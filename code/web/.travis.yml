@@ -12,7 +12,7 @@ deploy:
   provider: elasticbeanstalk
   region: "us-east-1"
   app: "kaagapAI"
-  env: "Kaagapai-env"
+  env: "Kaagapai-env-1"
   bucket_name: "elasticbeanstalk-us-east-1-647912191476"
   bucket_path: "kaagapAI"
   on:
