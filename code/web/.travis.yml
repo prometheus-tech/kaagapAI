@@ -2,8 +2,9 @@ sudo: required
 services:
   - docker
 
+before_script: cd project
+
 before_install:
-  cd project
   - docker build -t jessietabilisma/kaagapAI -f Dockerfile.dev .
 
 script:
