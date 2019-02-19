@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - cd code/web/
+  - docker build -t jessietabilisma/kaagapai-test -f Dockerfile.dev .
+
+script:
+  - docker run jessietabilisma/kaagapai-test npm run test -- --coverage
+
+deploy:
+  provider: firebase
+  on:
+    branch: master
+  token:
+    secure: "$Firebase_token"
