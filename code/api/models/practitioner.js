@@ -42,21 +42,25 @@ const Practitioner = sequelize.define('practitioner', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  date_registered: {
+  dateRegistered: {
     type: Sequelize.DATEONLY,
-    allowNull: false
+    allowNull: false,
+    underscored: true
   },
-  last_logged: {
+  lastLogged: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: false,
+    underscored: true
   },
-  date_deactivated: {
+  dateDeactivated: {
     type: Sequelize.DATEONLY,
-    allowNull: false
+    allowNull: false,
+    underscored: true
   },
-  session_token: {
+  sessionToken: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    underscored: true
   }
 });
 
