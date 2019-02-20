@@ -1,24 +1,18 @@
 const mysql = require('mysql2');
+const Sequelize = require('sequelize');
 
-const pool = mysql.createPool({
+const sequelize = new Sequelize('db_kaagapai', 'admin', 'adminkaagapai', {
+  dialect: 'mysql',
   host: 'localhost',
-  port: '3306',
-  //host: '',
-  user: 'admin',
-  password: 'adminkaagapai',
-  database: 'db_kaagapai'
+  port: '3306'
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    return console.error('error: ' + err.message);
-  }
+module.exports = sequelize;
 
-  if (connection) {
-    connection.release();
-    console.log('db_kaagapai connected');
-  }
-  return;
-});
-
-module.exports = pool.promise();
+sequelize.authenticate()
+  .then(function(err) {
+    console.log('db_kaagapi connected');
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
