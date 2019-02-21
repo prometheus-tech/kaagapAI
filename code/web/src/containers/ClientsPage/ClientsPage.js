@@ -50,7 +50,8 @@ class ClientsPage extends Component {
         lastModified: '2019-02-17 10:30:00',
         numberOfSessions: 12
       }
-    ]
+    ],
+    cardView: true
   };
 
   render() {
