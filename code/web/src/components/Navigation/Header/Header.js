@@ -1,24 +1,42 @@
-import React from "react";
-import PropTypes from "prop-types";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import { withStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { withStyles, createMuiTheme } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
-import Logo from "../../../assets/logo.svg";
+import Logo from '../../../assets/logo.svg';
 
 // CSS is JS heheh
-const styles = theme => ({
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: '#ff4400'
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+      light: '#0066ff',
+      main: '#0044ff',
+      // dark: will be calculated from palette.secondary.main,
+      contrastText: '#ffcc00'
+    }
+    // error: will use the default color
+  }
+});
+const styles = ({
   root: {
-    width: "100%"
+    width: '100%',
+    backgroundColor: theme.palette.primary.main
   },
   grow: {
     flexGrow: 1
@@ -28,9 +46,9 @@ const styles = theme => ({
     marginRight: 20
   },
   title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block"
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
     }
   },
   logo: {
@@ -39,51 +57,51 @@ const styles = theme => ({
     height: 40
   },
   search: {
-    position: "relative",
+    position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: "#f4f4f4",
+    backgroundColor: '#f4f4f4',
     marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit * 3,
-      width: "auto"
+      width: 'auto'
     }
   },
   searchIcon: {
     width: theme.spacing.unit * 9,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   inputRoot: {
-    color: "inherit",
-    width: "100%"
+    color: 'inherit',
+    width: '100%'
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
       width: 200
     }
   },
   sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex"
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex'
     }
   },
   sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none"
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none'
     }
   }
 });
@@ -120,8 +138,8 @@ class PrimarySearchAppBar extends React.Component {
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
@@ -133,8 +151,8 @@ class PrimarySearchAppBar extends React.Component {
     const renderMobileMenu = (
       <Menu
         anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
@@ -157,7 +175,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="white">
+        <AppBar position="static" color="primary">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -185,7 +203,7 @@ class PrimarySearchAppBar extends React.Component {
                 </Badge>
               </IconButton>
               <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
