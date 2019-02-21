@@ -35,7 +35,9 @@ class GuttersGrid extends React.Component {
     return (
       <Aux>
         <Header />
-        <Grid container className={classes.root} />
+        <Grid container className={classes.root}>
+          {this.props.children}
+        </Grid>
       </Aux>
     );
   }
