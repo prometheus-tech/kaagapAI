@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
+import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 
 class ClientsPage extends Component {
   state = {
     clients: [
       {
+        id: 1,
         firstName: 'Cardo',
         lastName: 'Dalisay',
         gender: 'M',
@@ -15,6 +17,7 @@ class ClientsPage extends Component {
         numberOfSessions: 7
       },
       {
+        id: 2,
         firstName: 'Maria',
         lastName: 'Flordeliza',
         gender: 'F',
@@ -24,6 +27,7 @@ class ClientsPage extends Component {
         numberOfSessions: 4
       },
       {
+        id: 3,
         firstName: 'Ronaldo',
         lastName: 'Bato',
         gender: 'M',
@@ -33,6 +37,7 @@ class ClientsPage extends Component {
         numberOfSessions: 10
       },
       {
+        id: 4,
         firstName: 'Anton',
         lastName: 'Trillanes',
         gender: 'M',
@@ -42,6 +47,7 @@ class ClientsPage extends Component {
         numberOfSessions: 8
       },
       {
+        id: 5,
         firstName: 'Mark',
         lastName: 'Roxas',
         gender: 'M',
@@ -49,6 +55,16 @@ class ClientsPage extends Component {
         lastOpened: '2019-02-13 09:00:00',
         lastModified: '2019-02-17 10:30:00',
         numberOfSessions: 12
+      },
+      {
+        id: 6,
+        firstName: 'Louie',
+        lastName: 'Gordon',
+        gender: 'M',
+        dateAdded: '2019-01-08 07:20:00',
+        lastOpened: '2019-02-14 09:00:00',
+        lastModified: '2019-02-14 10:30:00',
+        numberOfSessions: 0
       }
     ],
     cardView: true
@@ -57,7 +73,7 @@ class ClientsPage extends Component {
   render() {
     return (
       <Auxilliary>
-        <h1>Clients</h1>
+        <ClientsCards clients={this.state.clients} />
       </Auxilliary>
     );
   }

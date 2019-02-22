@@ -7,8 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   mainGrid: {
-    paddingRight: 24,
-    paddingLeft: 24
+    padding: 24
   }
 });
 
