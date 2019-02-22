@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SortList from './SortList/SortList';
+import SortOrder from './SortOrder/SortOrder';
 
 const styles = theme => ({
   container: {
@@ -29,6 +30,10 @@ function CardSortControls(props) {
           optionsOpened={props.sortOptionsOpened}
           selectedIndexChanged={props.sortSelectedIndexChanged}
           optionsClosed={props.sortOptionsClosed}
+        />
+        <SortOrder
+          order={props.sortOrder}
+          orderChanged={props.sortOrderChanged}
         />
       </Grid>
     </Grid>

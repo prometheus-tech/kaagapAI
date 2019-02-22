@@ -70,7 +70,8 @@ class ClientsPage extends Component {
     ],
     cardView: true,
     cardSortAnchorElement: null,
-    cardSortSelectedIndex: 0
+    cardSortSelectedIndex: 0,
+    cardSortOrder: 'desc'
   };
 
   openSortOptionsHandler = element => {
@@ -88,6 +89,12 @@ class ClientsPage extends Component {
     this.setState({ cardSortAnchorElement: null });
   };
 
+  changeSortOrderHandler = updatedSortOrder => {
+    this.setState({
+      cardSortOrder: updatedSortOrder
+    });
+  };
+
   render() {
     return (
       <Auxilliary>
@@ -97,6 +104,8 @@ class ClientsPage extends Component {
           sortOptionsOpened={this.openSortOptionsHandler}
           sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
           sortOptionsClosed={this.closeSortOptionsHandler}
+          sortOrder={this.state.cardSortOrder}
+          sortOrderChanged={this.changeSortOrderHandler}
         />
         <ClientsCards clients={this.state.clients} />
       </Auxilliary>
