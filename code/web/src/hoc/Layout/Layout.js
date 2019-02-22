@@ -4,11 +4,11 @@ import Auxilliary from '../Auxilliary/Auxilliary';
 import Header from '../../components/Navigation/Header/Header';
 import Grid from '@material-ui/core/Grid';
 
-function Layout() {
+function Layout(props) {
   return (
     <Auxilliary>
       <Header />
-      <Grid container>{this.props.children}</Grid>
+      <Grid container>{props.children}</Grid>
     </Auxilliary>
   );
 }
