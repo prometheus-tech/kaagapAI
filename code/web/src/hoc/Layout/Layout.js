@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import Aux from '../Aux/Aux';
+import Auxilliary from '../Auxilliary/Auxilliary';
 import Header from '../../components/Navigation/Header/Header';
 
 const styles = theme => ({
@@ -33,12 +33,12 @@ class GuttersGrid extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Aux>
+      <Auxilliary>
         <Header />
         <Grid container className={classes.root}>
           {this.props.children}
         </Grid>
-      </Aux>
+      </Auxilliary>
     );
   }
 }
