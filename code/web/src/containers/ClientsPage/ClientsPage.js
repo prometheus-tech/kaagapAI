@@ -108,6 +108,9 @@ class ClientsPage extends Component {
           sortOrderChanged={this.changeSortOrderHandler}
         />
         <ClientsCards clients={this.state.clients} />
+
+        {/* For the meantime, if you want to test your ClientsTable, just comment my code
+        above and put yours below this comment */}
       </Auxilliary>
     );
   }
