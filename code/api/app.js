@@ -16,11 +16,10 @@ app.use('/graphql', expressGraphQL({
 sequelize
   .sync()
   .then(result => {
-    console.log(result);
     app.listen(3000, () => {
       console.log('Server is running at port 3000');
     });
   })
   .catch(err => {
-    console.log(err);
+    console.log("Failed to run the server: " + err);
   })

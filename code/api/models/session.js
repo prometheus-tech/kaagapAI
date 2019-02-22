@@ -1,25 +1,25 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Sessions = sequelize.define('Sessions', {
+  const Session = sequelize.define('Session', {
     s_id: DataTypes.INTEGER,
     session_name: DataTypes.STRING,
     date_of_session: DataTypes.DATE
   }, {});
 
-  Sessions.removeAttribute('id');
+  Session.removeAttribute('id');
 
-  Sessions.associate = function (models) {
+  Session.associate = function (models) {
     // associations can be defined here
-    Sessions.belongsTo(models.Client, {
+    Session.belongsTo(models.Client, {
       foreignKey: 'c_sid',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     });
 
-    Sessions.hasMany(models.Session_Document, {
+    Session.hasMany(models.Session_Document, {
       foreignKey: 'sd_session_id',
       as: 'session_documents'
     });
   };
-  return Sessions;
+  return Session;
 };
