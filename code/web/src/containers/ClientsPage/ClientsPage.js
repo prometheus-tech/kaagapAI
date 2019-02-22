@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Aux/Aux';
+import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 
 class ClientsPage extends Component {
   state = {
@@ -56,9 +56,9 @@ class ClientsPage extends Component {
 
   render() {
     return (
-      <Aux>
+      <Auxilliary>
         <h1>Clients</h1>
-      </Aux>
+      </Auxilliary>
     );
   }
 }
