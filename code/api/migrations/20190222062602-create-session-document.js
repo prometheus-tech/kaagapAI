@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       date_added: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       last_modified: {
         type: Sequelize.DATE
@@ -26,7 +26,7 @@ module.exports = {
       type: {
         type: Sequelize.ENUM('PDF', 'TXT', 'DOCX')
       },
-      sd_session_id  : {
+      sd_session_id: {
         type: Sequelize.INTEGER,
         onDelete:'CASCADE',
         onUpdate: 'CASCADE',

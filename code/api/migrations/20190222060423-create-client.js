@@ -2,46 +2,45 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Clients', {
-      client_id: {
-        allowNull: false,
-        autoIncrement: true,
+      c_id: {
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,
+        unique: true,
+        autoIncrement: true
       },
       fname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       lname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       gender: {
-        type: Sequelize.ENUM('M', 'F')
+        type: Sequelize.ENUM('M', 'F'),
+        allowNull: false
       },
       birthdate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       date_added: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       last_opened: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      practitioner_id: {
+      p_id: {
         type: Sequelize.STRING,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
           model: 'Practitioners',
           key: 'email',
-          as: 'practitioner_id'
+          as: 'p_id'
         }
       }
     });

@@ -2,45 +2,60 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Practitioners', {
-      email: {
-        allowNull: false,
+      p_id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        allowNull: false
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       phone_no: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR,
+        allowNull: false
       },
       password: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR,
+        allowNull: false
       },
       fname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       lname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       license: {
-        type: Sequelize.CHAR
+        type: Sequelize.CHAR,
+        allowNull: false
+      },
+      profession: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('pending', 'deactivated', 'active')
+        type: Sequelize.ENUM('pending', 'deactivated', 'active'),
+        allowNull: false
       },
       date_registered: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      },
+      date_deactivated: {
+        type: Sequelize.DATEONLY,
+        allowNull: true
       },
       last_logged: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       session_token: {
-        type: Sequelize.CHAR
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.CHAR,
+        allowNull: false
       }
     });
   },

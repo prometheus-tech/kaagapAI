@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Session_Document = sequelize.define('Session_Document', {
+    id: DataTypes.INTEGER,
     file: DataTypes.BLOB,
     file_name: DataTypes.STRING,
     content: DataTypes.TEXT,
@@ -8,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     last_modified: DataTypes.DATE,
     type: DataTypes.ENUM('PDF', 'TXT', 'DOCX')
   }, {});
+
   Session_Document.associate = function(models) {
     // associations can be defined here
     Session_Document.belongsTo(models.Session, {

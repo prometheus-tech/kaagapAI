@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       date_of_session: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       client_sid: {
         type: Sequelize.INTEGER,
@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         references: {
           model: 'Clients',
-          key: 'client_id',
+          key: 'c_id',
           as: 'client_sid'
         }
       }

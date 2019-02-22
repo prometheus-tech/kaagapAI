@@ -35,7 +35,7 @@ module.exports = {
         references: {
           model: 'Practitioners',
           key: 'email',
-          as: 'practitionerf_id'
+          as: 'pf_id'
         }
       }
     });

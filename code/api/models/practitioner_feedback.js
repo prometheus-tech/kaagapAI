@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     message: DataTypes.STRING,
     date_submitted: DataTypes.DATE
   }, {});
+  
   Practitioner_Feedback.associate = function(models) {
     // associations can be defined here
     Client.belongsTo(models.Practitioner, {
