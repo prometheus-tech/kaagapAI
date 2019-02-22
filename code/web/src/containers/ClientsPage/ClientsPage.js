@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
+import CardSortControls from '../../components/CardSortControls/CardSortControls';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 
 class ClientsPage extends Component {
@@ -67,12 +68,36 @@ class ClientsPage extends Component {
         numberOfSessions: 0
       }
     ],
-    cardView: true
+    cardView: true,
+    cardSortAnchorElement: null,
+    cardSortSelectedIndex: 0
+  };
+
+  openSortOptionsHandler = element => {
+    this.setState({ cardSortAnchorElement: element });
+  };
+
+  changeSortSelectedIndexHandler = (element, index) => {
+    this.setState({
+      cardSortSelectedIndex: index,
+      cardSortAnchorElement: null
+    });
+  };
+
+  closeSortOptionsHandler = () => {
+    this.setState({ cardSortAnchorElement: null });
   };
 
   render() {
     return (
       <Auxilliary>
+        <CardSortControls
+          cardSortAnchorElement={this.state.cardSortAnchorElement}
+          cardSortSelectedIndex={this.state.cardSortSelectedIndex}
+          sortOptionsOpened={this.openSortOptionsHandler}
+          sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
+          sortOptionsClosed={this.closeSortOptionsHandler}
+        />
         <ClientsCards clients={this.state.clients} />
       </Auxilliary>
     );
