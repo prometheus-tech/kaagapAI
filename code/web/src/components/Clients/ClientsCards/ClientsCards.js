@@ -9,7 +9,7 @@ function ClientsCards(props) {
   if (props.clients.length > 0) {
     clients = props.clients.map(client => {
       return (
-        <Grid item xs={12} md={4} lg={3} key={client.id}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={client.id}>
           <ClientCard
             firstName={client.firstName}
             lastName={client.lastName}
