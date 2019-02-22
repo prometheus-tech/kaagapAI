@@ -1,40 +1,25 @@
-const Sequelize = require('sequelize');
-
-const sequelize = require('../config/database');
-
-const Client = sequelize.define('client', {
-  timestamps: true,
-  clientId: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    allowNull: false,
-    underscored: true
-  },
-  cFname: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    underscored: true
-  },
-  cLname: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    underscored: true
-  },
-  gender: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  birthdate: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
-  },
-  lastOpened: {
-    type: Sequelize.DATE,
-    allowNull: false
-  },
-  createdAt: 'date_added',
-  updatedAt: false
-});
-
-module.exports = Client;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Client = sequelize.define('Client', {
+    fname: DataTypes.STRING,
+    lname: DataTypes.STRING,
+    gender: DataTypes.ENUM('M', 'F'),
+    birthdate: DataTypes.DATE,
+    date_added: DataTypes.DATE,
+    last_opened: DataTypes.DATE
+  }, {});
+  Client.associate = function(models) {
+    // associations can be defined here
+    Client.belongsTo(models.Practitioner, {
+      foreignKey: 'practitioner_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
+    
+    Client.hasMany(models.Session, {
+      foreignKey: 'client_sid',
+      as: 'sessions'
+    });
+  };
+  return Client;
+};

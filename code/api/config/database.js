@@ -10,10 +10,10 @@ const sequelize = new Sequelize('db_kaagapai', 'admin', 'adminkaagapai', {
 
 module.exports = sequelize;
 
-sequelize.authenticate()
-  .then(function(err) {
-    console.log('db_kaagapi connected');
-  })
-  .catch(function (err) {
-    console.log('Unable to connect to the database:', err);
-  });
+// sequelize.authenticate()
+//   .then(function(err) {
+//     console.log('db_kaagapi connected');
+//   })
+//   .catch(function (err) {
+//     console.log('Unable to connect to the database:', err);
+//   });

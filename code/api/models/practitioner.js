@@ -1,67 +1,28 @@
-const Sequelize = require('sequelize');
-
-const sequelize = require('../config/database');
-
-const Practitioner = sequelize.define('practitioner', {
-  timestamps: false,
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true
-  },
-  phone_no: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  fname: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  lname: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  license: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  profession: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  status: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  dateRegistered: {
-    type: Sequelize.DATEONLY,
-    allowNull: false,
-    underscored: true
-  },
-  lastLogged: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    underscored: true
-  },
-  dateDeactivated: {
-    type: Sequelize.DATEONLY,
-    allowNull: false,
-    underscored: true
-  },
-  sessionToken: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    underscored: true
-  }
-});
-
-module.exports = Practitioner;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Practitioner = sequelize.define('Practitioner', {
+    email: DataTypes.STRING,
+    phone_no: DataTypes.CHAR,
+    password: DataTypes.CHAR,
+    fname: DataTypes.STRING,
+    lname: DataTypes.STRING,
+    license: DataTypes.CHAR,
+    status: DataTypes.ENUM('pending','deactivated','active'),
+    date_registered: DataTypes.DATE,
+    last_logged: DataTypes.DATE,
+    session_token: DataTypes.CHAR
+  }, {});
+  Practitioner.removeAttribute('id');
+  Practitioner.associate = function(models) {
+    // associations can be defined here
+    Practitioner.hasMany(models.Client, {
+      foreignKey: 'practitioner_id',
+      as: 'clients'
+    });
+    Practitioner.hasMany(models.Practitioner_Feedback, {
+      foreignKey: 'practitionerf_id',
+      as: 'practitioner_feedbacks'
+    });
+  };
+  return Practitioner;
+};
