@@ -1,11 +1,10 @@
 const express = require('express');
 const expressGraphQL = require('express-graphql');
 const schema = require('./graphql/schema');
-const resolver = require('./graphql/resolvers')
+const resolver = require('./graphql/resolvers');
+const sequelize = require('./config/database');
 
 const app = express();
-
-const sequelize = require('./config/database');
 
 app.use('/graphql', expressGraphQL({
   schema: schema,
