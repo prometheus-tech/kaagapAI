@@ -13,8 +13,8 @@ module.exports = {
       status: 'active',
       date_registered: new Date(),
       date_deactivated: '',
-      last_logged: '02/27/2019 17:56',
-      session_token: '2492734923749skjhfd'
+      last_logged: '2019-02-27 23:20:00',
+      session_token: ''
     },
     {
       email: 'rosadiaz@gmail.com',
@@ -27,7 +27,7 @@ module.exports = {
       status: 'active',
       date_registered: new Date(),
       date_deactivated: '',
-      last_logged: '02/26/2019 7:39',
+      last_logged: new Date(),
       session_token: 'ksjhdf8729845'
   }], {});
   },

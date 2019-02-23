@@ -27,19 +27,20 @@ module.exports = {
       },
       date_added: {
         type: Sequelize.DATEONLY,
-        allowNull: false
+        allowNull: false,
+        defaultValue: Sequelize.NOW
       },
       last_opened: {
         type: Sequelize.DATE,
         allowNull: false
       },
       p_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
           model: 'Practitioners',
-          key: 'email',
+          key: 'p_id',
           as: 'p_id'
         }
       }

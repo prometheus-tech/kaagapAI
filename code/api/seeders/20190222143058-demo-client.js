@@ -6,28 +6,28 @@ module.exports = {
       fname: 'Jake',
       lname: 'Peralta',
       gender: 'M',
-      birthdate: '08/08/1985',
+      birthdate: '1985-08-08',
       date_added: new Date(),
-      last_opened: '02/27/2019 17:05',
-      p_id: 'amysantiago@gmail.com'
+      last_opened: '2019-27-02 17:05:00',
+      p_id: 1
     }, 
     {
       fname: 'Elena',
       lname: 'Alvarez',
       gender: 'F',
-      birthdate: '07/14/1999',
+      birthdate: '1999-07-14',
       date_added: new Date(),
-      last_opened: '02/25/2019 17:45',
-      p_id: 'rosadiaz@gmail.com'
+      last_opened: '2019-25-02 17:45:00',
+      p_id: 2
     }, 
     {
       fname: 'Erika',
       lname: 'Torio',
       gender: 'F',
-      birthdate: '01/20/1999',
+      birthdate: '1999-01-20',
       date_added: new Date(),
-      last_opened: '02/28/2019 18:50',
-      p_id: 'amysantiago@gmail.com'
+      last_opened: '2019-28-02 18:50:00',
+      p_id: 1
     }], {});
   },
 
