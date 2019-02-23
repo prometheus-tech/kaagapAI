@@ -25,17 +25,17 @@ module.exports = buildSchema(`
   type Practioner {
     p_id: ID!
     email: String!
-    phone_no: Char!
-    password: Char!
+    phone_no: String!
+    password: String!
     fname: String!
     lname: String!
-    license: Char!
+    license: String!
     profession: String!
     status: [Status!]!,
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date
-    session_token: Char
+    session_token: String
   }
 
   type Client {
@@ -46,6 +46,7 @@ module.exports = buildSchema(`
     birthdate: Date!
     date_added: Date!
     last_opened: Date
+    p_id: Int!
   }
 
   type Session {
@@ -65,11 +66,12 @@ module.exports = buildSchema(`
   }
 
   type RootQuery { 
-
+    getClients(p_id: Int!): Client!
   }
 
   type RootMutation {
-    
+    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!
+    removeClient(c_id: Int!): Client!
   }
 
   schema {
