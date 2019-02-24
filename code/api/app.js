@@ -13,17 +13,6 @@ app.use('/graphql', expressGraphQL({
   graphiql: true
 }));
 
-// app.use(
-//   graphqlEndpoint, 
-//   // bodyParser.json(), 
-//   expressGraphQL({
-//     schema, 
-//     context: {
-//       models
-//     }
-//   })
-// );
-
 models.sequelize
   .sync()
   .then(result => {

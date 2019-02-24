@@ -2,7 +2,7 @@ const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
   scalar Date 
-  scalar LongText
+  scalar LONGTEXT
 
   enum Status {
     pending
@@ -58,7 +58,7 @@ module.exports = buildSchema(`
     id: Int!
     file: String!
     file_name: String!
-    content: LongText!
+    content: LONGTEXT!
     date_added: Date!
     last_modified: Date
     type: [Type!]!
