@@ -1,6 +1,6 @@
 const { buildSchema } = require('graphql');
 
-module.exports = buildSchema(`
+const schema = buildSchema(`
   scalar Date 
   scalar LONGTEXT
 
@@ -79,3 +79,5 @@ module.exports = buildSchema(`
     mutation: RootMutation
   }
 `);
+
+module.exports = schema;
