@@ -64,13 +64,11 @@ const typeDefs = buildSchema(`
   }
 
   type RootQuery { 
-    getHello: String
-    getPractitioners: [Practitioner]
     getClients(p_id: Int!): [Client]
   }
 
   type RootMutation {
-    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!
+    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): String!
 
     removeClient(c_id: Int!): Client!
   }
