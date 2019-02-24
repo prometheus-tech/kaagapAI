@@ -42,7 +42,7 @@ function ClientListItem(props) {
 
   const dateAddedFormatted = (
     <Moment format="MMM D YYYY" withTitle>
-      {dateAddedFormatted}
+      {dateAdded}
     </Moment>
   );
 
