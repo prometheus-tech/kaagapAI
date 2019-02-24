@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.LONGTEXT
+        type: Sequelize.TEXT('long')
       },
       date_added: {
         type: Sequelize.DATEONLY

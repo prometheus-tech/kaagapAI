@@ -1,5 +1,8 @@
 //sequelize operations (i.e findById, destroy, etc.) can be found here: https://sequelize.readthedocs.io/en/latest/api/model/
-module.exports = {
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
+
+module.exports = { 
   Query: {
     getClients: (parent, {p_id}, { models }) => models.Client.find({where: { p_id }})
   },

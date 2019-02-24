@@ -2,8 +2,7 @@ const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
   scalar Date 
-  scalar BLOB
-  scalar Text
+  scalar LongText
 
   enum Status {
     pending
@@ -57,9 +56,9 @@ module.exports = buildSchema(`
 
   type SessionDocument {
     id: Int!
-    file: BLOB!
+    file: String!
     file_name: String!
-    content: Text!
+    content: LongText!
     date_added: Date!
     last_modified: Date
     type: [Type!]!
@@ -71,7 +70,7 @@ module.exports = buildSchema(`
 
   type RootMutation {
     addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!
-    
+
     removeClient(c_id: Int!): Client!
   }
 
