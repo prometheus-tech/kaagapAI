@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    file: DataTypes.BLOB,
+    file: DataTypes.STRING,
     file_name: DataTypes.STRING,
-    content: DataTypes.TEXT,
+    content: DataTypes.LONGTEXT,
     date_added: DataTypes.DATE,
     last_modified: DataTypes.DATE,
     type: DataTypes.ENUM('PDF', 'TXT', 'DOCX')

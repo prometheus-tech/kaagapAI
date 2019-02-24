@@ -1,8 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const expressGraphQL = require('express-graphql');
+const models = require('./models');
 const schema = require('./graphql/schema');
 const resolver = require('./graphql/resolvers');
-const models = require('./models');
 
 const app = express();
 
@@ -11,6 +12,17 @@ app.use('/graphql', expressGraphQL({
   rootValue: resolver,
   graphiql: true
 }));
+
+// app.use(
+//   graphqlEndpoint, 
+//   // bodyParser.json(), 
+//   expressGraphQL({
+//     schema, 
+//     context: {
+//       models
+//     }
+//   })
+// );
 
 models.sequelize
   .sync()

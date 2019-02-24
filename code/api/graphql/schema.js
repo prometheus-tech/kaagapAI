@@ -31,7 +31,7 @@ module.exports = buildSchema(`
     lname: String!
     license: String!
     profession: String!
-    status: [Status!]!,
+    status: [Status!]!
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date
@@ -66,11 +66,12 @@ module.exports = buildSchema(`
   }
 
   type RootQuery { 
-    getClients(p_id: Int!): Client!
+    getClients(p_id: Int!): Client
   }
 
   type RootMutation {
     addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!
+    
     removeClient(c_id: Int!): Client!
   }
 

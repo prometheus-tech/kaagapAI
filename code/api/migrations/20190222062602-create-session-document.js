@@ -9,13 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       file: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       file_name: {
         type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.TEXT
+        type: Sequelize.LONGTEXT
       },
       date_added: {
         type: Sequelize.DATEONLY
