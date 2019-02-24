@@ -1,10 +1,12 @@
 const Sequelize = require('sequelize');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
+const GraphQlJSON = require('graphql-type-json');
 const models = require('../models');
 const Op = Sequelize.Op;
 
 const resolver = { 
+  JSON: GraphQlJSON,
   Date: new GraphQLScalarType({
     name: 'Date',
     parseValue(value) {
@@ -24,8 +26,9 @@ const resolver = {
 
   //Query
   getClients: ({ p_id }) => models.Client.findAll({
+      raw: true,
       where: { p_id },
-      include: [
+      include: [{
         model: models.Practitioner,
         where: {
           p_id,
@@ -33,7 +36,7 @@ const resolver = {
             [Op.ne]: null
           }
         }
-      ]
+      }]
   }),
 
   //Mutations
@@ -44,11 +47,32 @@ const resolver = {
       birthdate, 
       p_id,
       date_added: new Date()
-    }).then(
-    res => "Successfully added client: " + res.fname + " " + res.lname
+  }).then(
+    res => models.Client.findAll({
+      raw: true,
+      limit: 1,
+      where: {
+        fname,
+        lname,
+        p_id
+      },
+      attributes:['c_id', 'fname'],
+      order: [[ 'c_id', 'DESC']]
+    })
   ),
 
-  // removeClient: (parent, { c_id }, {models}) => models.Client.destroy({where: { c_id }})
+  removeClient: ({ c_id }) =>        models.Client.findAll({
+    raw: true, 
+    where: {c_id},
+    attributes:['c_id', 'fname']
+  }).then(
+    res => {
+      models.Client.destroy({
+        where: { c_id }
+      })
+      return res;
+    }
+  ),
 }
 
 module.exports = resolver;

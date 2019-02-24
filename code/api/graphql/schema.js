@@ -2,6 +2,7 @@ const { buildSchema } = require('graphql');
 
 const typeDefs = buildSchema(`
   scalar Date 
+  scalar JSON
 
   enum Status {
     pending
@@ -64,13 +65,13 @@ const typeDefs = buildSchema(`
   }
 
   type RootQuery { 
-    getClients(p_id: Int!): [Client]
+    getClients(p_id: Int!): [Client]!
   }
 
   type RootMutation {
-    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): String!
+    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): JSON!
 
-    removeClient(c_id: Int!): Client!
+    removeClient(c_id: Int!): JSON!
   }
 
   schema {

@@ -10,7 +10,7 @@ const app = express();
 app.use('/graphql', expressGraphQL({
   schema: schema,
   rootValue: resolver,
-  graphiql: true
+  graphiql: true //to be changed to false when in production
 }));
 
 models.sequelize
