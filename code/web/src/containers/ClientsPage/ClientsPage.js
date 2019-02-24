@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import CardSortControls from '../../components/CardSortControls/CardSortControls';
-import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
+// import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
+import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
 
 class ClientsPage extends Component {
   state = {
@@ -107,10 +108,12 @@ class ClientsPage extends Component {
           sortOrder={this.state.cardSortOrder}
           sortOrderChanged={this.changeSortOrderHandler}
         />
-        <ClientsCards clients={this.state.clients} />
+        {/* <ClientsCards clients={this.state.clients} /> */}
 
         {/* For the meantime, if you want to test your ClientsTable, just comment my code
         above and put yours below this comment */}
+
+        <ClientTable />
       </Auxilliary>
     );
   }
