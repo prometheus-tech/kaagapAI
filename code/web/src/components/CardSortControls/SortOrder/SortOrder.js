@@ -6,7 +6,7 @@ import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 
 const getNewSortOrder = order => {
-  return order === 'desc' ? 'asc' : 'desc';
+  return order === 'asc' ? 'desc' : 'asc';
 };
 
 function SortOrder(props) {

@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import CardSortControls from '../../components/CardSortControls/CardSortControls';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
-// import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
+import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
 import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
+import ViewControl from '../../components/ViewControl/ViewControl';
 
 const sortingOptions = [
   'Last Name',
@@ -81,7 +82,8 @@ class ClientsPage extends Component {
     cardView: true,
     cardSortAnchorElement: null,
     cardSortSelectedIndex: 0,
-    cardSortOrder: 'asc'
+    cardSortOrder: 'asc',
+    view: 'list'
   };
 
   openSortOptionsHandler = element => {
@@ -117,27 +119,41 @@ class ClientsPage extends Component {
     }
   };
 
+  changeViewHandler = updatedView => {
+    this.setState({
+      view: updatedView
+    });
+  };
+
   render() {
     this.sortClients();
 
+    const clientsView =
+      this.state.view === 'list' ? (
+        <Auxilliary>
+          <CardSortControls
+            sortingOptions={sortingOptions}
+            cardSortAnchorElement={this.state.cardSortAnchorElement}
+            cardSortSelectedIndex={this.state.cardSortSelectedIndex}
+            sortOptionsOpened={this.openSortOptionsHandler}
+            sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
+            sortOptionsClosed={this.closeSortOptionsHandler}
+            sortOrder={this.state.cardSortOrder}
+            sortOrderChanged={this.changeSortOrderHandler}
+          />
+          <ClientsCards clients={this.state.clients} />
+        </Auxilliary>
+      ) : (
+        <ClientTable />
+      );
+
     return (
       <Auxilliary>
-        <CardSortControls
-          sortingOptions={sortingOptions}
-          cardSortAnchorElement={this.state.cardSortAnchorElement}
-          cardSortSelectedIndex={this.state.cardSortSelectedIndex}
-          sortOptionsOpened={this.openSortOptionsHandler}
-          sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
-          sortOptionsClosed={this.closeSortOptionsHandler}
-          sortOrder={this.state.cardSortOrder}
-          sortOrderChanged={this.changeSortOrderHandler}
+        <ViewControl
+          view={this.state.view}
+          viewChanged={this.changeViewHandler}
         />
-        <ClientsCards clients={this.state.clients} />
-
-        {/* For the meantime, if you want to test your ClientsTable, just comment my code
-        above and put yours below this comment */}
-
-        {/* <ClientTable /> */}
+        {clientsView}
       </Auxilliary>
     );
   }
