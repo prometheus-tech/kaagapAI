@@ -5,3 +5,7 @@ export function camelize(str) {
     })
     .replace(/\s+/g, '');
 }
+
+export function toPronounCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

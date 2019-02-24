@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ViewList from '@material-ui/icons/ViewList';
 import ViewModule from '@material-ui/icons/ViewModule';
+import Tooltip from '@material-ui/core/Tooltip';
+import { toPronounCase } from '../../util/helperFunctions';
 
 const styles = theme => ({
   container: {
@@ -12,14 +14,12 @@ const styles = theme => ({
   }
 });
 
-const getNewView = view => {
-  return view === 'list' ? 'module' : 'list';
-};
-
 function ViewControl(props) {
   const { classes } = props;
 
   const icon = props.view === 'list' ? <ViewList /> : <ViewModule />;
+
+  const otherView = props.view === 'list' ? 'card' : 'list';
 
   return (
     <Grid
@@ -31,13 +31,15 @@ function ViewControl(props) {
     >
       <Grid item xs={11} />
       <Grid item>
-        <IconButton
-          onClick={() => {
-            props.viewChanged(getNewView(props.view));
-          }}
-        >
-          {icon}
-        </IconButton>
+        <Tooltip title={toPronounCase(props.view) + ' view'}>
+          <IconButton
+            onClick={() => {
+              props.viewChanged(otherView);
+            }}
+          >
+            {icon}
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );
