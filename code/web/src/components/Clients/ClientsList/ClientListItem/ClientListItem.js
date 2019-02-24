@@ -9,6 +9,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import { getInitials } from '../../../../util/helperFunctions';
+import Moment from 'react-moment';
 
 const styles = theme => ({
   listItem: {
@@ -39,6 +40,29 @@ function ClientListItem(props) {
     lastOpened
   } = props.client;
 
+  const dateAddedFormatted = (
+    <Moment format="MMM D YYYY" withTitle>
+      {dateAddedFormatted}
+    </Moment>
+  );
+
+  const lastActivity =
+    lastModified > lastOpened ? (
+      <Typography>
+        Modified last{' '}
+        <Moment format="MMM D YYYY" withTitle>
+          {lastModified}
+        </Moment>
+      </Typography>
+    ) : (
+      <Typography>
+        Opened last{' '}
+        <Moment format="MMM D YYYY" withTitle>
+          {lastModified}
+        </Moment>
+      </Typography>
+    );
+
   return (
     <Paper elevation={0} className={classes.listItem}>
       <Grid container spacing={0} alignItems="center">
@@ -56,10 +80,10 @@ function ClientListItem(props) {
           <Typography gutterBottom={false}>{numberOfSessions}</Typography>
         </Grid>
         <Grid item md={2}>
-          <Typography gutterBottom={false}>{dateAdded}</Typography>
+          <Typography gutterBottom={false}>{dateAddedFormatted}</Typography>
         </Grid>
         <Grid item md={3}>
-          <Typography gutterBottom={false}>{lastModified}</Typography>
+          <Typography gutterBottom={false}>{lastActivity}</Typography>
         </Grid>
         <Grid item md={1} align="right">
           <IconButton>

@@ -26,7 +26,7 @@ function ClientCard(props) {
       : 'No sessions yet';
 
   return (
-    <Card>
+    <Card elevation={0}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
         action={
