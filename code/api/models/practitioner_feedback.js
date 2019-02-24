@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     file_name: DataTypes.STRING,
     message: DataTypes.STRING,
     date_submitted: DataTypes.DATE
-  }, {});
+  }, {
+    timestamps: false
+  });
 
   Practitioner_Feedback.removeAttribute('id');
   

@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     date_added: DataTypes.DATE,
     last_modified: DataTypes.DATE,
     type: DataTypes.ENUM('PDF', 'TXT', 'DOCX')
-  }, {});
+  }, {
+    timestamps: false
+  });
 
   Session_Document.removeAttribute('id');
 

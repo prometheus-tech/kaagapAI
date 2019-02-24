@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     birthdate: DataTypes.DATEONLY,
     date_added: DataTypes.DATEONLY,
     last_opened: DataTypes.DATE
-  }, {});
+  }, {
+    timestamps: false
+  });
 
   Client.removeAttribute('id');
   

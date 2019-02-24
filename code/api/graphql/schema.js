@@ -1,8 +1,7 @@
 const { buildSchema } = require('graphql');
 
-const schema = buildSchema(`
+const typeDefs = buildSchema(`
   scalar Date 
-  scalar LONGTEXT
 
   enum Status {
     pending
@@ -21,7 +20,7 @@ const schema = buildSchema(`
     DOCX
   }
 
-  type Practioner {
+  type Practitioner {
     p_id: ID!
     email: String!
     phone_no: String!
@@ -58,14 +57,16 @@ const schema = buildSchema(`
     id: Int!
     file: String!
     file_name: String!
-    content: LONGTEXT!
+    content: String!
     date_added: Date!
     last_modified: Date
     type: [Type!]!
   }
 
   type RootQuery { 
-    getClients(p_id: Int!): Client
+    getHello: String
+    getPractitioners: [Practitioner]
+    getClients(p_id: Int!): [Client]
   }
 
   type RootMutation {
@@ -80,4 +81,4 @@ const schema = buildSchema(`
   }
 `);
 
-module.exports = schema;
+module.exports = typeDefs;

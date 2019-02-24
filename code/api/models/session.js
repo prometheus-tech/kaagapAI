@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     session_name: DataTypes.STRING,
     date_of_session: DataTypes.DATE
-  }, {});
+  }, {
+    timestamps: false
+  });
 
   Session.removeAttribute('id');
 
