@@ -7,7 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { withStyles, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -16,27 +16,13 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Logo from '../../../assets/logo.svg';
 
 // CSS is JS heheh
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      // light: will be calculated from palette.primary.main,
-      main: '#ff4400'
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
-    },
-    secondary: {
-      light: '#0066ff',
-      main: '#0044ff',
-      // dark: will be calculated from palette.secondary.main,
-      contrastText: '#ffcc00'
-    }
-    // error: will use the default color
-  }
-});
-const styles = ({
+const styles = theme => ({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.primary.main
+    background: 'white'
+  },
+  notif: {
+    color: '#00796b'
   },
   grow: {
     flexGrow: 1
@@ -56,12 +42,16 @@ const styles = ({
     width: 40,
     height: 40
   },
+  // name: {
+  //   color: '#aa00ff'
+  // },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#e0f7fa',
     marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
+    marginLeft: 3,
+    height: '2.5rem',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit * 3,
@@ -75,11 +65,13 @@ const styles = ({
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: '#bbdefb'
   },
   inputRoot: {
-    color: 'inherit',
-    width: '100%'
+    color: '#333333',
+    width: '100%',
+    height: '100%'
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -155,11 +147,12 @@ class PrimarySearchAppBar extends React.Component {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
+        color="primary"
       >
         <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
+          <IconButton color="primary">
+            <Badge badgeContent={2} color="primary">
+              <NotificationsIcon className={classes.notif} />
             </Badge>
           </IconButton>
           <p>Notifications</p>
@@ -175,7 +168,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="primary">
+        <AppBar position="static" className={classes.root}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -183,6 +176,8 @@ class PrimarySearchAppBar extends React.Component {
               aria-label="Open drawer"
             />
             <img src={Logo} className={classes.logo} alt="kaagapAI" />
+            {/* <h1 className={classes.name}>kaagapAI</h1>
+            <h2 className={classes.prof}>Practitioners</h2> */}
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -197,8 +192,8 @@ class PrimarySearchAppBar extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
+              <IconButton color="primary" className={classes.notif}>
+                <Badge badgeContent={2} color="primary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
@@ -206,7 +201,7 @@ class PrimarySearchAppBar extends React.Component {
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
-                color="inherit"
+                color="#333333"
               >
                 <AccountCircle />
               </IconButton>
