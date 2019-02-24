@@ -25,6 +25,7 @@ function CardSortControls(props) {
       <Grid item xs={11} />
       <Grid item>
         <SortList
+          options={props.sortingOptions}
           anchorElement={props.cardSortAnchorElement}
           selectedIndex={props.cardSortSelectedIndex}
           optionsOpened={props.sortOptionsOpened}

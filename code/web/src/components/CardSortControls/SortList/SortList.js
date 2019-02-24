@@ -5,10 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 
-const options = ['Last Name', 'First Name', 'Last Modified', 'Last Opened'];
-
 function SortList(props) {
-  const menuList = options.map((option, optionIndex) => {
+  const menuList = props.options.map((option, optionIndex) => {
     return (
       <MenuItem
         key={optionIndex}
@@ -23,7 +21,7 @@ function SortList(props) {
   return (
     <Auxilliary>
       <Button onClick={event => props.optionsOpened(event.currentTarget)}>
-        {options[props.selectedIndex]}
+        {props.options[props.selectedIndex]}
       </Button>
       <Menu
         anchorEl={props.anchorElement}

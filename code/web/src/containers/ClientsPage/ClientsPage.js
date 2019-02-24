@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import CardSortControls from '../../components/CardSortControls/CardSortControls';
-// import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
-import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
+import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
+// import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
+import sort from 'fast-sort';
+import { camelize } from '../../util/helperFunctions';
+
+const sortingOptions = [
+  'Last Name',
+  'First Name',
+  'Last Modified',
+  'Last Opened'
+];
 
 class ClientsPage extends Component {
   state = {
@@ -72,7 +81,7 @@ class ClientsPage extends Component {
     cardView: true,
     cardSortAnchorElement: null,
     cardSortSelectedIndex: 0,
-    cardSortOrder: 'desc'
+    cardSortOrder: 'asc'
   };
 
   openSortOptionsHandler = element => {
@@ -96,10 +105,25 @@ class ClientsPage extends Component {
     });
   };
 
+  sortClients = () => {
+    const sortingProperty = camelize(
+      sortingOptions[this.state.cardSortSelectedIndex]
+    );
+
+    if (this.state.cardSortOrder === 'asc') {
+      sort(this.state.clients).asc(sortingProperty);
+    } else if (this.state.cardSortOrder === 'desc') {
+      sort(this.state.clients).desc(sortingProperty);
+    }
+  };
+
   render() {
+    this.sortClients();
+
     return (
       <Auxilliary>
         <CardSortControls
+          sortingOptions={sortingOptions}
           cardSortAnchorElement={this.state.cardSortAnchorElement}
           cardSortSelectedIndex={this.state.cardSortSelectedIndex}
           sortOptionsOpened={this.openSortOptionsHandler}
@@ -108,12 +132,12 @@ class ClientsPage extends Component {
           sortOrder={this.state.cardSortOrder}
           sortOrderChanged={this.changeSortOrderHandler}
         />
-        {/* <ClientsCards clients={this.state.clients} /> */}
+        <ClientsCards clients={this.state.clients} />
 
         {/* For the meantime, if you want to test your ClientsTable, just comment my code
         above and put yours below this comment */}
 
-        <ClientTable />
+        {/* <ClientTable /> */}
       </Auxilliary>
     );
   }
