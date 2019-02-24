@@ -8,12 +8,7 @@ import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
 import ViewControl from '../../components/ViewControl/ViewControl';
 
-const sortingOptions = [
-  'Last Name',
-  'First Name',
-  'Last Modified',
-  'Last Opened'
-];
+const sortingOptions = ['Name', 'Last Modified', 'Last Opened'];
 
 class ClientsPage extends Component {
   state = {
@@ -79,7 +74,6 @@ class ClientsPage extends Component {
         numberOfSessions: 0
       }
     ],
-    cardView: true,
     cardSortAnchorElement: null,
     cardSortSelectedIndex: 0,
     cardSortOrder: 'asc',
@@ -108,9 +102,14 @@ class ClientsPage extends Component {
   };
 
   sortClients = () => {
-    const sortingProperty = camelize(
+    let sortingProperty = camelize(
       sortingOptions[this.state.cardSortSelectedIndex]
     );
+
+    // Sort by first name when sorting option is by name
+    if (sortingProperty === 'name') {
+      sortingProperty = 'firstName';
+    }
 
     if (this.state.cardSortOrder === 'asc') {
       sort(this.state.clients).asc(sortingProperty);
