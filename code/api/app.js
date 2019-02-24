@@ -2,7 +2,7 @@ const express = require('express');
 const expressGraphQL = require('express-graphql');
 const schema = require('./graphql/schema');
 const resolver = require('./graphql/resolvers');
-const sequelize = require('./config/database');
+const models = require('./models');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use('/graphql', expressGraphQL({
   graphiql: true
 }));
 
-sequelize
+models.sequelize
   .sync()
   .then(result => {
     app.listen(3000, () => {

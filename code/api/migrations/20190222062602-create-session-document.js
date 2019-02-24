@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Session_Documents', {
-      id: {
+      sd_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -26,14 +26,14 @@ module.exports = {
       type: {
         type: Sequelize.ENUM('PDF', 'TXT', 'DOCX')
       },
-      sd_session_id: {
+      session_id: {
         type: Sequelize.INTEGER,
         onDelete:'CASCADE',
         onUpdate: 'CASCADE',
         references: {
           model: 'Sessions',
           key:'session_id',
-          as: 'sd_session_id'
+          as: 'session_id'
         }
       }
     });

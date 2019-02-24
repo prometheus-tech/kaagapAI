@@ -1,9 +1,10 @@
-const uuid = require('uuid/v4');
-
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Client = sequelize.define('Client', {
-    c_id: DataTypes.INTEGER,
+    c_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     fname: DataTypes.STRING,
     lname: DataTypes.STRING,
     gender: DataTypes.ENUM('M', 'F'),
@@ -23,8 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     
     Client.hasMany(models.Session, {
-      foreignKey: 'c_sid',
-      as: 'sessions'
+      foreignKey: 's_id'
     });
   };
 

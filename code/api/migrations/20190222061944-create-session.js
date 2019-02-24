@@ -14,14 +14,14 @@ module.exports = {
       date_of_session: {
         type: Sequelize.DATEONLY
       },
-      client_sid: {
+      c_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {
           model: 'Clients',
           key: 'c_id',
-          as: 'client_sid'
+          as: 'c_id'
         }
       }
     });
