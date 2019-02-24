@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import { getInitials } from '../../../../util/helperFunctions';
 import Moment from 'react-moment';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
   listItem: {
@@ -66,26 +67,28 @@ function ClientListItem(props) {
   return (
     <Paper elevation={0} className={classes.listItem}>
       <Grid container spacing={0} alignItems="center">
-        <Grid item md={1}>
+        <Grid item md={1} sm={2} xs={2}>
           <Avatar className={classes.avatar}>
             {getInitials(firstName, lastName)}
           </Avatar>
         </Grid>
-        <Grid item md={3}>
+        <Grid item md={3} sm={8} xs={8}>
           <Typography className={classes.name} gutterBottom={false}>
             {firstName + ' ' + lastName}
           </Typography>
         </Grid>
-        <Grid item md={2}>
-          <Typography gutterBottom={false}>{numberOfSessions}</Typography>
-        </Grid>
-        <Grid item md={2}>
-          <Typography gutterBottom={false}>{dateAddedFormatted}</Typography>
-        </Grid>
-        <Grid item md={3}>
-          <Typography gutterBottom={false}>{lastActivity}</Typography>
-        </Grid>
-        <Grid item md={1} align="right">
+        <Hidden smDown>
+          <Grid item md={2}>
+            <Typography gutterBottom={false}>{numberOfSessions}</Typography>
+          </Grid>
+          <Grid item md={2}>
+            <Typography gutterBottom={false}>{dateAddedFormatted}</Typography>
+          </Grid>
+          <Grid item md={3}>
+            <Typography gutterBottom={false}>{lastActivity}</Typography>
+          </Grid>
+        </Hidden>
+        <Grid item md={1} sm={1} xs={2} align="right">
           <IconButton>
             <MoreVertIcon />
           </IconButton>

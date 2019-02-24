@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import { blueGrey } from '@material-ui/core/colors';
 import ClientListItem from './ClientListItem/ClientListItem';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
   listContainer: {
@@ -46,7 +47,7 @@ function ClientsList(props) {
   if (props.clients.length > 0) {
     clients = props.clients.map(client => {
       return (
-        <Grid item xs={12}>
+        <Grid key={client.id} item xs={12}>
           <ClientListItem client={client} />
         </Grid>
       );
@@ -64,27 +65,38 @@ function ClientsList(props) {
         <Grid item xs={12}>
           <Paper className={classes.listHeader} elevation={0}>
             <Grid container spacing={0}>
-              <Grid item md={4}>
+              <Grid item md={4} sm={10} xs={9}>
                 <Typography gutterBottom={false} className={classes.listLabel}>
                   Name
                 </Typography>
               </Grid>
-              <Grid item md={2}>
-                <Typography gutterBottom={false} className={classes.listLabel}>
-                  Sessions
-                </Typography>
-              </Grid>
-              <Grid item md={2}>
-                <Typography gutterBottom={false} className={classes.listLabel}>
-                  Date created
-                </Typography>
-              </Grid>
-              <Grid item md={3}>
-                <Typography gutterBottom={false} className={classes.listLabel}>
-                  Last activity
-                </Typography>
-              </Grid>
-              <Grid item md={1} />
+              <Hidden smDown>
+                <Grid item md={2}>
+                  <Typography
+                    gutterBottom={false}
+                    className={classes.listLabel}
+                  >
+                    Sessions
+                  </Typography>
+                </Grid>
+                <Grid item md={2}>
+                  <Typography
+                    gutterBottom={false}
+                    className={classes.listLabel}
+                  >
+                    Date created
+                  </Typography>
+                </Grid>
+                <Grid item md={3}>
+                  <Typography
+                    gutterBottom={false}
+                    className={classes.listLabel}
+                  >
+                    Last activity
+                  </Typography>
+                </Grid>
+              </Hidden>
+              <Grid item md={1} sm={1} xs={2} />
             </Grid>
           </Paper>
         </Grid>
