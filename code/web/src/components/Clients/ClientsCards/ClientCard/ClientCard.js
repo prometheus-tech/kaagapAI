@@ -4,20 +4,21 @@ import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import deepOrange from '@material-ui/core/colors/deepOrange';
+import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import { getInitials } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   avatar: {
-    backgroundColor: deepOrange[500]
+    backgroundColor: blue[500]
   }
 });
 
 function ClientCard(props) {
   const { classes } = props;
 
-  const initials = props.firstName.charAt(0) + props.lastName.charAt(0);
+  const initials = getInitials(props.firstName, props.lastName);
   const name = props.firstName + ' ' + props.lastName;
   const sessions =
     props.numberOfSessions > 0

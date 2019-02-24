@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import CardSortControls from '../../components/CardSortControls/CardSortControls';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
-import ClientTable from '../../components/Clients/ClientsTable/ClientsTable';
 import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
 import ViewControl from '../../components/ViewControl/ViewControl';
+import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 
 const sortingOptions = ['Name', 'Last Modified', 'Last Opened'];
 
@@ -143,7 +143,7 @@ class ClientsPage extends Component {
           <ClientsCards clients={this.state.clients} />
         </Auxilliary>
       ) : (
-        <ClientTable />
+        <ClientsList clients={this.state.clients} />
       );
 
     return (
