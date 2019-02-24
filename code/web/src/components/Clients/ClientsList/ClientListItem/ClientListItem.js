@@ -72,7 +72,7 @@ function ClientListItem(props) {
             {getInitials(firstName, lastName)}
           </Avatar>
         </Grid>
-        <Grid item md={3} sm={8} xs={8}>
+        <Grid item md={3} sm={9} xs={8}>
           <Typography className={classes.name} gutterBottom={false}>
             {firstName + ' ' + lastName}
           </Typography>
