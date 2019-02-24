@@ -10,7 +10,7 @@ const getNewSortOrder = order => {
 };
 
 function SortOrder(props) {
-  const icon = props.order === 'asc' ? <ArrowDownward /> : <ArrowUpward />;
+  const icon = props.order === 'asc' ? <ArrowUpward /> : <ArrowDownward />;
 
   return (
     <Auxilliary>
