@@ -58,7 +58,7 @@ const resolver = {
       },
       attributes:['c_id', 'fname'],
       order: [[ 'c_id', 'DESC']]
-    })
+    }) //Returns only the id and name of added client
   ),
 
   removeClient: ({ c_id }) =>        models.Client.findAll({
@@ -70,7 +70,7 @@ const resolver = {
       models.Client.destroy({
         where: { c_id }
       })
-      return res;
+      return res; //Returns only the id and name of removed client
     }
   ),
 }
