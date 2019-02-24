@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Practitioner_Feedbacks', {
-      feedback_id: {
+      pf_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -20,22 +20,14 @@ module.exports = {
       date_submitted: {
         type: Sequelize.DATE
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      practitionerf_id: {
-        type: Sequelize.STRING,
+      p_id: {
+        type: Sequelize.INTEGER,
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',
         references: {
           model: 'Practitioners',
-          key: 'email',
-          as: 'pf_id'
+          key: 'p_id',
+          as: 'p_id'
         }
       }
     });

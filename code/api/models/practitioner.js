@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Practitioner = sequelize.define('Practitioner', {
-    p_id: DataTypes.INTEGER,
+    p_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     email: DataTypes.STRING,
     phone_no: DataTypes.CHAR,
     password: DataTypes.CHAR,
@@ -14,20 +17,20 @@ module.exports = (sequelize, DataTypes) => {
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
     session_token: DataTypes.CHAR
-  }, {});
+  }, {
+    timestamps: false
+  });
 
   Practitioner.removeAttribute('id');
 
   Practitioner.associate = function(models) {
     // associations can be defined here
     Practitioner.hasMany(models.Client, {
-      foreignKey: 'p_id',
-      as: 'clients'
+      foreignKey: 'c_id'
     });
     
     Practitioner.hasMany(models.Practitioner_Feedback, {
-      foreignKey: 'pf_id',
-      as: 'practitioner_feedbacks'
+      foreignKey: 'pf_id'
     });
   };
 

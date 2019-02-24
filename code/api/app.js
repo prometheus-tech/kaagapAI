@@ -1,24 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const expressGraphQL = require('express-graphql');
+const models = require('./models');
 const schema = require('./graphql/schema');
-const resolver = require('./graphql/resolvers')
+const resolver = require('./graphql/resolvers');
 
 const app = express();
-
-const sequelize = require('./config/database');
 
 app.use('/graphql', expressGraphQL({
   schema: schema,
   rootValue: resolver,
-  //graphiql: true
+  graphiql: true
 }));
 
-sequelize
+models.sequelize
   .sync()
   .then(result => {
     app.listen(3000, () => {
-  console.log('Server is running at port 3000');
-});
+      console.log('Server is running at port 3000');
+    });
   })
   .catch(err => {
     console.log("Failed to run the server: " + err);
