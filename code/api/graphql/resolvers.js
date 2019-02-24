@@ -1,6 +1,8 @@
+const Sequelize = require('sequelize');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const models = require('../models');
+const Op = Sequelize.Op;
 
 const resolver = { 
   Date: new GraphQLScalarType({
@@ -22,11 +24,29 @@ const resolver = {
 
   //Query
   getClients: ({ p_id }) => models.Client.findAll({
-      where: { p_id }
+      where: { p_id },
+      include: [
+        model: models.Practitioner,
+        where: {
+          p_id,
+          session_token: {
+            [Op.ne]: null
+          }
+        }
+      ]
   }),
 
   //Mutations
-  addClient: (parent, args, { models }) => models.Client.create(args),
+  addClient: ({ fname, lname, gender, birthdate, p_id }) => models.Client.create({
+      fname, 
+      lname, 
+      gender, 
+      birthdate, 
+      p_id,
+      date_added: new Date()
+    }).then(
+    res => "Successfully added client: " + res.fname + " " + res.lname
+  ),
 
   // removeClient: (parent, { c_id }, {models}) => models.Client.destroy({where: { c_id }})
 }
