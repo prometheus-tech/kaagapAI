@@ -30,7 +30,7 @@ const typeDefs = buildSchema(`
     lname: String!
     license: String!
     profession: String!
-    status: [Status!]!
+    status: Status!
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date
@@ -41,7 +41,7 @@ const typeDefs = buildSchema(`
     c_id: ID!
     fname: String!
     lname: String!
-    gender: [Gender!]!
+    gender: Gender!
     birthdate: Date!
     date_added: Date!
     last_opened: Date
@@ -61,11 +61,11 @@ const typeDefs = buildSchema(`
     content: String!
     date_added: Date!
     last_modified: Date
-    type: [Type!]!
+    type: Type!
   }
 
   type RootQuery { 
-    getClients(p_id: Int!): JSON!
+    getClients(p_id: Int!): [Client]!
   }
 
   type RootMutation {

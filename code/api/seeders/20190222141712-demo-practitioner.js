@@ -3,6 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Practitioners', [{
+      p_id: 1,
       email: 'amysantiago@gmail.com',
       phone_no: '0982736485767',
       password: 'asantiago',
@@ -17,6 +18,7 @@ module.exports = {
       session_token: ''
     },
     {
+      p_id: 2,
       email: 'rosadiaz@gmail.com',
       phone_no: '09847837463',
       password: 'rdiaz',
