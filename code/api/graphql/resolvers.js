@@ -4,6 +4,9 @@ const { Kind } = require('graphql/language');
 const GraphQlJSON = require('graphql-type-json');
 const models = require('../models');
 const Op = Sequelize.Op;
+const operatorsAliases = {
+  $ne: Op.ne
+}
 
 const resolver = { 
   JSON: GraphQlJSON,
@@ -25,18 +28,15 @@ const resolver = {
   }),
 
   //Query
-  getClients: ({ p_id }) => models.Client.findAll({
-      raw: true,
-      where: { p_id },
-      include: [{
-        model: models.Practitioner,
-        where: {
-          p_id,
-          session_token: {
-            [Op.ne]: null
-          }
-        }
+  getClients: ({ p_id }) => models.Practitioner.findOne({
+    raw: true,
+    where: {
+      p_id,
+      $ne: [{
+        session_token: null
       }]
+    },
+    attributes: ['p_id', 'session_token']
   }),
 
   //Mutations
