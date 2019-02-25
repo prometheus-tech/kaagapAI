@@ -94,16 +94,14 @@ const resolver = {
     }
   ),
 
-  //Update Client Information
-  updateClient: ({
+  //Update Client Name
+  updateClientName: ({
     c_id,
     fname,
     lname,
-    birthdate
   }) => models.Client.update({
     fname,
     lname,
-    birthdate
   }, {
     where: {
       c_id
@@ -116,12 +114,35 @@ const resolver = {
       where: {
         c_id,
         fname,
-        lname,
+        lname
+      },
+      attributes: ['c_id', 'fname', 'lname']
+    })
+    //returns the fields updated
+  ),
+
+  //Update Client Birthdate
+  updateClientBirthdate: ({
+    c_id,
+    birthdate
+  }) => models.Client.update({
+    birthdate
+  }, {
+    where: {
+      c_id
+    },
+    returning: false
+  }).then(
+    res => models.Client.findAll({
+      raw: true,
+      limit: 1,
+      where: {
+        c_id,
         birthdate
       },
-      attributes: ['c_id', 'fname', 'lname', 'birthdate']
+      attributes: ['c_id', 'birthdate']
     })
-    //returns the fields that can be updated
+    //returns the fields updated
   ),
 
   //Update last opened client
