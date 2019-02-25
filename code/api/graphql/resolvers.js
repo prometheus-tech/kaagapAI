@@ -1,16 +1,8 @@
 const Sequelize = require('sequelize');
-const {
-  GraphQLScalarType
-} = require('graphql');
-const {
-  Kind
-} = require('graphql/language');
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const GraphQlJSON = require('graphql-type-json');
 const models = require('../models');
-const Op = Sequelize.Op;
-const operatorsAliases = {
-  $ne: Op.ne
-}
 
 const resolver = {
   JSON: GraphQlJSON,
