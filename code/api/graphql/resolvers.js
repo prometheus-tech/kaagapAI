@@ -26,8 +26,7 @@ const resolver = {
   //Query
   getClients: ({ p_id }) => models.Client.findAll({
     raw: true,
-    where: { p_id },
-    attributes: ['p_id', 'session_token']
+    where: { p_id }
   }),
 
   //Mutations
