@@ -94,19 +94,22 @@ const resolver = {
     }
   ),
 
-  //Update Client
+  //Update Client Information
   updateClient: ({
     c_id,
     fname,
     lname,
     birthdate
-  }) => models.Client.update({fname, lname, birthdate}, {
+  }) => models.Client.update({
+    fname,
+    lname,
+    birthdate
+  }, {
     where: {
       c_id
     },
     returning: false
-  })
-  .then(
+  }).then(
     res => models.Client.findAll({
       raw: true,
       limit: 1,
@@ -119,8 +122,30 @@ const resolver = {
       attributes: ['c_id', 'fname', 'lname', 'birthdate']
     })
     //returns the fields that can be updated
+  ),
+
+  //Update last opened client
+  updateLastOpenedClient: ({
+    c_id
+  }) => models.Client.update({
+    last_opened: new Date()
+  }, {
+    where: {
+      c_id
+    },
+    returning: false
+  }).then(
+    res => models.Client.findAll({
+      raw: true,
+      limit: 1,
+      where: {
+        c_id
+      },
+      attributes: ['c_id', 'last_opened']
+    })
+    //returns the fields that can be updated
   )
-  
+
 }
 
 module.exports = resolver;

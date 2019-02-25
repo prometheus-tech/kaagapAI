@@ -74,6 +74,8 @@ const typeDefs = buildSchema(`
     removeClient(c_id: Int!): JSON!
 
     updateClient(c_id: Int!, fname: String!, lname: String!, birthdate: Date!):JSON
+
+    updateLastOpenedClient(c_id: Int!):JSON
   }
 
   schema {
