@@ -72,6 +72,8 @@ const typeDefs = buildSchema(`
     addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): JSON!
 
     removeClient(c_id: Int!): JSON!
+
+    updateClient(c_id: Int!, fname: String!, lname: String!, birthdate: Date!):JSON
   }
 
   schema {
