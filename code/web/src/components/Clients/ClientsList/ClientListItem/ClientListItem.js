@@ -49,14 +49,14 @@ function ClientListItem(props) {
 
   const lastActivity =
     lastModified > lastOpened ? (
-      <Typography>
+      <Typography component="span">
         Modified last{' '}
         <Moment format="MMM D YYYY" withTitle>
           {lastModified}
         </Moment>
       </Typography>
     ) : (
-      <Typography>
+      <Typography component="span">
         Opened last{' '}
         <Moment format="MMM D YYYY" withTitle>
           {lastModified}
@@ -73,19 +73,29 @@ function ClientListItem(props) {
           </Avatar>
         </Grid>
         <Grid item md={3} sm={9} xs={8}>
-          <Typography className={classes.name} gutterBottom={false}>
+          <Typography
+            component="span"
+            className={classes.name}
+            gutterBottom={false}
+          >
             {firstName + ' ' + lastName}
           </Typography>
         </Grid>
         <Hidden smDown>
           <Grid item md={2}>
-            <Typography gutterBottom={false}>{numberOfSessions}</Typography>
+            <Typography component="span" gutterBottom={false}>
+              {numberOfSessions}
+            </Typography>
           </Grid>
           <Grid item md={2}>
-            <Typography gutterBottom={false}>{dateAddedFormatted}</Typography>
+            <Typography component="span" gutterBottom={false}>
+              {dateAddedFormatted}
+            </Typography>
           </Grid>
           <Grid item md={3}>
-            <Typography gutterBottom={false}>{lastActivity}</Typography>
+            <Typography component="span" gutterBottom={false}>
+              {lastActivity}
+            </Typography>
           </Grid>
         </Hidden>
         <Grid item md={1} sm={1} xs={2} align="right">
