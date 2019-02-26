@@ -7,6 +7,7 @@ import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
 import ViewControl from '../../components/ViewControl/ViewControl';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
+import AddClientModal from '../../components/Clients/AddClientModal/AddClientModal';
 
 const sortingOptions = ['Name', 'Last Modified', 'Last Opened'];
 
@@ -148,6 +149,7 @@ class ClientsPage extends Component {
 
     return (
       <Auxilliary>
+         <AddClientModal />;
         <ViewControl
           view={this.state.view}
           viewChanged={this.changeViewHandler}
