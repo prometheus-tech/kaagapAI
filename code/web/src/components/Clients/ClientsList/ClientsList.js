@@ -58,19 +58,39 @@ function ClientsList(props) {
       >
         <Grid item xs={12}>
           <Paper className={classes.listHeader} elevation={0}>
-            <Grid container spacing={0}>
+            <Grid container spacing={0} alignItems="center">
               <Grid item md={4} sm={10} xs={9}>
-                <ClientListHeader headerLabel="Name" />
+                <ClientListHeader
+                  sortOrder={props.sortOrder}
+                  currentSortedByLabel={props.currentSortedByLabel}
+                  selectedIndexChanged={props.sortSelectedIndexChanged}
+                  headerLabel="Name"
+                />
               </Grid>
               <Hidden smDown>
                 <Grid item md={2}>
-                  <ClientListHeader headerLabel="Sessions" />
+                  <ClientListHeader
+                    sortOrder={props.sortOrder}
+                    currentSortedByLabel={props.currentSortedByLabel}
+                    selectedIndexChanged={props.sortSelectedIndexChanged}
+                    headerLabel="Sessions"
+                  />
                 </Grid>
                 <Grid item md={2}>
-                  <ClientListHeader headerLabel="Date Added" />
+                  <ClientListHeader
+                    sortOrder={props.sortOrder}
+                    currentSortedByLabel={props.currentSortedByLabel}
+                    selectedIndexChanged={props.sortSelectedIndexChanged}
+                    headerLabel="Date Added"
+                  />
                 </Grid>
                 <Grid item md={3}>
-                  <ClientListHeader headerLabel="Last Activity" />
+                  <ClientListHeader
+                    sortOrder={props.sortOrder}
+                    currentSortedByLabel={props.currentSortedByLabel}
+                    selectedIndexChanged={props.sortSelectedIndexChanged}
+                    headerLabel="Last Activity"
+                  />
                 </Grid>
               </Hidden>
               <Grid item md={1} sm={1} xs={2} />

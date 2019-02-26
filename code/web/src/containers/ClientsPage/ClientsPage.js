@@ -87,6 +87,10 @@ class ClientsPage extends Component {
       cardSortSelectedIndex: 0,
       cardSortOrder: 'asc'
     },
+    listSortSettings: {
+      listSortSelectedIndex: 0,
+      listSortOrder: 'asc'
+    },
     view: 'list'
   };
 
@@ -142,6 +146,17 @@ class ClientsPage extends Component {
     }
   };
 
+  changeListSortSelectedIndexHandler = sortingOption => {
+    const updatedListSortSettings = { ...this.state.listSortSettings };
+
+    updatedListSortSettings.listSortSelectedIndex = listSortingOptions.indexOf(
+      sortingOption
+    );
+    updatedListSortSettings.listSortOrder = 'asc';
+
+    this.setState({ listSortSettings: updatedListSortSettings });
+  };
+
   changeViewHandler = updatedView => {
     this.setState({
       view: updatedView
@@ -165,7 +180,16 @@ class ClientsPage extends Component {
           <ClientsCards clients={this.state.clients} />
         </Auxilliary>
       ) : (
-        <ClientsList clients={this.state.clients} />
+        <ClientsList
+          sortOrder={this.state.listSortSettings.listSortOrder}
+          currentSortedByLabel={
+            listSortingOptions[
+              this.state.listSortSettings.listSortSelectedIndex
+            ]
+          }
+          sortSelectedIndexChanged={this.changeListSortSelectedIndexHandler}
+          clients={this.state.clients}
+        />
       );
 
     return (
