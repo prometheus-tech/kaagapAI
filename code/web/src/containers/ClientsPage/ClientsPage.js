@@ -82,36 +82,52 @@ class ClientsPage extends Component {
         numberOfSessions: 0
       }
     ],
-    cardSortAnchorElement: null,
-    cardSortSelectedIndex: 0,
-    cardSortOrder: 'asc',
+    cardSortSettings: {
+      cardSortAnchorElement: null,
+      cardSortSelectedIndex: 0,
+      cardSortOrder: 'asc'
+    },
     view: 'list'
   };
 
   openSortOptionsHandler = element => {
-    this.setState({ cardSortAnchorElement: element });
+    const updatedCardSortSettings = { ...this.state.cardSortSettings };
+
+    updatedCardSortSettings.cardSortAnchorElement = element;
+
+    this.setState({
+      cardSortSettings: updatedCardSortSettings
+    });
   };
 
   changeSortSelectedIndexHandler = (element, index) => {
-    this.setState({
-      cardSortSelectedIndex: index,
-      cardSortAnchorElement: null
-    });
+    const updatedCardSortSettings = { ...this.state.cardSortSettings };
+
+    updatedCardSortSettings.cardSortSelectedIndex = index;
+    updatedCardSortSettings.cardSortAnchorElement = null;
+
+    this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
   closeSortOptionsHandler = () => {
-    this.setState({ cardSortAnchorElement: null });
+    const updatedCardSortSettings = { ...this.state.cardSortSettings };
+
+    updatedCardSortSettings.cardSortAnchorElement = null;
+
+    this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
   changeSortOrderHandler = updatedSortOrder => {
-    this.setState({
-      cardSortOrder: updatedSortOrder
-    });
+    const updatedCardSortSettings = { ...this.state.cardSortSettings };
+
+    updatedCardSortSettings.cardSortOrder = updatedSortOrder;
+
+    this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
   sortClients = () => {
     let sortingProperty = camelize(
-      cardSortingOptions[this.state.cardSortSelectedIndex]
+      cardSortingOptions[this.state.cardSortSettings.cardSortSelectedIndex]
     );
 
     // Sort by first name when sorting option is by name
@@ -119,9 +135,9 @@ class ClientsPage extends Component {
       sortingProperty = 'firstName';
     }
 
-    if (this.state.cardSortOrder === 'asc') {
+    if (this.state.cardSortSettings.cardSortOrder === 'asc') {
       sort(this.state.clients).asc(sortingProperty);
-    } else if (this.state.cardSortOrder === 'desc') {
+    } else if (this.state.cardSortSettings.cardSortOrder === 'desc') {
       sort(this.state.clients).desc(sortingProperty);
     }
   };
@@ -140,12 +156,10 @@ class ClientsPage extends Component {
         <Auxilliary>
           <CardSortControls
             sortingOptions={cardSortingOptions}
-            cardSortAnchorElement={this.state.cardSortAnchorElement}
-            cardSortSelectedIndex={this.state.cardSortSelectedIndex}
+            cardSortSettings={this.state.cardSortSettings}
             sortOptionsOpened={this.openSortOptionsHandler}
             sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
             sortOptionsClosed={this.closeSortOptionsHandler}
-            sortOrder={this.state.cardSortOrder}
             sortOrderChanged={this.changeSortOrderHandler}
           />
           <ClientsCards clients={this.state.clients} />
