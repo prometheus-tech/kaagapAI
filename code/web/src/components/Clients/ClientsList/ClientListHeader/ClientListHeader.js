@@ -4,10 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { blueGrey } from '@material-ui/core/colors';
 import Auxilliary from '../../../../hoc/Auxilliary/Auxilliary';
 import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import SortOrder from '../../../CardSortControls/SortOrder/SortOrder';
 
 const styles = theme => ({
@@ -23,7 +19,10 @@ function ClientListHeader(props) {
 
   let sortOrderButton =
     props.currentSortedByLabel === props.headerLabel ? (
-      <SortOrder order={props.sortOrder} />
+      <SortOrder
+        order={props.sortOrder}
+        orderChanged={props.sortOrderChanged}
+      />
     ) : null;
 
   return (

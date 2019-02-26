@@ -17,7 +17,7 @@ const styles = theme => ({
 function ViewControl(props) {
   const { classes } = props;
 
-  const icon = props.view === 'list' ? <ViewList /> : <ViewModule />;
+  const icon = props.view === 'list' ? <ViewModule /> : <ViewList />;
 
   const otherView = props.view === 'list' ? 'card' : 'list';
 
@@ -31,7 +31,7 @@ function ViewControl(props) {
     >
       <Grid item xs={11} />
       <Grid item>
-        <Tooltip title={toPronounCase(props.view) + ' view'}>
+        <Tooltip title={toPronounCase(otherView) + ' view'}>
           <IconButton
             onClick={() => {
               props.viewChanged(otherView);

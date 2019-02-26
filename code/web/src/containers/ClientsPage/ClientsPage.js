@@ -83,81 +83,114 @@ class ClientsPage extends Component {
       }
     ],
     cardSortSettings: {
-      cardSortAnchorElement: null,
-      cardSortSelectedIndex: 0,
-      cardSortOrder: 'asc'
+      anchorElement: null,
+      selectedIndex: 0,
+      sortOrder: 'asc'
     },
     listSortSettings: {
-      listSortSelectedIndex: 0,
-      listSortOrder: 'asc'
+      selectedIndex: 0,
+      sortOrder: 'asc'
     },
-    view: 'list'
+    view: 'card'
   };
 
-  openSortOptionsHandler = element => {
+  openCardSortOptionsHandler = element => {
     const updatedCardSortSettings = { ...this.state.cardSortSettings };
 
-    updatedCardSortSettings.cardSortAnchorElement = element;
+    updatedCardSortSettings.anchorElement = element;
 
     this.setState({
       cardSortSettings: updatedCardSortSettings
     });
   };
 
-  changeSortSelectedIndexHandler = (element, index) => {
+  changeCardSortSelectedIndexHandler = (element, index) => {
     const updatedCardSortSettings = { ...this.state.cardSortSettings };
 
-    updatedCardSortSettings.cardSortSelectedIndex = index;
-    updatedCardSortSettings.cardSortAnchorElement = null;
+    updatedCardSortSettings.selectedIndex = index;
+    updatedCardSortSettings.anchorElement = null;
 
     this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
-  closeSortOptionsHandler = () => {
+  closeCardSortOptionsHandler = () => {
     const updatedCardSortSettings = { ...this.state.cardSortSettings };
 
-    updatedCardSortSettings.cardSortAnchorElement = null;
+    updatedCardSortSettings.anchorElement = null;
 
     this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
-  changeSortOrderHandler = updatedSortOrder => {
+  changeCardSortOrderHandler = updatedSortOrder => {
     const updatedCardSortSettings = { ...this.state.cardSortSettings };
 
-    updatedCardSortSettings.cardSortOrder = updatedSortOrder;
+    updatedCardSortSettings.sortOrder = updatedSortOrder;
 
     this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
   sortClients = () => {
-    let sortingProperty = camelize(
-      cardSortingOptions[this.state.cardSortSettings.cardSortSelectedIndex]
-    );
+    const sortSettings =
+      this.state.view === 'card'
+        ? { ...this.state.cardSortSettings }
+        : { ...this.state.listSortSettings };
+    const sortingOptions =
+      this.state.view === 'card' ? cardSortingOptions : listSortingOptions;
+
+    let sortingProperty = camelize(sortingOptions[sortSettings.selectedIndex]);
 
     // Sort by first name when sorting option is by name
     if (sortingProperty === 'name') {
       sortingProperty = 'firstName';
+    } else if (sortingProperty === 'sessions') {
+      sortingProperty = 'numberOfSessions';
     }
 
-    if (this.state.cardSortSettings.cardSortOrder === 'asc') {
+    if (sortSettings.sortOrder === 'asc') {
       sort(this.state.clients).asc(sortingProperty);
-    } else if (this.state.cardSortSettings.cardSortOrder === 'desc') {
+    } else if (sortSettings.sortOrder === 'desc') {
       sort(this.state.clients).desc(sortingProperty);
     }
   };
 
   changeListSortSelectedIndexHandler = sortingOption => {
+    if (
+      listSortingOptions.indexOf(sortingOption) !==
+      this.state.listSortSettings.selectedIndex
+    ) {
+      const updatedListSortSettings = { ...this.state.listSortSettings };
+
+      updatedListSortSettings.selectedIndex = listSortingOptions.indexOf(
+        sortingOption
+      );
+      updatedListSortSettings.sortOrder = 'asc';
+
+      this.setState({ listSortSettings: updatedListSortSettings });
+    }
+  };
+
+  changeListSortOrderHandler = updatedSortOrder => {
     const updatedListSortSettings = { ...this.state.listSortSettings };
 
-    updatedListSortSettings.listSortSelectedIndex = listSortingOptions.indexOf(
-      sortingOption
-    );
-    updatedListSortSettings.listSortOrder = 'asc';
+    updatedListSortSettings.sortOrder = updatedSortOrder;
 
     this.setState({ listSortSettings: updatedListSortSettings });
   };
 
   changeViewHandler = updatedView => {
+    // Reset to default
+    this.setState({
+      cardSortSettings: {
+        anchorElement: null,
+        selectedIndex: 0,
+        sortOrder: 'asc'
+      },
+      listSortSettings: {
+        selectedIndex: 0,
+        sortOrder: 'asc'
+      }
+    });
+
     this.setState({
       view: updatedView
     });
@@ -167,27 +200,26 @@ class ClientsPage extends Component {
     this.sortClients();
 
     const clientsView =
-      this.state.view === 'list' ? (
+      this.state.view === 'card' ? (
         <Auxilliary>
           <CardSortControls
             sortingOptions={cardSortingOptions}
-            cardSortSettings={this.state.cardSortSettings}
-            sortOptionsOpened={this.openSortOptionsHandler}
-            sortSelectedIndexChanged={this.changeSortSelectedIndexHandler}
-            sortOptionsClosed={this.closeSortOptionsHandler}
-            sortOrderChanged={this.changeSortOrderHandler}
+            sortSettings={this.state.cardSortSettings}
+            sortOptionsOpened={this.openCardSortOptionsHandler}
+            sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}
+            sortOptionsClosed={this.closeCardSortOptionsHandler}
+            sortOrderChanged={this.changeCardSortOrderHandler}
           />
           <ClientsCards clients={this.state.clients} />
         </Auxilliary>
       ) : (
         <ClientsList
-          sortOrder={this.state.listSortSettings.listSortOrder}
+          sortOrder={this.state.listSortSettings.sortOrder}
           currentSortedByLabel={
-            listSortingOptions[
-              this.state.listSortSettings.listSortSelectedIndex
-            ]
+            listSortingOptions[this.state.listSortSettings.selectedIndex]
           }
           sortSelectedIndexChanged={this.changeListSortSelectedIndexHandler}
+          sortOrderChanged={this.changeListSortOrderHandler}
           clients={this.state.clients}
         />
       );

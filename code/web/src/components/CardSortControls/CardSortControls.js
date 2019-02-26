@@ -13,11 +13,7 @@ const styles = theme => ({
 
 function CardSortControls(props) {
   const { classes } = props;
-  const {
-    cardSortAnchorElement,
-    cardSortSelectedIndex,
-    cardSortOrder
-  } = props.cardSortSettings;
+  const { anchorElement, selectedIndex, sortOrder } = props.sortSettings;
 
   return (
     <Grid
@@ -31,16 +27,13 @@ function CardSortControls(props) {
       <Grid item>
         <SortList
           options={props.sortingOptions}
-          anchorElement={cardSortAnchorElement}
-          selectedIndex={cardSortSelectedIndex}
+          anchorElement={anchorElement}
+          selectedIndex={selectedIndex}
           optionsOpened={props.sortOptionsOpened}
           selectedIndexChanged={props.sortSelectedIndexChanged}
           optionsClosed={props.sortOptionsClosed}
         />
-        <SortOrder
-          order={cardSortOrder}
-          orderChanged={props.sortOrderChanged}
-        />
+        <SortOrder order={sortOrder} orderChanged={props.sortOrderChanged} />
       </Grid>
     </Grid>
   );

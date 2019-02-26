@@ -64,6 +64,7 @@ function ClientsList(props) {
                   sortOrder={props.sortOrder}
                   currentSortedByLabel={props.currentSortedByLabel}
                   selectedIndexChanged={props.sortSelectedIndexChanged}
+                  sortOrderChanged={props.sortOrderChanged}
                   headerLabel="Name"
                 />
               </Grid>
@@ -73,6 +74,7 @@ function ClientsList(props) {
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
                     selectedIndexChanged={props.sortSelectedIndexChanged}
+                    sortOrderChanged={props.sortOrderChanged}
                     headerLabel="Sessions"
                   />
                 </Grid>
@@ -81,6 +83,7 @@ function ClientsList(props) {
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
                     selectedIndexChanged={props.sortSelectedIndexChanged}
+                    sortOrderChanged={props.sortOrderChanged}
                     headerLabel="Date Added"
                   />
                 </Grid>
@@ -89,6 +92,7 @@ function ClientsList(props) {
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
                     selectedIndexChanged={props.sortSelectedIndexChanged}
+                    sortOrderChanged={props.sortOrderChanged}
                     headerLabel="Last Activity"
                   />
                 </Grid>
