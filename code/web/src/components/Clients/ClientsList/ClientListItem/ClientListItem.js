@@ -24,7 +24,12 @@ const styles = theme => ({
     fontWeight: 500
   },
   avatar: {
-    backgroundColor: blue[500]
+    backgroundColor: blue[500],
+    marginRight: 16
+  },
+  nameGrid: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -65,12 +70,10 @@ function ClientListItem(props) {
   return (
     <Paper elevation={0} className={classes.listItem}>
       <Grid container spacing={0} alignItems="center">
-        <Grid item md={1} sm={2} xs={2}>
+        <Grid item md={4} sm={7} xs={10} className={classes.nameGrid}>
           <Avatar className={classes.avatar}>
             {getInitials(firstName, lastName)}
           </Avatar>
-        </Grid>
-        <Grid item md={3} sm={9} xs={8}>
           <Typography
             component="span"
             className={classes.name}
@@ -79,18 +82,20 @@ function ClientListItem(props) {
             {firstName + ' ' + lastName}
           </Typography>
         </Grid>
-        <Hidden smDown>
-          <Grid item md={2}>
+        <Hidden xsDown>
+          <Grid item md={2} sm={4}>
             <Typography component="span" gutterBottom={false}>
               {numberOfSessions}
             </Typography>
           </Grid>
-          <Grid item md={2}>
+        </Hidden>
+        <Hidden smDown>
+          <Grid item md={2} sm={0}>
             <Typography component="span" gutterBottom={false}>
               {dateAddedFormatted}
             </Typography>
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} sm={0}>
             <Typography component="span" gutterBottom={false}>
               {lastActivity}
             </Typography>

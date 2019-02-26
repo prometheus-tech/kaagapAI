@@ -59,7 +59,7 @@ function ClientsList(props) {
         <Grid item xs={12}>
           <Paper className={classes.listHeader} elevation={0}>
             <Grid container spacing={0} alignItems="center">
-              <Grid item md={4} sm={10} xs={9}>
+              <Grid item md={4} sm={7} xs={10}>
                 <ClientListHeader
                   sortOrder={props.sortOrder}
                   currentSortedByLabel={props.currentSortedByLabel}
@@ -68,8 +68,8 @@ function ClientsList(props) {
                   headerLabel="Name"
                 />
               </Grid>
-              <Hidden smDown>
-                <Grid item md={2}>
+              <Hidden xsDown>
+                <Grid item md={2} sm={4}>
                   <ClientListHeader
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
@@ -78,7 +78,9 @@ function ClientsList(props) {
                     headerLabel="Sessions"
                   />
                 </Grid>
-                <Grid item md={2}>
+              </Hidden>
+              <Hidden smDown>
+                <Grid item md={2} sm={0}>
                   <ClientListHeader
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
@@ -87,7 +89,7 @@ function ClientsList(props) {
                     headerLabel="Date Added"
                   />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={3} sm={0}>
                   <ClientListHeader
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
@@ -97,7 +99,7 @@ function ClientsList(props) {
                   />
                 </Grid>
               </Hidden>
-              <Grid item md={1} sm={1} xs={2} />
+              <Grid item md={1} sm={2} xs={2} />
             </Grid>
           </Paper>
         </Grid>
