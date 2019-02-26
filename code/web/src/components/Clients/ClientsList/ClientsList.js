@@ -6,8 +6,8 @@ import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import { blueGrey } from '@material-ui/core/colors';
 import ClientListItem from './ClientListItem/ClientListItem';
+import ClientListHeader from './ClientListHeader/ClientListHeader';
 import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
@@ -31,11 +31,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     backgroundColor: 'transparent'
-  },
-  listLabel: {
-    fontSize: 15,
-    fontWeight: 600,
-    color: blueGrey[600]
   }
 });
 
@@ -66,34 +61,17 @@ function ClientsList(props) {
           <Paper className={classes.listHeader} elevation={0}>
             <Grid container spacing={0}>
               <Grid item md={4} sm={10} xs={9}>
-                <Typography gutterBottom={false} className={classes.listLabel}>
-                  Name
-                </Typography>
+                <ClientListHeader headerLabel="Name" />
               </Grid>
               <Hidden smDown>
                 <Grid item md={2}>
-                  <Typography
-                    gutterBottom={false}
-                    className={classes.listLabel}
-                  >
-                    Sessions
-                  </Typography>
+                  <ClientListHeader headerLabel="Sessions" />
                 </Grid>
                 <Grid item md={2}>
-                  <Typography
-                    gutterBottom={false}
-                    className={classes.listLabel}
-                  >
-                    Date created
-                  </Typography>
+                  <ClientListHeader headerLabel="Date added" />
                 </Grid>
                 <Grid item md={3}>
-                  <Typography
-                    gutterBottom={false}
-                    className={classes.listLabel}
-                  >
-                    Last activity
-                  </Typography>
+                  <ClientListHeader headerLabel="Last Activity" />
                 </Grid>
               </Hidden>
               <Grid item md={1} sm={1} xs={2} />
