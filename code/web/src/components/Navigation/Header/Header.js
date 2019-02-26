@@ -42,9 +42,6 @@ const styles = theme => ({
     width: 40,
     height: 40
   },
-  // name: {
-  //   color: '#aa00ff'
-  // },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -201,7 +198,6 @@ class PrimarySearchAppBar extends React.Component {
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
-                color="#333333"
               >
                 <AccountCircle />
               </IconButton>
