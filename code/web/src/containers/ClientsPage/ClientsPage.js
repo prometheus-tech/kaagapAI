@@ -9,7 +9,7 @@ import ViewControl from '../../components/ViewControl/ViewControl';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import AddClientModal from '../../components/Clients/AddClientModal/AddClientModal';
 
-const sortingOptions = ['Name', 'Last Modified', 'Last Opened'];
+const cardSortingOptions = ['Name', 'Last Modified', 'Last Opened'];
 
 class ClientsPage extends Component {
   state = {
@@ -104,7 +104,7 @@ class ClientsPage extends Component {
 
   sortClients = () => {
     let sortingProperty = camelize(
-      sortingOptions[this.state.cardSortSelectedIndex]
+      cardSortingOptions[this.state.cardSortSelectedIndex]
     );
 
     // Sort by first name when sorting option is by name
@@ -132,7 +132,7 @@ class ClientsPage extends Component {
       this.state.view === 'list' ? (
         <Auxilliary>
           <CardSortControls
-            sortingOptions={sortingOptions}
+            sortingOptions={cardSortingOptions}
             cardSortAnchorElement={this.state.cardSortAnchorElement}
             cardSortSelectedIndex={this.state.cardSortSelectedIndex}
             sortOptionsOpened={this.openSortOptionsHandler}
