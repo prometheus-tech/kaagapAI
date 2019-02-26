@@ -20,10 +20,8 @@ const styles = theme => ({
     marginBottom: 16
   },
   name: {
-    fontFamily: 'roboto',
-    fontSize: 15,
-    fontWeight: 600,
-    letterSpacing: 1
+    lineHeight: '1.71429em',
+    fontWeight: 500
   },
   avatar: {
     backgroundColor: blue[500]
