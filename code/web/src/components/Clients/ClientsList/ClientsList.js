@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
