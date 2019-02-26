@@ -67,7 +67,7 @@ function ClientsList(props) {
                   <ClientListHeader headerLabel="Sessions" />
                 </Grid>
                 <Grid item md={2}>
-                  <ClientListHeader headerLabel="Date added" />
+                  <ClientListHeader headerLabel="Date Added" />
                 </Grid>
                 <Grid item md={3}>
                   <ClientListHeader headerLabel="Last Activity" />
