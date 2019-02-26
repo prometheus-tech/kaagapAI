@@ -10,6 +10,13 @@ import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import AddClientModal from '../../components/Clients/AddClientModal/AddClientModal';
 
 const cardSortingOptions = ['Name', 'Last Modified', 'Last Opened'];
+const listSortingOptions = [
+  'Name',
+  'Sessions',
+  'Date Added',
+  'Last Modified',
+  'Last Opened'
+];
 
 class ClientsPage extends Component {
   state = {
@@ -149,7 +156,7 @@ class ClientsPage extends Component {
 
     return (
       <Auxilliary>
-         <AddClientModal />;
+        <AddClientModal />;
         <ViewControl
           view={this.state.view}
           viewChanged={this.changeViewHandler}
