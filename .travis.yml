@@ -4,7 +4,7 @@ services:
 
 before_install:
   - cd code/web/
-  - docker build -t jessietabilisma/kaagapai-test -f Dockerfile.dev .
+  - docker build -t jessietabilisma/kaagapai-test -f 
 
 script:
   - docker run jessietabilisma/kaagapai-test npm run test -- --coverage
@@ -12,6 +12,6 @@ script:
 deploy:
   provider: firebase
   on:
-    branch: master
+    branch: dev
   token:
     secure: "$Firebase_token"
