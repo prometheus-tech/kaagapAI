@@ -3,7 +3,7 @@
     "username": "admin",
     "password": "adminkaagapai",
     "database": "db_kaagapai",
-    "host": "localhost",
+    "host": "kaagapai.com",
     "dialect": "mysql"
   },
   "test": {

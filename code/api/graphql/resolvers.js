@@ -109,7 +109,12 @@ const resolver = {
       where: { c_id },
       attributes: ['c_id', 'last_opened']
     })//returns the fields that can be updated
-  )
+  ),
+
+  getSessions: ({ c_id }) => models.Session.findAll({
+    raw: true,
+    where: { c_id }
+  }),
 }
 
 module.exports = resolver;

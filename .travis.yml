@@ -4,14 +4,23 @@ services:
 
 before_install:
   - cd code/web/
-  - docker build -t jessietabilisma/kaagapai-test -f Dockerfile.dev .
+  - docker build -t jessietabilisma/kaagapai .
 
-script:
-  - docker run jessietabilisma/kaagapai-test npm run test -- --coverage
+# script:
+#   - docker run jessietabilisma/kaagapai npm run test -- --coverage
 
 deploy:
   provider: firebase
   on:
-    branch: master
+    branch: dev
   token:
     secure: "$Firebase_token"
+notifications:
+  email:
+    - 2164149@slu.edu.ph
+    - 2161495@slu.edu.ph
+    - 2160809@slu.edu.ph
+    - 2160120@slu.edu.ph
+    - 2161745@slu.edu.ph
+    - 2161436@slu.edu.ph
+    - 2161794@slu.edu.ph

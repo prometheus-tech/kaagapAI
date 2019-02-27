@@ -3,6 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Clients', [{
+      c_id: 1,
       fname: 'Jake',
       lname: 'Peralta',
       gender: 'M',
@@ -12,6 +13,7 @@ module.exports = {
       p_id: 1
     }, 
     {
+      c_id: 2,
       fname: 'Elena',
       lname: 'Alvarez',
       gender: 'F',
@@ -21,6 +23,7 @@ module.exports = {
       p_id: 2
     }, 
     {
+      c_id: 3,
       fname: 'Erika',
       lname: 'Torio',
       gender: 'F',
