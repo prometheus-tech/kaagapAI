@@ -7,8 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
-import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
+import Dropdown from '../../Dropdown/Dropdown';
 import Hidden from '@material-ui/core/Hidden';
+import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
 
 const styles = theme => ({
   listContainer: {
@@ -91,17 +92,23 @@ function ClientsList(props) {
                   />
                 </Grid>
                 <Grid item md={3} sm={false}>
-                  <ClientListDropdownHeader
-                    currentSortedByLabel={props.currentSortedByLabel}
-                    selectedIndexChanged={props.sortSelectedIndexChanged}
-                    sortOrderChanged={props.sortOrderChanged}
-                    options={props.dropdownOptions}
-                    optionsOpened={props.dropdownOpened}
-                    dropdownSettings={props.dropdownSettings}
-                    dropdownSelectedIndexChanged={
-                      props.dropdownSelectedIndexChanged
+                  <Dropdown
+                    parent={
+                      <ClientListDropdownHeader
+                        label={
+                          props.dropdownOptions[
+                            props.dropdownSettings.selectedIndex
+                          ]
+                        }
+                        opened={props.dropdownOpened}
+                      />
                     }
-                    optionsClosed={props.dropdownClosed}
+                    options={props.dropdownOptions}
+                    selectedIndex={props.dropdownSettings.selectedIndex}
+                    selectedIndexChanged={props.dropdownSelectedIndexChanged}
+                    opened={props.dropdownOpened}
+                    closed={props.dropdownClosed}
+                    anchorElement={props.dropdownSettings.anchorElement}
                   />
                 </Grid>
               </Hidden>

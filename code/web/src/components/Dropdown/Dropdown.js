@@ -5,8 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import Popover from '@material-ui/core/Popover';
 
 const styles = theme => ({
@@ -35,14 +33,7 @@ function Dropdown(props) {
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} className={classes.dropdownGrid}>
-        <Typography
-          component="span"
-          gutterBottom={false}
-          onClick={event => props.opened(event.currentTarget)}
-        >
-          {props.options[props.selectedIndex]}
-        </Typography>
-        <ArrowDropDown />
+        {props.parent}
       </Grid>
       <Popover
         open={Boolean(props.anchorElement)}
