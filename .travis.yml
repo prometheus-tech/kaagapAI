@@ -6,8 +6,8 @@ before_install:
   - cd code/web/
   - docker build -t jessietabilisma/kaagapai .
 
-script:
-  - docker run jessietabilisma/kaagapai npm run test -- --coverage
+# script:
+#   - docker run jessietabilisma/kaagapai npm run test -- --coverage
 
 deploy:
   provider: firebase
