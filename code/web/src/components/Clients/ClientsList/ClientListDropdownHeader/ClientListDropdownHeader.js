@@ -1,37 +1,57 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import { blueGrey } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import SortOrder from '../../../CardSortControls/SortOrder/SortOrder';
 
 const styles = theme => ({
   listLabel: {
     fontSize: 15,
     fontWeight: 600,
-    color: blueGrey[600]
+    color: 'rgba(0, 0, 0, 0.54)',
+    cursor: 'pointer'
   },
   dropDownGrid: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    cursor: 'pointer'
   }
 });
 
 function ClientListDropdownHeader(props) {
   const { classes } = props;
+
+  let sortOrderButton =
+    props.currentSortedByLabel === props.label ? (
+      <SortOrder
+        order={props.sortOrder}
+        orderChanged={props.sortOrderChanged}
+      />
+    ) : null;
+
   return (
     <Grid container spacing={0}>
-      <Grid item xs={12} className={classes.dropDownGrid}>
+      <Grid
+        item
+        xs={12}
+        className={classes.dropDownGrid}
+        onClick={() => {
+          props.sortSelectedIndexChanged(props.label, 'desc');
+        }}
+      >
         <Typography
           component="span"
           gutterBottom={false}
           className={classes.listLabel}
-          onClick={event => props.opened(event.currentTarget)}
+          onClick={event => {
+            event.stopPropagation();
+            props.opened(event.currentTarget);
+          }}
         >
           {props.label}
         </Typography>
-        <ArrowDropDown />
+        {sortOrderButton}
       </Grid>
     </Grid>
   );

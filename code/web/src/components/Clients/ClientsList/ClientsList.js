@@ -2,7 +2,6 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import 'typeface-roboto';
 import Paper from '@material-ui/core/Paper';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
@@ -30,7 +29,7 @@ const styles = theme => ({
   listHeader: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 0,
     backgroundColor: 'transparent'
   }
 });
@@ -44,7 +43,12 @@ function ClientsList(props) {
     clients = props.clients.map(client => {
       return (
         <Grid key={client.id} item xs={12}>
-          <ClientListItem client={client} />
+          <ClientListItem
+            client={client}
+            lastActivityOption={
+              props.dropdownOptions[props.dropdownSettings.selectedIndex]
+            }
+          />
         </Grid>
       );
     });
@@ -101,12 +105,17 @@ function ClientsList(props) {
                           ]
                         }
                         opened={props.dropdownOpened}
+                        sortOrder={props.sortOrder}
+                        currentSortedByLabel={props.currentSortedByLabel}
+                        sortSelectedIndexChanged={
+                          props.sortSelectedIndexChanged
+                        }
+                        sortOrderChanged={props.sortOrderChanged}
                       />
                     }
                     options={props.dropdownOptions}
                     selectedIndex={props.dropdownSettings.selectedIndex}
                     selectedIndexChanged={props.dropdownSelectedIndexChanged}
-                    opened={props.dropdownOpened}
                     closed={props.dropdownClosed}
                     anchorElement={props.dropdownSettings.anchorElement}
                   />

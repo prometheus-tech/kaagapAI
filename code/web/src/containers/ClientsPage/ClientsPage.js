@@ -154,6 +154,20 @@ class ClientsPage extends Component {
     updatedListLastActionDropdownSettings.selectedIndex = index;
     updatedListLastActionDropdownSettings.anchorElement = null;
 
+    if (
+      this.state.listSortSettings.selectedIndex === 3 ||
+      this.state.listSortSettings.selectedIndex === 4
+    ) {
+      const sortingOption =
+        listLastActionDropdownOptions[
+          updatedListLastActionDropdownSettings.selectedIndex
+        ];
+      this.changeListSortSelectedIndexHandler(
+        sortingOption,
+        this.state.listSortSettings.sortOrder
+      );
+    }
+
     this.setState({
       listLastActionDropdownSettings: updatedListLastActionDropdownSettings
     });
@@ -171,7 +185,7 @@ class ClientsPage extends Component {
     });
   };
 
-  changeListSortSelectedIndexHandler = sortingOption => {
+  changeListSortSelectedIndexHandler = (sortingOption, sortingOrder) => {
     if (
       listSortingOptions.indexOf(sortingOption) !==
       this.state.listSortSettings.selectedIndex
@@ -181,7 +195,7 @@ class ClientsPage extends Component {
       updatedListSortSettings.selectedIndex = listSortingOptions.indexOf(
         sortingOption
       );
-      updatedListSortSettings.sortOrder = 'asc';
+      updatedListSortSettings.sortOrder = sortingOrder ? sortingOrder : 'asc';
 
       this.setState({ listSortSettings: updatedListSortSettings });
     }

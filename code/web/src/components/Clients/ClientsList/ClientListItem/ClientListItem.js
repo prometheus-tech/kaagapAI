@@ -17,7 +17,8 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 1,
     paddingBottom: theme.spacing.unit * 1,
-    marginBottom: 16
+    marginBottom: 16,
+    cursor: 'pointer'
   },
   name: {
     lineHeight: '1.71429em',
@@ -45,24 +46,22 @@ function ClientListItem(props) {
   } = props.client;
 
   const dateAddedFormatted = (
-    <Moment format="MMM D YYYY" withTitle>
+    <Moment format="MMM D, YYYY" withTitle>
       {dateAdded}
     </Moment>
   );
 
   const lastActivity =
-    lastModified > lastOpened ? (
+    props.lastActivityOption === 'Last Modified' ? (
       <Typography component="span">
-        Modified last{' '}
-        <Moment format="MMM D YYYY" withTitle>
+        <Moment format="MMM D, YYYY" withTitle>
           {lastModified}
         </Moment>
       </Typography>
     ) : (
       <Typography component="span">
-        Opened last{' '}
-        <Moment format="MMM D YYYY" withTitle>
-          {lastModified}
+        <Moment format="MMM D, YYYY" withTitle>
+          {lastOpened}
         </Moment>
       </Typography>
     );
