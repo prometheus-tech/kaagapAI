@@ -4,7 +4,7 @@ services:
 
 before_install:
   - cd code/web/
-  - docker build -t jessietabilisma/kaagapai-test -f 
+  - docker build -t jessietabilisma/kaagapai-test .
 
 script:
   - docker run jessietabilisma/kaagapai-test npm run test -- --coverage
