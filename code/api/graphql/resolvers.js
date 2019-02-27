@@ -27,7 +27,7 @@ const resolver = {
   getClients: ({ p_id }) => models.Client.findAll({
     raw: true,
     attributes: {
-      include: [[Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')), 'Sessions']]
+      include: [[Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')), 'no_of_sessions']]
     },
     include:[{
       model: models.Session,
