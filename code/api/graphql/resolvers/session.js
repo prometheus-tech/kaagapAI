@@ -1,7 +1,3 @@
-const Sequelize = require('sequelize');
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const GraphQlJSON = require('graphql-type-json');
 const models = require('../../models');
 
 const resolver = {
@@ -10,18 +6,14 @@ const resolver = {
     where: { c_id }
   }),
 
-  getSessionDocuments: ({ c_id }) => models.Session.findAll({
+  getSessionDocuments: ({ session_id }) => models.Session.findAll({
     raw: true,
-    attributes: {
-      include: ['*']
-    },
     include:[{
       model: models.Session_Document,
-      attributes: [],
+      attributes: ['sd_id', 'file_name', 'file',  'date_added', 'last_modified', 'type'],
       required: false
     }],
-    group: ['Session.session_id'],
-    where: { c_id }
+    where: { session_id }
   }),
 
   addSession: ({
