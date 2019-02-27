@@ -17,6 +17,7 @@ const listSortingOptions = [
   'Last Modified',
   'Last Opened'
 ];
+const listLastActionDropdownOptions = ['Last Modified', 'Last Opened'];
 
 class ClientsPage extends Component {
   state = {
@@ -91,7 +92,11 @@ class ClientsPage extends Component {
       selectedIndex: 0,
       sortOrder: 'asc'
     },
-    view: 'card'
+    view: 'card',
+    listLastActionDropdownSettings: {
+      anchorElement: null,
+      selectedIndex: 0
+    }
   };
 
   openCardSortOptionsHandler = element => {
@@ -129,28 +134,41 @@ class ClientsPage extends Component {
     this.setState({ cardSortSettings: updatedCardSortSettings });
   };
 
-  sortClients = () => {
-    const sortSettings =
-      this.state.view === 'card'
-        ? { ...this.state.cardSortSettings }
-        : { ...this.state.listSortSettings };
-    const sortingOptions =
-      this.state.view === 'card' ? cardSortingOptions : listSortingOptions;
+  openListLastActionDropdownHandler = element => {
+    const updatedListLastActionDropdownSettings = {
+      ...this.state.listLastActionDropdownSettings
+    };
 
-    let sortingProperty = camelize(sortingOptions[sortSettings.selectedIndex]);
+    updatedListLastActionDropdownSettings.anchorElement = element;
 
-    // Sort by first name when sorting option is by name
-    if (sortingProperty === 'name') {
-      sortingProperty = 'firstName';
-    } else if (sortingProperty === 'sessions') {
-      sortingProperty = 'numberOfSessions';
-    }
+    this.setState({
+      listLastActionDropdownSettings: updatedListLastActionDropdownSettings
+    });
+  };
 
-    if (sortSettings.sortOrder === 'asc') {
-      sort(this.state.clients).asc(sortingProperty);
-    } else if (sortSettings.sortOrder === 'desc') {
-      sort(this.state.clients).desc(sortingProperty);
-    }
+  changeListLastActionDropdownSelectedIndexHandler = (element, index) => {
+    const updatedListLastActionDropdownSettings = {
+      ...this.state.listLastActionDropdownSettings
+    };
+
+    updatedListLastActionDropdownSettings.selectedIndex = index;
+    updatedListLastActionDropdownSettings.anchorElement = null;
+
+    this.setState({
+      listLastActionDropdownSettings: updatedListLastActionDropdownSettings
+    });
+  };
+
+  closeListLastActionDropdownHandler = () => {
+    const updatedListLastActionDropdownSettings = {
+      ...this.state.listLastActionDropdownSettings
+    };
+
+    updatedListLastActionDropdownSettings.anchorElement = null;
+
+    this.setState({
+      listLastActionDropdownSettings: updatedListLastActionDropdownSettings
+    });
   };
 
   changeListSortSelectedIndexHandler = sortingOption => {
@@ -175,6 +193,30 @@ class ClientsPage extends Component {
     updatedListSortSettings.sortOrder = updatedSortOrder;
 
     this.setState({ listSortSettings: updatedListSortSettings });
+  };
+
+  sortClients = () => {
+    const sortSettings =
+      this.state.view === 'card'
+        ? { ...this.state.cardSortSettings }
+        : { ...this.state.listSortSettings };
+    const sortingOptions =
+      this.state.view === 'card' ? cardSortingOptions : listSortingOptions;
+
+    let sortingProperty = camelize(sortingOptions[sortSettings.selectedIndex]);
+
+    // Sort by first name when sorting option is by name
+    if (sortingProperty === 'name') {
+      sortingProperty = 'firstName';
+    } else if (sortingProperty === 'sessions') {
+      sortingProperty = 'numberOfSessions';
+    }
+
+    if (sortSettings.sortOrder === 'asc') {
+      sort(this.state.clients).asc(sortingProperty);
+    } else if (sortSettings.sortOrder === 'desc') {
+      sort(this.state.clients).desc(sortingProperty);
+    }
   };
 
   changeViewHandler = updatedView => {
@@ -220,6 +262,13 @@ class ClientsPage extends Component {
           }
           sortSelectedIndexChanged={this.changeListSortSelectedIndexHandler}
           sortOrderChanged={this.changeListSortOrderHandler}
+          dropdownSettings={this.state.listLastActionDropdownSettings}
+          dropdownOptions={listLastActionDropdownOptions}
+          dropdownOpened={this.openListLastActionDropdownHandler}
+          dropdownSelectedIndexChanged={
+            this.changeListLastActionDropdownSelectedIndexHandler
+          }
+          dropdownClosed={this.closeListLastActionDropdownHandler}
           clients={this.state.clients}
         />
       );

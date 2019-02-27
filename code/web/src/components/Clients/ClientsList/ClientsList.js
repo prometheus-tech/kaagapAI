@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
+import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
 import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
@@ -80,7 +81,7 @@ function ClientsList(props) {
                 </Grid>
               </Hidden>
               <Hidden smDown>
-                <Grid item md={2} sm={0}>
+                <Grid item md={2} sm={false}>
                   <ClientListHeader
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
@@ -89,13 +90,18 @@ function ClientsList(props) {
                     headerLabel="Date Added"
                   />
                 </Grid>
-                <Grid item md={3} sm={0}>
-                  <ClientListHeader
-                    sortOrder={props.sortOrder}
+                <Grid item md={3} sm={false}>
+                  <ClientListDropdownHeader
                     currentSortedByLabel={props.currentSortedByLabel}
                     selectedIndexChanged={props.sortSelectedIndexChanged}
                     sortOrderChanged={props.sortOrderChanged}
-                    headerLabel="Last Activity"
+                    options={props.dropdownOptions}
+                    optionsOpened={props.dropdownOpened}
+                    dropdownSettings={props.dropdownSettings}
+                    dropdownSelectedIndexChanged={
+                      props.dropdownSelectedIndexChanged
+                    }
+                    optionsClosed={props.dropdownClosed}
                   />
                 </Grid>
               </Hidden>
