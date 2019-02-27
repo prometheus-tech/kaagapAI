@@ -11,6 +11,8 @@ const typeDefs = `
 
   type Query { 
     getSessions(c_id: Int!): [Session]!
+
+    getSessionDocuments(c_id: Int!): JSON!
   }
 
   type Mutation {

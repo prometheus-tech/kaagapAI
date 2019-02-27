@@ -10,6 +10,20 @@ const resolver = {
     where: { c_id }
   }),
 
+  getSessionDocuments: ({ c_id }) => models.Session.findAll({
+    raw: true,
+    attributes: {
+      include: ['*']
+    },
+    include:[{
+      model: models.Session_Document,
+      attributes: [],
+      required: false
+    }],
+    group: ['Session.session_id'],
+    where: { c_id }
+  }),
+
   addSession: ({
     session_name,
     date_of_session,
