@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('db_kaagapai', 'admin', 'adminkaagapai', {
   dialect: 'mysql',
-  host: 'localhost',
+  host: 'kaagapai.com',
   port: '3306',
   operatorsAliases: false,
   logging: false
