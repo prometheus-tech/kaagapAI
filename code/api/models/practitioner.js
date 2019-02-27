@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     
     Practitioner.hasMany(models.Practitioner_Feedback, {
-      foreignKey: 'pf_id'
+      foreignKey: 'p_id'
     });
   };
 

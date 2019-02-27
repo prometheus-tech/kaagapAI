@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Session.hasMany(models.Session_Document, {
-      foreignKey: 'sd_id'
+      foreignKey: 'session_id'
     });
   };
   return Session;

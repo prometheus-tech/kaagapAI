@@ -77,7 +77,11 @@ const typeDefs = buildSchema(`
   type RootMutation {
     addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): JSON!
 
+    addSession(session_name: String!, date_of_session: Date!, c_id: Int!): JSON!
+
     removeClient(c_id: Int!): JSON!
+
+    removeSession(session_id: Int!, c_id: Int!): JSON!
 
     updateClientName(c_id: Int!, fname: String!, lname: String!): JSON!
 
