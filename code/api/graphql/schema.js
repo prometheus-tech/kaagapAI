@@ -88,6 +88,10 @@ const typeDefs = buildSchema(`
     updateClientBirthdate(c_id: Int!, birthdate: Date!): JSON!
 
     updateClientLastOpened(c_id: Int!): JSON!
+
+    updateSessionName(session_id: Int!, session_name: String!): JSON!
+
+    updateSessionDate(session_id: Int!, date_of_session: Date!): JSON!
   }
 
   schema {
