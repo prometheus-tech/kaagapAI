@@ -49,7 +49,7 @@ const typeDefs = buildSchema(`
   }
 
   type Session {
-    s_id: ID!
+    session_id: ID!
     session_name: String!
     date_of_session: Date!
   }
@@ -66,6 +66,8 @@ const typeDefs = buildSchema(`
 
   type RootQuery { 
     getClients(p_id: Int!): [Client]!
+
+    getSessions(c_id: Int!): [Session]!
   }
 
   type RootMutation {
