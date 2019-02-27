@@ -2,12 +2,6 @@ const typeDefs = `
   scalar Date 
   scalar JSON
 
-  enum Type {
-    PDF
-    TXT
-    DOCX
-  }
-
   type PractitionerFeedback {
     pf_id: Int!
     feedback_file: Binary!
