@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const GraphQlJSON = require('graphql-type-json');
-const models = require('../models');
+const models = require('../../models');
 
 const resolver = {
   JSON: GraphQlJSON,
@@ -26,6 +26,15 @@ const resolver = {
   //Query
   getClients: ({ p_id }) => models.Client.findAll({
     raw: true,
+    attributes: {
+      include: [[Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')), 'no_of_sessions']]
+    },
+    include:[{
+      model: models.Session,
+      attributes: [],
+      required: false
+    }],
+    group: ['Client.c_id'],
     where: { p_id }
   }),
 
@@ -110,11 +119,6 @@ const resolver = {
       attributes: ['c_id', 'last_opened']
     })//returns the fields that can be updated
   ),
-
-  getSessions: ({ c_id }) => models.Session.findAll({
-    raw: true,
-    where: { c_id }
-  }),
 }
 
 module.exports = resolver;

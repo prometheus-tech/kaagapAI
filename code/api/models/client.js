@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     
     Client.hasMany(models.Session, {
-      foreignKey: 'session_id'
+      foreignKey: 'c_id'
     });
   };
 
