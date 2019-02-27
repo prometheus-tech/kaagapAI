@@ -1,4 +1,6 @@
-const { buildSchema } = require('graphql');
+const {
+  buildSchema
+} = require('graphql');
 
 const typeDefs = buildSchema(`
   scalar Date 
@@ -52,6 +54,7 @@ const typeDefs = buildSchema(`
     session_id: ID!
     session_name: String!
     date_of_session: Date!
+    c_id: Int!
   }
 
   type SessionDocument {
@@ -62,6 +65,7 @@ const typeDefs = buildSchema(`
     date_added: Date!
     last_modified: Date
     type: Type!
+    session_id: Int!
   }
 
   type RootQuery { 
