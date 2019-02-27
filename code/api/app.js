@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const expressGraphQL = require('express-graphql');
 const models = require('./models');
 const schema = require('./graphql/schemas/schema');
