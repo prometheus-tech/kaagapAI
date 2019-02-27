@@ -26,6 +26,15 @@ const resolver = {
   //Query
   getClients: ({ p_id }) => models.Client.findAll({
     raw: true,
+    attributes: {
+      include: [[Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')), 'Sessions']]
+    },
+    include:[{
+      model: models.Session,
+      attributes: [],
+      required: false
+    }],
+    group: ['Client.c_id'],
     where: { p_id }
   }),
 

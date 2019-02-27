@@ -69,7 +69,7 @@ const typeDefs = buildSchema(`
   }
 
   type RootQuery { 
-    getClients(p_id: Int!): [Client]!
+    getClients(p_id: Int!): JSON!
 
     getSessions(c_id: Int!): [Session]!
   }
