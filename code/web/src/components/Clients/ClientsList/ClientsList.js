@@ -7,7 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
+import Dropdown from '../../Dropdown/Dropdown';
 import Hidden from '@material-ui/core/Hidden';
+import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
 
 const styles = theme => ({
   listContainer: {
@@ -80,7 +82,7 @@ function ClientsList(props) {
                 </Grid>
               </Hidden>
               <Hidden smDown>
-                <Grid item md={2} sm={0}>
+                <Grid item md={2} sm={false}>
                   <ClientListHeader
                     sortOrder={props.sortOrder}
                     currentSortedByLabel={props.currentSortedByLabel}
@@ -89,13 +91,24 @@ function ClientsList(props) {
                     headerLabel="Date Added"
                   />
                 </Grid>
-                <Grid item md={3} sm={0}>
-                  <ClientListHeader
-                    sortOrder={props.sortOrder}
-                    currentSortedByLabel={props.currentSortedByLabel}
-                    selectedIndexChanged={props.sortSelectedIndexChanged}
-                    sortOrderChanged={props.sortOrderChanged}
-                    headerLabel="Last Activity"
+                <Grid item md={3} sm={false}>
+                  <Dropdown
+                    parent={
+                      <ClientListDropdownHeader
+                        label={
+                          props.dropdownOptions[
+                            props.dropdownSettings.selectedIndex
+                          ]
+                        }
+                        opened={props.dropdownOpened}
+                      />
+                    }
+                    options={props.dropdownOptions}
+                    selectedIndex={props.dropdownSettings.selectedIndex}
+                    selectedIndexChanged={props.dropdownSelectedIndexChanged}
+                    opened={props.dropdownOpened}
+                    closed={props.dropdownClosed}
+                    anchorElement={props.dropdownSettings.anchorElement}
                   />
                 </Grid>
               </Hidden>

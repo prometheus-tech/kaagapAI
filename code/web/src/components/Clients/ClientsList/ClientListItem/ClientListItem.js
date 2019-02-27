@@ -90,12 +90,12 @@ function ClientListItem(props) {
           </Grid>
         </Hidden>
         <Hidden smDown>
-          <Grid item md={2} sm={0}>
+          <Grid item md={2} sm={false}>
             <Typography component="span" gutterBottom={false}>
               {dateAddedFormatted}
             </Typography>
           </Grid>
-          <Grid item md={3} sm={0}>
+          <Grid item md={3} sm={false}>
             <Typography component="span" gutterBottom={false}>
               {lastActivity}
             </Typography>
