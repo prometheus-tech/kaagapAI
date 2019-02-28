@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
+import Grid from '@material-ui/core/Grid';
 import CardSortControls from '../../components/CardSortControls/CardSortControls';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 import sort from 'fast-sort';
@@ -258,14 +258,6 @@ class ClientsPage extends Component {
     const clientsView =
       this.state.view === 'card' ? (
         <Auxilliary>
-          <CardSortControls
-            sortOptions={cardSortingOptions}
-            sortSettings={this.state.cardSortSettings}
-            sortOptionsOpened={this.openCardSortOptionsHandler}
-            sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}
-            sortOptionsClosed={this.closeCardSortOptionsHandler}
-            sortOrderChanged={this.changeCardSortOrderHandler}
-          />
           <ClientsCards clients={this.state.clients} />
         </Auxilliary>
       ) : (
@@ -288,14 +280,25 @@ class ClientsPage extends Component {
       );
 
     return (
-      <Auxilliary>
-        <AddClientModal />
-        <ViewControl
-          view={this.state.view}
-          viewChanged={this.changeViewHandler}
-        />
-        {clientsView}
-      </Auxilliary>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
+          <ViewControl
+            view={this.state.view}
+            viewChanged={this.changeViewHandler}
+          />
+          <CardSortControls
+            sortOptions={cardSortingOptions}
+            sortSettings={this.state.cardSortSettings}
+            sortOptionsOpened={this.openCardSortOptionsHandler}
+            sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}
+            sortOptionsClosed={this.closeCardSortOptionsHandler}
+            sortOrderChanged={this.changeCardSortOrderHandler}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          {clientsView}
+        </Grid>
+      </Grid>
     );
   }
 }
