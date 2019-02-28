@@ -3,26 +3,19 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Logo from '../../../assets/logo.svg';
 
-// CSS is JS heheh
 const styles = theme => ({
   root: {
     width: '100%',
     background: 'white'
-  },
-  notif: {
-    color: '#00796b'
   },
   grow: {
     flexGrow: 1
@@ -95,7 +88,7 @@ const styles = theme => ({
   }
 });
 
-class PrimarySearchAppBar extends React.Component {
+class Header extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null
@@ -146,14 +139,6 @@ class PrimarySearchAppBar extends React.Component {
         onClose={this.handleMenuClose}
         color="primary"
       >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="primary">
-            <Badge badgeContent={2} color="primary">
-              <NotificationsIcon className={classes.notif} />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
             <AccountCircle />
@@ -173,27 +158,8 @@ class PrimarySearchAppBar extends React.Component {
               aria-label="Open drawer"
             />
             <img src={Logo} className={classes.logo} alt="kaagapAI" />
-            {/* <h1 className={classes.name}>kaagapAI</h1>
-            <h2 className={classes.prof}>Practitioners</h2> */}
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="primary" className={classes.notif}>
-                <Badge badgeContent={2} color="primary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
               <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                 aria-haspopup="true"
@@ -220,8 +186,8 @@ class PrimarySearchAppBar extends React.Component {
   }
 }
 
-PrimarySearchAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles)(Header);
