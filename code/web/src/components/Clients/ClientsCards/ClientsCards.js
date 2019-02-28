@@ -21,7 +21,7 @@ function ClientsCards(props) {
   }
 
   return (
-    <Grid container spacing={24}>
+    <Grid container spacing={16}>
       {clients}
     </Grid>
   );
