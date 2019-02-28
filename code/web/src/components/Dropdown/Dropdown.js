@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,8 +14,6 @@ const styles = theme => ({
 });
 
 function Dropdown(props) {
-  const { classes } = props;
-
   const items = props.options.map((option, optionIndex) => {
     return (
       <ListItem
@@ -31,26 +28,21 @@ function Dropdown(props) {
   });
 
   return (
-    <Grid container spacing={0}>
-      <Grid item xs={12} className={classes.dropdownGrid}>
-        {props.parent}
-      </Grid>
-      <Popover
-        open={Boolean(props.anchorElement)}
-        anchorEl={props.anchorElement}
-        onClose={props.closed}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
-        }}
-      >
-        <List>{items}</List>
-      </Popover>
-    </Grid>
+    <Popover
+      open={Boolean(props.anchorElement)}
+      anchorEl={props.anchorElement}
+      onClose={props.closed}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left'
+      }}
+    >
+      <List>{items}</List>
+    </Popover>
   );
 }
 

@@ -20,14 +20,19 @@ const styles = theme => ({
 });
 
 function ClientListDropdownHeader(props) {
-  const { classes } = props;
+  const {
+    classes,
+    currentSortedByLabel,
+    label,
+    sortOrder,
+    sortOrderChanged,
+    sortSelectedIndexChanged,
+    opened
+  } = props;
 
   let sortOrderButton =
-    props.currentSortedByLabel === props.label ? (
-      <SortOrder
-        order={props.sortOrder}
-        orderChanged={props.sortOrderChanged}
-      />
+    currentSortedByLabel === label ? (
+      <SortOrder order={sortOrder} orderChanged={sortOrderChanged} />
     ) : null;
 
   return (
@@ -37,7 +42,7 @@ function ClientListDropdownHeader(props) {
         xs={12}
         className={classes.dropDownGrid}
         onClick={() => {
-          props.sortSelectedIndexChanged(props.label, 'desc');
+          sortSelectedIndexChanged(label, 'desc');
         }}
       >
         <Typography
@@ -46,10 +51,10 @@ function ClientListDropdownHeader(props) {
           className={classes.listLabel}
           onClick={event => {
             event.stopPropagation();
-            props.opened(event.currentTarget);
+            opened(event.currentTarget);
           }}
         >
-          {props.label}
+          {label}
         </Typography>
         {sortOrderButton}
       </Grid>

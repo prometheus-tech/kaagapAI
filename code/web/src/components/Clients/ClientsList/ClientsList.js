@@ -6,9 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
-import Dropdown from '../../Dropdown/Dropdown';
 import Hidden from '@material-ui/core/Hidden';
 import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
+import Dropdown from '../../Dropdown/Dropdown';
 
 const styles = theme => ({
   listContainer: {
@@ -35,19 +35,29 @@ const styles = theme => ({
 });
 
 function ClientsList(props) {
-  const { classes } = props;
+  const {
+    classes,
+    sortOrder,
+    currentSortedByLabel,
+    sortSelectedIndexChanged,
+    sortOrderChanged,
+    dropdownSettings,
+    dropdownOpened,
+    dropdownOptions,
+    dropdownSelectedIndexChanged,
+    dropdownClosed,
+    clients
+  } = props;
 
-  let clients = null;
+  let clientsList = null;
 
-  if (props.clients.length > 0) {
-    clients = props.clients.map(client => {
+  if (clients.length > 0) {
+    clientsList = clients.map(client => {
       return (
         <Grid key={client.id} item xs={12}>
           <ClientListItem
             client={client}
-            lastActivityOption={
-              props.dropdownOptions[props.dropdownSettings.selectedIndex]
-            }
+            lastActivityOption={dropdownOptions[dropdownSettings.selectedIndex]}
           />
         </Grid>
       );
@@ -67,57 +77,53 @@ function ClientsList(props) {
             <Grid container spacing={0} alignItems="center">
               <Grid item md={4} sm={7} xs={10}>
                 <ClientListHeader
-                  sortOrder={props.sortOrder}
-                  currentSortedByLabel={props.currentSortedByLabel}
-                  selectedIndexChanged={props.sortSelectedIndexChanged}
-                  sortOrderChanged={props.sortOrderChanged}
-                  headerLabel="Name"
+                  sortOrder={sortOrder}
+                  currentSortedByLabel={currentSortedByLabel}
+                  selectedIndexChanged={sortSelectedIndexChanged}
+                  sortOrderChanged={sortOrderChanged}
+                  defaultSortOrder="asc"
+                  label="Name"
                 />
               </Grid>
               <Hidden xsDown>
                 <Grid item md={2} sm={4}>
                   <ClientListHeader
-                    sortOrder={props.sortOrder}
-                    currentSortedByLabel={props.currentSortedByLabel}
-                    selectedIndexChanged={props.sortSelectedIndexChanged}
-                    sortOrderChanged={props.sortOrderChanged}
-                    headerLabel="Sessions"
+                    sortOrder={sortOrder}
+                    currentSortedByLabel={currentSortedByLabel}
+                    selectedIndexChanged={sortSelectedIndexChanged}
+                    sortOrderChanged={sortOrderChanged}
+                    defaultSortOrder="desc"
+                    label="Sessions"
                   />
                 </Grid>
               </Hidden>
               <Hidden smDown>
                 <Grid item md={2} sm={false}>
                   <ClientListHeader
-                    sortOrder={props.sortOrder}
-                    currentSortedByLabel={props.currentSortedByLabel}
-                    selectedIndexChanged={props.sortSelectedIndexChanged}
-                    sortOrderChanged={props.sortOrderChanged}
-                    headerLabel="Date Added"
+                    sortOrder={sortOrder}
+                    currentSortedByLabel={currentSortedByLabel}
+                    selectedIndexChanged={sortSelectedIndexChanged}
+                    sortOrderChanged={sortOrderChanged}
+                    defaultSortOrder="desc"
+                    label="Date Added"
                   />
                 </Grid>
                 <Grid item md={3} sm={false}>
+                  <ClientListDropdownHeader
+                    label={dropdownOptions[dropdownSettings.selectedIndex]}
+                    opened={dropdownOpened}
+                    sortOrder={sortOrder}
+                    currentSortedByLabel={currentSortedByLabel}
+                    sortSelectedIndexChanged={sortSelectedIndexChanged}
+                    sortOrderChanged={sortOrderChanged}
+                  />
                   <Dropdown
-                    parent={
-                      <ClientListDropdownHeader
-                        label={
-                          props.dropdownOptions[
-                            props.dropdownSettings.selectedIndex
-                          ]
-                        }
-                        opened={props.dropdownOpened}
-                        sortOrder={props.sortOrder}
-                        currentSortedByLabel={props.currentSortedByLabel}
-                        sortSelectedIndexChanged={
-                          props.sortSelectedIndexChanged
-                        }
-                        sortOrderChanged={props.sortOrderChanged}
-                      />
-                    }
-                    options={props.dropdownOptions}
-                    selectedIndex={props.dropdownSettings.selectedIndex}
-                    selectedIndexChanged={props.dropdownSelectedIndexChanged}
-                    closed={props.dropdownClosed}
-                    anchorElement={props.dropdownSettings.anchorElement}
+                    options={dropdownOptions}
+                    anchorElement={dropdownSettings.anchorElement}
+                    selectedIndex={dropdownSettings.selectedIndex}
+                    opened={dropdownOpened}
+                    closed={dropdownClosed}
+                    selectedIndexChanged={dropdownSelectedIndexChanged}
                   />
                 </Grid>
               </Hidden>
@@ -133,7 +139,7 @@ function ClientsList(props) {
         className={classes.listContainer}
         alignItems="center"
       >
-        {clients}
+        {clientsList}
       </Grid>
     </Auxilliary>
   );

@@ -15,14 +15,19 @@ const styles = theme => ({
 });
 
 function ClientListHeader(props) {
-  const { classes } = props;
+  const {
+    classes,
+    currentSortedByLabel,
+    label,
+    defaultSortOrder,
+    sortOrder,
+    sortOrderChanged,
+    selectedIndexChanged
+  } = props;
 
   let sortOrderButton =
-    props.currentSortedByLabel === props.headerLabel ? (
-      <SortOrder
-        order={props.sortOrder}
-        orderChanged={props.sortOrderChanged}
-      />
+    currentSortedByLabel === label ? (
+      <SortOrder order={sortOrder} orderChanged={sortOrderChanged} />
     ) : null;
 
   return (
@@ -32,14 +37,10 @@ function ClientListHeader(props) {
         gutterBottom={false}
         className={classes.listLabel}
         onClick={() => {
-          if (props.headerLabel === 'Date Added') {
-            props.selectedIndexChanged(props.headerLabel, 'desc');
-          } else {
-            props.selectedIndexChanged(props.headerLabel);
-          }
+          selectedIndexChanged(label, defaultSortOrder);
         }}
       >
-        {props.headerLabel}
+        {label}
         {sortOrderButton}
       </Typography>
     </Auxilliary>

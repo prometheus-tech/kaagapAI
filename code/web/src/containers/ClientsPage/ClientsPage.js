@@ -259,7 +259,7 @@ class ClientsPage extends Component {
       this.state.view === 'card' ? (
         <Auxilliary>
           <CardSortControls
-            sortingOptions={cardSortingOptions}
+            sortOptions={cardSortingOptions}
             sortSettings={this.state.cardSortSettings}
             sortOptionsOpened={this.openCardSortOptionsHandler}
             sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}

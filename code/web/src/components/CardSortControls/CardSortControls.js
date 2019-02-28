@@ -21,7 +21,14 @@ const styles = theme => ({
 });
 
 function CardSortControls(props) {
-  const { classes } = props;
+  const {
+    classes,
+    sortOptions,
+    sortOptionsOpened,
+    sortSelectedIndexChanged,
+    sortOptionsClosed,
+    sortOrderChanged
+  } = props;
   const { anchorElement, selectedIndex, sortOrder } = props.sortSettings;
 
   return (
@@ -34,23 +41,21 @@ function CardSortControls(props) {
     >
       <Grid item xs={11} />
       <Grid item className={classes.sortControlGrid}>
+        <Button
+          onClick={event => sortOptionsOpened(event.currentTarget)}
+          className={classes.dropdownButton}
+        >
+          {sortOptions[selectedIndex]}
+        </Button>
         <Dropdown
-          parent={
-            <Button
-              onClick={event => props.sortOptionsOpened(event.currentTarget)}
-              className={classes.dropdownButton}
-            >
-              {props.sortingOptions[selectedIndex]}
-            </Button>
-          }
-          options={props.sortingOptions}
+          options={sortOptions}
           anchorElement={anchorElement}
           selectedIndex={selectedIndex}
-          opened={props.sortOptionsOpened}
-          selectedIndexChanged={props.sortSelectedIndexChanged}
-          closed={props.sortOptionsClosed}
+          opened={sortOptionsOpened}
+          selectedIndexChanged={sortSelectedIndexChanged}
+          closed={sortOptionsClosed}
         />
-        <SortOrder order={sortOrder} orderChanged={props.sortOrderChanged} />
+        <SortOrder order={sortOrder} orderChanged={sortOrderChanged} />
       </Grid>
     </Grid>
   );
