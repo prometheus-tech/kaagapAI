@@ -13,6 +13,8 @@ import Dropdown from '../../UI/Dropdown/Dropdown';
 const styles = theme => ({
   listContainer: {
     padding: theme.spacing.unit,
+    paddingTop: 0,
+    paddingBottom: 0,
     [theme.breakpoints.down('xs')]: {
       paddingRight: 0,
       paddingLeft: 0
@@ -28,8 +30,8 @@ const styles = theme => ({
   },
   listHeader: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 0,
+    paddingTop: 0,
+    paddingBottom: 0,
     backgroundColor: 'transparent'
   }
 });
@@ -75,16 +77,18 @@ function ClientsList(props) {
         <Grid item xs={12}>
           <Paper className={classes.listHeader} elevation={0}>
             <Grid container spacing={0} alignItems="center">
-              <Grid item md={4} sm={7} xs={10}>
-                <ClientListHeader
-                  sortOrder={sortOrder}
-                  currentSortedByLabel={currentSortedByLabel}
-                  selectedIndexChanged={sortSelectedIndexChanged}
-                  sortOrderChanged={sortOrderChanged}
-                  defaultSortOrder="asc"
-                  label="Name"
-                />
-              </Grid>
+              <Hidden xsDown>
+                <Grid item md={4} sm={7}>
+                  <ClientListHeader
+                    sortOrder={sortOrder}
+                    currentSortedByLabel={currentSortedByLabel}
+                    selectedIndexChanged={sortSelectedIndexChanged}
+                    sortOrderChanged={sortOrderChanged}
+                    defaultSortOrder="asc"
+                    label="Name"
+                  />
+                </Grid>
+              </Hidden>
               <Hidden xsDown>
                 <Grid item md={2} sm={4}>
                   <ClientListHeader
@@ -126,8 +130,8 @@ function ClientsList(props) {
                     selectedIndexChanged={dropdownSelectedIndexChanged}
                   />
                 </Grid>
+                <Grid item md={1} sm={2} xs={2} />
               </Hidden>
-              <Grid item md={1} sm={2} xs={2} />
             </Grid>
           </Paper>
         </Grid>

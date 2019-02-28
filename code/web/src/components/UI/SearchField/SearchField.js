@@ -16,10 +16,7 @@ const styles = theme => ({
     }
   },
   input: {
-    marginLeft: '8px',
-    '&:focus': {
-      
-    }
+    marginLeft: '8px'
   }
 });
 

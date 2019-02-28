@@ -9,13 +9,11 @@ import { camelize } from '../../util/helperFunctions';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import SearchField from '../../components/UI/SearchField/SearchField';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
   controls: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 16
+    marginBottom: 32
   }
 });
 
@@ -289,31 +287,46 @@ class ClientsPage extends Component {
         />
       );
 
+    const cardSortControl =
+      this.state.view === 'card' ? (
+        <Grid item sm={3} md={2} align="right">
+          <CardSortControls
+            sortOptions={cardSortingOptions}
+            sortSettings={this.state.cardSortSettings}
+            sortOptionsOpened={this.openCardSortOptionsHandler}
+            sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}
+            sortOptionsClosed={this.closeCardSortOptionsHandler}
+            sortOrderChanged={this.changeCardSortOrderHandler}
+          />
+        </Grid>
+      ) : null;
+
     return (
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <Grid container spacing={32} className={classes.controls}>
-            <Grid item>
+          <Grid
+            container
+            spacing={0}
+            direction="row"
+            className={classes.controls}
+            justify="flex-end"
+            alignItems="center"
+          >
+            <Hidden smDown>
+              <Grid item md={3} />
+            </Hidden>
+            <Grid item xs={12} sm={8} md={6}>
               <SearchField label="client" />
             </Grid>
-            <Grid item>
-              <CardSortControls
-                sortOptions={cardSortingOptions}
-                sortSettings={this.state.cardSortSettings}
-                sortOptionsOpened={this.openCardSortOptionsHandler}
-                sortSelectedIndexChanged={
-                  this.changeCardSortSelectedIndexHandler
-                }
-                sortOptionsClosed={this.closeCardSortOptionsHandler}
-                sortOrderChanged={this.changeCardSortOrderHandler}
-              />
-            </Grid>
-            <Grid item>
-              <ViewControl
-                view={this.state.view}
-                viewChanged={this.changeViewHandler}
-              />
-            </Grid>
+            <Hidden xsDown>
+              {cardSortControl}
+              <Grid item sm={1} md={1} align="right">
+                <ViewControl
+                  view={this.state.view}
+                  viewChanged={this.changeViewHandler}
+                />
+              </Grid>
+            </Hidden>
           </Grid>
         </Grid>
         <Grid item xs={12}>
