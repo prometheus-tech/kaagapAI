@@ -17,7 +17,7 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 1,
     paddingBottom: theme.spacing.unit * 1,
-    marginBottom: 16,
+    marginBottom: 8,
     cursor: 'pointer',
     '&:hover': {
       boxShadow: theme.shadows[2]

@@ -14,7 +14,7 @@ const styles = theme => ({
   listContainer: {
     padding: theme.spacing.unit,
     paddingTop: 0,
-    paddingBottom: 0,
+    paddingBottom: 8,
     [theme.breakpoints.down('xs')]: {
       paddingRight: 0,
       paddingLeft: 0
