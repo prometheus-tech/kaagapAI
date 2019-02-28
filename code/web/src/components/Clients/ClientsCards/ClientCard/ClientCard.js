@@ -12,6 +12,12 @@ import { getInitials } from '../../../../util/helperFunctions';
 const styles = theme => ({
   avatar: {
     backgroundColor: blue[500]
+  },
+  card: {
+    '&:hover': {
+      boxShadow: theme.shadows[2]
+    },
+    cursor: 'pointer'
   }
 });
 
@@ -26,7 +32,7 @@ function ClientCard(props) {
       : 'No sessions yet';
 
   return (
-    <Card elevation={0}>
+    <Card elevation={0} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
         action={

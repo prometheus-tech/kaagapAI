@@ -18,7 +18,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 1,
     paddingBottom: theme.spacing.unit * 1,
     marginBottom: 16,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    '&:hover': {
+      boxShadow: theme.shadows[2]
+    }
   },
   name: {
     lineHeight: '1.71429em',
