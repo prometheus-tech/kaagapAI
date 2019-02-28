@@ -8,7 +8,7 @@ import ClientListItem from './ClientListItem/ClientListItem';
 import ClientListHeader from './ClientListHeader/ClientListHeader';
 import Hidden from '@material-ui/core/Hidden';
 import ClientListDropdownHeader from './ClientListDropdownHeader/ClientListDropdownHeader';
-import Dropdown from '../../Dropdown/Dropdown';
+import Dropdown from '../../UI/Dropdown/Dropdown';
 
 const styles = theme => ({
   listContainer: {

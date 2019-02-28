@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import CardSortControls from '../../components/CardSortControls/CardSortControls';
+import CardSortControls from '../../components/Clients/CardSortControls/CardSortControls';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
-import ViewControl from '../../components/ViewControl/ViewControl';
+import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
-import AddClientModal from '../../components/Clients/AddClientModal/AddClientModal';
+
+const styles = theme => ({
+  controls: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 16
+  }
+});
 
 const cardSortingOptions = ['Name', 'Last Modified', 'Last Opened'];
 const listSortingOptions = [
@@ -253,13 +262,13 @@ class ClientsPage extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     this.sortClients();
 
     const clientsView =
       this.state.view === 'card' ? (
-        <Auxilliary>
-          <ClientsCards clients={this.state.clients} />
-        </Auxilliary>
+        <ClientsCards clients={this.state.clients} />
       ) : (
         <ClientsList
           sortOrder={this.state.listSortSettings.sortOrder}
@@ -282,18 +291,26 @@ class ClientsPage extends Component {
     return (
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <ViewControl
-            view={this.state.view}
-            viewChanged={this.changeViewHandler}
-          />
-          <CardSortControls
-            sortOptions={cardSortingOptions}
-            sortSettings={this.state.cardSortSettings}
-            sortOptionsOpened={this.openCardSortOptionsHandler}
-            sortSelectedIndexChanged={this.changeCardSortSelectedIndexHandler}
-            sortOptionsClosed={this.closeCardSortOptionsHandler}
-            sortOrderChanged={this.changeCardSortOrderHandler}
-          />
+          <Grid container spacing={32} className={classes.controls}>
+            <Grid item>
+              <CardSortControls
+                sortOptions={cardSortingOptions}
+                sortSettings={this.state.cardSortSettings}
+                sortOptionsOpened={this.openCardSortOptionsHandler}
+                sortSelectedIndexChanged={
+                  this.changeCardSortSelectedIndexHandler
+                }
+                sortOptionsClosed={this.closeCardSortOptionsHandler}
+                sortOrderChanged={this.changeCardSortOrderHandler}
+              />
+            </Grid>
+            <Grid item>
+              <ViewControl
+                view={this.state.view}
+                viewChanged={this.changeViewHandler}
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           {clientsView}
@@ -303,4 +320,4 @@ class ClientsPage extends Component {
   }
 }
 
-export default ClientsPage;
+export default withStyles(styles)(ClientsPage);

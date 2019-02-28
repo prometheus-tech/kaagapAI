@@ -2,14 +2,11 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Dropdown from '../Dropdown/Dropdown';
-import SortOrder from './SortOrder/SortOrder';
+import Dropdown from '../../UI/Dropdown/Dropdown';
+import SortOrder from '../../UI/SortOrder/SortOrder';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  container: {
-    marginBottom: 32
-  },
   dropdownButton: {
     textTransform: 'capitalize',
     color: 'rgba(0, 0, 0, 0.54)'
@@ -32,13 +29,7 @@ function CardSortControls(props) {
   const { anchorElement, selectedIndex, sortOrder } = props.sortSettings;
 
   return (
-    <Grid
-      container
-      spacing={0}
-      justify="flex-end"
-      alignItems="center"
-      className={classes.container}
-    >
+    <Grid container spacing={0} justify="flex-end" alignItems="center">
       <Grid item xs={11} />
       <Grid item className={classes.sortControlGrid}>
         <Button

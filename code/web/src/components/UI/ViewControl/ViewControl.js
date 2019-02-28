@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ViewList from '@material-ui/icons/ViewList';
 import ViewModule from '@material-ui/icons/ViewModule';
 import Tooltip from '@material-ui/core/Tooltip';
-import { toPronounCase } from '../../util/helperFunctions';
+import { toPronounCase } from '../../../util/helperFunctions';
 
 function ViewControl(props) {
   const { view, viewChanged } = props;
