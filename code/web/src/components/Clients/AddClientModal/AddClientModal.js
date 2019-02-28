@@ -5,7 +5,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Close from '@material-ui/icons/Close';
 import Modal from '@material-ui/core/Modal';
-import Auxilliary from '../../../hoc/Auxilliary/Auxilliary'
+import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
@@ -102,7 +102,7 @@ class AddClientModal extends Component {
           onClick={this.handleOpen}
         >
           <AddIcon className={classes.extendedIcon} />
-          Add Client
+          New Client
         </Fab>
         <Modal
           aria-labelledby="simple-modal-title"
@@ -112,7 +112,7 @@ class AddClientModal extends Component {
           <div style={getModalStyle()} className={classes.paper}>
             <Close onClick={this.handleClose} className={classes.close} />
             <Typography variant="h6" id="modal-title">
-              Add Client
+              New Client
             </Typography>
             <Grid container direction="row">
               <Grid item xs={12} sm={6}>

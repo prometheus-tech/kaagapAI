@@ -289,7 +289,7 @@ class ClientsPage extends Component {
 
     return (
       <Auxilliary>
-        <AddClientModal />;
+        <AddClientModal />
         <ViewControl
           view={this.state.view}
           viewChanged={this.changeViewHandler}
