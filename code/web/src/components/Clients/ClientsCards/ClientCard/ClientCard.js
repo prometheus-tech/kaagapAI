@@ -22,14 +22,12 @@ const styles = theme => ({
 });
 
 function ClientCard(props) {
-  const { classes } = props;
+  const { classes, firstName, lastName, numberOfSessions } = props;
 
-  const initials = getInitials(props.firstName, props.lastName);
-  const name = props.firstName + ' ' + props.lastName;
+  const initials = getInitials(firstName, lastName);
+  const name = firstName + ' ' + lastName;
   const sessions =
-    props.numberOfSessions > 0
-      ? props.numberOfSessions + ' sessions'
-      : 'No sessions yet';
+    numberOfSessions > 0 ? numberOfSessions + ' sessions' : 'No sessions yet';
 
   return (
     <Card elevation={0} className={classes.card}>
