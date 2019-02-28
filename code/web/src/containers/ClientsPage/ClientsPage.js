@@ -8,6 +8,7 @@ import sort from 'fast-sort';
 import { camelize } from '../../util/helperFunctions';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
+import SearchField from '../../components/UI/SearchField/SearchField';
 
 const styles = theme => ({
   controls: {
@@ -292,6 +293,9 @@ class ClientsPage extends Component {
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Grid container spacing={32} className={classes.controls}>
+            <Grid item>
+              <SearchField label="client" />
+            </Grid>
             <Grid item>
               <CardSortControls
                 sortOptions={cardSortingOptions}
