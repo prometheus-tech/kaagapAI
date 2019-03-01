@@ -6,7 +6,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-  uri: 'kaagapai.com:4000/graphql'
+  uri: 'http://kaagapai.com:4000/graphql'
 });
 
 class App extends Component {
