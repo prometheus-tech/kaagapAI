@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
+import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 
 class ClientsPage extends Component {
   render() {
-    const clientsView = null;
+    const clientsView = <ClientsCards />;
 
     return (
       <Grid container>
