@@ -16,10 +16,11 @@ const typeDefs = `
     date_added: Date!
     last_opened: Date
     p_id: Int!
+    no_of_sessions:Int
   }
 
   type Query { 
-    getClients(p_id: Int!): JSON!
+    getClients(p_id: Int!): [Client]!
   }
 
   type Mutation {
