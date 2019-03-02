@@ -2,11 +2,10 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import ClientMoreActions from '../ClientMoreActions/ClientMoreActions';
 import { getInitials } from '../../../util/helperFunctions';
 
 const styles = theme => ({
@@ -33,11 +32,7 @@ function ClientCard(props) {
     <Card elevation={0} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
-        action={
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
-        }
+        action={<ClientMoreActions id={id} />}
         title={name}
         subheader={sessions}
       />
