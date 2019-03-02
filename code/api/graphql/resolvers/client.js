@@ -38,6 +38,20 @@ const resolver = {
     where: { p_id }
   }),
 
+  getClient: ({ c_id }) => models.Client.findOne({
+    raw: true,
+    attributes: {
+      include: [[Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')), 'no_of_sessions']]
+    },
+    include:[{
+      model: models.Session,
+      attributes: [],
+      required: false,
+      where: { c_id }
+    }],
+    where: { c_id }
+  }),
+
   //Mutations
   addClient: ({
     fname,

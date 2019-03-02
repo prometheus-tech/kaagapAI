@@ -21,6 +21,8 @@ const typeDefs = `
 
   type Query { 
     getClients(p_id: Int!): [Client]!
+
+    getClient(c_id: Int!): Client!
   }
 
   type Mutation {
