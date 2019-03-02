@@ -6,16 +6,6 @@ const resolver = {
     where: { c_id }
   }),
 
-  getSessionDocuments: ({ session_id }) => models.Session.findAll({
-    raw: true,
-    include:[{
-      model: models.Session_Document,
-      attributes: ['sd_id', 'file_name', 'file',  'date_added', 'last_modified', 'type'],
-      required: false
-    }],
-    where: { session_id }
-  }),
-
   addSession: ({
     session_name,
     date_of_session,
