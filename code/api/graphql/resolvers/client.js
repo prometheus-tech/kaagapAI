@@ -50,7 +50,15 @@ const resolver = {
       where: { c_id }
     }],
     where: { c_id }
-  }),
+  }).then (
+    res => {
+      models.Client.update({ last_opened: new Date() }, {
+      where: { c_id },
+      })
+
+      return res;
+    }
+  ),
 
   //Mutations
   addClient: ({
@@ -95,43 +103,19 @@ const resolver = {
     }
   ),
 
-  //Update Client Name
-  updateClientName: ({ c_id, fname, lname }) => models.Client.update({
+  updateClientInformation: ({ c_id, fname, lname, birthdate, gender }) => models.Client.update({
     fname,
     lname,
+    birthdate,
+    gender
   }, {
     where: { c_id },
     returning: false
   }).then(
     res => models.Client.findOne({
       raw: true,
-      where: { c_id, fname, lname },
-      attributes: ['c_id', 'fname', 'lname']
+      where: { c_id }
     }) //returns the fields updated
-  ),
-
-  //Update Client Birthdate
-  updateClientBirthdate: ({ c_id, birthdate }) => models.Client.update({ birthdate }, {
-    where: { c_id },
-    returning: false
-  }).then(
-    res => models.Client.findOne({
-      raw: true,
-      where: { c_id, birthdate },
-      attributes: ['c_id', 'birthdate']
-    }) //returns the fields updated
-  ),
-
-  //Update last opened client
-  updateClientLastOpened: ({ c_id }) => models.Client.update({ last_opened: new Date() }, {
-    where: { c_id },
-    returning: false
-  }).then(
-    res => models.Client.findOne({
-      raw: true,
-      where: { c_id },
-      attributes: ['c_id', 'last_opened']
-    })//returns the fields that can be updated
   ),
 }
 

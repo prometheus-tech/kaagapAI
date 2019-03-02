@@ -30,11 +30,7 @@ const typeDefs = `
 
     removeClient(c_id: Int!): JSON!
 
-    updateClientName(c_id: Int!, fname: String!, lname: String!): JSON!
-
-    updateClientBirthdate(c_id: Int!, birthdate: Date!): JSON!
-
-    updateClientLastOpened(c_id: Int!): JSON!
+    updateClientInformation(c_id: Int!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): JSON!
   }
 `
 module.exports = typeDefs;
