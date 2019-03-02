@@ -48,27 +48,16 @@ const resolver = {
     }
   ),
 
-   //Update Session Name
-  updateSessionName: ({ session_id, session_name }) => models.Session.update({ session_name }, {
+  updateSessionInformation: ({ session_id, session_name, date_of_session }) => models.Session.update({ 
+    session_name,
+    date_of_session
+  }, {
     where: { session_id },
     returning: false
   }).then(
     res => models.Session.findOne({
       raw: true,
-      where: { session_id },
-      attributes: ['session_id', 'session_name']
-    }) //returns the fields updated
-  ),
-
-  //Update Date of Session
-  updateSessionDate: ({ session_id, date_of_session }) => models.Session.update({ date_of_session }, {
-    where: { session_id },
-    returning: false
-  }).then(
-    res => models.Session.findOne({
-      raw: true,
-      where: { session_id },
-      attributes: ['session_id', 'session_name', 'date_of_session']
+      where: { session_id }
     }) //returns the fields updated
   ),
 }
