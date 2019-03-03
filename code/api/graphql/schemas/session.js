@@ -18,7 +18,7 @@ const typeDefs = `
 
     removeSession(session_id: Int!, c_id: Int!): JSON!
 
-    updateSessionInformation(session_id: Int!, session_name: String!, date_of_session: Date!): JSON!
+    updateSessionInformation(session_id: Int!, session_name: String!, date_of_session: Date!): Session!
   }
 `
 module.exports = typeDefs;

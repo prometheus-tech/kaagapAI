@@ -20,9 +20,9 @@ const typeDefs = `
   }
 
   type Query { 
-    getSessionDocuments(session_id: Int!): JSON!
+    getSessionDocuments(session_id: Int!): [Session]!
 
-    getSessionDocument(sd_id: Int!): JSON!
+    getSessionDocument(sd_id: Int!): Session!
   }
 `
 module.exports = typeDefs;
