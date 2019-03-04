@@ -24,6 +24,7 @@ deploy:
     secure: "$FIREBASE_TOKEN"
   on:
     branch: dev
+  project: "kaagapai"
 notifications:
   email:
     - 2164149@slu.edu.ph
