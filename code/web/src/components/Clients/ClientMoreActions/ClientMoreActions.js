@@ -7,10 +7,12 @@ import Popover from '@material-ui/core/Popover';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import EditClientModal from '../EditClientModal/EditClientModal';
 
 class ClientMoreActions extends Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
+    editModalOpened: false
   };
 
   handleClick = event => {
@@ -25,9 +27,27 @@ class ClientMoreActions extends Component {
     });
   };
 
+  openEditClientModalHandler = () => {
+    this.handleClose();
+    this.setState({ editModalOpened: true });
+  };
+
+  closeEditClientModalHandler = () => {
+    this.setState({ editModalOpened: false });
+  };
+
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, editModalOpened } = this.state;
+    const { clientId } = this.props;
     const open = Boolean(anchorEl);
+
+    const modal = this.state.editModalOpened ? (
+      <EditClientModal
+        isOpened={editModalOpened}
+        closed={this.closeEditClientModalHandler}
+        clientId={parseInt(clientId)}
+      />
+    ) : null;
 
     return (
       <Auxilliary>
@@ -49,7 +69,7 @@ class ClientMoreActions extends Component {
           }}
         >
           <List>
-            <ListItem button>
+            <ListItem button onClick={this.openEditClientModalHandler}>
               <ListItemText primary="Edit" />
             </ListItem>
             <ListItem button>
@@ -57,6 +77,7 @@ class ClientMoreActions extends Component {
             </ListItem>
           </List>
         </Popover>
+        {modal}
       </Auxilliary>
     );
   }

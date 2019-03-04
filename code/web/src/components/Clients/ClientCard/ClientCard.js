@@ -21,7 +21,7 @@ const styles = theme => ({
 });
 
 function ClientCard(props) {
-  const { classes, id, firstName, lastName, sessionsCount } = props;
+  const { classes, clientId, firstName, lastName, sessionsCount } = props;
 
   const initials = getInitials(firstName, lastName);
   const name = firstName + ' ' + lastName;
@@ -32,7 +32,7 @@ function ClientCard(props) {
     <Card elevation={0} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
-        action={<ClientMoreActions id={id} />}
+        action={<ClientMoreActions clientId={clientId} />}
         title={name}
         subheader={sessions}
       />

@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 
-import Layout from './hoc/Layout/Layout';
-import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
+
+import Layout from './hoc/Layout/Layout';
+import ClientsPage from './containers/ClientsPage/ClientsPage';
 
 const client = new ApolloClient({
-  uri: 'http://kaagapai.com:4000/graphql'
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache({
+    dataIdFromObject: object => {
+      switch (object.__typename) {
+        case 'Client':
+          return object.c_id;
+        default:
+          return defaultDataIdFromObject(object);
+      }
+    }
+  })
 });
 
 class App extends Component {
