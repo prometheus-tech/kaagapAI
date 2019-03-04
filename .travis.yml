@@ -1,20 +1,25 @@
-sudo: required
-services:
-  - docker
+# sudo: required
+# services:
+#   - docker
 
-before_install:
-  - cd code/web/
-  - docker build -t jessietabilisma/kaagapai .
+# before_install:
+#   - cd code/web/
+#   - docker build -t jessietabilisma/kaagapai .
 
-# script:
-#   - docker run jessietabilisma/kaagapai npm run test -- --coverage
+# # script:
+# #   - docker run jessietabilisma/kaagapai npm run test -- --coverage
+language: node_js
+node_js:
+  - "node"
+script:
+  -
 
 deploy:
   provider: firebase
+  token:
+    secure: "$FIREBASE_TOKEN"
   on:
     branch: dev
-  token:
-    secure: "$Firebase_token"
 notifications:
   email:
     - 2164149@slu.edu.ph
