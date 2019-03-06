@@ -5,12 +5,10 @@ import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 
 class ClientsPage extends Component {
   render() {
-    const clientsView = <ClientsCards />;
-
     return (
       <Grid container>
         <Grid item xs={12}>
-          {clientsView}
+          <ClientsCards />
         </Grid>
       </Grid>
     );

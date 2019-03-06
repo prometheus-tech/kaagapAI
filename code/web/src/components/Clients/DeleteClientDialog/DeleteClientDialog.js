@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import { Typography } from '@material-ui/core';
+import Slide from '@material-ui/core/Slide';
 
 const styles = theme => ({
   dense: {
@@ -28,6 +29,10 @@ const styles = theme => ({
     color: theme.palette.error.dark
   }
 });
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class DeleteClientDialog extends Component {
   constructor(props) {
@@ -51,17 +56,15 @@ class DeleteClientDialog extends Component {
   };
 
   render() {
-    const {
-      isOpened,
-      closed,
-      clientId,
-      clientName,
-      classes,
-      fullScreen
-    } = this.props;
+    const { isOpened, closed, clientName, classes, fullScreen } = this.props;
 
     return (
-      <Dialog open={isOpened} onClose={closed} fullScreen={fullScreen}>
+      <Dialog
+        open={isOpened}
+        onClose={closed}
+        fullScreen={fullScreen}
+        TransitionComponent={Transition}
+      >
         <DialogTitle>Delete Client?</DialogTitle>
         <DialogContent>
           <DialogContentText className={classes.dialogContentText}>

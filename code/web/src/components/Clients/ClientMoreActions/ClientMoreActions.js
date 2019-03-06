@@ -47,6 +47,15 @@ class ClientMoreActions extends Component {
     this.setState({ deleteClientDialogOpened: false });
   };
 
+  openDeleteClientDialogHandler = () => {
+    this.closeMoreActionsHandler();
+    this.setState({ deleteClientDialogOpened: true });
+  };
+
+  closeDeleteClientDialogHandler = () => {
+    this.setState({ deleteClientDialogOpened: false });
+  };
+
   render() {
     const {
       anchorEl,
