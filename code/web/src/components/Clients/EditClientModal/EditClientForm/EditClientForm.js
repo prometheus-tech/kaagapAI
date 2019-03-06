@@ -174,7 +174,12 @@ class EditClientForm extends Component {
                       <Button onClick={closed}>Cancel</Button>
                     </Grid>
                     <Grid item xs={5} align="right">
-                      <Button color="primary" type="submit" disabled={loading}>
+                      <Button
+                        color="primary"
+                        type="submit"
+                        disabled={loading}
+                        autoFocus
+                      >
                         {loading ? 'Saving...' : 'Save Changes'}
                       </Button>
                     </Grid>

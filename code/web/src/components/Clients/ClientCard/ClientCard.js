@@ -31,7 +31,7 @@ function ClientCard({ classes, clientId, firstName, lastName, sessionsCount }) {
     <Card elevation={0} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
-        action={<ClientMoreActions clientId={clientId} />}
+        action={<ClientMoreActions clientId={clientId} clientName={name} />}
         title={name}
         subheader={sessions}
       />
