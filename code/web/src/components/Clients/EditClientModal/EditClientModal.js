@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CLIENT_BASIC_INFO_FRAGMENT } from '../../../fragments/fragments';
+import CLIENT_BASIC_INFO from '../../../graphql/fragments/clientBasicInfo';
 import { ApolloConsumer } from 'react-apollo';
 
 import Modal from '@material-ui/core/Modal';
@@ -15,7 +15,7 @@ function EditClientModal(props) {
     <ApolloConsumer>
       {client => {
         const clientData = client.readFragment({
-          fragment: CLIENT_BASIC_INFO_FRAGMENT,
+          fragment: CLIENT_BASIC_INFO,
           id: c_id
         });
 

@@ -7,6 +7,8 @@ import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import Layout from './hoc/Layout/Layout';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 
+import { USER_ID, AUTH_TOKEN } from './util/constants';
+
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
@@ -23,11 +25,9 @@ const client = new ApolloClient({
   cache
 });
 
-cache.writeData({
-  data: {
-    currentUserId: parseInt(1)
-  }
-});
+// Remove this upon implementing authentication functionality
+localStorage.setItem(USER_ID, parseInt(1));
+localStorage.setItem(AUTH_TOKEN, 'kaagapai');
 
 class App extends Component {
   render() {

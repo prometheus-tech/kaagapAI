@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { GET_CLIENTS } from '../../../queries/queries';
+import { USER_ID } from '../../../util/constants';
+
+import CLIENTS from '../../../graphql/queries/clients';
 import { Query } from 'react-apollo';
 
 import Grid from '@material-ui/core/Grid';
@@ -8,11 +10,11 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import ClientCard from '../ClientCard/ClientCard';
 
 function ClientsCards() {
-  const p_id = parseInt(1);
+  const p_id = parseInt(localStorage.getItem(USER_ID));
 
   return (
     <Grid container spacing={16}>
-      <Query query={GET_CLIENTS} variables={{ p_id }}>
+      <Query query={CLIENTS} variables={{ p_id }}>
         {({ loading, error, data }) => {
           if (loading) {
             return <p>Loading...</p>;

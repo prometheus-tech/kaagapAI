@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { UPDATE_CLIENT } from '../../../../mutations/mutations';
+import EDIT_CLIENT from '../../../../graphql/mutations/editClient';
 import { Mutation } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -83,7 +83,7 @@ class EditClientForm extends Component {
     const { classes, closed } = this.props;
 
     return (
-      <Mutation mutation={UPDATE_CLIENT} onCompleted={() => closed()}>
+      <Mutation mutation={EDIT_CLIENT} onCompleted={() => closed()}>
         {(editClient, { loading, error }) => (
           <form
             onSubmit={e => {
