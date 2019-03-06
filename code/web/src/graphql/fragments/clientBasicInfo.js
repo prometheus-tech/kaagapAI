@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 
-export const CLIENT_BASIC_INFO_FRAGMENT = gql`
+const clientBasicInfo = gql`
   fragment ClientBasicInfo on Client {
     c_id
     fname
@@ -9,3 +9,5 @@ export const CLIENT_BASIC_INFO_FRAGMENT = gql`
     birthdate
   }
 `;
+
+export default clientBasicInfo;
