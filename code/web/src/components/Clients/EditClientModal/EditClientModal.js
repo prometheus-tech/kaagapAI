@@ -9,14 +9,12 @@ import EditClientForm from './EditClientForm/EditClientForm';
 function EditClientModal(props) {
   const { isOpened, clientId, closed } = props;
 
-  const c_id = parseInt(clientId);
-
   return (
     <ApolloConsumer>
       {client => {
         const clientData = client.readFragment({
           fragment: CLIENT_BASIC_INFO,
-          id: c_id
+          id: clientId
         });
 
         return (

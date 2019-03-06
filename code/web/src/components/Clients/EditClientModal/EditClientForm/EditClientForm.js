@@ -56,22 +56,24 @@ class EditClientForm extends Component {
   constructor(props) {
     super(props);
 
+    const { c_id, fname, lname, gender, birthdate } = props.client;
+
     this.state = {
-      c_id: parseInt(props.client.c_id),
-      fname: props.client.fname,
-      lname: props.client.lname,
-      gender: props.client.gender,
-      birthdate: props.client.birthdate
+      c_id: parseInt(c_id),
+      fname: fname,
+      lname: lname,
+      gender: gender,
+      birthdate: birthdate
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps({ client: { fname, lname, gender, birthdate } }) {
     this.setState({
-      c_id: parseInt(nextProps.client.fname),
-      fname: nextProps.client.fname,
-      lname: nextProps.client.lname,
-      gender: nextProps.client.gender,
-      birthdate: nextProps.client.birthdate
+      c_id: parseInt(fname),
+      fname: fname,
+      lname: lname,
+      gender: gender,
+      birthdate: birthdate
     });
   }
 

@@ -15,20 +15,20 @@ class ClientMoreActions extends Component {
     editModalOpened: false
   };
 
-  handleClick = event => {
+  openMoreActionsHandler = event => {
     this.setState({
       anchorEl: event.currentTarget
     });
   };
 
-  handleClose = () => {
+  closeMoreActionsHandler = () => {
     this.setState({
       anchorEl: null
     });
   };
 
   openEditClientModalHandler = () => {
-    this.handleClose();
+    this.closeMoreActionsHandler();
     this.setState({ editModalOpened: true });
   };
 
@@ -41,24 +41,23 @@ class ClientMoreActions extends Component {
     const { clientId } = this.props;
     const open = Boolean(anchorEl);
 
-    const modal = this.state.editModalOpened ? (
+    const modal = editModalOpened ? (
       <EditClientModal
         isOpened={editModalOpened}
         closed={this.closeEditClientModalHandler}
-        clientId={parseInt(clientId)}
+        clientId={clientId}
       />
     ) : null;
 
     return (
       <Auxilliary>
-        <IconButton onClick={this.handleClick}>
+        <IconButton onClick={this.openMoreActionsHandler}>
           <MoreVertIcon />
         </IconButton>
         <Popover
-          id="simple-popper"
           open={open}
           anchorEl={anchorEl}
-          onClose={this.handleClose}
+          onClose={this.closeMoreActionsHandler}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left'
@@ -73,7 +72,7 @@ class ClientMoreActions extends Component {
               <ListItemText primary="Edit" />
             </ListItem>
             <ListItem button>
-              <ListItemText primary="Remove" />
+              <ListItemText primary="Delete" />
             </ListItem>
           </List>
         </Popover>

@@ -6,6 +6,7 @@ import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import ClientMoreActions from '../ClientMoreActions/ClientMoreActions';
+
 import { getInitials } from '../../../util/helperFunctions';
 
 const styles = theme => ({
@@ -20,9 +21,7 @@ const styles = theme => ({
   }
 });
 
-function ClientCard(props) {
-  const { classes, clientId, firstName, lastName, sessionsCount } = props;
-
+function ClientCard({ classes, clientId, firstName, lastName, sessionsCount }) {
   const initials = getInitials(firstName, lastName);
   const name = firstName + ' ' + lastName;
   const sessions =
