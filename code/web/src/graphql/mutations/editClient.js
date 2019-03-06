@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
-import clientBasicInfo from '../fragments/clientBasicInfo';
+import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 
-const updateClient = gql`
+const EDIT_CLIENT = gql`
   mutation UpdateClient(
     $c_id: Int!
     $fname: String!
@@ -20,7 +20,7 @@ const updateClient = gql`
       ...ClientBasicInfo
     }
   }
-  ${clientBasicInfo}
+  ${CLIENT_BASIC_INFO}
 `;
 
-export default updateClient;
+export default EDIT_CLIENT;

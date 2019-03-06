@@ -1,15 +1,15 @@
 import { gql } from 'apollo-boost';
 
-import clientBasicInfo from '../fragments/clientBasicInfo';
+import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 
-const clients = gql`
+const CLIENTS = gql`
   query GetClients($p_id: Int!) {
     getClients(p_id: $p_id) {
       ...ClientBasicInfo
       no_of_sessions
     }
   }
-  ${clientBasicInfo}
+  ${CLIENT_BASIC_INFO}
 `;
 
-export default clients;
+export default CLIENTS;
