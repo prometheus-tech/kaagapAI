@@ -91,9 +91,23 @@ const resolver = {
 
       return models.Client.findOne({
         raw: true,
-        where: {
-          c_id
-        }
+        attributes: {
+          include: [
+            [
+              Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')),
+              'no_of_sessions'
+            ]
+          ]
+        },
+        include: [
+          {
+            model: models.Session,
+            attributes: [],
+            required: false,
+            where: { c_id }
+          }
+        ],
+        where: { c_id }
       });
     }),
 
