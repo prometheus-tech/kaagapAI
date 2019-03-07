@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+import { USER_ID } from '../../../util/constants';
+
+import DELETE_CLIENT from '../../../graphql/mutations/deleteClient';
+import { Mutation } from 'react-apollo';
+import CLIENTS from '../../../graphql/queries/clients';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -56,58 +62,96 @@ class DeleteClientDialog extends Component {
   };
 
   render() {
-    const { isOpened, closed, clientName, classes, fullScreen } = this.props;
+    const {
+      isOpened,
+      closed,
+      clientName,
+      clientId,
+      classes,
+      fullScreen
+    } = this.props;
 
     return (
-      <Dialog
-        open={isOpened}
-        onClose={closed}
-        fullScreen={fullScreen}
-        TransitionComponent={Transition}
+      <Mutation
+        mutation={DELETE_CLIENT}
+        onCompleted={() => closed()}
+        update={(
+          cache,
+          {
+            data: {
+              deleteClient: { c_id, fname, lname }
+            }
+          }
+        ) => {
+          const getClientsQueryParams = {
+            query: CLIENTS,
+            variables: { p_id: parseInt(localStorage.getItem(USER_ID)) }
+          };
+
+          const { getClients } = cache.readQuery(getClientsQueryParams);
+
+          cache.writeQuery({
+            ...getClientsQueryParams,
+            data: {
+              getClients: getClients.filter(c => parseInt(c.c_id) !== c_id)
+            }
+          });
+        }}
       >
-        <DialogTitle>Delete Client?</DialogTitle>
-        <DialogContent>
-          <DialogContentText className={classes.dialogContentText}>
-            This action{' '}
-            <Typography component="span" className={classes.bold}>
-              cannot{' '}
-            </Typography>
-            be undone. This will permanently delete{' '}
-            <Typography component="span" className={classes.bold}>
-              {clientName}
-            </Typography>{' '}
-            and all of its associated data.
-          </DialogContentText>
-          <DialogContentText>
-            Please type in{' '}
-            <Typography component="span" className={classes.bold}>
-              {clientName}
-            </Typography>{' '}
-            to confirm.
-          </DialogContentText>
-          <TextField
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            className={classNames(classes.textField, classes.dense)}
-            onChange={e => {
-              this.setState({ clientName: e.target.value });
-            }}
-            value={this.state.clientName}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closed}>Cancel</Button>
-          <Button
-            className={classes.deleteColor}
-            disabled={!(this.state.clientName === clientName)}
-            onClick={closed}
-            autoFocus
+        {(deleteClient, { loading, error, data }) => (
+          <Dialog
+            open={isOpened}
+            onClose={closed}
+            fullScreen={fullScreen}
+            TransitionComponent={Transition}
           >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <DialogTitle>Delete Client?</DialogTitle>
+            <DialogContent>
+              <DialogContentText className={classes.dialogContentText}>
+                This action{' '}
+                <Typography component="span" className={classes.bold}>
+                  cannot{' '}
+                </Typography>
+                be undone. This will permanently delete{' '}
+                <Typography component="span" className={classes.bold}>
+                  {clientName}
+                </Typography>{' '}
+                and all of its associated data.
+              </DialogContentText>
+              <DialogContentText>
+                Please type in{' '}
+                <Typography component="span" className={classes.bold}>
+                  {clientName}
+                </Typography>{' '}
+                to confirm.
+              </DialogContentText>
+              <TextField
+                margin="dense"
+                variant="outlined"
+                fullWidth
+                className={classNames(classes.textField, classes.dense)}
+                onChange={e => {
+                  this.setState({ clientName: e.target.value });
+                }}
+                value={this.state.clientName}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closed}>Cancel</Button>
+              <Button
+                className={classes.deleteColor}
+                disabled={!(this.state.clientName === clientName) || loading}
+                onClick={() =>
+                  deleteClient({ variables: { c_id: parseInt(clientId) } })
+                }
+                autoFocus
+              >
+                {loading ? 'Deleting...' : 'Delete'}
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
+      </Mutation>
     );
   }
 }
