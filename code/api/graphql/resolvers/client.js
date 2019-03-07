@@ -83,7 +83,7 @@ const resolver = {
         lname,
         p_id
       },
-      attributes: ['c_id', 'fname', 'lname'],
+      attributes: ['c_id', 'fname', 'lname', 'birthdate', 'gender'],
       order: [
         ['c_id', 'DESC']
       ]
