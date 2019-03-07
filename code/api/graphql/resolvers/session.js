@@ -14,20 +14,16 @@ const resolver = {
     session_name,
     date_of_session,
     c_id
-  }).then(
-    res => models.Session.findAll({
+  }).then(res => {
+    const { c_id } = res.dataValues;
+
+    return models.Session.findOne({
       raw: true,
-      limit: 1,
       where: {
-        c_id,
-        session_name
-      },
-      attributes: ['session_name', 'session_id'],
-      order: [
-        ['c_id', 'DESC']
-      ]
-    }) //Returns only the id and name of added Session
-  ),
+        c_id
+      }
+    });
+  }),
 
   removeSession: ({ session_id, c_id }) => models.Session.findOne({
     raw: true,
