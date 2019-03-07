@@ -16,7 +16,7 @@ const typeDefs = `
   type Mutation {
     addSession(session_name: String!, date_of_session: Date!, c_id: Int!): Session!
 
-    removeSession(session_id: Int!, c_id: Int!): JSON!
+    deleteSession(session_id: Int!, c_id: Int!): JSON!
 
     updateSessionInformation(session_id: Int!, session_name: String!, date_of_session: Date!): Session!
   }

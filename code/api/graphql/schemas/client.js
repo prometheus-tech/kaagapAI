@@ -28,7 +28,7 @@ const typeDefs = `
   type Mutation {
     addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): Client!
 
-    removeClient(c_id: Int!): JSON!
+    deleteClient(c_id: Int!): JSON!
 
     updateClientInformation(c_id: Int!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
   }

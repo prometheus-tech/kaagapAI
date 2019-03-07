@@ -111,7 +111,7 @@ const resolver = {
       });
     }),
 
-  removeClient: ({ c_id }) =>
+  deleteClient: ({ c_id }) =>
     models.Client.findOne({
       raw: true,
       where: { c_id },

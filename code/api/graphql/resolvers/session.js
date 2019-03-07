@@ -25,7 +25,7 @@ const resolver = {
     });
   }),
 
-  removeSession: ({ session_id, c_id }) => models.Session.findOne({
+  deleteSession: ({ session_id, c_id }) => models.Session.findOne({
     raw: true,
     where: { session_id },
     attributes: ['session_id', 'session_name'],
