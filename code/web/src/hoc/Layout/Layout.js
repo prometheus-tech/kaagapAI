@@ -1,9 +1,8 @@
 import React from 'react';
 
-import Auxilliary from '../Auxilliary/Auxilliary';
-import Header from '../../components/Navigation/Header/Header';
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import Auxilliary from '../Auxilliary/Auxilliary';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   mainGrid: {
@@ -16,7 +15,7 @@ function Layout(props) {
 
   return (
     <Auxilliary>
-      <Header />
+      {/* Header goes here */}
       <Grid container className={classes.mainGrid}>
         {props.children}
       </Grid>
