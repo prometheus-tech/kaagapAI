@@ -37,17 +37,17 @@ matrix:
         app:
           dev: kaagapai-dev
         on:
-          repo: JessieMTabilisma/kaagapAI-test
+          repo: prometheus-tech/kaagapAI
           branches:
             only:
               - dev
 
-# notifications:
-#   email:
-#     - 2164149@slu.edu.ph
-#     - 2161495@slu.edu.ph
-#     - 2160809@slu.edu.ph
-#     - 2160120@slu.edu.ph
-#     - 2161745@slu.edu.ph
-#     - 2161436@slu.edu.ph
-#     - 2161794@slu.edu.ph
+notifications:
+  email:
+    - 2164149@slu.edu.ph
+    - 2161495@slu.edu.ph
+    - 2160809@slu.edu.ph
+    - 2160120@slu.edu.ph
+    - 2161745@slu.edu.ph
+    - 2161436@slu.edu.ph
+    - 2161794@slu.edu.ph
