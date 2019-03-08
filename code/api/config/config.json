@@ -2,8 +2,8 @@
   "development": {
     "username": "admin",
     "password": "adminkaagapai",
-    "database": "db_kaagapai",
-    "host": "kaagapai.com",
+    "database": "dbkaagapai",
+    "host": "35.234.9.118",
     "dialect": "mysql"
   },
   "test": {
