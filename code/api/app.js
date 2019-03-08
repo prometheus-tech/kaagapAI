@@ -14,7 +14,7 @@ app.use(
   expressGraphQL({
     schema: schema,
     rootValue: resolver,
-    graphiql: true //to be changed to false when in production
+    graphiql: false //to be changed to false when in production
   })
 );
 
