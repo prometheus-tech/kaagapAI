@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('db_kaagapai', 'admin', 'adminkaagapai', {
+const sequelize = new Sequelize('dbkaagapai', 'admin', 'adminkaagapai', {
   dialect: 'mysql',
-  host: 'kaagapai.com',
+  host: '35.234.9.118"',
   port: '3306',
   operatorsAliases: false,
   logging: false
@@ -13,11 +13,11 @@ const models = {
   Client: sequelize.import('./client'),
   Session: sequelize.import('./session'),
   Session_Document: sequelize.import('./session_document'),
-  Practitioner_Feedback: sequelize.import('./practitioner_feedback'),
+  Practitioner_Feedback: sequelize.import('./practitioner_feedback')
 };
 
-Object.keys(models).forEach((modelName) => {
-  if('associate' in models[modelName]) {
+Object.keys(models).forEach(modelName => {
+  if ('associate' in models[modelName]) {
     models[modelName].associate(models);
   }
 });
