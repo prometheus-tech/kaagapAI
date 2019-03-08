@@ -1,35 +1,53 @@
-# sudo: required
-# services:
-#   - docker
+sudo: required
+matrix:
+  include:
+    - language: node_js
+      node_js: lts/*
+      cache:
+        directories:
+          - node_modules
+      before_install:
+        - npm install -g firebase-tools
+        - cd code/web/
+        - npm install
+      script:
+        - npm test
+      after_success:
+        - travis_wait 40 npm run build
+        - firebase use default --token $FIREBASE_TOKEN
+        - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+      on:
+        branch:
+          - dev
+        project: kaagapai
+    - language: node_js
+      node_js: lts/*
+      services: mysql
+      cache:
+        directories:
+          - node_modules
+      before_install:
+        - cd code/api
+        - npm install
+      script: "true"
+      deploy:
+        provider: heroku
+        api_key:
+          secure: ZcdmgvvZavzo0EDHM1PkLmfQBGFszYXGr6iSTTUVPDHiLW78a3bg0uo7vvLZOCF2dtSNzxdFaBJyiOiPzUnRS/lsUdBoL7MK/6qfSo2Mc2nlYmDmI4Fq+aPtWRGWtanNSoHV406l7KnL4kUoODn0CYobX8fGh2TugX28hrLqgWYNjtOgcNcfSF0odbIVHoEM6rVQfCOrhjkFmAH+/xw30vUNgwcf83o7WI/uf5DMuKuIqJxHJrxsHHcmsw3+V2kgCvYISl2iwK/FLpCa8S2eMKy2LCzxuURf0aTuSelwiH/9n4N8jrb6WabO+/3KsT0IFf87IH9t4bAQNjqSy8+Pxz+GOoDnF946Q+SDJs0mhCs+QmT/Px91YlLaXblj8sdVaf4PuVTfb4TSqJ06MEvAEuEMbeFQZK205ONmdxAjO8sqZ6z25gCbG8iLNM21Gs1VMO4Cs0/v00u+WwHvdmn1kw2BAPRq98+ap2ldEJezA1b//WehsJ5uZ9lC/loP4mM5Du8khqemz05pSpc205DPKdHS36ECvD7sszzBaFPOmS22sGXSB6ZDqQ5nrd37Qm2lORj+rJmGY28gxH2TODueI8TX+8mMD/easz68rLoq/oZ2TOd1WSIJjdzAFOzVkSWKSYVEYKTqnBOMamMKisDjSuKVEGaLYBcYUMKFF9/AZrE=
+        app:
+          dev: kaagapai-dev
+        on:
+          repo: JessieMTabilisma/kaagapAI-test
+          branches:
+            only:
+              - dev
 
-# before_install:
-#   - cd code/web/
-#   - docker build -t jessietabilisma/kaagapai .
-
-# # script:
-# #   - docker run jessietabilisma/kaagapai npm run test -- --coverage
-language: node_js
-node_js:
-  - "node"
-
-
-
-script:
-  -
-
-deploy:
-  provider: firebase
-  token:
-    secure: "$FIREBASE_TOKEN"
-  on:
-    branch: dev
-  project: "kaagapai"
-notifications:
-  email:
-    - 2164149@slu.edu.ph
-    - 2161495@slu.edu.ph
-    - 2160809@slu.edu.ph
-    - 2160120@slu.edu.ph
-    - 2161745@slu.edu.ph
-    - 2161436@slu.edu.ph
-    - 2161794@slu.edu.ph
+# notifications:
+#   email:
+#     - 2164149@slu.edu.ph
+#     - 2161495@slu.edu.ph
+#     - 2160809@slu.edu.ph
+#     - 2160120@slu.edu.ph
+#     - 2161745@slu.edu.ph
+#     - 2161436@slu.edu.ph
+#     - 2161794@slu.edu.ph
