@@ -1,2 +1,2 @@
 # **kaagapAI**
-A text analysis tool for mentak health practitioners
+A text analysis tool for mental health practitioners
