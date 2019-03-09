@@ -1,9 +1,11 @@
+const dotenv = require('dotenv').config();
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('db_kaagapai', 'admin', 'adminkaagapai', {
+
+const sequelize = new Sequelize(process.env.DB_NAME_DEV, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   dialect: 'mysql',
-  host: 'kaagapai.com',
-  port: '3306',
+  host: process.env.DB_HOST_DEV,
+  port: process.env.DB_PORT,
   operatorsAliases: false,
   logging: false
 });
