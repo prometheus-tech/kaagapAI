@@ -4,4 +4,4 @@ public/images/uploads/*
 !public/images/uploads/.gitkeep
 .DS_Store
 **/.DS_Store
-.env
+*.env
