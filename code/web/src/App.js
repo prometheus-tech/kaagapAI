@@ -21,7 +21,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: 'https://kaagapai-dev.herokuapp.com/graphql',
+  uri: 'http://kaagapai.com:4000/graphql',
   cache
 });
 
