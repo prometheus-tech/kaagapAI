@@ -29,12 +29,7 @@ function ClientsCards() {
               {data.getClients.map(client => {
                 return (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={client.c_id}>
-                    <ClientCard
-                      clientId={client.c_id}
-                      firstName={client.fname}
-                      lastName={client.lname}
-                      sessionsCount={client.no_of_sessions}
-                    />
+                    <ClientCard client={client} />
                   </Grid>
                 );
               })}

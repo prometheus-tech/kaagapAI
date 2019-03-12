@@ -78,7 +78,7 @@ class DeleteClientDialog extends Component {
           cache,
           {
             data: {
-              deleteClient: { c_id, fname, lname }
+              deleteClient: { c_id }
             }
           }
         ) => {

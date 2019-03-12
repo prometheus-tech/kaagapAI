@@ -21,17 +21,18 @@ const styles = theme => ({
   }
 });
 
-function ClientCard({ classes, clientId, firstName, lastName, sessionsCount }) {
-  const initials = getInitials(firstName, lastName);
-  const name = firstName + ' ' + lastName;
+function ClientCard({ classes, client }) {
+  const { fname, lname, no_of_sessions } = client;
+  const initials = getInitials(fname, lname);
+  const name = fname + ' ' + lname;
   const sessions =
-    sessionsCount > 0 ? sessionsCount + ' sessions' : 'No sessions yet';
+    no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
 
   return (
     <Card elevation={1} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
-        action={<ClientMoreActions clientId={clientId} clientName={name} />}
+        action={<ClientMoreActions client={client} />}
         title={name}
         subheader={sessions}
       />

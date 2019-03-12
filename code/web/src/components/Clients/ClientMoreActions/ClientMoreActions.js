@@ -7,13 +7,13 @@ import Popover from '@material-ui/core/Popover';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import EditClientModal from '../EditClientModal/EditClientModal';
+import EditClientDialog from '../EditClientDialog/EditClientDialog';
 import DeleteClientDialog from '../DeleteClientDialog/DeleteClientDialog';
 
 class ClientMoreActions extends Component {
   state = {
     anchorEl: null,
-    editClientModalOpened: false,
+    editClientDialogOpened: false,
     deleteClientDialogOpened: false
   };
 
@@ -29,13 +29,13 @@ class ClientMoreActions extends Component {
     });
   };
 
-  openEditClientModalHandler = () => {
+  openEditClientDialogHandler = () => {
     this.closeMoreActionsHandler();
-    this.setState({ editClientModalOpened: true });
+    this.setState({ editClientDialogOpened: true });
   };
 
-  closeEditClientModalHandler = () => {
-    this.setState({ editClientModalOpened: false });
+  closeEditClientDialogHandler = () => {
+    this.setState({ editClientDialogOpened: false });
   };
 
   openDeleteClientDialogHandler = () => {
@@ -59,17 +59,18 @@ class ClientMoreActions extends Component {
   render() {
     const {
       anchorEl,
-      editClientModalOpened,
+      editClientDialogOpened,
       deleteClientDialogOpened
     } = this.state;
-    const { clientId, clientName } = this.props;
+    const { client } = this.props;
+    const { c_id, fname, lname } = client;
     const open = Boolean(anchorEl);
 
-    const editClientModal = editClientModalOpened ? (
-      <EditClientModal
-        isOpened={editClientModalOpened}
-        closed={this.closeEditClientModalHandler}
-        clientId={clientId}
+    const editClientModal = editClientDialogOpened ? (
+      <EditClientDialog
+        isOpened={editClientDialogOpened}
+        closed={this.closeEditClientDialogHandler}
+        client={client}
       />
     ) : null;
 
@@ -77,8 +78,8 @@ class ClientMoreActions extends Component {
       <DeleteClientDialog
         isOpened={deleteClientDialogOpened}
         closed={this.closeDeleteClientDialogHandler}
-        clientId={clientId}
-        clientName={clientName}
+        clientId={c_id}
+        clientName={fname + ' ' + lname}
       />
     ) : null;
 
@@ -101,7 +102,7 @@ class ClientMoreActions extends Component {
           }}
         >
           <List>
-            <ListItem button onClick={this.openEditClientModalHandler}>
+            <ListItem button onClick={this.openEditClientDialogHandler}>
               <ListItemText primary="Edit" />
             </ListItem>
             <ListItem button>
