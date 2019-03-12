@@ -28,7 +28,7 @@ function ClientCard({ classes, clientId, firstName, lastName, sessionsCount }) {
     sessionsCount > 0 ? sessionsCount + ' sessions' : 'No sessions yet';
 
   return (
-    <Card elevation={0} className={classes.card}>
+    <Card elevation={1} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
         action={<ClientMoreActions clientId={clientId} clientName={name} />}

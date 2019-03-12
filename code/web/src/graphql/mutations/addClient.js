@@ -2,24 +2,25 @@ import { gql } from 'apollo-boost';
 
 const ADD_CLIENT = gql`
   mutation AddClient(
+    $p_id: Int!
     $fname: String!
     $lname: String!
     $gender: [Gender!]!
     $birthdate: Date!
-    $p_id: Int!
   ) {
     addClient(
+      p_id: $p_id
       fname: $fname
       lname: $lname
       gender: $gender
       birthdate: $birthdate
-      p_id: $p_id
     ) {
+      __typename
+      c_id
       fname
       lname
       gender
       birthdate
-      c_id
       no_of_sessions
     }
   }

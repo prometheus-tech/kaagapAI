@@ -74,7 +74,6 @@ class DeleteClientDialog extends Component {
     return (
       <Mutation
         mutation={DELETE_CLIENT}
-        onCompleted={() => closed()}
         update={(
           cache,
           {
@@ -96,6 +95,8 @@ class DeleteClientDialog extends Component {
               getClients: getClients.filter(c => parseInt(c.c_id) !== c_id)
             }
           });
+
+          closed();
         }}
       >
         {(deleteClient, { loading, error, data }) => (
@@ -156,4 +157,6 @@ class DeleteClientDialog extends Component {
   }
 }
 
-export default withMobileDialog()(withStyles(styles)(DeleteClientDialog));
+export default withMobileDialog({ breakpoint: 'xs' })(
+  withStyles(styles)(DeleteClientDialog)
+);
