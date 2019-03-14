@@ -2,11 +2,18 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Auxilliary from '../Auxilliary/Auxilliary';
+import Header from '../../components/Navigation/Header/Header';
 import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   mainGrid: {
-    padding: 24
+    padding: theme.spacing.unit * 6,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing.unit * 4
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing.unit * 2
+    }
   }
 });
 
@@ -15,7 +22,7 @@ function Layout(props) {
 
   return (
     <Auxilliary>
-      {/* Header goes here */}
+      <Header />
       <Grid container className={classes.mainGrid}>
         {props.children}
       </Grid>

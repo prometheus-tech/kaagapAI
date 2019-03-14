@@ -7,9 +7,10 @@ import { Query } from 'react-apollo';
 
 import Grid from '@material-ui/core/Grid';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ClientCard from '../ClientCard/ClientCard';
 
-function ClientsCards() {
+function ClientsCards(props) {
   const p_id = parseInt(localStorage.getItem(USER_ID));
 
   return (
@@ -17,7 +18,23 @@ function ClientsCards() {
       <Query query={CLIENTS} variables={{ p_id }}>
         {({ loading, error, data }) => {
           if (loading) {
-            return <p>Loading...</p>;
+            return (
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                justify="center"
+                alignItems="center"
+                style={{
+                  minHeight: '40vh',
+                  overflow: 'hidden'
+                }}
+              >
+                <Grid item>
+                  <CircularProgress />
+                </Grid>
+              </Grid>
+            );
           }
 
           if (error) {
