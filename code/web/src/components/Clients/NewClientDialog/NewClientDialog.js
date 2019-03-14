@@ -6,7 +6,10 @@ import ADD_CLIENT from '../../../graphql/mutations/addClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../graphql/queries/clients';
 
+import { withSnackbar } from 'notistack';
+
 import { withStyles } from '@material-ui/core/styles';
+import SimpleSnackbar from '../../UI/SimpleSnackbar/SimpleSnackbar';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
@@ -59,7 +62,7 @@ class NewClientDialog extends Component {
       lname: '',
       gender: '',
       birthdate: '',
-      open: false
+      isDialogOpened: false
     };
   }
 
@@ -69,7 +72,7 @@ class NewClientDialog extends Component {
 
   openNewClientDialogHandler = () => {
     this.setState({
-      open: true
+      isDialogOpened: true
     });
   };
 
@@ -79,13 +82,20 @@ class NewClientDialog extends Component {
       lname: '',
       gender: '',
       birthdate: '',
-      open: false
+      isDialogOpened: false
     });
   };
 
   render() {
     const { classes, fullScreen } = this.props;
-    const { open, p_id, fname, lname, gender, birthdate } = this.state;
+    const {
+      isDialogOpened,
+      p_id,
+      fname,
+      lname,
+      gender,
+      birthdate
+    } = this.state;
 
     return (
       <Auxilliary>
@@ -118,128 +128,129 @@ class NewClientDialog extends Component {
                 getClients
               }
             });
-
-            this.closeNewClientDialogHandler();
           }}
-          optimisticResponse={{
-            __typename: 'Mutation',
-            addClient: {
-              __typename: 'Client',
-              c_id: Math.round(Math.random() * -1000000),
-              fname: fname,
-              lname: lname,
-              gender: gender,
-              birthdate: birthdate,
-              no_of_sessions: 0
-            }
+          onCompleted={data => {
+            const { fname, lname } = data.addClient;
+
+            this.props.enqueueSnackbar(
+              fname + ' ' + lname + ' successfully added!'
+            );
           }}
         >
-          {(addClient, { loading, error, data }) => (
-            <Dialog
-              open={open}
-              onClose={this.closeNewClientDialogHandler}
-              fullWidth={true}
-              fullScreen={fullScreen}
-              maxWidth="sm"
-            >
-              <DialogTitle onClose={this.closeNewClientDialogHandler}>
-                New Client
-              </DialogTitle>
-              <DialogContent>
-                <Grid container spacing={16}>
-                  <Grid item xs={12}>
-                    <Grid container spacing={8}>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          label="First name"
-                          className={classes.dense}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth
-                          name="fname"
-                          onChange={this.inputChangeHandler}
-                          value={fname}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          label="Last name"
-                          className={classes.dense}
-                          margin="dense"
-                          variant="outlined"
-                          fullWidth
-                          name="lname"
-                          onChange={this.inputChangeHandler}
-                          value={lname}
-                        />
+          {(addClient, { loading }) => {
+            if (loading) {
+              return <SimpleSnackbar isOpened={loading} />;
+            }
+
+            return (
+              <Dialog
+                open={isDialogOpened}
+                onClose={this.closeNewClientDialogHandler}
+                fullWidth={true}
+                fullScreen={fullScreen}
+                maxWidth="sm"
+              >
+                <DialogTitle onClose={this.closeNewClientDialogHandler}>
+                  New Client
+                </DialogTitle>
+                <DialogContent>
+                  <Grid container spacing={16}>
+                    <Grid item xs={12}>
+                      <Grid container spacing={8}>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            label="First name"
+                            className={classes.dense}
+                            margin="dense"
+                            variant="outlined"
+                            fullWidth
+                            name="fname"
+                            onChange={this.inputChangeHandler}
+                            value={fname}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            label="Last name"
+                            className={classes.dense}
+                            margin="dense"
+                            variant="outlined"
+                            fullWidth
+                            name="lname"
+                            onChange={this.inputChangeHandler}
+                            value={lname}
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} className={classes.inputGroup}>
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend">Gender</FormLabel>
-                      <RadioGroup
-                        className={classes.group}
-                        row
-                        name="gender"
+                    <Grid item xs={12} className={classes.inputGroup}>
+                      <FormControl component="fieldset">
+                        <FormLabel component="legend">Gender</FormLabel>
+                        <RadioGroup
+                          className={classes.group}
+                          row
+                          name="gender"
+                          onChange={this.inputChangeHandler}
+                          value={gender}
+                        >
+                          <FormControlLabel
+                            value="M"
+                            control={<Radio color="primary" />}
+                            label="Male"
+                            labelPlacement="end"
+                          />
+                          <FormControlLabel
+                            value="F"
+                            control={<Radio color="primary" />}
+                            label="Female"
+                            labelPlacement="end"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Birthdate"
+                        type="date"
+                        variant="outlined"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        fullWidth
+                        name="birthdate"
                         onChange={this.inputChangeHandler}
-                        value={gender}
-                      >
-                        <FormControlLabel
-                          value="M"
-                          control={<Radio color="primary" />}
-                          label="Male"
-                          labelPlacement="end"
-                        />
-                        <FormControlLabel
-                          value="F"
-                          control={<Radio color="primary" />}
-                          label="Female"
-                          labelPlacement="end"
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                        value={birthdate}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Birthdate"
-                      type="date"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      fullWidth
-                      name="birthdate"
-                      onChange={this.inputChangeHandler}
-                      value={birthdate}
-                    />
-                  </Grid>
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.closeNewClientDialogHandler}>
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => {
-                    addClient({
-                      variables: {
-                        p_id: p_id,
-                        fname: fname,
-                        lname: lname,
-                        gender: gender,
-                        birthdate: birthdate
-                      }
-                    });
-                  }}
-                  color="primary"
-                  autoFocus
-                >
-                  Add Client
-                </Button>
-              </DialogActions>
-            </Dialog>
-          )}
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.closeNewClientDialogHandler}>
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      addClient({
+                        variables: {
+                          p_id: p_id,
+                          fname: fname,
+                          lname: lname,
+                          gender: gender,
+                          birthdate: birthdate
+                        }
+                      });
+
+                      this.closeNewClientDialogHandler();
+                    }}
+                    color="primary"
+                    autoFocus
+                  >
+                    Add Client
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            );
+          }}
         </Mutation>
       </Auxilliary>
     );
@@ -247,5 +258,5 @@ class NewClientDialog extends Component {
 }
 
 export default withMobileDialog({ breakpoint: 'xs' })(
-  withStyles(styles)(NewClientDialog)
+  withStyles(styles)(withSnackbar(NewClientDialog))
 );

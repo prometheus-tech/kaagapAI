@@ -4,6 +4,9 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 
+import { SnackbarProvider } from 'notistack';
+
+import Button from '@material-ui/core/Button';
 import Layout from './hoc/Layout/Layout';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 
@@ -33,9 +36,19 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <Layout>
-          <ClientsPage />
-        </Layout>
+        <SnackbarProvider
+          maxSnack={3}
+          preventDuplicate
+          action={[
+            <Button color="secondary" size="small">
+              {'Dismiss'}
+            </Button>
+          ]}
+        >
+          <Layout>
+            <ClientsPage />
+          </Layout>
+        </SnackbarProvider>
       </ApolloProvider>
     );
   }

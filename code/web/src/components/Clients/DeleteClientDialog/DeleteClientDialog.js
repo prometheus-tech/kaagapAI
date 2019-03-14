@@ -6,6 +6,8 @@ import DELETE_CLIENT from '../../../graphql/mutations/deleteClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../graphql/queries/clients';
 
+import { withSnackbar } from 'notistack';
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -65,11 +67,14 @@ class DeleteClientDialog extends Component {
     const {
       isOpened,
       closed,
-      clientName,
       clientId,
+      fname,
+      lname,
       classes,
       fullScreen
     } = this.props;
+
+    const clientName = fname + ' ' + lname;
 
     return (
       <Mutation
@@ -78,7 +83,7 @@ class DeleteClientDialog extends Component {
           cache,
           {
             data: {
-              deleteClient: { c_id }
+              deleteClient: { c_id, fname, lname }
             }
           }
         ) => {
@@ -92,14 +97,27 @@ class DeleteClientDialog extends Component {
           cache.writeQuery({
             ...getClientsQueryParams,
             data: {
-              getClients: getClients.filter(c => parseInt(c.c_id) !== c_id)
+              getClients: getClients.filter(
+                c => parseInt(c.c_id) !== parseInt(c_id)
+              )
             }
           });
 
-          closed();
+          this.props.enqueueSnackbar(
+            fname + ' ' + lname + ' successfully deleted!'
+          );
+        }}
+        optimisticResponse={{
+          __typename: 'Mutation',
+          deleteClient: {
+            __typename: 'Client',
+            c_id: parseInt(clientId),
+            fname: fname,
+            lname: lname
+          }
         }}
       >
-        {(deleteClient, { loading, error, data }) => (
+        {deleteClient => (
           <Dialog
             open={isOpened}
             onClose={closed}
@@ -141,13 +159,14 @@ class DeleteClientDialog extends Component {
               <Button onClick={closed}>Cancel</Button>
               <Button
                 className={classes.deleteColor}
-                disabled={!(this.state.clientName === clientName) || loading}
-                onClick={() =>
-                  deleteClient({ variables: { c_id: parseInt(clientId) } })
-                }
+                disabled={!(this.state.clientName === clientName)}
+                onClick={() => {
+                  deleteClient({ variables: { c_id: parseInt(clientId) } });
+                  closed();
+                }}
                 autoFocus
               >
-                {loading ? 'Deleting...' : 'Delete'}
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -158,5 +177,5 @@ class DeleteClientDialog extends Component {
 }
 
 export default withMobileDialog({ breakpoint: 'xs' })(
-  withStyles(styles)(DeleteClientDialog)
+  withStyles(styles)(withSnackbar(DeleteClientDialog))
 );

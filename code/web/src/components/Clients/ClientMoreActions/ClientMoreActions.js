@@ -79,7 +79,8 @@ class ClientMoreActions extends Component {
         isOpened={deleteClientDialogOpened}
         closed={this.closeDeleteClientDialogHandler}
         clientId={c_id}
-        clientName={fname + ' ' + lname}
+        fname={fname}
+        lname={lname}
       />
     ) : null;
 

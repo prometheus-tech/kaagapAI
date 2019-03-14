@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import EDIT_CLIENT from '../../../graphql/mutations/editClient';
 import { Mutation } from 'react-apollo';
 
+import { withSnackbar } from 'notistack';
+
 import { withStyles } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
@@ -110,116 +112,123 @@ class EditClientDialog extends Component {
           }
         }}
       >
-        {(editClient, { loading, error, data }) => (
-          <Dialog
-            open={isOpened}
-            onClose={closed}
-            fullWidth={true}
-            fullScreen={fullScreen}
-            maxWidth="sm"
-          >
-            <DialogTitle onClose={this.closeNewClientDialogHandler}>
-              Edit Client
-            </DialogTitle>
-            <DialogContent>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Grid container spacing={8}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        label="First name"
-                        className={classes.dense}
-                        margin="dense"
-                        variant="outlined"
-                        fullWidth
-                        name="fname"
-                        onChange={this.inputChangeHandler}
-                        value={fname}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        label="Last name"
-                        className={classes.dense}
-                        margin="dense"
-                        variant="outlined"
-                        fullWidth
-                        name="lname"
-                        onChange={this.inputChangeHandler}
-                        value={lname}
-                      />
+        {editClient => {
+          return (
+            <Dialog
+              open={isOpened}
+              onClose={closed}
+              fullWidth={true}
+              fullScreen={fullScreen}
+              maxWidth="sm"
+            >
+              <DialogTitle onClose={this.closeNewClientDialogHandler}>
+                Edit Client
+              </DialogTitle>
+              <DialogContent>
+                <Grid container spacing={16}>
+                  <Grid item xs={12}>
+                    <Grid container spacing={8}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="First name"
+                          className={classes.dense}
+                          margin="dense"
+                          variant="outlined"
+                          fullWidth
+                          name="fname"
+                          onChange={this.inputChangeHandler}
+                          value={fname}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Last name"
+                          className={classes.dense}
+                          margin="dense"
+                          variant="outlined"
+                          fullWidth
+                          name="lname"
+                          onChange={this.inputChangeHandler}
+                          value={lname}
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={12} className={classes.inputGroup}>
-                  <FormControl component="fieldset">
-                    <FormLabel component="legend">Gender</FormLabel>
-                    <RadioGroup
-                      className={classes.group}
-                      row
-                      name="gender"
+                  <Grid item xs={12} className={classes.inputGroup}>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Gender</FormLabel>
+                      <RadioGroup
+                        className={classes.group}
+                        row
+                        name="gender"
+                        onChange={this.inputChangeHandler}
+                        value={gender}
+                      >
+                        <FormControlLabel
+                          value="M"
+                          control={<Radio color="primary" />}
+                          label="Male"
+                          labelPlacement="end"
+                        />
+                        <FormControlLabel
+                          value="F"
+                          control={<Radio color="primary" />}
+                          label="Female"
+                          labelPlacement="end"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Birthdate"
+                      type="date"
+                      variant="outlined"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      fullWidth
+                      name="birthdate"
                       onChange={this.inputChangeHandler}
-                      value={gender}
-                    >
-                      <FormControlLabel
-                        value="M"
-                        control={<Radio color="primary" />}
-                        label="Male"
-                        labelPlacement="end"
-                      />
-                      <FormControlLabel
-                        value="F"
-                        control={<Radio color="primary" />}
-                        label="Female"
-                        labelPlacement="end"
-                      />
-                    </RadioGroup>
-                  </FormControl>
+                      value={birthdate}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Birthdate"
-                    type="date"
-                    variant="outlined"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    fullWidth
-                    name="birthdate"
-                    onChange={this.inputChangeHandler}
-                    value={birthdate}
-                  />
-                </Grid>
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={closed}>Cancel</Button>
-              <Button
-                onClick={() => {
-                  editClient({
-                    variables: {
-                      c_id: c_id,
-                      fname: fname,
-                      lname: lname,
-                      gender: gender,
-                      birthdate: birthdate
-                    }
-                  });
-                  closed();
-                }}
-                color="primary"
-                autoFocus
-              >
-                Save Changes
-              </Button>
-            </DialogActions>
-          </Dialog>
-        )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closed}>Cancel</Button>
+                <Button
+                  onClick={() => {
+                    editClient({
+                      variables: {
+                        c_id: c_id,
+                        fname: fname,
+                        lname: lname,
+                        gender: gender,
+                        birthdate: birthdate
+                      }
+                    });
+
+                    closed();
+
+                    this.props.enqueueSnackbar(
+                      fname + ' ' + lname + ' successfully edited!'
+                    );
+                  }}
+                  color="primary"
+                  autoFocus
+                >
+                  Save Changes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          );
+        }}
       </Mutation>
     );
   }
 }
 
 export default withMobileDialog({ breakpoint: 'xs' })(
-  withStyles(styles)(EditClientDialog)
+  withStyles(styles)(withSnackbar(EditClientDialog))
 );
