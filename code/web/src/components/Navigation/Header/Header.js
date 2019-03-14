@@ -23,55 +23,10 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20
   },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block'
-    }
-  },
   logo: {
     margin: 10,
     width: 40,
     height: 40
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: '#e0f7fa',
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 3,
-    height: '2.5rem',
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: 'auto'
-    }
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#bbdefb'
-  },
-  inputRoot: {
-    color: '#333333',
-    width: '100%',
-    height: '100%'
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200
-    }
   },
   sectionDesktop: {
     display: 'none',
@@ -149,7 +104,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.root}>
+        <AppBar position="static" className={classes.root} elevation={4}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}

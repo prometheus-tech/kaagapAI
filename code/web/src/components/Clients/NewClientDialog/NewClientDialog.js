@@ -36,7 +36,7 @@ const styles = theme => ({
     fontSize: 16,
     '&:hover': {
       backgroundColor: lightBlue[700],
-      boxShadow: theme.shadows[8]
+      boxShadow: theme.shadows[10]
     },
     margin: theme.spacing.unit
   },

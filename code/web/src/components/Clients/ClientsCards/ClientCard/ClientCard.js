@@ -5,9 +5,9 @@ import Avatar from '@material-ui/core/Avatar';
 import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import ClientMoreActions from '../ClientMoreActions/ClientMoreActions';
+import ClientMoreActions from '../../ClientMoreActions/ClientMoreActions';
 
-import { getInitials } from '../../../util/helperFunctions';
+import { getInitials } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   avatar: {
@@ -15,7 +15,7 @@ const styles = theme => ({
   },
   card: {
     '&:hover': {
-      boxShadow: theme.shadows[2]
+      boxShadow: theme.shadows[4]
     },
     cursor: 'pointer'
   }
@@ -29,7 +29,7 @@ function ClientCard({ classes, client }) {
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
 
   return (
-    <Card elevation={1} className={classes.card}>
+    <Card elevation={2} className={classes.card}>
       <CardHeader
         avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
         action={<ClientMoreActions client={client} />}

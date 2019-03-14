@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <SnackbarProvider
-          maxSnack={3}
+          maxSnack={1}
           preventDuplicate
           action={[
             <Button color="secondary" size="small">
