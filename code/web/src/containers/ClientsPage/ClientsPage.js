@@ -7,10 +7,12 @@ import { Query } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import SearchField from '../../components/UI/SearchField/SearchField';
+import ViewControl from '../../components/UI/ViewControl/ViewControl';
 
 const styles = theme => ({
   mainContainer: {
@@ -22,6 +24,16 @@ const styles = theme => ({
 });
 
 class ClientsPage extends Component {
+  state = {
+    view: 'card'
+  };
+
+  changeViewHandler = updatedView => {
+    this.setState({
+      view: updatedView
+    });
+  };
+
   render() {
     const p_id = parseInt(localStorage.getItem(USER_ID));
 
@@ -65,6 +77,14 @@ class ClientsPage extends Component {
                     <Grid item xs={12} sm={8} md={6}>
                       <SearchField label="client" />
                     </Grid>
+                    <Hidden xsDown>
+                      <Grid item sm={4} md={3} align="right">
+                        <ViewControl
+                          view={this.state.view}
+                          viewChanged={this.changeViewHandler}
+                        />
+                      </Grid>
+                    </Hidden>
                   </Grid>
                 </Grid>
               ) : null}
