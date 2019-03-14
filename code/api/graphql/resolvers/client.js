@@ -114,13 +114,12 @@ const resolver = {
   deleteClient: ({ c_id }) =>
     models.Client.findOne({
       raw: true,
-      where: { c_id },
-      attributes: ['c_id', 'fname', 'lname']
+      where: { c_id }
     }).then(res => {
       models.Client.destroy({
         where: { c_id }
       });
-      return res; //Returns only the id and name of removed client
+      return res;
     }),
 
   updateClientInformation: ({ c_id, fname, lname, birthdate, gender }) =>
