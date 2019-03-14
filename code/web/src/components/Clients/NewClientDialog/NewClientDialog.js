@@ -8,6 +8,7 @@ import CLIENTS from '../../../graphql/queries/clients';
 
 import { withSnackbar } from 'notistack';
 
+import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleSnackbar from '../../UI/SimpleSnackbar/SimpleSnackbar';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
@@ -29,6 +30,19 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 const styles = theme => ({
+  floatingButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+    backgroundColor: lightBlue[600],
+    boxShadow: theme.shadows[24],
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: lightBlue[700],
+      boxShadow: theme.shadows[10]
+    },
+    zIndex: 2
+  },
   extendedButton: {
     backgroundColor: lightBlue[600],
     color: '#ffffff',
@@ -99,14 +113,28 @@ class NewClientDialog extends Component {
 
     return (
       <Auxilliary>
-        <Fab
-          color="primary"
-          variant="extended"
-          className={classes.extendedButton}
-          onClick={this.openNewClientDialogHandler}
-        >
-          <Add className={classes.extendedIcon} /> New Client
-        </Fab>
+        <Hidden smDown>
+          <Fab
+            color="primary"
+            variant="extended"
+            className={classes.extendedButton}
+            onClick={this.openNewClientDialogHandler}
+          >
+            <Add className={classes.extendedIcon} /> New Client
+          </Fab>
+        </Hidden>
+        <Hidden mdUp>
+          <Fab
+            size="large"
+            color="primary"
+            className={classes.floatingButton}
+            onClick={this.openNewClientDialogHandler}
+            disableRipple={false}
+            disableFocusRipple={false}
+          >
+            <Add />
+          </Fab>
+        </Hidden>
         <Mutation
           mutation={ADD_CLIENT}
           update={(cache, { data: { addClient } }) => {

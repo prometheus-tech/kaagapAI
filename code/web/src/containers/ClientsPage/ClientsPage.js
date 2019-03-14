@@ -13,6 +13,9 @@ import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientD
 import SearchField from '../../components/UI/SearchField/SearchField';
 
 const styles = theme => ({
+  mainContainer: {
+    paddingBottom: theme.spacing.unit * 10
+  },
   controls: {
     marginBottom: theme.spacing.unit * 6
   }
@@ -52,7 +55,7 @@ class ClientsPage extends Component {
           }
 
           return (
-            <Grid container>
+            <Grid container className={classes.mainContainer}>
               {!loading ? (
                 <Grid item xs={12} className={classes.controls}>
                   <Grid container alignItems="center">
