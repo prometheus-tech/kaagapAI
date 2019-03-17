@@ -79,12 +79,10 @@ class NewClientDialog extends Component {
       lname: '',
       gender: '',
       birthdate: '',
-      submitted: false,
       isDialogOpened: false
     };
     // Code for validation
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
   inputChangeHandler = e => {
@@ -106,15 +104,17 @@ class NewClientDialog extends Component {
       isDialogOpened: false
     });
   };
-  // Code for Validation
-  // handleValidationForm(event) {
-  //   const { formDataValidation } = this.state;
-  //   formDataValidation[event.target.name] = event.target.value;
-  //   this.setState({ formDataValidation });
-  // }
-  handleSubmitForm() {
-    this.setState({ submitted: true }, () => {
-      setTimeout(() => this.setState({ submitted: false }), 5000);
+  /**
+   * Code for Validation
+   * This function implements to check if the input is a letter.
+   */
+  componentWillMount() {
+    const letters = '^[A-Za-z]+$';
+    ValidatorForm.addValidationRule('isLetter', value => {
+      if (value == value.match(letters)) {
+        return true;
+      }
+      return false;
     });
   }
 
@@ -129,8 +129,6 @@ class NewClientDialog extends Component {
       birthdate
     } = this.state;
 
-    // Code for Validation
-    const { submitted } = this.state;
     return (
       <Auxilliary>
         <Hidden smDown>
@@ -164,7 +162,6 @@ class NewClientDialog extends Component {
                 p_id: parseInt(localStorage.getItem(USER_ID))
               }
             });
-
             getClients.push(addClient);
 
             cache.writeQuery({
@@ -203,8 +200,8 @@ class NewClientDialog extends Component {
                 </DialogTitle>
                 <DialogContent>
                   <ValidatorForm ref="form">
-                    <Grid container spacing={16}>
-                      <Grid item xs={12}>
+                    <Grid container justify="center" spacing={16}>
+                      <Grid item xs={10}>
                         <Grid container spacing={8}>
                           <Grid item xs={12} sm={6}>
                             <TextValidator
@@ -214,7 +211,7 @@ class NewClientDialog extends Component {
                                 'required',
                                 'minStringLength: ' + 2,
                                 'maxStringLength:' + 12,
-                                'matchRegexp: ^[a-zA-Z]+$'
+                                'isLetter'
                               ]}
                               errorMessages={[
                                 'This field is required',
@@ -222,22 +219,34 @@ class NewClientDialog extends Component {
                                 'Not above 12 characters',
                                 'Please do not include numbers'
                               ]}
+                              withRequiredValidator
                               className={classes.dense}
                               margin="dense"
-                              variant="outlined"
+                              // variant="outlined"
                               fullWidth
                               name="fname"
                               onChange={this.inputChangeHandler}
-                              // onChange={this.inputChangeHandler}
-                              // value={fname}
                             />
                           </Grid>
                           <Grid item xs={12} sm={6}>
-                            <TextField
+                            <TextValidator
                               label="Last name"
+                              validators={[
+                                'required',
+                                'minStringLength: ' + 2,
+                                'maxStringLength:' + 12,
+                                'isLetter'
+                              ]}
+                              errorMessages={[
+                                'This field is required',
+                                'Too short',
+                                'Not above 12 characters',
+                                'Please do not include numbers'
+                              ]}
+                              withRequiredValidator
                               className={classes.dense}
                               margin="dense"
-                              variant="outlined"
+                              // variant="outlined"
                               fullWidth
                               name="lname"
                               onChange={this.inputChangeHandler}
@@ -246,7 +255,7 @@ class NewClientDialog extends Component {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item xs={12} className={classes.inputGroup}>
+                      <Grid item xs={10} className={classes.inputGroup}>
                         <FormControl component="fieldset">
                           <FormLabel component="legend">Gender</FormLabel>
                           <RadioGroup
@@ -255,6 +264,8 @@ class NewClientDialog extends Component {
                             name="gender"
                             onChange={this.inputChangeHandler}
                             value={gender}
+                            validators={'required'}
+                            withRequiredValidator
                           >
                             <FormControlLabel
                               value="M"
@@ -271,11 +282,12 @@ class NewClientDialog extends Component {
                           </RadioGroup>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12}>
+                      <Grid item xs={10}>
                         <TextField
                           label="Birthdate"
                           type="date"
-                          variant="outlined"
+                          validators={['required', 'isDate']}
+                          // variant="outlined"
                           InputLabelProps={{
                             shrink: true
                           }}
@@ -288,7 +300,7 @@ class NewClientDialog extends Component {
                     </Grid>
                   </ValidatorForm>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions mt="5">
                   <Button onClick={this.closeNewClientDialogHandler}>
                     Cancel
                   </Button>
@@ -308,6 +320,7 @@ class NewClientDialog extends Component {
                     }}
                     color="primary"
                     autoFocus
+                    disabled={!this.state.birthdate}
                   >
                     Add Client
                   </Button>
