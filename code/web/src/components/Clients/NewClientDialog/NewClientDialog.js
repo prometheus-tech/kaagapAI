@@ -29,6 +29,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+// import { ValidatorComponent } from 'react-form-validator-core';
+
 const styles = theme => ({
   floatingButton: {
     position: 'fixed',
@@ -76,8 +79,12 @@ class NewClientDialog extends Component {
       lname: '',
       gender: '',
       birthdate: '',
+      submitted: false,
       isDialogOpened: false
     };
+    // Code for validation
+    this.inputChangeHandler = this.inputChangeHandler.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
   inputChangeHandler = e => {
@@ -99,6 +106,17 @@ class NewClientDialog extends Component {
       isDialogOpened: false
     });
   };
+  // Code for Validation
+  // handleValidationForm(event) {
+  //   const { formDataValidation } = this.state;
+  //   formDataValidation[event.target.name] = event.target.value;
+  //   this.setState({ formDataValidation });
+  // }
+  handleSubmitForm() {
+    this.setState({ submitted: true }, () => {
+      setTimeout(() => this.setState({ submitted: false }), 5000);
+    });
+  }
 
   render() {
     const { classes, fullScreen } = this.props;
@@ -111,6 +129,8 @@ class NewClientDialog extends Component {
       birthdate
     } = this.state;
 
+    // Code for Validation
+    const { submitted } = this.state;
     return (
       <Auxilliary>
         <Hidden smDown>
@@ -182,75 +202,91 @@ class NewClientDialog extends Component {
                   New Client
                 </DialogTitle>
                 <DialogContent>
-                  <Grid container spacing={16}>
-                    <Grid item xs={12}>
-                      <Grid container spacing={8}>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            label="First name"
-                            className={classes.dense}
-                            margin="dense"
-                            variant="outlined"
-                            fullWidth
-                            name="fname"
-                            onChange={this.inputChangeHandler}
-                            value={fname}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            label="Last name"
-                            className={classes.dense}
-                            margin="dense"
-                            variant="outlined"
-                            fullWidth
-                            name="lname"
-                            onChange={this.inputChangeHandler}
-                            value={lname}
-                          />
+                  <ValidatorForm ref="form">
+                    <Grid container spacing={16}>
+                      <Grid item xs={12}>
+                        <Grid container spacing={8}>
+                          <Grid item xs={12} sm={6}>
+                            <TextValidator
+                              label="First name"
+                              value={fname}
+                              validators={[
+                                'required',
+                                'minStringLength: ' + 2,
+                                'maxStringLength:' + 12,
+                                'matchRegexp: ^[a-zA-Z]+$'
+                              ]}
+                              errorMessages={[
+                                'This field is required',
+                                'Too short',
+                                'Not above 12 characters',
+                                'Please do not include numbers'
+                              ]}
+                              className={classes.dense}
+                              margin="dense"
+                              variant="outlined"
+                              fullWidth
+                              name="fname"
+                              onChange={this.inputChangeHandler}
+                              // onChange={this.inputChangeHandler}
+                              // value={fname}
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              label="Last name"
+                              className={classes.dense}
+                              margin="dense"
+                              variant="outlined"
+                              fullWidth
+                              name="lname"
+                              onChange={this.inputChangeHandler}
+                              value={lname}
+                            />
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12} className={classes.inputGroup}>
-                      <FormControl component="fieldset">
-                        <FormLabel component="legend">Gender</FormLabel>
-                        <RadioGroup
-                          className={classes.group}
-                          row
-                          name="gender"
+                      <Grid item xs={12} className={classes.inputGroup}>
+                        <FormControl component="fieldset">
+                          <FormLabel component="legend">Gender</FormLabel>
+                          <RadioGroup
+                            className={classes.group}
+                            row
+                            name="gender"
+                            onChange={this.inputChangeHandler}
+                            value={gender}
+                          >
+                            <FormControlLabel
+                              value="M"
+                              control={<Radio color="primary" />}
+                              label="Male"
+                              labelPlacement="end"
+                            />
+                            <FormControlLabel
+                              value="F"
+                              control={<Radio color="primary" />}
+                              label="Female"
+                              labelPlacement="end"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Birthdate"
+                          type="date"
+                          variant="outlined"
+                          InputLabelProps={{
+                            shrink: true
+                          }}
+                          fullWidth
+                          name="birthdate"
                           onChange={this.inputChangeHandler}
-                          value={gender}
-                        >
-                          <FormControlLabel
-                            value="M"
-                            control={<Radio color="primary" />}
-                            label="Male"
-                            labelPlacement="end"
-                          />
-                          <FormControlLabel
-                            value="F"
-                            control={<Radio color="primary" />}
-                            label="Female"
-                            labelPlacement="end"
-                          />
-                        </RadioGroup>
-                      </FormControl>
+                          value={birthdate}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Birthdate"
-                        type="date"
-                        variant="outlined"
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                        fullWidth
-                        name="birthdate"
-                        onChange={this.inputChangeHandler}
-                        value={birthdate}
-                      />
-                    </Grid>
-                  </Grid>
+                  </ValidatorForm>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.closeNewClientDialogHandler}>
