@@ -19,7 +19,7 @@ matrix:
       on:
         branch:
           - dev
-        project: kaagapai
+        project: kaagapai-dev
     - language: node_js
       node_js: lts/*
       services: mysql
