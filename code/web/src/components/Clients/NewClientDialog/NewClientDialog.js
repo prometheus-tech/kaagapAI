@@ -22,7 +22,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -30,7 +29,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-// import { ValidatorComponent } from 'react-form-validator-core';
 
 const styles = theme => ({
   floatingButton: {
@@ -77,11 +75,12 @@ class NewClientDialog extends Component {
       p_id: parseInt(localStorage.getItem(USER_ID)),
       fname: '',
       lname: '',
-      gender: '',
+      gender: 'M',
       birthdate: '',
       isDialogOpened: false
     };
-    // Code for validation
+
+    // Needed for validation
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
   }
 
@@ -99,22 +98,23 @@ class NewClientDialog extends Component {
     this.setState({
       fname: '',
       lname: '',
-      gender: '',
+      gender: 'M',
       birthdate: '',
       isDialogOpened: false
     });
   };
+
   /**
-   * Code for Validation
-   * This function implements to check if the input is a letter.
+   * Custom validators
    */
   componentWillMount() {
-    const letters = '^[A-Za-z]+$';
+    const letters = '^[A-Za-z\\s-]+$';
     ValidatorForm.addValidationRule('isLetter', value => {
-      if (value == value.match(letters)) {
-        return true;
-      }
-      return false;
+      return value.match(letters);
+    });
+    const date = '([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))';
+    ValidatorForm.addValidationRule('isDate', value => {
+      return value.match(date);
     });
   }
 
@@ -195,18 +195,35 @@ class NewClientDialog extends Component {
                 fullScreen={fullScreen}
                 maxWidth="sm"
               >
-                <DialogTitle onClose={this.closeNewClientDialogHandler}>
-                  New Client
-                </DialogTitle>
-                <DialogContent>
-                  <ValidatorForm ref="form">
-                    <Grid container justify="center" spacing={16}>
-                      <Grid item xs={10}>
+                <ValidatorForm
+                  onSubmit={() => {
+                    addClient({
+                      variables: {
+                        p_id: p_id,
+                        fname: fname.trim(),
+                        lname: lname.trim(),
+                        gender: gender,
+                        birthdate: birthdate
+                      }
+                    });
+
+                    this.closeNewClientDialogHandler();
+                  }}
+                >
+                  <DialogTitle>New Client</DialogTitle>
+                  <DialogContent>
+                    <Grid container spacing={16}>
+                      <Grid item xs={12}>
                         <Grid container spacing={8}>
                           <Grid item xs={12} sm={6}>
                             <TextValidator
                               label="First name"
                               value={fname}
+                              variant="outlined"
+                              fullWidth
+                              name="fname"
+                              onChange={this.inputChangeHandler}
+                              margin="dense"
                               validators={[
                                 'required',
                                 'minStringLength: ' + 2,
@@ -219,18 +236,17 @@ class NewClientDialog extends Component {
                                 'Not above 12 characters',
                                 'Please do not include numbers'
                               ]}
-                              withRequiredValidator
-                              className={classes.dense}
-                              margin="dense"
-                              // variant="outlined"
-                              fullWidth
-                              name="fname"
-                              onChange={this.inputChangeHandler}
                             />
                           </Grid>
                           <Grid item xs={12} sm={6}>
                             <TextValidator
                               label="Last name"
+                              value={lname}
+                              variant="outlined"
+                              fullWidth
+                              name="lname"
+                              onChange={this.inputChangeHandler}
+                              margin="dense"
                               validators={[
                                 'required',
                                 'minStringLength: ' + 2,
@@ -243,29 +259,20 @@ class NewClientDialog extends Component {
                                 'Not above 12 characters',
                                 'Please do not include numbers'
                               ]}
-                              withRequiredValidator
-                              className={classes.dense}
-                              margin="dense"
-                              // variant="outlined"
-                              fullWidth
-                              name="lname"
-                              onChange={this.inputChangeHandler}
-                              value={lname}
                             />
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item xs={10} className={classes.inputGroup}>
+                      <Grid item xs={12} className={classes.inputGroup}>
                         <FormControl component="fieldset">
                           <FormLabel component="legend">Gender</FormLabel>
                           <RadioGroup
                             className={classes.group}
                             row
                             name="gender"
-                            onChange={this.inputChangeHandler}
                             value={gender}
+                            onChange={this.inputChangeHandler}
                             validators={'required'}
-                            withRequiredValidator
                           >
                             <FormControlLabel
                               value="M"
@@ -282,49 +289,37 @@ class NewClientDialog extends Component {
                           </RadioGroup>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={10}>
-                        <TextField
-                          label="Birthdate"
+                      <Grid item xs={12}>
+                        <TextValidator
                           type="date"
-                          validators={['required', 'isDate']}
-                          // variant="outlined"
+                          label="Birthdate"
+                          variant="outlined"
                           InputLabelProps={{
                             shrink: true
                           }}
-                          fullWidth
                           name="birthdate"
-                          onChange={this.inputChangeHandler}
                           value={birthdate}
+                          fullWidth
+                          onChange={this.inputChangeHandler}
+                          margin="dense"
+                          validators={['required', 'isDate']}
+                          errorMessages={[
+                            'This field is required',
+                            'Not a valid date'
+                          ]}
                         />
                       </Grid>
                     </Grid>
-                  </ValidatorForm>
-                </DialogContent>
-                <DialogActions mt="5">
-                  <Button onClick={this.closeNewClientDialogHandler}>
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      addClient({
-                        variables: {
-                          p_id: p_id,
-                          fname: fname,
-                          lname: lname,
-                          gender: gender,
-                          birthdate: birthdate
-                        }
-                      });
-
-                      this.closeNewClientDialogHandler();
-                    }}
-                    color="primary"
-                    autoFocus
-                    disabled={!this.state.birthdate}
-                  >
-                    Add Client
-                  </Button>
-                </DialogActions>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.closeNewClientDialogHandler}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" color="primary" autoFocus>
+                      Add Client
+                    </Button>
+                  </DialogActions>
+                </ValidatorForm>
               </Dialog>
             );
           }}
