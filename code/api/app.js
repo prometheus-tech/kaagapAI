@@ -6,7 +6,6 @@ const schema = require('./graphql/schemas/schema');
 const resolver = require('./graphql/resolvers/resolvers');
 const cors = require('cors');
 
-
 const app = express();
 
 app.use(cors());
@@ -16,7 +15,7 @@ app.use(
   expressGraphQL({
     schema: schema,
     rootValue: resolver,
-    graphiql: process.env.DB_HOST_PROD
+    graphiql: process.env.DB_HOST_DEV
   })
 );
 
