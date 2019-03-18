@@ -4,13 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import { getInitials } from '../../../../util/helperFunctions';
 import Moment from 'react-moment';
 import Hidden from '@material-ui/core/Hidden';
+import ClientMoreActions from '../../ClientMoreActions/ClientMoreActions';
 
 const styles = theme => ({
   listItem: {
@@ -37,10 +36,9 @@ const styles = theme => ({
   }
 });
 
-function ClientListItem({
-  classes,
-  client: { fname, lname, no_of_sessions, date_added, last_opened }
-}) {
+function ClientListItem({ classes, client }) {
+  const { fname, lname, date_added, last_opened, no_of_sessions } = client;
+
   const dateAddedFormatted = (
     <Moment format="MMM D, YYYY" withTitle>
       {date_added}
@@ -88,9 +86,7 @@ function ClientListItem({
           </Grid>
         </Hidden>
         <Grid item md={1} sm={1} xs={2} align="right">
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <ClientMoreActions client={client} />
         </Grid>
       </Grid>
     </Paper>
