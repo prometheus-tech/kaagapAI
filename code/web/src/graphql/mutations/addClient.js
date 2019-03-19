@@ -1,5 +1,7 @@
 import { gql } from 'apollo-boost';
 
+import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
+
 const ADD_CLIENT = gql`
   mutation AddClient(
     $p_id: Int!
@@ -16,14 +18,13 @@ const ADD_CLIENT = gql`
       birthdate: $birthdate
     ) {
       __typename
-      c_id
-      fname
-      lname
-      gender
-      birthdate
+      ...ClientBasicInfo
       no_of_sessions
+      date_added
+      last_opened
     }
   }
+  ${CLIENT_BASIC_INFO}
 `;
 
 export default ADD_CLIENT;
