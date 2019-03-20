@@ -227,14 +227,14 @@ class NewClientDialog extends Component {
                               validators={[
                                 'required',
                                 'minStringLength: ' + 2,
-                                'maxStringLength:' + 12,
+                                'maxStringLength:' + 20,
                                 'isLetter'
                               ]}
                               errorMessages={[
                                 'This field is required',
-                                'Too short',
-                                'Not above 12 characters',
-                                'Please do not include numbers'
+                                'First name might be too short',
+                                'First name must be less than 20 characters',
+                                'Please do not include numbers and/or special characters'
                               ]}
                             />
                           </Grid>
@@ -250,14 +250,14 @@ class NewClientDialog extends Component {
                               validators={[
                                 'required',
                                 'minStringLength: ' + 2,
-                                'maxStringLength:' + 12,
+                                'maxStringLength:' + 20,
                                 'isLetter'
                               ]}
                               errorMessages={[
                                 'This field is required',
-                                'Too short',
-                                'Not above 12 characters',
-                                'Please do not include numbers'
+                                'Last name might be too short',
+                                'Last name must be less than 20 characters',
+                                'Please do not include numbers and/or special characters'
                               ]}
                             />
                           </Grid>
