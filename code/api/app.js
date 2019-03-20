@@ -15,7 +15,7 @@ app.use(
   expressGraphQL({
     schema: schema,
     rootValue: resolver,
-    graphiql: process.env.DB_HOST_DEV
+    graphiql: process.env.DB_HOST_TEST
   })
 );
 
