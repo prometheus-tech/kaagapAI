@@ -112,7 +112,7 @@ class NewClientDialog extends Component {
     ValidatorForm.addValidationRule('isLetter', value => {
       return value.match(letters);
     });
-    const date = '([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))';
+    const date = '^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$';
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
     });
