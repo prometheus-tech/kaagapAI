@@ -60,6 +60,7 @@ const resolver = {
       include: [
         {
           model: models.Session,
+          as: 'sessions',
           attributes: [],
           required: false,
           where: { c_id }
