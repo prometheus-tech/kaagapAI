@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Session.associate = function (models) {
     // associations can be defined here
     Session.belongsTo(models.Client, {
+      as: 'client',
       foreignKey: 'c_id',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'

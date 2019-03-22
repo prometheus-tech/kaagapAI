@@ -17,6 +17,7 @@ const typeDefs = `
     last_opened: Date
     p_id: Int!
     no_of_sessions:Int
+    sessions: [Session]
   }
 
   type Query { 
