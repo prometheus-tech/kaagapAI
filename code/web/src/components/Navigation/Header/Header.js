@@ -104,7 +104,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.root} elevation={4}>
+        <AppBar position="fixed" className={classes.root} elevation={4}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}

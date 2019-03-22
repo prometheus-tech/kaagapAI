@@ -66,24 +66,6 @@ class ClientMoreActions extends Component {
     const { c_id, fname, lname } = client;
     const open = Boolean(anchorEl);
 
-    const editClientModal = editClientDialogOpened ? (
-      <EditClientDialog
-        isOpened={editClientDialogOpened}
-        closed={this.closeEditClientDialogHandler}
-        client={client}
-      />
-    ) : null;
-
-    const deleteClientDialog = deleteClientDialogOpened ? (
-      <DeleteClientDialog
-        isOpened={deleteClientDialogOpened}
-        closed={this.closeDeleteClientDialogHandler}
-        clientId={c_id}
-        fname={fname}
-        lname={lname}
-      />
-    ) : null;
-
     return (
       <Auxilliary>
         <IconButton onClick={this.openMoreActionsHandler}>
@@ -103,7 +85,7 @@ class ClientMoreActions extends Component {
           }}
         >
           <List>
-            <ListItem button onClick={this.openEditClientDialogHandler}>
+            <ListItem button onClick={e => this.openEditClientDialogHandler(e)}>
               <ListItemText primary="Edit" />
             </ListItem>
             <ListItem button>
@@ -114,8 +96,18 @@ class ClientMoreActions extends Component {
             </ListItem>
           </List>
         </Popover>
-        {editClientModal}
-        {deleteClientDialog}
+        <EditClientDialog
+          isOpened={editClientDialogOpened}
+          closed={this.closeEditClientDialogHandler}
+          client={client}
+        />
+        <DeleteClientDialog
+          isOpened={deleteClientDialogOpened}
+          closed={this.closeDeleteClientDialogHandler}
+          clientId={c_id}
+          fname={fname}
+          lname={lname}
+        />
       </Auxilliary>
     );
   }

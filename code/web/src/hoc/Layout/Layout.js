@@ -14,7 +14,8 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing.unit * 2
     }
-  }
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 function Layout(props) {
@@ -23,6 +24,7 @@ function Layout(props) {
   return (
     <Auxilliary>
       <Header />
+      <div className={classes.toolbar} />
       <Grid container className={classes.mainGrid}>
         {props.children}
       </Grid>
