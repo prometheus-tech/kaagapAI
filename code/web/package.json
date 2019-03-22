@@ -1,12 +1,21 @@
 {
-  "name": "web",
+  "name": "kaagapai-integration",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "apollo-boost": "^0.3.1",
+    "apollo-cache-inmemory": "^1.5.1",
+    "graphql": "^14.1.1",
+    "moment": "^2.24.0",
+    "notistack": "^0.5.0",
+    "react": "^16.8.3",
+    "react-apollo": "^2.5.1",
+    "react-dom": "^16.8.3",
+    "react-form-validator-core": "^0.6.2",
+    "react-material-ui-form-validator": "^2.0.7",
+    "react-moment": "^0.8.4",
     "react-scripts": "2.1.5"
   },
   "scripts": {
@@ -23,9 +32,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "coveralls": "^3.0.2",
-    "jest": "^24.1.0"
-  }
+  ]
 }
