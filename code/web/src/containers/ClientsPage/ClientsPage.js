@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import ClientsCards from '../../components/Clients/ClientsCards/ClientsCards';
+import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import SearchField from '../../components/UI/SearchField/SearchField';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
