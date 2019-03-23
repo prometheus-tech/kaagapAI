@@ -8,7 +8,6 @@ import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import SearchField from '../../components/UI/SearchField/SearchField';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
-import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 
 const styles = theme => ({
   mainContainer: {
