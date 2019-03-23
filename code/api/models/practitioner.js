@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Practitioner = sequelize.define('Practitioner', {
     p_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     email: DataTypes.STRING,
     phone_no: DataTypes.CHAR,
@@ -12,25 +13,24 @@ module.exports = (sequelize, DataTypes) => {
     lname: DataTypes.STRING,
     license: DataTypes.CHAR,
     profession: DataTypes.STRING,
-    status: DataTypes.ENUM('pending','deactivated','active'),
+    status: DataTypes.ENUM('pending', 'deactivated', 'active'),
     date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
     session_token: DataTypes.CHAR
-  }, {
-    timestamps: false
   });
 
   Practitioner.removeAttribute('id');
 
-  Practitioner.associate = function(models) {
-    // associations can be defined here
+  Practitioner.associate = models => {
     Practitioner.hasMany(models.Client, {
-      foreignKey: 'c_id'
+      foreignKey: 'p_id',
+      sourceKey: 'p_id'
     });
-    
+
     Practitioner.hasMany(models.Practitioner_Feedback, {
-      foreignKey: 'p_id'
+      foreignKey: 'p_id',
+      sourceKey: 'p_id'
     });
   };
 

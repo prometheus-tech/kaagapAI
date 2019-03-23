@@ -10,7 +10,11 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST_DEV,
     port: process.env.DB_PORT,
     operatorsAliases: false,
-    logging: false
+    logging: false,
+    define: {
+      underscored: true,
+      timestamps: false
+    }
   }
 );
 
