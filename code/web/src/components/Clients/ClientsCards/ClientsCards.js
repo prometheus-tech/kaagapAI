@@ -25,7 +25,7 @@ function ClientsCards() {
 
         return (
           <Grid container spacing={16}>
-            {data.getClients.map(client => {
+            {data.clients.map(client => {
               return (
                 <Grid item key={client.c_id} xs={12} sm={6} md={4} lg={3}>
                   <ClientCard client={client} />

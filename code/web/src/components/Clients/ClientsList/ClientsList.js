@@ -97,7 +97,7 @@ function ClientsList(props) {
               className={classes.listContainer}
               alignItems="center"
             >
-              {data.getClients.map(client => {
+              {data.clients.map(client => {
                 return (
                   <Grid item key={client.c_id} xs={12}>
                     <ClientListItem client={client} />

@@ -1,6 +1,5 @@
-const typeDefs = `
+export default `
   scalar Date 
-  scalar JSON
 
   enum Type {
     PDF
@@ -24,5 +23,4 @@ const typeDefs = `
 
     getSessionDocument(sd_id: Int!): Session!
   }
-`
-module.exports = typeDefs;
+`;

@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     last_opened: DataTypes.DATE
   });
 
-  Client.removeAttribute('id');
-
   Client.associate = models => {
     Client.belongsTo(models.Practitioner, {
       foreignKey: 'p_id',

@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize(
   process.env.DB_NAME_DEV,
@@ -35,4 +35,4 @@ Object.keys(models).forEach(modelName => {
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
-module.exports = models;
+export default models;

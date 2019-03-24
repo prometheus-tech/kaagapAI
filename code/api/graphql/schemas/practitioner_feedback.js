@@ -1,6 +1,5 @@
-const typeDefs = `
+export default `
   scalar Date 
-  scalar JSON
 
   type PractitionerFeedback {
     pf_id: Int!
@@ -10,5 +9,4 @@ const typeDefs = `
     date_submitted: Date!
     p_id: Int!
   }
-`
-module.exports = typeDefs;
+`;

@@ -3,8 +3,8 @@ import { gql } from 'apollo-boost';
 import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 
 const CLIENT = gql`
-  query GetClient($c_id: Int!) {
-    getClient(c_id: $c_id) {
+  query client($c_id: Int!) {
+    client(c_id: $c_id) {
       __typename
       ...ClientBasicInfo
       date_added

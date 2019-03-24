@@ -1,141 +1,88 @@
-const Sequelize = require('sequelize');
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const GraphQlJSON = require('graphql-type-json');
-const models = require('../../models');
-
-const resolver = {
-  JSON: GraphQlJSON,
-  Date: new GraphQLScalarType({
-    name: 'Date',
-    parseValue(value) {
-      return new Date(value);
+export default {
+  Client: {
+    sessions: ({ c_id }, args, { models }) => {
+      return models.Session.findAll({ where: { c_id } });
     },
-    serialize(value) {
-      return value.getTime();
-    },
-    parseLiteral(ast) {
-      if (ast.kind === Kind.INT) {
-        return new Date(ast.value);
-      }
-
-      return null;
+    no_of_sessions: ({ c_id }, args, { models }) => {
+      return models.Session.count({ where: { c_id } });
     }
-  }),
-
-  //Query
-  getClients: ({ p_id }) =>
-    models.Client.findAll({
-      raw: true,
-      attributes: {
-        include: [
-          [
-            Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')),
-            'no_of_sessions'
-          ]
-        ]
-      },
-      include: [
-        {
-          model: models.Session,
-          attributes: [],
-          required: false
-        }
-      ],
-      group: ['Client.c_id'],
-      where: { p_id }
-    }),
-
-  getClient: ({ c_id }) =>
-    models.Client.findOne({
-      raw: true,
-      attributes: {
-        include: [
-          [
-            Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')),
-            'no_of_sessions'
-          ]
-        ]
-      },
-      include: [
-        {
-          model: models.Session,
-          attributes: [],
-          required: false,
-          where: { c_id }
-        }
-      ],
-      where: { c_id }
-    }).then(res => {
-      models.Client.update(
-        { last_opened: new Date() },
-        {
-          where: { c_id }
-        }
-      );
-
-      return res;
-    }),
-
-  //Mutations
-  addClient: ({ fname, lname, gender, birthdate, p_id }) =>
-    models.Client.create({
-      fname,
-      lname,
-      gender,
-      birthdate,
-      p_id,
-      date_added: new Date()
-    }).then(res => {
-      const { c_id } = res.dataValues;
-
-      return models.Client.findOne({
+  },
+  Query: {
+    clients: (parent, { p_id }, { models }) => {
+      return models.Client.findAll({
         raw: true,
-        attributes: {
-          include: [
-            [
-              Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')),
-              'no_of_sessions'
-            ]
-          ]
-        },
-        include: [
-          {
-            model: models.Session,
-            attributes: [],
-            required: false,
-            where: { c_id }
-          }
-        ],
-        where: { c_id }
+        where: { p_id }
       });
-    }),
-
-  deleteClient: ({ c_id }) =>
-    models.Client.findOne({
-      raw: true,
-      where: { c_id }
-    }).then(res => {
-      models.Client.destroy({
-        where: { c_id }
+    },
+    client: (parent, { c_id }, { models }) => {
+      return models.Client.findOne({
+        where: { c_id },
+        raw: true
       });
-      return res;
-    }),
-
-  updateClientInformation: ({ c_id, fname, lname, birthdate, gender }) =>
-    models.Client.update(
-      {
+    }
+  },
+  Mutation: {
+    addClient: (parent, { fname, lname, gender, birthdate, p_id }, models) =>
+      models.Client.create({
         fname,
         lname,
+        gender,
         birthdate,
-        gender
-      },
-      {
-        where: { c_id },
-        returning: false
-      }
-    ).then(
-      res =>
+        p_id,
+        date_added: new Date()
+      }).then(res => {
+        const { c_id } = res.dataValues;
+
+        return models.Client.findOne({
+          raw: true,
+          attributes: {
+            include: [
+              [
+                Sequelize.fn('COUNT', Sequelize.col('Sessions.session_id')),
+                'no_of_sessions'
+              ]
+            ]
+          },
+          include: [
+            {
+              model: models.Session,
+              attributes: [],
+              required: false,
+              where: { c_id }
+            }
+          ],
+          where: { c_id }
+        });
+      }),
+
+    deleteClient: (parent, { c_id }, { models }) =>
+      models.Client.findOne({
+        raw: true,
+        where: { c_id }
+      }).then(res => {
+        models.Client.destroy({
+          where: { c_id }
+        });
+        return res;
+      }),
+
+    updateClientInformation: (
+      parent,
+      { c_id, fname, lname, birthdate, gender },
+      { models }
+    ) =>
+      models.Client.update(
+        {
+          fname,
+          lname,
+          birthdate,
+          gender
+        },
+        {
+          where: { c_id },
+          returning: false
+        }
+      ).then(res =>
         models.Client.findOne({
           raw: true,
           attributes: {
@@ -155,8 +102,7 @@ const resolver = {
             }
           ],
           where: { c_id }
-        }) //returns the fields updated
-    )
+        })
+      )
+  }
 };
-
-module.exports = resolver;

@@ -1,6 +1,5 @@
-const typeDefs = `
-  scalar Date 
-  scalar JSON
+export default `
+  scalar Date
 
   enum Gender {
     M
@@ -16,14 +15,14 @@ const typeDefs = `
     date_added: Date!
     last_opened: Date
     p_id: Int!
-    no_of_sessions:Int
-    sessions: [Session]
+    no_of_sessions: Int
+    sessions: [Session!]
   }
 
   type Query { 
-    getClients(p_id: Int!): [Client]!
-
-    getClient(c_id: Int!): Client!
+    clients(p_id: Int!): [Client!]
+    
+    client(c_id: Int!): Client
   }
 
   type Mutation {
@@ -34,4 +33,3 @@ const typeDefs = `
     updateClientInformation(c_id: Int!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
   }
 `;
-module.exports = typeDefs;

@@ -156,13 +156,13 @@ class NewClientDialog extends Component {
         <Mutation
           mutation={ADD_CLIENT}
           update={(cache, { data: { addClient } }) => {
-            const { getClients } = cache.readQuery({
+            const { clients } = cache.readQuery({
               query: CLIENTS,
               variables: {
                 p_id: parseInt(localStorage.getItem(USER_ID))
               }
             });
-            getClients.push(addClient);
+            clients.push(addClient);
 
             cache.writeQuery({
               query: CLIENTS,
@@ -170,7 +170,7 @@ class NewClientDialog extends Component {
                 p_id: parseInt(localStorage.getItem(USER_ID))
               },
               data: {
-                getClients
+                clients
               }
             });
           }}

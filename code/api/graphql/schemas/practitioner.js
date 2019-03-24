@@ -1,6 +1,5 @@
-const typeDefs = `
+export default `
   scalar Date 
-  scalar JSON
   
   enum Status {
     pending
@@ -23,5 +22,4 @@ const typeDefs = `
     last_logged: Date
     session_token: String
   }
-`
-module.exports = typeDefs;
+`;

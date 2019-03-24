@@ -1,23 +1,20 @@
-const express = require('express');
-const expressGraphQL = require('express-graphql');
-const dotenv = require('dotenv').config();
-const models = require('./models');
-const schema = require('./graphql/schemas/schema');
-const resolver = require('./graphql/resolvers/resolvers');
-const cors = require('cors');
+import express from 'express';
+import { ApolloServer, gql } from 'apollo-server-express';
+import typeDefs from './graphql/schemas/schema';
+import resolvers from './graphql/resolvers/resolvers';
+import models from './models';
+import cors from 'cors';
+
+const server = new ApolloServer({
+  typeDefs: gql(typeDefs),
+  resolvers,
+  context: { models }
+});
 
 const app = express();
 
 app.use(cors());
-
-app.use(
-  '/graphql',
-  expressGraphQL({
-    schema: schema,
-    rootValue: resolver,
-    graphiql: process.env.DB_HOST_DEV
-  })
-);
+server.applyMiddleware({ app });
 
 models.sequelize
   .sync()

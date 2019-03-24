@@ -1,12 +1,8 @@
-const { mergeResolvers } = require('merge-graphql-schemas');
-const clientResolver = require('./client');
-const sessionResolver = require('./session');
-const sessionDocumentResolver = require('./session_documents');
+import { mergeResolvers } from 'merge-graphql-schemas';
+import clientResolver from './client';
+import sessionResolver from './session';
+import sessionDocumentResolver from './session_documents';
 
-const resolvers = [
-  clientResolver,
-  sessionResolver,
-  sessionDocumentResolver
-]
+const resolvers = [clientResolver, sessionResolver, sessionDocumentResolver];
 
-module.exports = mergeResolvers(resolvers);
+export default mergeResolvers(resolvers);

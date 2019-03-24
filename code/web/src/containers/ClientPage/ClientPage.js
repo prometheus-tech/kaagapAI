@@ -110,7 +110,7 @@ class ClientPage extends Component {
                     gutterBottom={false}
                   >
                     <PersonIcon className={classes.breadCrumbIcon} />
-                    {data.getClient.fname + ' ' + data.getClient.lname}
+                    {data.client.fname + ' ' + data.client.lname}
                     <IconButton
                       component="span"
                       onClick={
@@ -128,7 +128,7 @@ class ClientPage extends Component {
                 isOpened={isClientDetailsOpened}
                 opened={this.openClientDetailsHandler}
                 closed={this.closeClientDetailesHandler}
-                client={data.getClient}
+                client={data.client}
               />
             </div>
           );
