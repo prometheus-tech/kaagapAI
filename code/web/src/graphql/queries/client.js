@@ -9,6 +9,11 @@ const CLIENT = gql`
       ...ClientBasicInfo
       date_added
       last_opened
+      no_of_sessions
+      sessions {
+        session_id
+        session_name
+      }
     }
   }
   ${CLIENT_BASIC_INFO}

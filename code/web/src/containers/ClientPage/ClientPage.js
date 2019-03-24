@@ -84,6 +84,10 @@ class ClientPage extends Component {
             return <LoadingFullScreen />;
           }
 
+          if (error) {
+            return <p>Error</p>;
+          }
+
           return (
             <div className={classes.root}>
               <main
