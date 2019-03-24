@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import 'typeface-overpass';
 
-
 import Logo from '../../../assets/kaagapai-logo.svg';
 
 const styles = theme => ({
@@ -27,7 +26,7 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20
   },
-  nameLogo:{
+  nameLogo: {
     color: blueGrey[800]
   },
   logo: {
@@ -119,7 +118,9 @@ class Header extends Component {
               aria-label="Open drawer"
             />
             <img src={Logo} className={classes.logo} alt="kaagapAI" />
-            <Typography variant="h6" className={classes.nameLogo} noWrap>kaagapAI</Typography>
+            <Typography variant="h6" className={classes.nameLogo} noWrap>
+              kaagapAI
+            </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton

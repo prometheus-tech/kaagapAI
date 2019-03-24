@@ -16,7 +16,7 @@ export default `
     last_opened: Date
     p_id: Int!
     no_of_sessions: Int
-    sessions: [Session!]
+    sessions: [Session]
   }
 
   type Query { 

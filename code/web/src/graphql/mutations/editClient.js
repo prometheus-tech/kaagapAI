@@ -20,8 +20,6 @@ const EDIT_CLIENT = gql`
       __typename
       ...ClientBasicInfo
       no_of_sessions
-      date_added
-      last_opened
     }
   }
   ${CLIENT_BASIC_INFO}
