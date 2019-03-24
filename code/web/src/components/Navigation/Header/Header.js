@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,8 +8,12 @@ import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Typography from '@material-ui/core/Typography';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import 'typeface-overpass';
 
-import Logo from '../../../assets/logo.svg';
+
+import Logo from '../../../assets/kaagapai-logo.svg';
 
 const styles = theme => ({
   root: {
@@ -23,10 +27,13 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20
   },
+  nameLogo:{
+    color: blueGrey[800]
+  },
   logo: {
     margin: 10,
-    width: 40,
-    height: 40
+    width: 45,
+    height: 45
   },
   sectionDesktop: {
     display: 'none',
@@ -42,7 +49,7 @@ const styles = theme => ({
   }
 });
 
-class Header extends React.Component {
+class Header extends Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null
@@ -104,7 +111,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={classes.root} elevation={4}>
+        <AppBar position="fixed" className={classes.root} elevation={1}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -112,6 +119,7 @@ class Header extends React.Component {
               aria-label="Open drawer"
             />
             <img src={Logo} className={classes.logo} alt="kaagapAI" />
+            <Typography variant="h6" className={classes.nameLogo} noWrap>kaagapAI</Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
