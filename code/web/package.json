@@ -19,7 +19,8 @@
     "react-moment": "^0.8.4",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "typeface-overpass": "0.0.72"
   },
   "scripts": {
     "start": "react-scripts start",
