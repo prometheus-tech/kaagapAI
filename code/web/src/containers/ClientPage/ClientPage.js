@@ -64,7 +64,7 @@ class ClientPage extends Component {
     });
   };
 
-  closeClientDetailesHandler = () => {
+  closeClientDetailsHandler = () => {
     this.setState({
       isClientDetailsOpened: false
     });
@@ -119,7 +119,7 @@ class ClientPage extends Component {
                       component="span"
                       onClick={
                         isClientDetailsOpened
-                          ? this.closeClientDetailesHandler
+                          ? this.closeClientDetailsHandler
                           : this.openClientDetailsHandler
                       }
                     >
@@ -131,7 +131,7 @@ class ClientPage extends Component {
               <ClientInformation
                 isOpened={isClientDetailsOpened}
                 opened={this.openClientDetailsHandler}
-                closed={this.closeClientDetailesHandler}
+                closed={this.closeClientDetailsHandler}
                 client={data.client}
               />
             </div>
