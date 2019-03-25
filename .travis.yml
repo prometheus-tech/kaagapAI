@@ -18,8 +18,8 @@ matrix:
         - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
       on:
         branch:
-          - dev
-        project: kaagapai-dev
+          - test
+        project: kaagapai-staging
     - language: node_js
       node_js: lts/*
       services: mysql
@@ -33,14 +33,14 @@ matrix:
       deploy:
         provider: heroku
         api_key:
-          secure: mbLi8eUAeHudHd+JwmwFglMnKOGPzyC19+wH9KoRiF4LNuicYPHvsVqprSjSj0ZVFCgGd5c8J0fKRHjDNuQe599nAzgdn5xKUrKTqedQYJcYbY9kjnnySFEV7t97s1hxSQJd0lflNOsxtQ1u+WLk1fdKegvo35qhKjsgi9uRD68f7ZGZ03vT0AkT16k4kfO0aH02fEGeERBVcVtCx6BS1bKLUrQv8rvgPhZt71afKo4onScUAc0DQk7BSJG3k1niIPrTzyl/7fA211rDPYO4PffPDR50naVYYbm03kvp8szccWSwATmsRgwvtxy1ROidc/U8tSza7S6YOtMTOqsw1/uVZP9yDgNYVVpDUDSO+coE+jK6izYNMCLZaseGPVxo7Jzk2zFTZtiWT7Xwu9WEtnxpEYjabTZ/RyfVoF5JYzL/PhCBR7oeR3rlDh5nPebgDo00eb4zT4WdWuO8d+u57xKqbzZFgZD4vGiFJdZphaW9gmAlqQCoTmdrXMchR9FaoNGeWqkX2yvJu7FQ7G8oHxF3/KKjBZn6y8g3vdPfbGVlrM2QKnCgjQLVOGG2gryoOgZdVvOi72LaXhpLrxW2/iTv5Q8W/YbFcaTwJzbgY4TwUDFo/fHeuZJZGpyIguOnE1Xk7+7kuMDObKVZLazN/VFH+T9BrwHarPlXSzIcElI=
+          secure: DmNfGQE6w70jFXK9NXmjMlTETrditVx8LHIPcRGfEjnEFrRSFWzCDEd69coZoBUQY3Tg4bbos6yEr22CVPJ0a4lLvNxzEPPLHeDFsdDGDVrXxDvFAS7d0tvSSYYkWQ4OByRbnqOe+hs7T7kj2tdIcLzRkrVLgkNEspAPzxrktnFej1I5ti/5y13fVsFACSPwdiEzec/J/F/VEzi1psz19e+thP4NlFWDVQtspL5uutRbkglxCng1UKXCe2ekf2TrNXLzlJHfTlNn3CYSIc0Q7WwzA5b3HVWImT+qrbJwwmdpLeO7yN8j17VJgCviXfNFrWaGIT6f2NodMVC2zK/A7P5WAsDXlIEmEZK+0I0t3W+o19BHUuoNStEyXKsi4NeNpdrOLwNyG3wzzvD5C2UC5Vlx2dbusX2/sRMGJf3VwLvDety1NpdGyFauVYexKKugNoXGnipW4JWK+OXy6CF4uwOLnc/w460Xk4SKX8nQMCVdUFJM7zPYjz/9vmIE3ewxlbkIlR18puX5CUIuLDgAd98mUTDdTAIX2pSzYcaGcdMEdfLVar5BjQTrHYHd/yTYBLe+Uf0vSECXkiZFFoF073BUJQj8+yQI6bylnrfgGsHUya57JS8YQllW+qIw2pLwjCJrsYg0ObLKFfWfFrNV634Gcxzin7/CSD40OdnhCbc=
         app:
-          dev: kaagapai-dev
+          test: kaagapai-staging
         on:
           repo: prometheus-tech/kaagapAI
           branches:
             only:
-              - dev
+              - test
 notifications:
   email:
     - 2164149@slu.edu.ph
