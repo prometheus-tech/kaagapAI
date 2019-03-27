@@ -18,6 +18,10 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import SessionsCards from '../../components/Client/SessionsCards/SessionsCards';
+import Hidden from '@material-ui/core/Hidden';
+import Fab from '@material-ui/core/Fab';
+import Add from '@material-ui/icons/Add';
+import { lightBlue } from '@material-ui/core/colors';
 
 const styles = theme => ({
   root: {
@@ -52,12 +56,41 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2.5,
     display: 'flex',
     alignItems: 'center'
+  },
+  floatingButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+    backgroundColor: lightBlue[600],
+    boxShadow: theme.shadows[24],
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: lightBlue[700],
+      boxShadow: theme.shadows[10]
+    },
+    zIndex: 2
+  },
+  extendedButton: {
+    backgroundColor: lightBlue[600],
+    color: '#ffffff',
+    textTransform: 'capitalize',
+    fontSize: 16,
+    '&:hover': {
+      backgroundColor: lightBlue[700],
+      boxShadow: theme.shadows[10]
+    },
+    margin: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 6
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit
   }
 });
 
 class ClientPage extends Component {
   state = {
-    isClientDetailsOpened: false
+    isClientDetailsOpened: false,
+    isNewSessionDialogOpened: false
   };
 
   openClientDetailsHandler = () => {
@@ -70,6 +103,14 @@ class ClientPage extends Component {
     this.setState({
       isClientDetailsOpened: false
     });
+  };
+
+  openNewSessionDialogHandler = () => {
+    this.setState({ isNewSessionDialogOpened: true });
+  };
+
+  closeNewSessionDialogHandler = () => {
+    this.setState({ isNewSessionDialogOpened: false });
   };
 
   render() {
@@ -129,6 +170,28 @@ class ClientPage extends Component {
                     </IconButton>
                   </Typography>
                 </Breadcrumbs>
+                <Hidden smDown>
+                  <Fab
+                    color="primary"
+                    variant="extended"
+                    className={classes.extendedButton}
+                    onClick={this.openNewSessionDialogHandler}
+                  >
+                    <Add className={classes.extendedIcon} /> New Session
+                  </Fab>
+                </Hidden>
+                <Hidden mdUp>
+                  <Fab
+                    size="large"
+                    color="primary"
+                    className={classes.floatingButton}
+                    onClick={this.openNewSessionDialogHandler}
+                    disableRipple={false}
+                    disableFocusRipple={false}
+                  >
+                    <Add />
+                  </Fab>
+                </Hidden>
                 <SessionsCards sessions={data.client.sessions} />
               </main>
               <ClientInformation
