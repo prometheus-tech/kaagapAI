@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -10,6 +11,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import EditClientDialog from '../EditClientDialog/EditClientDialog';
 import DeleteClientDialog from '../DeleteClientDialog/DeleteClientDialog';
 
+const styles = theme => ({
+  root:{
+    background: '#33333',
+  }
+});
 class ClientMoreActions extends Component {
   state = {
     anchorEl: null,
@@ -65,10 +71,10 @@ class ClientMoreActions extends Component {
     const { client } = this.props;
     const { c_id, fname, lname } = client;
     const open = Boolean(anchorEl);
-
+    const {classes} = this.props;
     return (
       <Auxilliary>
-        <IconButton onClick={this.openMoreActionsHandler}>
+        <IconButton disableRipple={true} className={classes.root} onClick={this.openMoreActionsHandler}>
           <MoreVertIcon />
         </IconButton>
         <Popover
@@ -113,4 +119,4 @@ class ClientMoreActions extends Component {
   }
 }
 
-export default ClientMoreActions;
+export default withStyles(styles)(ClientMoreActions);
