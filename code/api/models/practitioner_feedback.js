@@ -12,8 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     date_submitted: DataTypes.DATE
   });
 
-  Practitioner_Feedback.removeAttribute('id');
-
   Practitioner_Feedback.associate = models => {
     Practitioner_Feedback.belongsTo(models.Practitioner, {
       foreignKey: 'p_id',
