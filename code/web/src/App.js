@@ -20,6 +20,8 @@ const cache = new InMemoryCache({
     switch (object.__typename) {
       case 'Client':
         return object.c_id;
+      case 'Session':
+        return object.session_id;
       default:
         return defaultDataIdFromObject(object);
     }
@@ -27,7 +29,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: 'https://kaagapai-dev.herokuapp.com/graphql',
+  uri: 'http://kaagapai.com:4000/graphql',
   cache
 });
 

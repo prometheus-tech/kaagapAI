@@ -13,6 +13,7 @@ const CLIENT = gql`
       sessions {
         session_id
         session_name
+        date_of_session
       }
     }
   }
