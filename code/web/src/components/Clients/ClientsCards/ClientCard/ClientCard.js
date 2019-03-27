@@ -2,18 +2,12 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import ClientMoreActions from '../../ClientMoreActions/ClientMoreActions';
-import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
 import { getInitials } from '../../../../util/helperFunctions';
 
@@ -32,8 +26,6 @@ const styles = theme => ({
     background: '#fff',
     borderRadius: '6px',
     maxWidth: '200px',
-    transition:
-      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
