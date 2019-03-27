@@ -22,6 +22,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { lightBlue } from '@material-ui/core/colors';
+import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 
 const styles = theme => ({
   root: {
@@ -118,7 +119,7 @@ class ClientPage extends Component {
 
     const { c_id } = this.props.match.params;
 
-    const { isClientDetailsOpened } = this.state;
+    const { isClientDetailsOpened, isNewSessionDialogOpened } = this.state;
 
     return (
       <Query query={CLIENT} variables={{ c_id: parseInt(c_id) }}>
@@ -192,6 +193,11 @@ class ClientPage extends Component {
                     <Add />
                   </Fab>
                 </Hidden>
+                <NewSessionDialog
+                  clientId={parseInt(c_id)}
+                  opened={isNewSessionDialogOpened}
+                  closed={this.closeNewSessionDialogHandler}
+                />
                 <SessionsCards sessions={data.client.sessions} />
               </main>
               <ClientInformation

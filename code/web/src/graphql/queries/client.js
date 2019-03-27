@@ -11,6 +11,7 @@ const CLIENT = gql`
       last_opened
       no_of_sessions
       sessions {
+        __typename
         session_id
         session_name
         date_of_session
