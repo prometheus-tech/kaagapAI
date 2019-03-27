@@ -46,7 +46,7 @@ const styles = theme => ({
     zIndex: 2
   },
   extendedButton: {
-    backgroundColor: lightBlue[600],
+    background: '#0575e6',
     color: '#ffffff',
     textTransform: 'capitalize',
     fontSize: 16,

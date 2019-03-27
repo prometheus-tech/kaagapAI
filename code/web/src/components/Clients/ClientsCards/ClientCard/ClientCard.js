@@ -2,22 +2,62 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import blue from '@material-ui/core/colors/blue';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import ClientMoreActions from '../../ClientMoreActions/ClientMoreActions';
+import Icon from '@material-ui/core/Icon';
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 import { getInitials } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   avatar: {
-    backgroundColor: blue[500]
+    backgroundColor: '#0091ea',
+    margin: '10px auto',
+    height: '70px',
+    width: '70px',
+    textTransform: 'uppercase',
+    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
   },
   card: {
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
+    marginTop: '2rem',
+    background: '#fff',
+    borderRadius: '6px',
+    maxWidth: '200px',
+    transition:
+      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      boxShadow: theme.shadows[4]
+      transform: 'scale(1.05)',
+      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)'
     },
-    cursor: 'pointer'
+    cardContent: {
+      padding: '14px 80px 18px 36px'
+    },
+    action: {
+      dispay: 'flex'
+    }
+  },
+  nameClient: {
+    position: 'relative',
+    top: '12px',
+    color: '#9e9e9e'
+  },
+  session: {
+    fontWeight: '300',
+    fontSize: '12px',
+    marginTop: '15px'
+  },
+  iconHover: {
+    '&:hover': {
+      color: '#2196f3'
+    }
+  },
+  cardContent: {
+    '&:hover': {
+      cursor: 'pointer'
+    }
   }
 });
 
@@ -29,13 +69,37 @@ function ClientCard({ classes, client }) {
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
 
   return (
-    <Card elevation={2} className={classes.card}>
-      <CardHeader
-        avatar={<Avatar className={classes.avatar}>{initials}</Avatar>}
-        action={<ClientMoreActions client={client} />}
-        title={name}
-        subheader={sessions}
-      />
+    <Card className={classes.card}>
+      <CardContent className={classes.cardContent}>
+        <Avatar className={classes.avatar}>{initials}</Avatar>
+        <Typography
+          noWrap
+          variant="h6"
+          align="center"
+          className={classes.nameClient}
+        >
+          {name}
+        </Typography>
+        <Typography className={classes.session} align="center">
+          {sessions}
+        </Typography>
+      </CardContent>
+      <CardActions disableActionSpacing className={classes.action}>
+        <IconButton
+          className={classes.iconHover}
+          disableRipple={true}
+          aria-label="Archive"
+        >
+          <Icon>archive</Icon>
+        </IconButton>
+        <IconButton
+          className={classes.iconHover}
+          disableRipple={true}
+          aria-label="Edit"
+        >
+          <Icon>edit</Icon>
+        </IconButton>
+      </CardActions>
     </Card>
   );
 }
