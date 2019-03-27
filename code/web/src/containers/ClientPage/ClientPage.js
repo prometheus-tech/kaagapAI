@@ -17,6 +17,7 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import SessionsCards from '../../components/Client/SessionsCards/SessionsCards';
 
 const styles = theme => ({
   root: {
@@ -28,14 +29,14 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginRight: 350
+    marginRight: 0
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginRight: 0
+    marginRight: 350
   },
   secondaryHeader: {
     marginBottom: theme.spacing.unit * 2
@@ -44,7 +45,8 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   breadCrumb: {
-    fontSize: theme.spacing.unit * 2.5
+    fontSize: theme.spacing.unit * 2.5,
+    marginBottom: theme.spacing.unit * 2
   },
   breadCrumbLink: {
     fontSize: theme.spacing.unit * 2.5,
@@ -127,6 +129,7 @@ class ClientPage extends Component {
                     </IconButton>
                   </Typography>
                 </Breadcrumbs>
+                <SessionsCards sessions={data.client.sessions} />
               </main>
               <ClientInformation
                 isOpened={isClientDetailsOpened}
