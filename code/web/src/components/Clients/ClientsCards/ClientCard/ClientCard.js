@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -8,6 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 import { getInitials } from '../../../../util/helperFunctions';
 
@@ -68,22 +71,30 @@ function ClientCard({ classes, client }) {
   const sessions =
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
 
+  const CardLink = props => <Link to={'/client/' + client.c_id} {...props} />;
+
   return (
     <Card className={classes.card}>
-      <CardContent className={classes.cardContent}>
-        <Avatar className={classes.avatar}>{initials}</Avatar>
-        <Typography
-          noWrap
-          variant="h6"
-          align="center"
-          className={classes.nameClient}
-        >
-          {name}
-        </Typography>
-        <Typography className={classes.session} align="center">
-          {sessions}
-        </Typography>
-      </CardContent>
+      <ButtonBase
+        disableRipple={true}
+        disableTouchRipple={true}
+        component={CardLink}
+      >
+        <CardContent className={classes.cardContent}>
+          <Avatar className={classes.avatar}>{initials}</Avatar>
+          <Typography
+            noWrap
+            variant="h6"
+            align="center"
+            className={classes.nameClient}
+          >
+            {name}
+          </Typography>
+          <Typography className={classes.session} align="center">
+            {sessions}
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       <CardActions disableActionSpacing className={classes.action}>
         <IconButton
           className={classes.iconHover}
