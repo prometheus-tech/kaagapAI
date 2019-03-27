@@ -71,6 +71,7 @@ class NewSessionDialog extends Component {
           );
 
           client.sessions.push(addSession);
+          client.no_of_sessions = client.sessions.length;
 
           cache.writeQuery({
             query: CLIENT,
