@@ -10,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     date_of_session: DataTypes.DATE
   });
 
-  Session.removeAttribute('id');
-
   Session.associate = models => {
     Session.belongsTo(models.Client, {
       foreignKey: 'c_id',

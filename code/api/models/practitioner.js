@@ -20,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     session_token: DataTypes.CHAR
   });
 
-  Practitioner.removeAttribute('id');
-
   Practitioner.associate = models => {
     Practitioner.hasMany(models.Client, {
       foreignKey: 'p_id',

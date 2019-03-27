@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.ENUM('PDF', 'TXT', 'DOCX')
   });
 
-  Session_Document.removeAttribute('id');
-
   Session_Document.associate = models => {
     Session_Document.belongsTo(models.Session, {
       foreignKey: 'session_id',
