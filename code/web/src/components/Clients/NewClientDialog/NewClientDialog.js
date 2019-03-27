@@ -29,6 +29,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { cloneDeep } from 'apollo-utilities';
 
 const styles = theme => ({
   floatingButton: {
@@ -156,12 +157,14 @@ class NewClientDialog extends Component {
         <Mutation
           mutation={ADD_CLIENT}
           update={(cache, { data: { addClient } }) => {
-            const { clients } = cache.readQuery({
-              query: CLIENTS,
-              variables: {
-                p_id: parseInt(localStorage.getItem(USER_ID))
-              }
-            });
+            const { clients } = cloneDeep(
+              cache.readQuery({
+                query: CLIENTS,
+                variables: {
+                  p_id: parseInt(localStorage.getItem(USER_ID))
+                }
+              })
+            );
             clients.push(addClient);
 
             cache.writeQuery({
