@@ -19,8 +19,8 @@ export default `
   }
 
   type Query { 
-    getSessionDocuments(session_id: Int!): [Session]!
+    getSessionDocuments(session_id: Int!): [SessionDocument]
 
-    getSessionDocument(sd_id: Int!): Session!
+    getSessionDocument(sd_id: Int!): SessionDocument
   }
 `;
