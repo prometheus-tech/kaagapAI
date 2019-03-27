@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { cloneDeep } from 'apollo-utilities';
+import { getUTCDate } from '../../../util/helperFunctions';
 
 const styles = theme => ({
   inputGroup: {
@@ -35,7 +36,7 @@ class NewSessionDialog extends Component {
     this.state = {
       c_id: parseInt(props.clientId),
       session_name: '',
-      date_of_session: ''
+      date_of_session: getUTCDate(new Date())
     };
 
     // Needed for validation
@@ -45,7 +46,7 @@ class NewSessionDialog extends Component {
   clearFieldsHandler = () => {
     this.setState({
       session_name: '',
-      date_of_session: ''
+      date_of_session: getUTCDate(new Date())
     });
   };
 
