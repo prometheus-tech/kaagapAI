@@ -17,7 +17,10 @@ import Logo from '../../../assets/kaagapai-logo.svg';
 const styles = theme => ({
   root: {
     width: '100%',
-    background: 'white'
+    background: 'white',
+    boxShadow: 'none',
+    borderBottom: '0.8px solid #f1f1f1',
+    height: '60px'
   },
   grow: {
     flexGrow: 1
@@ -27,12 +30,12 @@ const styles = theme => ({
     marginRight: 20
   },
   nameLogo: {
-    color: blueGrey[800]
+    color: blueGrey[600]
   },
   logo: {
     margin: 10,
-    width: 45,
-    height: 45
+    width: 40,
+    height: 40
   },
   sectionDesktop: {
     display: 'none',
@@ -110,7 +113,7 @@ class Header extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={classes.root} elevation={1}>
+        <AppBar position="fixed" className={classes.root}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}

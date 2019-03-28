@@ -6,6 +6,8 @@ import CLIENT from '../../graphql/queries/client';
 import { Query } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
 import Link from '@material-ui/core/Link';
@@ -27,6 +29,13 @@ import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessio
 const styles = theme => ({
   root: {
     display: 'flex'
+  },
+  Stepper: {
+    boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+    backgroundColor: '#ffffff',
+    marginTop: '60px',
+    height: '50px',
+    zIndex: 1
   },
   content: {
     flexGrow: 1,
@@ -51,12 +60,14 @@ const styles = theme => ({
   },
   breadCrumb: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
+    marginLeft: '50px'
   },
   breadCrumbLink: {
-    fontSize: theme.spacing.unit * 2.5,
+    fontSize: theme.spacing.unit * 2,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontWeight: '300'
   },
   floatingButton: {
     position: 'fixed',
@@ -85,6 +96,9 @@ const styles = theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
+  },
+  infoAction: {
+    marginLeft: 'auto'
   }
 });
 
@@ -139,38 +153,48 @@ class ClientPage extends Component {
                   [classes.contentShift]: isClientDetailsOpened
                 })}
               >
-                <Breadcrumbs
-                  separator={<NavigateNextIcon />}
-                  className={classes.breadCrumb}
+                <AppBar
+                  position="fixed"
+                  color="default"
+                  className={classes.Stepper}
                 >
-                  <Link
-                    component={RouterLink}
-                    color="inherit"
-                    to="/"
-                    className={classes.breadCrumbLink}
-                  >
-                    <PeopleIcon className={classes.breadCrumbIcon} />
-                    Clients
-                  </Link>
-                  <Typography
-                    color="textPrimary"
-                    className={classes.breadCrumbLink}
-                    gutterBottom={false}
-                  >
-                    <PersonIcon className={classes.breadCrumbIcon} />
-                    {data.client.fname + ' ' + data.client.lname}
-                    <IconButton
-                      component="span"
-                      onClick={
-                        isClientDetailsOpened
-                          ? this.closeClientDetailsHandler
-                          : this.openClientDetailsHandler
-                      }
+                  <Toolbar>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon />}
+                      className={classes.breadCrumb}
                     >
-                      <InfoIcon fontSize="small" />
-                    </IconButton>
-                  </Typography>
-                </Breadcrumbs>
+                      <Link
+                        component={RouterLink}
+                        color="inherit"
+                        to="/"
+                        className={classes.breadCrumbLink}
+                      >
+                        <PeopleIcon className={classes.breadCrumbIcon} />
+                        Clients
+                      </Link>
+                      <Typography
+                        color="textPrimary"
+                        className={classes.breadCrumbLink}
+                        gutterBottom={false}
+                      >
+                        <PersonIcon className={classes.breadCrumbIcon} />
+                        {data.client.fname + ' ' + data.client.lname}
+                        <IconButton
+                          component="span"
+                          onClick={
+                            isClientDetailsOpened
+                              ? this.closeClientDetailsHandler
+                              : this.openClientDetailsHandler
+                          }
+                        >
+                          <InfoIcon
+                            fontSize="small"
+                          />
+                        </IconButton>
+                      </Typography>
+                    </Breadcrumbs>
+                  </Toolbar>
+                </AppBar>
                 <Hidden smDown>
                   <Fab
                     color="primary"
