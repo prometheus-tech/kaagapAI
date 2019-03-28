@@ -19,9 +19,9 @@ const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
       case 'Client':
-        return object.c_id;
+        return 'client:' + object.c_id;
       case 'Session':
-        return object.session_id;
+        return 'session:' + object.session_id;
       default:
         return defaultDataIdFromObject(object);
     }

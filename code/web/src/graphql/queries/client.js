@@ -1,24 +1,22 @@
 import { gql } from 'apollo-boost';
 
 import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
+import CLIENT_META_DATA from '../fragments/clientMetaData';
+import SESSION_INFO from '../fragments/sessionInfo';
 
 const CLIENT = gql`
   query client($c_id: Int!) {
     client(c_id: $c_id) {
-      __typename
       ...ClientBasicInfo
-      date_added
-      last_opened
-      no_of_sessions
+      ...ClientMetaData
       sessions {
-        __typename
-        session_id
-        session_name
-        date_of_session
+        ...SessionInfo
       }
     }
   }
   ${CLIENT_BASIC_INFO}
+  ${CLIENT_META_DATA}
+  ${SESSION_INFO}
 `;
 
 export default CLIENT;

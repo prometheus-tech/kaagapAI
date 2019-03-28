@@ -17,9 +17,7 @@ const EDIT_CLIENT = gql`
       birthdate: $birthdate
       gender: $gender
     ) {
-      __typename
       ...ClientBasicInfo
-      no_of_sessions
     }
   }
   ${CLIENT_BASIC_INFO}
