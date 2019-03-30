@@ -2,24 +2,18 @@ const dotenv = require('dotenv').config();
 
 module.exports = {
   development: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_DEV,
-    host: process.env.DB_HOST_DEV,
-    dialect: 'mysql'
+    ssl: false,
+    port: process.env.PORT || 4000,
+    hostname: process.env.DB_HOST_DEV
   },
   test: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_TEST,
-    host: process.env.DB_HOST_TEST,
-    dialect: 'mysql'
+    ssl: false,
+    port: process.env.PORT || 4000,
+    hostname: process.env.DB_HOST_TEST
   },
   production: {
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME_PROD,
-    host: process.env.DB_HOST_PROD,
-    dialect: 'mysql'
+    ssl: false,
+    port: process.env.PORT || 4000,
+    hostname: process.env.DB_HOST_PROD
   }
 };
