@@ -18,9 +18,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     background: 'white',
-    boxShadow: 'none',
-    borderBottom: '0.8px solid #f1f1f1',
-    height: '60px'
+    boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)'
   },
   grow: {
     flexGrow: 1

@@ -46,9 +46,11 @@ const styles = theme => ({
     zIndex: 2
   },
   extendedButton: {
-    background: '#0575e6',
+    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
+    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
+    borderRadius: '5px',
     fontSize: 16,
     '&:hover': {
       backgroundColor: lightBlue[700],
