@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -39,10 +39,7 @@ const styles = theme => ({
   }
 });
 
-function SessionCard({
-  session: { session_id, session_name, date_of_session },
-  classes
-}) {
+function SessionCard({ session, classes, sessionEdited }) {
   return (
     <Card className={classes.card}>
       <CardActionArea>
@@ -52,17 +49,23 @@ function SessionCard({
               <FolderIcon fontSize="large" />
             </Avatar>
           </div>
-          <Typography className={classes.cardTitle}>{session_name}</Typography>
+          <Typography className={classes.cardTitle}>
+            {session.session_name}
+          </Typography>
           <Typography className={classes.cardSubheader}>
             <Moment format="MMM D, YYYY" withTitle>
-              {date_of_session}
+              {session.date_of_session}
             </Moment>
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.cardActions}>
-        <IconButton>
-          <MoreVertIcon fontSize="small" />
+        <IconButton
+          onClick={() => {
+            sessionEdited(session);
+          }}
+        >
+          <EditIcon fontSize="small" />
         </IconButton>
       </CardActions>
     </Card>

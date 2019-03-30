@@ -6,6 +6,7 @@ import CLIENT from '../../graphql/queries/client';
 import { Query } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
@@ -19,12 +20,13 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import SessionsCards from '../../components/Client/SessionsCards/SessionsCards';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { lightBlue } from '@material-ui/core/colors';
+import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
+import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 
 const styles = theme => ({
   root: {
@@ -105,7 +107,13 @@ const styles = theme => ({
 class ClientPage extends Component {
   state = {
     isClientDetailsOpened: false,
-    isNewSessionDialogOpened: false
+    isNewSessionDialogOpened: false,
+    isEditSessionDialogOpened: false,
+    selectedSession: {
+      session_id: '',
+      session_name: '',
+      date_of_session: ''
+    }
   };
 
   openClientDetailsHandler = () => {
@@ -128,12 +136,34 @@ class ClientPage extends Component {
     this.setState({ isNewSessionDialogOpened: false });
   };
 
+  openEditSessionDialogHandler = session => {
+    this.setState({
+      isEditSessionDialogOpened: true,
+      selectedSession: {
+        session_id: session.session_id,
+        session_name: session.session_name,
+        date_of_session: session.date_of_session
+      }
+    });
+  };
+
+  closeEditSessionDialogHandler = () => {
+    this.setState({
+      isEditSessionDialogOpened: false
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
     const { c_id } = this.props.match.params;
 
-    const { isClientDetailsOpened, isNewSessionDialogOpened } = this.state;
+    const {
+      isClientDetailsOpened,
+      isNewSessionDialogOpened,
+      isEditSessionDialogOpened,
+      selectedSession
+    } = this.state;
 
     return (
       <Query query={CLIENT} variables={{ c_id: parseInt(c_id) }}>
@@ -187,9 +217,7 @@ class ClientPage extends Component {
                               : this.openClientDetailsHandler
                           }
                         >
-                          <InfoIcon
-                            fontSize="small"
-                          />
+                          <InfoIcon fontSize="small" />
                         </IconButton>
                       </Typography>
                     </Breadcrumbs>
@@ -222,7 +250,30 @@ class ClientPage extends Component {
                   opened={isNewSessionDialogOpened}
                   closed={this.closeNewSessionDialogHandler}
                 />
-                <SessionsCards sessions={data.client.sessions} />
+                <EditSessionDialog
+                  isOpened={isEditSessionDialogOpened}
+                  closed={this.closeEditSessionDialogHandler}
+                  session={selectedSession}
+                />
+                <Grid container spacing={16}>
+                  {data.client.sessions.map(session => {
+                    return (
+                      <Grid
+                        item
+                        key={session.session_id}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                      >
+                        <SessionCard
+                          sessionEdited={this.openEditSessionDialogHandler}
+                          session={session}
+                        />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
               </main>
               <ClientInformation
                 isOpened={isClientDetailsOpened}
