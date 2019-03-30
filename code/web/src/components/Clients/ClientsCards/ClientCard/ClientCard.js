@@ -35,11 +35,10 @@ const styles = theme => ({
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
       padding: '0px 0px 0px 0px'
     },
-    cardContent: {
-      // padding: '14px 80px 18px 36px'
-    },
     action: {
-      dispay: 'flex'
+      padding: 0,
+      display: 'flex',
+      justifyContent: 'flex-start'
     }
   },
   nameClient: {
@@ -101,7 +100,7 @@ function ClientCard({ classes, client }) {
           </Typography>
         </CardContent>
       </ButtonBase>
-      <CardActions disableActionSpacing className={classes.action}>
+      <CardActions className={classes.action}>
         <IconButton
           className={classes.iconHover}
           disableRipple={true}
