@@ -26,11 +26,12 @@ import { lightBlue } from '@material-ui/core/colors';
 import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
+import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   },
   content: {
     flexGrow: 2,
@@ -104,6 +105,7 @@ class ClientPage extends Component {
     isClientDetailsOpened: false,
     isNewSessionDialogOpened: false,
     isEditSessionDialogOpened: false,
+    isDeleteSessionDialogOpened: false,
     selectedSession: {
       session_id: '',
       session_name: '',
@@ -148,6 +150,23 @@ class ClientPage extends Component {
     });
   };
 
+  openDeleteSessionDialogHandler = session => {
+    this.setState({
+      isDeleteSessionDialogOpened: true,
+      selectedSession: {
+        session_id: session.session_id,
+        session_name: session.session_name,
+        date_of_session: session.date_of_session
+      }
+    });
+  };
+
+  closeDeleteSessionDialogHandler = () => {
+    this.setState({
+      isDeleteSessionDialogOpened: false
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -157,6 +176,7 @@ class ClientPage extends Component {
       isClientDetailsOpened,
       isNewSessionDialogOpened,
       isEditSessionDialogOpened,
+      isDeleteSessionDialogOpened,
       selectedSession
     } = this.state;
 
@@ -244,6 +264,12 @@ class ClientPage extends Component {
                   closed={this.closeEditSessionDialogHandler}
                   session={selectedSession}
                 />
+                <DeleteSessionDialog
+                  isOpened={isDeleteSessionDialogOpened}
+                  closed={this.closeDeleteSessionDialogHandler}
+                  clientId={parseInt(c_id)}
+                  session={selectedSession}
+                />
                 <Grid container spacing={16}>
                   {data.client.sessions.map(session => {
                     return (
@@ -257,6 +283,7 @@ class ClientPage extends Component {
                       >
                         <SessionCard
                           sessionEdited={this.openEditSessionDialogHandler}
+                          sessionDeleted={this.openDeleteSessionDialogHandler}
                           session={session}
                         />
                       </Grid>

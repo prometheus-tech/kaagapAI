@@ -3,7 +3,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -73,35 +72,32 @@ const styles = theme => ({
   }
 });
 
-function SessionCard({ session, classes, sessionEdited }) {
+function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
   return (
-    <Card
-      className={classes.card}
-      disableRipple={true}
-      disableTouchRipple={true}
-    >
-      <CardActionArea>
-        <CardContent className={classes.cardContent}>
-          <div className={classes.avatarContainer}>
-            <Avatar className={classes.avatar}>
-              <FolderIcon fontSize="large" />
-            </Avatar>
-          </div>
-          <Typography className={classes.cardTitle}>
-            {session.session_name}
-          </Typography>
-          <Typography className={classes.cardSubheader}>
-            <Moment format="MMM D, YYYY" withTitle>
-              {session.date_of_session}
-            </Moment>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+    <Card className={classes.card}>
+      <CardContent className={classes.cardContent}>
+        <div className={classes.avatarContainer}>
+          <Avatar className={classes.avatar}>
+            <FolderIcon fontSize="large" />
+          </Avatar>
+        </div>
+        <Typography className={classes.cardTitle}>
+          {session.session_name}
+        </Typography>
+        <Typography className={classes.cardSubheader}>
+          <Moment format="MMM D, YYYY" withTitle>
+            {session.date_of_session}
+          </Moment>
+        </Typography>
+      </CardContent>
       <CardActions className={classes.cardActions}>
         <IconButton
           disableRipple={true}
           aria-label="Archive"
           className={classes.iconAction}
+          onClick={() => {
+            sessionDeleted(session);
+          }}
         >
           <Icon fontSize="small">archive</Icon>
         </IconButton>
