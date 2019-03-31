@@ -20,12 +20,11 @@ const styles = theme => ({
     margin: '10px auto',
     height: '70px',
     width: '70px',
-    textTransform: 'uppercase',
-    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+    textTransform: 'uppercase'
   },
   card: {
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
-    marginTop: '2rem',
+    marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px',
     maxWidth: '230px',
@@ -33,10 +32,11 @@ const styles = theme => ({
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
       transform: 'scale(1.05)',
-      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)'
+      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
+      padding: '0px 0px 0px 0px'
     },
     cardContent: {
-      padding: '14px 80px 18px 36px'
+      // padding: '14px 80px 18px 36px'
     },
     action: {
       dispay: 'flex'
@@ -55,12 +55,17 @@ const styles = theme => ({
   iconHover: {
     '&:hover': {
       color: '#2196f3'
+    },
+    buttonBase: {
+      height: '100vh',
+      width: '100vw'
     }
   },
   cardContent: {
     '&:hover': {
       cursor: 'pointer'
     }
+    // width: '250px'
   }
 });
 
@@ -76,6 +81,7 @@ function ClientCard({ classes, client }) {
   return (
     <Card className={classes.card}>
       <ButtonBase
+        className={classes.buttonBase}
         disableRipple={true}
         disableTouchRipple={true}
         component={CardLink}

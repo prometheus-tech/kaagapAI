@@ -5,10 +5,8 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import CLIENT from '../../graphql/queries/client';
 import { Query } from 'react-apollo';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
 import Link from '@material-ui/core/Link';
@@ -31,13 +29,6 @@ import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSes
 const styles = theme => ({
   root: {
     display: 'flex'
-  },
-  Stepper: {
-    boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-    backgroundColor: '#ffffff',
-    marginTop: '60px',
-    height: '50px',
-    zIndex: 1
   },
   content: {
     flexGrow: 1,
@@ -62,8 +53,7 @@ const styles = theme => ({
   },
   breadCrumb: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2,
-    marginLeft: '50px'
+    marginBottom: theme.spacing.unit * 2
   },
   breadCrumbLink: {
     fontSize: theme.spacing.unit * 2,
@@ -82,12 +72,14 @@ const styles = theme => ({
       backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     },
-    zIndex: 2
+    zIndex: 1
   },
   extendedButton: {
-    backgroundColor: lightBlue[600],
+    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
+    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
+    borderRadius: '5px',
     fontSize: 16,
     '&:hover': {
       backgroundColor: lightBlue[700],
@@ -98,9 +90,6 @@ const styles = theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
-  },
-  infoAction: {
-    marginLeft: 'auto'
   }
 });
 
@@ -183,46 +172,38 @@ class ClientPage extends Component {
                   [classes.contentShift]: isClientDetailsOpened
                 })}
               >
-                <AppBar
-                  position="fixed"
-                  color="default"
-                  className={classes.Stepper}
+                <Breadcrumbs
+                  separator={<NavigateNextIcon />}
+                  className={classes.breadCrumb}
                 >
-                  <Toolbar>
-                    <Breadcrumbs
-                      separator={<NavigateNextIcon />}
-                      className={classes.breadCrumb}
+                  <Link
+                    component={RouterLink}
+                    color="inherit"
+                    to="/"
+                    className={classes.breadCrumbLink}
+                  >
+                    <PeopleIcon className={classes.breadCrumbIcon} />
+                    Clients
+                  </Link>
+                  <Typography
+                    color="textPrimary"
+                    className={classes.breadCrumbLink}
+                    gutterBottom={false}
+                  >
+                    <PersonIcon className={classes.breadCrumbIcon} />
+                    {data.client.fname + ' ' + data.client.lname}
+                    <IconButton
+                      component="span"
+                      onClick={
+                        isClientDetailsOpened
+                          ? this.closeClientDetailsHandler
+                          : this.openClientDetailsHandler
+                      }
                     >
-                      <Link
-                        component={RouterLink}
-                        color="inherit"
-                        to="/"
-                        className={classes.breadCrumbLink}
-                      >
-                        <PeopleIcon className={classes.breadCrumbIcon} />
-                        Clients
-                      </Link>
-                      <Typography
-                        color="textPrimary"
-                        className={classes.breadCrumbLink}
-                        gutterBottom={false}
-                      >
-                        <PersonIcon className={classes.breadCrumbIcon} />
-                        {data.client.fname + ' ' + data.client.lname}
-                        <IconButton
-                          component="span"
-                          onClick={
-                            isClientDetailsOpened
-                              ? this.closeClientDetailsHandler
-                              : this.openClientDetailsHandler
-                          }
-                        >
-                          <InfoIcon fontSize="small" />
-                        </IconButton>
-                      </Typography>
-                    </Breadcrumbs>
-                  </Toolbar>
-                </AppBar>
+                      <InfoIcon fontSize="small" />
+                    </IconButton>
+                  </Typography>
+                </Breadcrumbs>
                 <Hidden smDown>
                   <Fab
                     color="primary"
