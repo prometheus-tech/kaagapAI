@@ -19,7 +19,7 @@ const drawerWidth = '25vw';
 
 const styles = theme => ({
   drawer: {
-    zIndex: -1,
+    zIndex: 1,
     width: drawerWidth,
     flexShrink: 0
   },
@@ -173,7 +173,7 @@ class ClientInformation extends Component {
           />
         </Grid>
         <EditClientDialog
-          isOpened={editClientDialogOpened}
+          opened={editClientDialogOpened}
           closed={this.closeEditClientDialogHandler}
           client={client}
         />

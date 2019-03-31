@@ -19,7 +19,7 @@ const styles = theme => ({
     width: '100%',
     background: '#fafafa',
     boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)',
-    zIndex: 1
+    zIndex: 3
   },
   grow: {
     flexGrow: 1
