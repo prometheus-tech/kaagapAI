@@ -32,35 +32,6 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { cloneDeep } from 'apollo-utilities';
 
 const styles = theme => ({
-  floatingButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    backgroundColor: lightBlue[600],
-    boxShadow: theme.shadows[24],
-    color: '#ffffff',
-    '&:hover': {
-      backgroundColor: lightBlue[700],
-      boxShadow: theme.shadows[10]
-    },
-    zIndex: 2
-  },
-  extendedButton: {
-    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
-    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
-    color: '#ffffff',
-    textTransform: 'capitalize',
-    borderRadius: '5px',
-    fontSize: 16,
-    '&:hover': {
-      backgroundColor: lightBlue[700],
-      boxShadow: theme.shadows[10]
-    },
-    margin: theme.spacing.unit
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
   inputGroup: {
     marginTop: 16,
     marginBottom: 16
@@ -79,8 +50,7 @@ class NewClientDialog extends Component {
       fname: '',
       lname: '',
       gender: 'M',
-      birthdate: '',
-      isDialogOpened: false
+      birthdate: ''
     };
 
     // Needed for validation
@@ -91,19 +61,12 @@ class NewClientDialog extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  openNewClientDialogHandler = () => {
-    this.setState({
-      isDialogOpened: true
-    });
-  };
-
-  closeNewClientDialogHandler = () => {
+  clearFieldsHandler = () => {
     this.setState({
       fname: '',
       lname: '',
       gender: 'M',
-      birthdate: '',
-      isDialogOpened: false
+      birthdate: ''
     });
   };
 
@@ -111,10 +74,6 @@ class NewClientDialog extends Component {
    * Custom validators
    */
   componentWillMount() {
-    const letters = '^[A-Za-z\\s-]+$';
-    ValidatorForm.addValidationRule('isLetter', value => {
-      return value.match(letters);
-    });
     const date = '^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$';
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
@@ -122,40 +81,11 @@ class NewClientDialog extends Component {
   }
 
   render() {
-    const { classes, fullScreen } = this.props;
-    const {
-      isDialogOpened,
-      p_id,
-      fname,
-      lname,
-      gender,
-      birthdate
-    } = this.state;
+    const { classes, fullScreen, opened, closed } = this.props;
+    const { p_id, fname, lname, gender, birthdate } = this.state;
 
     return (
       <Auxilliary>
-        <Hidden smDown>
-          <Fab
-            color="primary"
-            variant="extended"
-            className={classes.extendedButton}
-            onClick={this.openNewClientDialogHandler}
-          >
-            <Add className={classes.extendedIcon} /> New Client
-          </Fab>
-        </Hidden>
-        <Hidden mdUp>
-          <Fab
-            size="large"
-            color="primary"
-            className={classes.floatingButton}
-            onClick={this.openNewClientDialogHandler}
-            disableRipple={false}
-            disableFocusRipple={false}
-          >
-            <Add />
-          </Fab>
-        </Hidden>
         <Mutation
           mutation={ADD_CLIENT}
           update={(cache, { data: { addClient } }) => {
@@ -194,8 +124,11 @@ class NewClientDialog extends Component {
 
             return (
               <Dialog
-                open={isDialogOpened}
-                onClose={this.closeNewClientDialogHandler}
+                open={opened}
+                onClose={() => {
+                  this.clearFieldsHandler();
+                  closed();
+                }}
                 fullWidth={true}
                 fullScreen={fullScreen}
                 maxWidth="sm"
@@ -212,7 +145,8 @@ class NewClientDialog extends Component {
                       }
                     });
 
-                    this.closeNewClientDialogHandler();
+                    this.clearFieldsHandler();
+                    closed();
                   }}
                 >
                   <DialogTitle>New Client</DialogTitle>
@@ -231,15 +165,11 @@ class NewClientDialog extends Component {
                               margin="dense"
                               validators={[
                                 'required',
-                                'minStringLength: ' + 2,
-                                'maxStringLength:' + 20,
-                                'isLetter'
+                                'maxStringLength:' + 100
                               ]}
                               errorMessages={[
                                 'This field is required',
-                                'First name might be too short',
-                                'First name must be less than 20 characters',
-                                'Please do not include numbers and/or special characters'
+                                'First name must be less than 100 characters'
                               ]}
                             />
                           </Grid>
@@ -254,15 +184,11 @@ class NewClientDialog extends Component {
                               margin="dense"
                               validators={[
                                 'required',
-                                'minStringLength: ' + 2,
-                                'maxStringLength:' + 20,
-                                'isLetter'
+                                'maxStringLength:' + 100
                               ]}
                               errorMessages={[
                                 'This field is required',
-                                'Last name might be too short',
-                                'Last name must be less than 20 characters',
-                                'Please do not include numbers and/or special characters'
+                                'Last name must be less than 100 characters'
                               ]}
                             />
                           </Grid>
@@ -317,7 +243,12 @@ class NewClientDialog extends Component {
                     </Grid>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.closeNewClientDialogHandler}>
+                    <Button
+                      onClick={() => {
+                        this.clearFieldsHandler();
+                        closed();
+                      }}
+                    >
                       Cancel
                     </Button>
                     <Button type="submit" color="primary" autoFocus>
