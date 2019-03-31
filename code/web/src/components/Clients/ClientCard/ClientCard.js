@@ -12,7 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-import { getInitials } from '../../../../util/helperFunctions';
+import { getInitials } from '../../../util/helperFunctions';
 
 const styles = theme => ({
   avatar: {
