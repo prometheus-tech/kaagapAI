@@ -6,10 +6,11 @@ export default `
     session_name: String!
     date_of_session: Date!
     c_id: Int!
+    documents: [SessionDocument]
   }
 
   type Query { 
-    getSessions(c_id: Int!): [Session]!
+    session(session_id: Int!): Session
   }
 
   type Mutation {
