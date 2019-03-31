@@ -17,6 +17,7 @@ import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
+import DeleteClientDialog from '../../components/Clients/DeleteClientDialog/DeleteClientDialog';
 
 const styles = theme => ({
   mainContainer: {
@@ -59,6 +60,15 @@ const styles = theme => ({
 class ClientsPage extends Component {
   state = {
     isNewClientDialogOpened: false,
+    isDeleteClientDialogOpened: false,
+    selectedClient: {
+      c_id: '',
+      fname: '',
+      lname: '',
+      gender: '',
+      birthdate: '',
+      no_of_sessions: ''
+    },
     view: 'card'
   };
 
@@ -80,10 +90,34 @@ class ClientsPage extends Component {
     });
   };
 
+  openDeleteClientDialogHandler = client => {
+    this.setState({
+      isDeleteClientDialogOpened: true,
+      selectedClient: {
+        c_id: parseInt(client.c_id),
+        fname: client.fname,
+        lname: client.lname,
+        gender: client.gender,
+        birthdate: client.birthdate,
+        no_of_sessions: client.no_of_sessions
+      }
+    });
+  };
+
+  closeDeleteClientDialogHandler = () => {
+    this.setState({
+      isDeleteClientDialogOpened: false
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
-    const { isNewClientDialogOpened } = this.state;
+    const {
+      isNewClientDialogOpened,
+      isDeleteClientDialogOpened,
+      selectedClient
+    } = this.state;
 
     const p_id = parseInt(localStorage.getItem(USER_ID));
 
@@ -153,7 +187,10 @@ class ClientsPage extends Component {
                           md={4}
                           lg={3}
                         >
-                          <ClientCard client={client} />
+                          <ClientCard
+                            clientDeleted={this.openDeleteClientDialogHandler}
+                            client={client}
+                          />
                         </Grid>
                       );
                     })}
@@ -161,8 +198,15 @@ class ClientsPage extends Component {
                 </Grid>
               </Grid>
               <NewClientDialog
+                practitionerId={p_id}
                 opened={isNewClientDialogOpened}
                 closed={this.closeNewClientDialogHandler}
+              />
+              <DeleteClientDialog
+                opened={isDeleteClientDialogOpened}
+                closed={this.closeDeleteClientDialogHandler}
+                practitionerId={p_id}
+                client={selectedClient}
               />
             </Auxilliary>
           );

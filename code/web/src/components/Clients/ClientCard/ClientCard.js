@@ -68,7 +68,7 @@ const styles = theme => ({
   }
 });
 
-function ClientCard({ classes, client }) {
+function ClientCard({ classes, client, clientDeleted }) {
   const { fname, lname, no_of_sessions } = client;
   const initials = getInitials(fname, lname);
   const name = fname + ' ' + lname;
@@ -105,6 +105,9 @@ function ClientCard({ classes, client }) {
           className={classes.iconHover}
           disableRipple={true}
           aria-label="Archive"
+          onClick={() => {
+            clientDeleted(client);
+          }}
         >
           <Icon>archive</Icon>
         </IconButton>

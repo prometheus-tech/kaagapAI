@@ -94,6 +94,8 @@ class DeleteSessionDialog extends Component {
             s => parseInt(s.session_id) !== parseInt(session_id)
           );
 
+          client.no_of_sessions = client.sessions.length;
+
           cache.writeQuery({
             ...clientQueryParams,
             data: {

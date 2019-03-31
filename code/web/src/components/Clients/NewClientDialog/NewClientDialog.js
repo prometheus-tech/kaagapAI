@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
-import { USER_ID } from '../../../util/constants';
-
 import ADD_CLIENT from '../../../graphql/mutations/addClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../graphql/queries/clients';
 
 import { withSnackbar } from 'notistack';
 
-import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleSnackbar from '../../UI/SimpleSnackbar/SimpleSnackbar';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
-import { lightBlue } from '@material-ui/core/colors';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -46,7 +40,7 @@ class NewClientDialog extends Component {
     super(props);
 
     this.state = {
-      p_id: parseInt(localStorage.getItem(USER_ID)),
+      p_id: parseInt(props.practitionerId),
       fname: '',
       lname: '',
       gender: 'M',
@@ -81,7 +75,7 @@ class NewClientDialog extends Component {
   }
 
   render() {
-    const { classes, fullScreen, opened, closed } = this.props;
+    const { classes, fullScreen, opened, closed, practitionerId } = this.props;
     const { p_id, fname, lname, gender, birthdate } = this.state;
 
     return (
@@ -93,7 +87,7 @@ class NewClientDialog extends Component {
               cache.readQuery({
                 query: CLIENTS,
                 variables: {
-                  p_id: parseInt(localStorage.getItem(USER_ID))
+                  p_id: parseInt(practitionerId)
                 }
               })
             );
@@ -102,7 +96,7 @@ class NewClientDialog extends Component {
             cache.writeQuery({
               query: CLIENTS,
               variables: {
-                p_id: parseInt(localStorage.getItem(USER_ID))
+                p_id: parseInt(parseInt(practitionerId))
               },
               data: {
                 clients
