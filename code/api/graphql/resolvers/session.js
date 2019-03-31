@@ -1,10 +1,12 @@
 export default {
+  Session: {
+    documents: ({ session_id }, args, { models }) => {
+      return models.Session_Document.findAll({ where: { session_id } });
+    }
+  },
   Query: {
-    getSessions: (parent, { c_id }, { models }) => {
-      models.Session.findAll({
-        raw: true,
-        where: { c_id }
-      });
+    session: async (parent, { session_id }, { models }) => {
+      return await models.Session.findOne({ where: { session_id } });
     }
   },
   Mutation: {
