@@ -18,6 +18,7 @@ import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import DeleteClientDialog from '../../components/Clients/DeleteClientDialog/DeleteClientDialog';
+import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 
 const styles = theme => ({
   mainContainer: {
@@ -40,7 +41,6 @@ const styles = theme => ({
     zIndex: 2
   },
   extendedButton: {
-    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
     background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
@@ -61,6 +61,7 @@ class ClientsPage extends Component {
   state = {
     isNewClientDialogOpened: false,
     isDeleteClientDialogOpened: false,
+    isEditClientDialogOpened: false,
     selectedClient: {
       c_id: '',
       fname: '',
@@ -90,6 +91,26 @@ class ClientsPage extends Component {
     });
   };
 
+  openEditClientDialogHandler = client => {
+    this.setState({
+      isEditClientDialogOpened: true,
+      selectedClient: {
+        c_id: parseInt(client.c_id),
+        fname: client.fname,
+        lname: client.lname,
+        gender: client.gender,
+        birthdate: client.birthdate,
+        no_of_sessions: client.no_of_sessions
+      }
+    });
+  };
+
+  closeEditClientDialogHandler = () => {
+    this.setState({
+      isEditClientDialogOpened: false
+    });
+  };
+
   openDeleteClientDialogHandler = client => {
     this.setState({
       isDeleteClientDialogOpened: true,
@@ -115,6 +136,7 @@ class ClientsPage extends Component {
 
     const {
       isNewClientDialogOpened,
+      isEditClientDialogOpened,
       isDeleteClientDialogOpened,
       selectedClient
     } = this.state;
@@ -188,6 +210,7 @@ class ClientsPage extends Component {
                           lg={3}
                         >
                           <ClientCard
+                            clientEdited={this.openEditClientDialogHandler}
                             clientDeleted={this.openDeleteClientDialogHandler}
                             client={client}
                           />
@@ -201,6 +224,11 @@ class ClientsPage extends Component {
                 practitionerId={p_id}
                 opened={isNewClientDialogOpened}
                 closed={this.closeNewClientDialogHandler}
+              />
+              <EditClientDialog
+                opened={isEditClientDialogOpened}
+                closed={this.closeEditClientDialogHandler}
+                client={selectedClient}
               />
               <DeleteClientDialog
                 opened={isDeleteClientDialogOpened}

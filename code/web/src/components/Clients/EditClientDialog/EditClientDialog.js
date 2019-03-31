@@ -88,10 +88,6 @@ class EditClientDialog extends Component {
    * Custom validators
    */
   componentWillMount() {
-    const letters = '^[A-Za-z\\s-]+$';
-    ValidatorForm.addValidationRule('isLetter', value => {
-      return value.match(letters);
-    });
     const date = '^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$';
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
@@ -103,7 +99,7 @@ class EditClientDialog extends Component {
   };
 
   render() {
-    const { classes, fullScreen, isOpened, closed } = this.props;
+    const { classes, fullScreen, opened, closed } = this.props;
     const {
       c_id,
       fname,
@@ -132,7 +128,7 @@ class EditClientDialog extends Component {
         {editClient => {
           return (
             <Dialog
-              open={isOpened}
+              open={opened}
               onClose={closed}
               fullWidth={true}
               fullScreen={fullScreen}
@@ -173,17 +169,10 @@ class EditClientDialog extends Component {
                             name="fname"
                             onChange={this.inputChangeHandler}
                             margin="dense"
-                            validators={[
-                              'required',
-                              'minStringLength: ' + 2,
-                              'maxStringLength:' + 20,
-                              'isLetter'
-                            ]}
+                            validators={['required', 'maxStringLength:' + 100]}
                             errorMessages={[
                               'This field is required',
-                              'First name might be too short',
-                              'First name must be less than 20 characters',
-                              'Please do not include numbers and/or special characters'
+                              'First name must be less than 100 characters'
                             ]}
                           />
                         </Grid>
@@ -196,17 +185,10 @@ class EditClientDialog extends Component {
                             name="lname"
                             onChange={this.inputChangeHandler}
                             margin="dense"
-                            validators={[
-                              'required',
-                              'minStringLength: ' + 2,
-                              'maxStringLength:' + 20,
-                              'isLetter'
-                            ]}
+                            validators={['required', 'maxStringLength:' + 100]}
                             errorMessages={[
                               'This field is required',
-                              'Last name might be too short',
-                              'Last name must be less than 20 characters',
-                              'Please do not include numbers and/or special characters'
+                              'Last name must be less than 100 characters'
                             ]}
                           />
                         </Grid>

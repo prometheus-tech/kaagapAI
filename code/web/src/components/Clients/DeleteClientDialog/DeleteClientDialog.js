@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { USER_ID } from '../../../util/constants';
-
 import DELETE_CLIENT from '../../../graphql/mutations/deleteClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../graphql/queries/clients';

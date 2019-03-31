@@ -35,8 +35,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: theme.spacing.unit * 2,
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start'
+    ...theme.mixins.toolbar
   },
   clientDetailsContainer: {
     padding: theme.spacing.unit * 2
@@ -56,8 +55,8 @@ const styles = theme => ({
     fontWeight: 500,
     color: theme.palette.grey[800]
   },
-  closeInfo:{
-    marginLeft: '2rem',
+  closeInfo: {
+    marginLeft: '2rem'
   }
 });
 
@@ -100,7 +99,11 @@ class ClientInformation extends Component {
             </Avatar>
             <Typography className={classes.header}>{clientName}</Typography>
           </div>
-          <IconButton className={classes.closeInfo} component="span" onClick={closed}>
+          <IconButton
+            className={classes.closeInfo}
+            component="span"
+            onClick={closed}
+          >
             <CloseIcon />
           </IconButton>
         </div>

@@ -83,7 +83,6 @@ const styles = theme => ({
   },
   extendedButton: {
     background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
-    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
     borderRadius: '5px',
