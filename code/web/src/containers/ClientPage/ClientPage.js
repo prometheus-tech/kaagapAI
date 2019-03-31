@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
 import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import ClientInformation from '../../components/Client/ClientInformation/ClientInformation';
@@ -26,24 +27,26 @@ import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 
+const drawerWidth = '25';
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   content: {
-    flexGrow: 1,
+    flexGrow: 2,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginRight: 0
+    marginRight: -drawerWidth + '%',
+    zIndex: 1
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginRight: 350
+    marginRight: 0
   },
   secondaryHeader: {
     marginBottom: theme.spacing.unit * 2
@@ -53,13 +56,16 @@ const styles = theme => ({
   },
   breadCrumb: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
+    iconInfo: {
+      marginLeft: 'auto'
+    }
   },
   breadCrumbLink: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '300'
+    fontWeight: '400'
   },
   floatingButton: {
     position: 'fixed',
@@ -194,6 +200,7 @@ class ClientPage extends Component {
                     {data.client.fname + ' ' + data.client.lname}
                     <IconButton
                       component="span"
+                      className={classes.iconInfo}
                       onClick={
                         isClientDetailsOpened
                           ? this.closeClientDetailsHandler
@@ -204,6 +211,7 @@ class ClientPage extends Component {
                     </IconButton>
                   </Typography>
                 </Breadcrumbs>
+                <Divider light />
                 <Hidden smDown>
                   <Fab
                     color="primary"

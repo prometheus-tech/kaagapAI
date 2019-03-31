@@ -15,11 +15,11 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import EditClientDialog from '../../Clients/EditClientDialog/EditClientDialog';
 
-const drawerWidth = 350;
+const drawerWidth = '25vw';
 
 const styles = theme => ({
   drawer: {
-    zIndex: 1,
+    zIndex: -1,
     width: drawerWidth,
     flexShrink: 0
   },
@@ -35,7 +35,8 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: theme.spacing.unit * 2,
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start'
   },
   clientDetailsContainer: {
     padding: theme.spacing.unit * 2
@@ -54,6 +55,9 @@ const styles = theme => ({
   sectionHeader: {
     fontWeight: 500,
     color: theme.palette.grey[800]
+  },
+  closeInfo:{
+    marginLeft: '2rem',
   }
 });
 
@@ -96,7 +100,7 @@ class ClientInformation extends Component {
             </Avatar>
             <Typography className={classes.header}>{clientName}</Typography>
           </div>
-          <IconButton component="span" onClick={closed}>
+          <IconButton className={classes.closeInfo} component="span" onClick={closed}>
             <CloseIcon />
           </IconButton>
         </div>
