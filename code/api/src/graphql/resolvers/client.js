@@ -3,10 +3,12 @@ export default {
     sessions: ({ c_id }, args, { models }) => {
       return models.Session.findAll({ where: { c_id } });
     },
+
     no_of_sessions: ({ c_id }, args, { models }) => {
       return models.Session.count({ where: { c_id } });
     }
   },
+
   Query: {
     clients: (parent, { p_id }, { models }) => {
       return models.Client.findAll({
@@ -14,6 +16,7 @@ export default {
         where: { p_id }
       });
     },
+
     client: async (parent, { c_id }, { models }) => {
       await models.Client.update(
         {
@@ -25,6 +28,7 @@ export default {
       return await models.Client.findOne({ where: { c_id } });
     }
   },
+
   Mutation: {
     addClient: async (
       parent,
@@ -47,6 +51,7 @@ export default {
         where: { c_id }
       });
     },
+
     deleteClient: async (parent, { c_id }, { models }) => {
       const deleteClientRes = await models.Client.findOne({
         raw: true,
@@ -59,6 +64,7 @@ export default {
 
       return deleteClientRes;
     },
+    
     updateClientInformation: async (
       parent,
       { c_id, fname, lname, birthdate, gender },

@@ -9,6 +9,7 @@ export default {
         }
       });
     },
+    
     getSessionDocument: async (parent, { sd_id }, { models }) => {
       return await models.Session_Document.findOne({
         raw: true,
