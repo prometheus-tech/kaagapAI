@@ -1,13 +1,16 @@
 export default {
-  Query: {
-    getSessions: (parent, { c_id }, { models }) => {
-      models.Session.findAll({
-        raw: true,
-        where: { c_id }
-      });
+  Session: {
+    documents: ({ session_id }, args, { models }) => {
+      return models.Session_Document.findAll({ where: { session_id } });
     }
   },
-  
+
+  Query: {
+    session: async (parent, { session_id }, { models }) => {
+      return await models.Session.findOne({ where: { session_id } });
+    }
+  },
+
   Mutation: {
     addSession: async (
       parent,
@@ -29,7 +32,7 @@ export default {
         }
       });
     },
-    
+
     deleteSession: async (parent, { session_id, c_id }, { models }) => {
       const deleteSessionRes = await models.Session.findOne({
         raw: true,
@@ -42,7 +45,7 @@ export default {
 
       return deleteSessionRes;
     },
-
+    
     updateSessionInformation: async (
       parent,
       { session_id, session_name, date_of_session },
