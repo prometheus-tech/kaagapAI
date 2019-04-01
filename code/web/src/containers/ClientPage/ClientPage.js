@@ -27,27 +27,28 @@ import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    width: '100vw'
   },
   content: {
-    flexGrow: 2,
+    flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginRight: -drawerWidth + '%',
-    zIndex: 1
+    marginRight: 0
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginRight: 0
+    marginRight: +drawerWidth + '%'
   },
   secondaryHeader: {
     marginBottom: theme.spacing.unit * 2
@@ -78,8 +79,7 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
-    },
-    zIndex: 1
+    }
   },
   extendedButton: {
     background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
@@ -192,6 +192,7 @@ class ClientPage extends Component {
 
           return (
             <div className={classes.root}>
+              <CssBaseline />
               <main
                 className={classNames(classes.content, {
                   [classes.contentShift]: isClientDetailsOpened
@@ -253,22 +254,6 @@ class ClientPage extends Component {
                     <Add />
                   </Fab>
                 </Hidden>
-                <NewSessionDialog
-                  clientId={parseInt(c_id)}
-                  opened={isNewSessionDialogOpened}
-                  closed={this.closeNewSessionDialogHandler}
-                />
-                <EditSessionDialog
-                  isOpened={isEditSessionDialogOpened}
-                  closed={this.closeEditSessionDialogHandler}
-                  session={selectedSession}
-                />
-                <DeleteSessionDialog
-                  isOpened={isDeleteSessionDialogOpened}
-                  closed={this.closeDeleteSessionDialogHandler}
-                  clientId={parseInt(c_id)}
-                  session={selectedSession}
-                />
                 <Grid container spacing={16}>
                   {data.client.sessions.map(session => {
                     return (
@@ -289,6 +274,22 @@ class ClientPage extends Component {
                     );
                   })}
                 </Grid>
+                <NewSessionDialog
+                  clientId={parseInt(c_id)}
+                  opened={isNewSessionDialogOpened}
+                  closed={this.closeNewSessionDialogHandler}
+                />
+                <EditSessionDialog
+                  isOpened={isEditSessionDialogOpened}
+                  closed={this.closeEditSessionDialogHandler}
+                  session={selectedSession}
+                />
+                <DeleteSessionDialog
+                  isOpened={isDeleteSessionDialogOpened}
+                  closed={this.closeDeleteSessionDialogHandler}
+                  clientId={parseInt(c_id)}
+                  session={selectedSession}
+                />
               </main>
               <ClientInformation
                 isOpened={isClientDetailsOpened}
