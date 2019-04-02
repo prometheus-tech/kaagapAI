@@ -27,6 +27,9 @@ import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import SearcField from '../../components/UI/SearchField/SearchField';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const drawerWidth = '25';
@@ -58,16 +61,14 @@ const styles = theme => ({
   },
   breadCrumb: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2,
-    iconInfo: {
-      marginLeft: 'auto'
-    }
+    marginBottom: theme.spacing.unit * 2
   },
   breadCrumbLink: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '400'
+    fontWeight: '400',
+    textTransform: 'capitalize'
   },
   floatingButton: {
     position: 'fixed',
@@ -82,20 +83,29 @@ const styles = theme => ({
     }
   },
   extendedButton: {
-    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
+    background: 'rgb(109, 84, 248)',
     color: '#ffffff',
     textTransform: 'capitalize',
-    borderRadius: '5px',
+    borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
       backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     },
-    margin: theme.spacing.unit,
-    marginBottom: theme.spacing.unit * 6
+    marginTop: theme.spacing.unit * 4,
+    padding: '5px 25px 5px 25px'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
+  },
+  actionButton: {
+    marginTop: theme.spacing.unit * 4
+  },
+  searchField: {
+    marginBottom: theme.spacing.unit * 4
+  },
+  divider: {
+    marginTop: theme.spacing.unit * 2
   }
 });
 
@@ -198,62 +208,80 @@ class ClientPage extends Component {
                   [classes.contentShift]: isClientDetailsOpened
                 })}
               >
-                <Breadcrumbs
-                  separator={<NavigateNextIcon />}
-                  className={classes.breadCrumb}
-                >
-                  <Link
-                    component={RouterLink}
-                    color="inherit"
-                    to="/"
-                    className={classes.breadCrumbLink}
-                  >
-                    <PeopleIcon className={classes.breadCrumbIcon} />
-                    Clients
-                  </Link>
-                  <Typography
-                    color="textPrimary"
-                    className={classes.breadCrumbLink}
-                    gutterBottom={false}
-                  >
-                    <PersonIcon className={classes.breadCrumbIcon} />
-                    {data.client.fname + ' ' + data.client.lname}
-                    <IconButton
-                      component="span"
-                      className={classes.iconInfo}
-                      onClick={
-                        isClientDetailsOpened
-                          ? this.closeClientDetailsHandler
-                          : this.openClientDetailsHandler
-                      }
+                <Grid justify="space-between" container spacing={16}>
+                  <Grid item>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon />}
+                      className={classes.breadCrumb}
                     >
-                      <InfoIcon fontSize="small" />
-                    </IconButton>
-                  </Typography>
-                </Breadcrumbs>
-                <Divider light />
-                <Hidden smDown>
-                  <Fab
-                    color="primary"
-                    variant="extended"
-                    className={classes.extendedButton}
-                    onClick={this.openNewSessionDialogHandler}
-                  >
-                    <Add className={classes.extendedIcon} /> New Session
-                  </Fab>
-                </Hidden>
-                <Hidden mdUp>
-                  <Fab
-                    size="large"
-                    color="primary"
-                    className={classes.floatingButton}
-                    onClick={this.openNewSessionDialogHandler}
-                    disableRipple={false}
-                    disableFocusRipple={false}
-                  >
-                    <Add />
-                  </Fab>
-                </Hidden>
+                      <Button
+                        component={RouterLink}
+                        color="inherit"
+                        to="/"
+                        className={classes.breadCrumbLink}
+                      >
+                        <PeopleIcon className={classes.breadCrumbIcon} />
+                        Clients
+                      </Button>
+                      <Typography
+                        color="secondary"
+                        className={classes.breadCrumbLink}
+                        gutterBottom={false}
+                      >
+                        <PersonIcon className={classes.breadCrumbIcon} />
+                        {data.client.fname + ' ' + data.client.lname}
+                      </Typography>
+                    </Breadcrumbs>
+                  </Grid>
+                  <Grid item>
+                    {/* <SearcField label="" className={classes.searchField} /> */}
+                  </Grid>
+                </Grid>
+                <Divider light className={classes.divider} />
+                <Grid justify="space-between" container spacing={16}>
+                  <Grid item>
+                    <Hidden smDown>
+                      <Fab
+                        color="primary"
+                        variant="extended"
+                        className={classes.extendedButton}
+                        onClick={this.openNewSessionDialogHandler}
+                      >
+                        <Add className={classes.extendedIcon} /> New Session
+                      </Fab>
+                    </Hidden>
+                    <Hidden mdUp>
+                      <Fab
+                        size="large"
+                        color="primary"
+                        className={classes.floatingButton}
+                        onClick={this.openNewSessionDialogHandler}
+                        disableRipple={false}
+                        disableFocusRipple={false}
+                      >
+                        <Add />
+                      </Fab>
+                    </Hidden>
+                  </Grid>
+                  <Grid item align="flex-end">
+                    <div className={classes.actionButton}>
+                      <IconButton>
+                        <Icon>view_module</Icon>
+                      </IconButton>
+                      <IconButton
+                        component="span"
+                        className={classes.iconInfo}
+                        onClick={
+                          isClientDetailsOpened
+                            ? this.closeClientDetailsHandler
+                            : this.openClientDetailsHandler
+                        }
+                      >
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </div>
+                  </Grid>
+                </Grid>
                 <Grid container spacing={16}>
                   {data.client.sessions.map(session => {
                     return (

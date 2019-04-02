@@ -35,22 +35,22 @@ const styles = theme => ({
     boxShadow: theme.shadows[24],
     color: '#ffffff',
     '&:hover': {
-      backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     },
     zIndex: 2
   },
   extendedButton: {
-    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
+    background: 'rgb(109, 84, 248)',
     color: '#ffffff',
     textTransform: 'capitalize',
-    borderRadius: '5px',
+    borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
       backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     },
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    padding: '5px 25px 5px 25px'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit

@@ -17,7 +17,7 @@ import Logo from '../../../assets/kaagapai-logo.svg';
 const styles = theme => ({
   root: {
     width: '100%',
-    background: '#fafafa',
+    background: '#ffffff',
     boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)',
     zIndex: theme.zIndex.drawer + 1
   },

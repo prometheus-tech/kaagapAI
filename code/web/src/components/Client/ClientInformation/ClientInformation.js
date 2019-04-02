@@ -14,6 +14,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import EditClientDialog from '../../Clients/EditClientDialog/EditClientDialog';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 import { CssBaseline } from '@material-ui/core';
 
 const drawerWidth = '25';
@@ -41,7 +43,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   avatar: {
-    marginRight: 20
+    marginRight: 20,
+    backgroundColor: '#0091ea'
   },
   toolbar: theme.mixins.toolbar,
   header: {
@@ -57,6 +60,9 @@ const styles = theme => ({
   },
   closeInfo: {
     marginLeft: '2rem'
+  },
+  editIcon: {
+    marginRight: theme.spacing.unit
   }
 });
 
@@ -141,10 +147,21 @@ class ClientInformation extends Component {
                 </Moment>
               }
             />
-            <Grid item xs={12} align="right">
-              <IconButton onClick={this.openEditClientDialogHandler}>
+            <Grid item xs={12} align="left">
+              {/* <IconButton onClick={this.openEditClientDialogHandler}>
                 <EditIcon fontSize="small" />
-              </IconButton>
+              </IconButton> */}
+              <Button
+                color="primary"
+                variant="outlined"
+                aria-label="Edit"
+                onClick={this.openEditClientDialogHandler}
+              >
+                <Icon fontSize="small" className={classes.editIcon}>
+                  edit_icon
+                </Icon>
+                Edit
+              </Button>
             </Grid>
           </Grid>
           <Divider />

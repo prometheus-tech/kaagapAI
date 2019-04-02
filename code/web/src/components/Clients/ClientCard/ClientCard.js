@@ -86,7 +86,9 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
         component={CardLink}
       >
         <CardContent className={classes.cardContent}>
-          <Avatar className={classes.avatar}>{initials}</Avatar>
+          <Avatar className={classes.avatar}>
+            <Icon fontSize="large">person</Icon>
+          </Avatar>
           <Typography
             noWrap
             variant="h6"
