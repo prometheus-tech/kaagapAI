@@ -3,10 +3,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Practitioners', {
       p_id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        defaultValue: Sequelize.UUIDV4
       },
       email: {
         type: Sequelize.STRING,

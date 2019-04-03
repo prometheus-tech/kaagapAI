@@ -8,7 +8,7 @@ export default `
   }
 
   type Practitioner {
-    p_id: ID!
+    p_id: UUID!
     email: String!
     phone_no: String!
     password: String!

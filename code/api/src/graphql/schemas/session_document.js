@@ -1,5 +1,6 @@
 export default `
   scalar Date 
+  scalar UUID
 
   enum Type {
     PDF
@@ -8,14 +9,14 @@ export default `
   }
 
   type SessionDocument {
-    sd_id: Int!
+    sd_id: UUID!
     file: String!
     file_name: String!
     content: String!
     date_added: Date!
     last_modified: Date
     type: Type!
-    session_id: Int!
+    session_id: UUID!
   }
 
   type Query { 

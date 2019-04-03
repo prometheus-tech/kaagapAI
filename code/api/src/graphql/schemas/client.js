@@ -1,5 +1,6 @@
 export default `
   scalar Date
+  scalar UUID
 
   enum Gender {
     M
@@ -7,14 +8,14 @@ export default `
   }
 
   type Client {
-    c_id: ID!
+    c_id: UUID!
     fname: String!
     lname: String!
     gender: Gender!
     birthdate: Date!
     date_added: Date!
     last_opened: Date
-    p_id: Int!
+    p_id: UUID!
     no_of_sessions: Int
     sessions: [Session]
   }

@@ -3,10 +3,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Sessions', {
       session_id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,
+        defaultValue: Sequelize.UUIDV4
       },
       session_name: {
         type: Sequelize.STRING
@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       c_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         references: {

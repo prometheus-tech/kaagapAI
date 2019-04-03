@@ -1,4 +1,7 @@
+import GraphQlUUID from 'graphql-type-uuid';
 export default {
+  UUID: GraphQlUUID,
+  
   Query: {
     getSessionDocuments: async (parent, { session_id }, { models }) => {
       return await models.Session_Document.findAll({

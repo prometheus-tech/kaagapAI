@@ -1,9 +1,10 @@
 'use strict';
+const uuidv4 = require('uuid/v4');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Practitioners', [{
-      p_id: 1,
+      p_id: '67b8ba58-301e-45a3-ba01-ed6d0d229785',
       email: 'amysantiago@gmail.com',
       phone_no: '0982736485767',
       password: 'asantiago',
@@ -18,7 +19,7 @@ module.exports = {
       session_token: ''
     },
     {
-      p_id: 2,
+      p_id: 'd5654875-e8ce-4e9b-97d3-bfca9c743466',
       email: 'rosadiaz@gmail.com',
       phone_no: '09847837463',
       password: 'rdiaz',

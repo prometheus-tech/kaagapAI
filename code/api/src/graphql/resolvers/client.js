@@ -1,4 +1,8 @@
+import GraphQlUUID from 'graphql-type-uuid';
+
 export default {
+  UUID: GraphQlUUID,
+  
   Client: {
     sessions: ({ c_id }, args, { models }) => {
       return models.Session.findAll({ where: { c_id } });

@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Practitioner_Feedback = sequelize.define('Practitioner_Feedback', {
     pf_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
-      autoIncrement: true
+      defaultValue: DataTypes.UUIDV4
     },
     feedback_file: DataTypes.BLOB,
     file_name: DataTypes.STRING,

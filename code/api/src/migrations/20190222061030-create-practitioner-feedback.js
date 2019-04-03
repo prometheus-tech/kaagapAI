@@ -3,10 +3,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Practitioner_Feedbacks', {
       pf_id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        allowNull: false,
+        defaultValue: Sequelize.UUIDV4
       },
       feedback_file: {
         type: Sequelize.BLOB
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       p_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',
         references: {
