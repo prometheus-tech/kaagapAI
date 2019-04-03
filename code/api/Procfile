@@ -1,1 +1,2 @@
-web: node app.js
+web: pip install
+web: node app.js 
