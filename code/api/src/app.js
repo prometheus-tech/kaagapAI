@@ -4,26 +4,9 @@ import { ApolloServer, gql } from 'apollo-server-express';
 import typeDefs from './graphql/schemas/schema';
 import resolvers from './graphql/resolvers/resolvers';
 import models from './models';
+import configurations from './config/appconfig';
 import cors from 'cors';
 import http from 'http';
-
-const configurations = {
-  development: {
-    ssl: false,
-    port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_DEV
-  },
-  test: {
-    ssl: false,
-    port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_TEST
-  },
-  production: {
-    ssl: false,
-    port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_PROD
-  }
-};
 
 const environment = 'development'; // Change this Jessie
 const config = configurations[environment];
