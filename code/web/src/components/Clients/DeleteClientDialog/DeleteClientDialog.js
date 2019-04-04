@@ -89,7 +89,7 @@ class DeleteClientDialog extends Component {
           cache.writeQuery({
             ...clientsQueryParams,
             data: {
-              clients: clients.filter(c => parseInt(c.c_id) !== parseInt(c_id))
+              clients: clients.filter(c => c.c_id !== c_id)
             }
           });
 
@@ -101,7 +101,7 @@ class DeleteClientDialog extends Component {
           __typename: 'Mutation',
           deleteClient: {
             __typename: 'Client',
-            c_id: parseInt(client.c_id),
+            c_id: client.c_id,
             fname: client.fname,
             lname: client.lname
           }
@@ -151,7 +151,7 @@ class DeleteClientDialog extends Component {
                 className={classes.deleteColor}
                 disabled={!(this.state.clientName === clientName)}
                 onClick={() => {
-                  deleteClient({ variables: { c_id: parseInt(client.c_id) } });
+                  deleteClient({ variables: { c_id: client.c_id } });
 
                   closed();
                 }}

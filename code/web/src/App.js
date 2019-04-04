@@ -34,7 +34,7 @@ const client = new ApolloClient({
 });
 
 // Remove this upon implementing authentication functionality
-localStorage.setItem(USER_ID, parseInt(1));
+localStorage.setItem(USER_ID, '67b8ba58-301e-45a3-ba01-ed6d0d229785');
 localStorage.setItem(AUTH_TOKEN, 'kaagapai');
 
 class App extends Component {

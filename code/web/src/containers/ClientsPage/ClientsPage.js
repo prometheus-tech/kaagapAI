@@ -95,7 +95,7 @@ class ClientsPage extends Component {
     this.setState({
       isEditClientDialogOpened: true,
       selectedClient: {
-        c_id: parseInt(client.c_id),
+        c_id: client.c_id,
         fname: client.fname,
         lname: client.lname,
         gender: client.gender,
@@ -115,7 +115,7 @@ class ClientsPage extends Component {
     this.setState({
       isDeleteClientDialogOpened: true,
       selectedClient: {
-        c_id: parseInt(client.c_id),
+        c_id: client.c_id,
         fname: client.fname,
         lname: client.lname,
         gender: client.gender,
@@ -141,7 +141,7 @@ class ClientsPage extends Component {
       selectedClient
     } = this.state;
 
-    const p_id = parseInt(localStorage.getItem(USER_ID));
+    const p_id = localStorage.getItem(USER_ID);
 
     return (
       <Query query={CLIENTS} variables={{ p_id }}>

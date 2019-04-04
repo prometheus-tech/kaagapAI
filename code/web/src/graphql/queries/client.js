@@ -5,7 +5,7 @@ import CLIENT_META_DATA from '../fragments/clientMetaData';
 import SESSION_INFO from '../fragments/sessionInfo';
 
 const CLIENT = gql`
-  query client($c_id: Int!) {
+  query client($c_id: UUID!) {
     client(c_id: $c_id) {
       ...ClientBasicInfo
       ...ClientMetaData

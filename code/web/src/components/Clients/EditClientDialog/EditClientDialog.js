@@ -60,7 +60,7 @@ class EditClientDialog extends Component {
     } = props.client;
 
     this.state = {
-      c_id: parseInt(c_id),
+      c_id: c_id,
       fname: fname,
       lname: lname,
       gender: gender,
@@ -75,7 +75,7 @@ class EditClientDialog extends Component {
     client: { c_id, fname, lname, gender, birthdate, no_of_sessions }
   }) {
     this.setState({
-      c_id: parseInt(c_id),
+      c_id: c_id,
       fname: fname,
       lname: lname,
       gender: gender,

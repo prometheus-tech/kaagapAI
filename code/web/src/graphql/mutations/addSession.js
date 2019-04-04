@@ -4,7 +4,7 @@ import SESSION_INFO from '../fragments/sessionInfo';
 
 const ADD_SESSION = gql`
   mutation AddSession(
-    $c_id: Int!
+    $c_id: UUID!
     $session_name: String!
     $date_of_session: Date!
   ) {

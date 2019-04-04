@@ -34,7 +34,7 @@ class NewSessionDialog extends Component {
     super(props);
 
     this.state = {
-      c_id: parseInt(props.clientId),
+      c_id: props.clientId,
       session_name: '',
       date_of_session: getUTCDate(new Date())
     };

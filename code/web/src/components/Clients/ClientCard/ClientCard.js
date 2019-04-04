@@ -12,8 +12,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-import { getInitials } from '../../../util/helperFunctions';
-
 const styles = theme => ({
   avatar: {
     backgroundColor: '#0091ea',
@@ -70,7 +68,6 @@ const styles = theme => ({
 
 function ClientCard({ classes, client, clientEdited, clientDeleted }) {
   const { fname, lname, no_of_sessions } = client;
-  const initials = getInitials(fname, lname);
   const name = fname + ' ' + lname;
   const sessions =
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';

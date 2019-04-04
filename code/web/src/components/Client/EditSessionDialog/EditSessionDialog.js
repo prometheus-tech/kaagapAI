@@ -46,7 +46,7 @@ class EditSessionDialog extends Component {
     session: { session_id, session_name, date_of_session }
   }) {
     this.setState({
-      session_id: parseInt(session_id),
+      session_id: session_id,
       session_name,
       date_of_session
     });

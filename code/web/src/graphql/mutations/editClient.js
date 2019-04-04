@@ -4,7 +4,7 @@ import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 
 const EDIT_CLIENT = gql`
   mutation UpdateClient(
-    $c_id: Int!
+    $c_id: UUID!
     $fname: String!
     $lname: String!
     $birthdate: Date!

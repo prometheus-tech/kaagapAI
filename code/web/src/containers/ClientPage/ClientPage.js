@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
@@ -29,7 +28,6 @@ import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSes
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import SearcField from '../../components/UI/SearchField/SearchField';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 const drawerWidth = '25';
@@ -190,7 +188,7 @@ class ClientPage extends Component {
     } = this.state;
 
     return (
-      <Query query={CLIENT} variables={{ c_id: parseInt(c_id) }}>
+      <Query query={CLIENT} variables={{ c_id: c_id }}>
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
@@ -303,7 +301,7 @@ class ClientPage extends Component {
                   })}
                 </Grid>
                 <NewSessionDialog
-                  clientId={parseInt(c_id)}
+                  clientId={c_id}
                   opened={isNewSessionDialogOpened}
                   closed={this.closeNewSessionDialogHandler}
                 />
@@ -315,7 +313,7 @@ class ClientPage extends Component {
                 <DeleteSessionDialog
                   isOpened={isDeleteSessionDialogOpened}
                   closed={this.closeDeleteSessionDialogHandler}
-                  clientId={parseInt(c_id)}
+                  clientId={c_id}
                   session={selectedSession}
                 />
               </main>

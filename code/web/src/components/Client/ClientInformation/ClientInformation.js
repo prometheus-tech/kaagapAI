@@ -12,7 +12,6 @@ import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import EditClientDialog from '../../Clients/EditClientDialog/EditClientDialog';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';

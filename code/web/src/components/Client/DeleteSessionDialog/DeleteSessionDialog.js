@@ -46,16 +46,16 @@ class DeleteSessionDialog extends Component {
     super(props);
 
     this.state = {
-      c_id: parseInt(props.clientId),
-      session_id: parseInt(props.session.session_id),
+      c_id: props.clientId,
+      session_id: props.session.session_id,
       session_name: ''
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      c_id: parseInt(nextProps.clientId),
-      session_id: parseInt(nextProps.session.session_id),
+      c_id: nextProps.clientId,
+      session_id: nextProps.session.session_id,
       session_name: ''
     });
   }
@@ -85,13 +85,13 @@ class DeleteSessionDialog extends Component {
         ) => {
           const clientQueryParams = {
             query: CLIENT,
-            variables: { c_id: parseInt(c_id) }
+            variables: { c_id: c_id }
           };
 
           const { client } = cloneDeep(cache.readQuery(clientQueryParams));
 
           client.sessions = client.sessions.filter(
-            s => parseInt(s.session_id) !== parseInt(session_id)
+            s => s.session_id !== session_id
           );
 
           client.no_of_sessions = client.sessions.length;
@@ -109,7 +109,7 @@ class DeleteSessionDialog extends Component {
           __typename: 'Mutation',
           deleteSession: {
             __typename: 'Session',
-            c_id: parseInt(clientId),
+            c_id: clientId,
             session_id: session_id,
             session_name: session_name
           }

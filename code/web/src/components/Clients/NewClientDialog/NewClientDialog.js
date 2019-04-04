@@ -40,7 +40,7 @@ class NewClientDialog extends Component {
     super(props);
 
     this.state = {
-      p_id: parseInt(props.practitionerId),
+      p_id: props.practitionerId,
       fname: '',
       lname: '',
       gender: 'M',
@@ -87,7 +87,7 @@ class NewClientDialog extends Component {
               cache.readQuery({
                 query: CLIENTS,
                 variables: {
-                  p_id: parseInt(practitionerId)
+                  p_id: practitionerId
                 }
               })
             );
@@ -96,7 +96,7 @@ class NewClientDialog extends Component {
             cache.writeQuery({
               query: CLIENTS,
               variables: {
-                p_id: parseInt(parseInt(practitionerId))
+                p_id: practitionerId
               },
               data: {
                 clients

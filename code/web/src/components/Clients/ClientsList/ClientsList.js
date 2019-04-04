@@ -43,7 +43,7 @@ const styles = theme => ({
 function ClientsList(props) {
   const { classes } = props;
 
-  const p_id = parseInt(localStorage.getItem(USER_ID));
+  const p_id = localStorage.getItem(USER_ID);
 
   return (
     <Query query={CLIENTS} variables={{ p_id }}>
