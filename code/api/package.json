@@ -51,6 +51,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "graphql-type-json": "^0.2.1",
+    "graphql-type-uuid": "^0.2.0",
     "http": "0.0.0",
     "https": "^1.0.0",
     "jsonwebtoken": "8.4.0",
@@ -59,6 +60,7 @@
     "multer": "1.4.1",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.3.0",
-    "sequelize": "^4.43.0"
+    "sequelize": "^4.43.0",
+    "uuid": "^3.3.2"
   }
 }
