@@ -21,16 +21,16 @@ export default `
   }
 
   type Query { 
-    clients(p_id: Int!): [Client!]
+    clients(p_id: UUID!): [Client!]
     
-    client(c_id: Int!): Client
+    client(c_id: UUID!): Client
   }
 
   type Mutation {
-    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: Int!): Client!
+    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: UUID!): Client!
 
-    deleteClient(c_id: Int!): Client!
+    deleteClient(c_id: UUID!): Client!
 
-    updateClientInformation(c_id: Int!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
+    updateClientInformation(c_id: UUID!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
   }
 `;
