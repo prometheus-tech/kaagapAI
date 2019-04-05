@@ -22,7 +22,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { lightBlue } from '@material-ui/core/colors';
-import SessionCard from '../../components/Client/SessionCard/SessionCard';
+// import SessionCard from '../../components/Client/SessionCard/SessionCard';
+import SessionList from '../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
@@ -291,15 +292,16 @@ class ClientPage extends Component {
                         md={4}
                         lg={3}
                       >
-                        <SessionCard
+                        {/* <SessionCard
                           sessionEdited={this.openEditSessionDialogHandler}
                           sessionDeleted={this.openDeleteSessionDialogHandler}
                           session={session}
-                        />
+                        /> */}
                       </Grid>
                     );
                   })}
                 </Grid>
+                <SessionList />
                 <NewSessionDialog
                   clientId={c_id}
                   opened={isNewSessionDialogOpened}
