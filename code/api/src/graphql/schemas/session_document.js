@@ -2,12 +2,6 @@ export default `
   scalar Date 
   scalar UUID
 
-  enum Type {
-    PDF
-    TXT
-    DOCX
-  }
-
   type SessionDocument {
     sd_id: UUID!
     file: String!
@@ -15,7 +9,7 @@ export default `
     content: String!
     date_added: Date!
     last_modified: Date
-    type: Type!
+    type: String!
     session_id: UUID!
   }
 
