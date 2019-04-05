@@ -20,6 +20,6 @@ export default `
   }
 
   type Mutation {
-    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument
+    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
   }
 `;

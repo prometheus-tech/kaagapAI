@@ -59,6 +59,7 @@
     "graphql-upload": "^8.0.5",
     "http": "0.0.0",
     "https": "^1.0.0",
+    "i": "^0.3.6",
     "jsonwebtoken": "8.4.0",
     "merge-graphql-schemas": "^1.5.8",
     "morgan": "1.9.1",
