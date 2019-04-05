@@ -48,7 +48,7 @@ const styles = theme => ({
     height: 60,
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 1,
-    backgroundColor: grey[100],
+    backgroundColor: 'white',
     color: orange[700],
     padding: '2px 2px 2px 2px',
     fontSize: theme.spacing.unit * 6
@@ -56,7 +56,6 @@ const styles = theme => ({
   cardTitle: {
     fontSize: theme.spacing.unit * 2,
     fontWeight: 500,
-    textTransform: 'uppercase',
     color: grey[600],
     letterSpacing: '2px'
   },
