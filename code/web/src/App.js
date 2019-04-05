@@ -29,7 +29,7 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: 'http://kaagapai.com:4000/graphql',
+  uri: 'http://kaagapai-dev.com:4000/graphql',
   cache
 });
 
