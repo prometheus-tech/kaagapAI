@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       type: {
-        type: Sequelize.ENUM('PDF', 'TXT', 'DOCX')
+        type: Sequelize.STRING
       },
       session_id: {
         type: Sequelize.UUID,

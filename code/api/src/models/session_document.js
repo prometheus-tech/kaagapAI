@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT('long'),
     date_added: DataTypes.DATE,
     last_modified: DataTypes.DATE,
-    type: DataTypes.ENUM('PDF', 'TXT', 'DOCX')
+    type: DataTypes.STRING
   });
 
   Session_Document.associate = models => {
