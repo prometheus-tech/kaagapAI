@@ -14,8 +14,12 @@ export default `
   }
 
   type Query { 
-    getSessionDocuments(session_id: UUID!): [SessionDocument]
+    sessionDocuments(session_id: UUID!): [SessionDocument]
 
-    getSessionDocument(sd_id: UUID!): SessionDocument
+    sessionDocument(sd_id: UUID!): SessionDocument
+  }
+
+  type Mutation {
+    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument
   }
 `;
