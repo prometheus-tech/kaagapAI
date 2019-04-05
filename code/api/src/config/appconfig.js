@@ -4,16 +4,16 @@ module.exports = {
   development: {
     ssl: false,
     port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_DEV
+    hostname: process.env.HOST_DEV
   },
   test: {
     ssl: false,
     port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_TEST
+    hostname: process.env.HOST_TEST
   },
   production: {
     ssl: false,
     port: process.env.PORT || 4000,
-    hostname: process.env.DB_HOST_PROD
+    hostname: process.env.HOST_PROD
   }
 };
