@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,6 +15,7 @@ import orange from '@material-ui/core/colors/orange';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   card: {
@@ -68,27 +71,42 @@ const styles = theme => ({
       backgroundColor: 'transparent',
       color: '#1565c0'
     }
+  },
+  buttonBase: {
+    height: '100%',
+    width: '100%'
   }
 });
 
 function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
+  const CardLink = props => (
+    <Link to={'/session/' + session.session_id} {...props} />
+  );
+
   return (
     <Card className={classes.card}>
-      <CardContent className={classes.cardContent}>
-        <div className={classes.avatarContainer}>
-          <Avatar className={classes.avatar}>
-            <FolderIcon fontSize="large" />
-          </Avatar>
-        </div>
-        <Typography className={classes.cardTitle}>
-          {session.session_name}
-        </Typography>
-        <Typography className={classes.cardSubheader}>
-          <Moment format="MMM D, YYYY" withTitle>
-            {session.date_of_session}
-          </Moment>
-        </Typography>
-      </CardContent>
+      <ButtonBase
+        className={classes.buttonBase}
+        disableRipple={true}
+        disableTouchRipple={true}
+        component={CardLink}
+      >
+        <CardContent className={classes.cardContent}>
+          <div className={classes.avatarContainer}>
+            <Avatar className={classes.avatar}>
+              <FolderIcon fontSize="large" />
+            </Avatar>
+          </div>
+          <Typography className={classes.cardTitle}>
+            {session.session_name}
+          </Typography>
+          <Typography className={classes.cardSubheader}>
+            <Moment format="MMM D, YYYY" withTitle>
+              {session.date_of_session}
+            </Moment>
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       <CardActions className={classes.cardActions}>
         <IconButton
           disableRipple={true}
