@@ -28,8 +28,8 @@ import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessio
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import ViewControl from '../../components/UI/ViewControl/ViewControl';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -110,6 +110,7 @@ const styles = theme => ({
 
 class ClientPage extends Component {
   state = {
+    view: 'card',
     isClientDetailsOpened: false,
     isNewSessionDialogOpened: false,
     isEditSessionDialogOpened: false,
@@ -119,6 +120,10 @@ class ClientPage extends Component {
       session_name: '',
       date_of_session: ''
     }
+  };
+
+  changeViewHandler = newView => {
+    this.setState({ view: newView });
   };
 
   openClientDetailsHandler = () => {
@@ -181,6 +186,7 @@ class ClientPage extends Component {
     const { c_id } = this.props.match.params;
 
     const {
+      view,
       isClientDetailsOpened,
       isNewSessionDialogOpened,
       isEditSessionDialogOpened,
@@ -264,9 +270,10 @@ class ClientPage extends Component {
                   </Grid>
                   <Grid item align="flex-end">
                     <div className={classes.actionButton}>
-                      <IconButton>
-                        <Icon>view_module</Icon>
-                      </IconButton>
+                      <ViewControl
+                        view={view}
+                        viewChanged={this.changeViewHandler}
+                      />
                       <IconButton
                         component="span"
                         className={classes.iconInfo}
