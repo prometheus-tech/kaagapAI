@@ -14,6 +14,7 @@ import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 
 import { USER_ID, AUTH_TOKEN } from './util/constants';
+import SessionPage from './containers/SessionPage/SessionPage';
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
@@ -54,6 +55,7 @@ class App extends Component {
             <Layout>
               <Route exact path="/" component={ClientsPage} />
               <Route path="/client/:c_id" component={ClientPage} />
+              <Route path="/session/:session_id" component={SessionPage} />
             </Layout>
           </SnackbarProvider>
         </BrowserRouter>
