@@ -30,6 +30,7 @@ import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/Del
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
+import SessionCards from '../../components/Client/SessionCards/SessionCards';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -288,27 +289,15 @@ class ClientPage extends Component {
                     </div>
                   </Grid>
                 </Grid>
-                <Grid container spacing={16}>
-                  {data.client.sessions.map(session => {
-                    return (
-                      <Grid
-                        item
-                        key={session.session_id}
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        lg={3}
-                      >
-                        {/* <SessionCard
-                          sessionEdited={this.openEditSessionDialogHandler}
-                          sessionDeleted={this.openDeleteSessionDialogHandler}
-                          session={session}
-                        /> */}
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-                <SessionList />
+                {view === 'card' ? (
+                  <SessionCards
+                    sessions={data.client.sessions}
+                    sessionEdited={this.openEditSessionDialogHandler}
+                    sessionDeleted={this.openDeleteSessionDialogHandler}
+                  />
+                ) : (
+                  <SessionList sessions={data.client.sessions} />
+                )}
                 <NewSessionDialog
                   clientId={c_id}
                   opened={isNewSessionDialogOpened}

@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import { Avatar } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import orange from '@material-ui/core/colors/orange';
@@ -13,6 +12,7 @@ import grey from '@material-ui/core/colors/grey';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
+import Moment from 'react-moment';
 
 const styles = theme => ({
   listSession: {
@@ -29,8 +29,6 @@ const styles = theme => ({
     display: 'flex',
     marginTop: theme.spacing.unit * 2.5,
     marginLeft: theme.spacing.unit * 5,
-    backgroundColor: '#ffffff',
-    color: 'orange',
     width: 60,
     height: 60,
     backgroundColor: 'white',
@@ -60,7 +58,6 @@ const styles = theme => ({
     letterSpacing: '1px',
     lineHeight: '150%',
     color: grey[400],
-    letterSpacing: '1px',
     fontSize: '12px'
   },
   listItemActions: {
@@ -71,8 +68,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 4,
     letterSpacing: '1px',
     lineHeight: '150%',
-    color: grey[400],
-    letterSpacing: '1px',
     textTransform: 'capitalize',
     color: blue[500]
   },
@@ -81,8 +76,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     letterSpacing: '1px',
     lineHeight: '150%',
-    color: grey[400],
-    letterSpacing: '1px',
     textTransform: 'capitalize',
     color: green[500]
   },
@@ -91,15 +84,13 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     letterSpacing: '1px',
     lineHeight: '150%',
-    color: grey[400],
-    letterSpacing: '1px',
     textTransform: 'capitalize',
     color: red[500]
   }
 });
 
 function SessionListItem(props) {
-  const { classes } = props;
+  const { classes, session } = props;
   return (
     <div>
       <Paper elevation={1} className={classes.listSession}>
@@ -110,15 +101,21 @@ function SessionListItem(props) {
                 <FolderIcon fontSize="large" />
               </Avatar>
               <Typography className={classes.listItemName}>
-                Session 1
+                {session.session_name}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={3}>
-            <Typography className={classes.listItem}>April 5, 2019</Typography>
+            <Typography className={classes.listItem}>
+              <Moment format="MMM D, YYYY" withTitle>
+                {session.date_of_session}
+              </Moment>
+            </Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography className={classes.listItem}>April 5, 2019</Typography>
+            <Typography className={classes.listItem}>
+              Not yet implemented
+            </Typography>
           </Grid>
           <Grid item xs={3}>
             <div className={classes.listItemActions}>

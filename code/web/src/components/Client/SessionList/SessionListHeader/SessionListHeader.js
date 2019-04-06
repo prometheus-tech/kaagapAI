@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 import Paper from '@material-ui/core/Paper';
-import Auxilliary from '../../../../hoc/Auxilliary/Auxilliary';
 
 const styles = theme => ({
   root: {
@@ -54,16 +53,16 @@ function SessionListHeader(props) {
           </Grid>
           <Grid item xs={3}>
             <Typography className={classes.sessionHeader}>
-              Last Modified
+              Date of Session
             </Typography>
           </Grid>
           <Grid item xs={2}>
             <Typography className={classes.sessionHeader}>
-              Session Added
+              Last Opened
             </Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography className={classes.sessionHeader}>Action</Typography>
+            <Typography className={classes.sessionHeader}>Actions</Typography>
           </Grid>
         </Grid>
       </Paper>
