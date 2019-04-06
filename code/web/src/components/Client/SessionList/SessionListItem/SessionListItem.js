@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +16,7 @@ import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import Moment from 'react-moment';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   listSession: {
@@ -73,7 +77,7 @@ const styles = theme => ({
   },
   listItemActionEdit: {
     marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 4,
     letterSpacing: '1px',
     lineHeight: '150%',
     textTransform: 'capitalize',
@@ -86,13 +90,26 @@ const styles = theme => ({
     lineHeight: '150%',
     textTransform: 'capitalize',
     color: red[500]
+  },
+  buttonBase: {
+    display: 'block'
   }
 });
 
 function SessionListItem(props) {
   const { classes, session, sessionDeleted, sessionEdited } = props;
+
+  const ListLink = props => (
+    <Link to={'/session/' + session.session_id} {...props} />
+  );
+
   return (
-    <div>
+    <ButtonBase
+      className={classes.buttonBase}
+      disableRipple={true}
+      disableTouchRipple={true}
+      component={ListLink}
+    >
       <Paper elevation={1} className={classes.listSession}>
         <Grid container spacing={16}>
           <Grid item xs={4}>
@@ -119,11 +136,12 @@ function SessionListItem(props) {
           </Grid>
           <Grid item xs={3}>
             <div className={classes.listItemActions}>
-              <IconButton className={classes.listItemActionView}>
+              {/* <IconButton className={classes.listItemActionView}>
                 <Icon>remove_red_eye</Icon>
-              </IconButton>
+              </IconButton> */}
               <IconButton
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault();
                   sessionEdited(session);
                 }}
                 className={classes.listItemActionEdit}
@@ -131,7 +149,8 @@ function SessionListItem(props) {
                 <Icon>edit</Icon>
               </IconButton>
               <IconButton
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault();
                   sessionDeleted(session);
                 }}
                 className={classes.listItemActionArchive}
@@ -142,7 +161,7 @@ function SessionListItem(props) {
           </Grid>
         </Grid>
       </Paper>
-    </div>
+    </ButtonBase>
   );
 }
 export default withStyles(styles)(SessionListItem);

@@ -73,8 +73,7 @@ const styles = theme => ({
     }
   },
   buttonBase: {
-    height: '100%',
-    width: '100%'
+    display: 'block'
   }
 });
 
