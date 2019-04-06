@@ -296,7 +296,11 @@ class ClientPage extends Component {
                     sessionDeleted={this.openDeleteSessionDialogHandler}
                   />
                 ) : (
-                  <SessionList sessions={data.client.sessions} />
+                  <SessionList
+                    sessions={data.client.sessions}
+                    sessionEdited={this.openEditSessionDialogHandler}
+                    sessionDeleted={this.openDeleteSessionDialogHandler}
+                  />
                 )}
                 <NewSessionDialog
                   clientId={c_id}

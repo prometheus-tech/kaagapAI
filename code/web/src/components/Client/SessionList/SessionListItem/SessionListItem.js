@@ -90,7 +90,7 @@ const styles = theme => ({
 });
 
 function SessionListItem(props) {
-  const { classes, session } = props;
+  const { classes, session, sessionDeleted, sessionEdited } = props;
   return (
     <div>
       <Paper elevation={1} className={classes.listSession}>
@@ -122,10 +122,20 @@ function SessionListItem(props) {
               <IconButton className={classes.listItemActionView}>
                 <Icon>remove_red_eye</Icon>
               </IconButton>
-              <IconButton className={classes.listItemActionEdit}>
+              <IconButton
+                onClick={() => {
+                  sessionEdited(session);
+                }}
+                className={classes.listItemActionEdit}
+              >
                 <Icon>edit</Icon>
               </IconButton>
-              <IconButton className={classes.listItemActionArchive}>
+              <IconButton
+                onClick={() => {
+                  sessionDeleted(session);
+                }}
+                className={classes.listItemActionArchive}
+              >
                 <Icon>archive</Icon>
               </IconButton>
             </div>
