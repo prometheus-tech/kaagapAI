@@ -51,21 +51,25 @@ const uploadFile = async(file, session_id) => {
   } else {
     try {
       let getDocumentTranslation = async () => {
-        return new Promise(resolve =>
-          textract.fromFileWithMimeAndPath(
-            mimetype,
-            inputPath,
-            {
-              preserveLineBreaks: true
-            },
-            (err, text) => {
-              (async () => {
-                translation = await documentModules.translateText(text);
-                resolve(translation);
-              })();
-            }
+        try {
+          return new Promise(resolve =>
+            textract.fromFileWithMimeAndPath(
+              mimetype,
+              inputPath,
+              {
+                preserveLineBreaks: true
+              },
+              (err, text) => {
+                (async () => {
+                  translation = await documentModules.translateText(text);
+                  resolve(translation);
+                })();
+              }
+            )
           )
-        ).catch(err => console.error(err));
+        } catch (err) {
+          console.error(err); 
+        }
       };
 
       documentModules.uploadGCS(inputPath);
