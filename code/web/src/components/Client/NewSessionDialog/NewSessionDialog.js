@@ -132,8 +132,11 @@ class NewSessionDialog extends Component {
                         name="session_name"
                         onChange={this.inputChangeHandler}
                         margin="dense"
-                        validators={['required']}
-                        errorMessages={['This field is required']}
+                        validators={['required', 'trim']}
+                        errorMessages={[
+                          'This field is required',
+                          'This field must contain at least one non-whitespace character'
+                        ]}
                       />
                     </Grid>
                     <Grid item xs={12}>

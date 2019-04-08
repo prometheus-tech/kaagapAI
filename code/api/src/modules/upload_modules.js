@@ -1,6 +1,5 @@
 import documentModules from './document_modules';
 import path from 'path';
-import textract from 'textract';
 
 const uploadFile = async(file, session_id) => {
   const { filename, mimetype, createReadStream } = await file;
@@ -10,14 +9,31 @@ const uploadFile = async(file, session_id) => {
   var translation = null;
   var fileName = filename;
 
-  documentModules.storeUpload({ stream, inputPath });
-  var newFileName = documentModules.renameFile({ inputPath, session_id });
+  await documentModules.storeUpload({ stream, inputPath });
+  var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
-  inputPath = './src/tmp/' + newFileName;
   var filePath = 'gs://kaagapai-uploads/' + newFileName;
 
-  if (mimetype.indexOf('audio') + 1) {
+  if (mimetype.indexOf('wave') + 1) {
+    inputPath = './src/tmp/' + newFileName;
+    filePath = 'gs://kaagapai-uploads/' + newFileName;
+
+    await documentModules.uploadGCS(inputPath);
+
+    let getAudioTranslation = () => {
+      return new Promise(async resolve => {
+        const transcription = await documentModules.extractText(filePath);
+        translation = await documentModules.translateText(transcription);
+        resolve(translation);
+      });
+    };
+
+    translation = await getAudioTranslation();
+
+    return { session_id, fileName, filePath, mimetype, translation };
+  } else if (mimetype.indexOf('audio') + 1) {
     try {
+      inputPath = './src/tmp/' + newFileName;
       newFileName = path.parse(newFileName).name + '.wav';
       filePath = 'gs://kaagapai-uploads/' + newFileName;
       const params = {
@@ -34,8 +50,7 @@ const uploadFile = async(file, session_id) => {
                 const transcription = await documentModules.extractText(
                   'gs://kaagapai-uploads/' + wavFile.name
                 );
-                translation = await documentModules.translateText(
-                  transcription
+                translation = await documentModules.translateText(transcription
                 );
                 resolve(translation);
               })();
@@ -49,36 +64,12 @@ const uploadFile = async(file, session_id) => {
       console.log(err);
     }
   } else {
-    try {
-      let getDocumentTranslation = async () => {
-        try {
-          return new Promise(resolve =>
-            textract.fromFileWithMimeAndPath(
-              mimetype,
-              inputPath,
-              {
-                preserveLineBreaks: true
-              },
-              (err, text) => {
-                (async () => {
-                  translation = await documentModules.translateText(text);
-                  resolve(translation);
-                })();
-              }
-            )
-          )
-        } catch (err) {
-          console.error(err); 
-        }
-      };
+    inputPath = './src/tmp/' + newFileName;
+    const transcript = await documentModules.extractDocumentText(inputPath);
+    translation = await documentModules.translateText(transcript);
+    await documentModules.uploadGCS(inputPath);
 
-      documentModules.uploadGCS(inputPath);
-      translation = await getDocumentTranslation();
-
-      return { session_id, fileName, filePath, mimetype, translation };
-    } catch (err) {
-      console.log(err);
-    }
+    return { session_id, fileName, filePath, mimetype, translation };
   }
 }
 
