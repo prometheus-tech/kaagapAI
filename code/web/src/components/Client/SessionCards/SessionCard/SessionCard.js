@@ -57,14 +57,16 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 6
   },
   cardTitle: {
-    fontSize: theme.spacing.unit * 2,
-    fontWeight: 500,
-    color: grey[600],
+    fontSize: theme.spacing.unit * 2.9,
+    fontWeight: '400',
+    color: grey[900],
     letterSpacing: '2px'
   },
   cardSubheader: {
     fontSize: theme.spacing.unit * 1.4,
-    color: brown[200]
+    color: brown[200],
+    fontWeight: '300',
+    fontSize: '14px'
   },
   iconAction: {
     '&:hover': {

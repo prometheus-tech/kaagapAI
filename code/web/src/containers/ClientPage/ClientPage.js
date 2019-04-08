@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
@@ -22,7 +23,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { lightBlue } from '@material-ui/core/colors';
-// import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import SessionList from '../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
@@ -31,6 +31,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import SessionCards from '../../components/Client/SessionCards/SessionCards';
+import grey from '@material-ui/core/colors/grey';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -63,12 +64,23 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2.5,
     marginBottom: theme.spacing.unit * 2
   },
-  breadCrumbLink: {
+  breadCrumbLinkClient: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
     fontWeight: '400',
-    textTransform: 'capitalize'
+    padding: '10px 5px 10px 5px'
+  },
+  breadCrumbLinkClients: {
+    fontSize: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: '400',
+    padding: '5px 15px 5px 15px',
+    borderRadius: '50px',
+    '&:hover': {
+      backgroundColor: grey[300]
+    }
   },
   floatingButton: {
     position: 'fixed',
@@ -198,7 +210,7 @@ class ClientPage extends Component {
     return (
       <Query query={CLIENT} variables={{ c_id: c_id }}>
         {({ loading, error, data }) => {
-          if (loading) {
+          if (true) {
             return <LoadingFullScreen />;
           }
 
@@ -220,18 +232,18 @@ class ClientPage extends Component {
                       separator={<NavigateNextIcon />}
                       className={classes.breadCrumb}
                     >
-                      <Button
+                      <ButtonBase
                         component={RouterLink}
                         color="inherit"
                         to="/"
-                        className={classes.breadCrumbLink}
+                        className={classes.breadCrumbLinkClients}
                       >
                         <PeopleIcon className={classes.breadCrumbIcon} />
                         Clients
-                      </Button>
+                      </ButtonBase>
                       <Typography
                         color="secondary"
-                        className={classes.breadCrumbLink}
+                        className={classes.breadCrumbLinkClient}
                         gutterBottom={false}
                       >
                         <PersonIcon className={classes.breadCrumbIcon} />

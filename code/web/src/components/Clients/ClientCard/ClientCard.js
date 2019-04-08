@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
   avatar: {
@@ -42,20 +43,20 @@ const styles = theme => ({
   nameClient: {
     position: 'relative',
     top: '12px',
-    color: '#9e9e9e'
+    width: '200px',
+    marginRight: 'auto',
+    color: grey[900],
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
   session: {
     fontWeight: '300',
-    fontSize: '12px',
+    fontSize: '14px',
     marginTop: '15px'
   },
   iconHover: {
     '&:hover': {
       color: '#2196f3'
-    },
-    buttonBase: {
-      height: '100vh',
-      width: '100vw'
     }
   },
   cardContent: {

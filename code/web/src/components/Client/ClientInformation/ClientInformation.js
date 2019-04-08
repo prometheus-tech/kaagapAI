@@ -48,7 +48,9 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   header: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: 0
+    marginBottom: 0,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
   section: {
     padding: theme.spacing.unit * 2
