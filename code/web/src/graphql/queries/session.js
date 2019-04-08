@@ -9,6 +9,7 @@ const SESSION = gql`
       ...SessionInfo
       documents {
         sd_id
+        file_name
         file
         date_added
         type
