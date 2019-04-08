@@ -169,9 +169,14 @@ class EditClientDialog extends Component {
                             name="fname"
                             onChange={this.inputChangeHandler}
                             margin="dense"
-                            validators={['required', 'maxStringLength:' + 100]}
+                            validators={[
+                              'required',
+                              'trim',
+                              'maxStringLength:' + 100
+                            ]}
                             errorMessages={[
                               'This field is required',
+                              'This field must contain at least one non-whitespace character',
                               'First name must be less than 100 characters'
                             ]}
                           />
@@ -185,9 +190,14 @@ class EditClientDialog extends Component {
                             name="lname"
                             onChange={this.inputChangeHandler}
                             margin="dense"
-                            validators={['required', 'maxStringLength:' + 100]}
+                            validators={[
+                              'required',
+                              'trim',
+                              'maxStringLength:' + 100
+                            ]}
                             errorMessages={[
                               'This field is required',
+                              'This field must contain at least one non-whitespace character',
                               'Last name must be less than 100 characters'
                             ]}
                           />

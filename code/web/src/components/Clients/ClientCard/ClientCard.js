@@ -52,10 +52,6 @@ const styles = theme => ({
   iconHover: {
     '&:hover': {
       color: '#2196f3'
-    },
-    buttonBase: {
-      height: '100vh',
-      width: '100vw'
     }
   },
   cardContent: {

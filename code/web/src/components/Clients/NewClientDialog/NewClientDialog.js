@@ -159,10 +159,12 @@ class NewClientDialog extends Component {
                               margin="dense"
                               validators={[
                                 'required',
+                                'trim',
                                 'maxStringLength:' + 100
                               ]}
                               errorMessages={[
                                 'This field is required',
+                                'This field must have at least one non-whitespace character',
                                 'First name must be less than 100 characters'
                               ]}
                             />
@@ -178,10 +180,12 @@ class NewClientDialog extends Component {
                               margin="dense"
                               validators={[
                                 'required',
+                                'trim',
                                 'maxStringLength:' + 100
                               ]}
                               errorMessages={[
                                 'This field is required',
+                                'This field must contain at least one non-whitespace character',
                                 'Last name must be less than 100 characters'
                               ]}
                             />
