@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     birthdate: DataTypes.DATEONLY,
     date_added: DataTypes.DATEONLY,
     last_opened: DataTypes.DATE,
-    archive_status: DataTypes.ENUM('archived', 'existing')
+    archive_status: DataTypes.ENUM('archived', 'active')
   });
 
   Client.associate = models => {

@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false
       },
       archive_status: {
-        type: Sequelize.ENUM('archived', 'existing'),
+        type: Sequelize.ENUM('archived', 'active'),
         allowNull: false
       },
       p_id: {

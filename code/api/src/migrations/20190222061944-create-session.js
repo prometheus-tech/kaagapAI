@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       archive_status: {
-        type: Sequelize.ENUM('archived', 'existing'),
+        type: Sequelize.ENUM('archived', 'active'),
         allowNull: false
       },
       c_id: {

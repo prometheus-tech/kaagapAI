@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     session_name: DataTypes.STRING,
     date_of_session: DataTypes.DATE,
-    archive_status: DataTypes.ENUM('archived', 'existing')
+    archive_status: DataTypes.ENUM('archived', 'active')
   });
 
   Session.associate = models => {

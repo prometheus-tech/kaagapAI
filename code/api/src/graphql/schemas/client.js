@@ -9,7 +9,7 @@ export default `
 
   enum ArchiveStatus {
     archived
-    existing
+    active
   }
 
   type Client {

@@ -4,7 +4,7 @@ export default `
 
   enum ArchiveStatus {
     archived
-    existing
+    active
   }
 
   type Session {
