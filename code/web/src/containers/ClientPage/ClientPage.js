@@ -210,7 +210,7 @@ class ClientPage extends Component {
     return (
       <Query query={CLIENT} variables={{ c_id: c_id }}>
         {({ loading, error, data }) => {
-          if (true) {
+          if (loading) {
             return <LoadingFullScreen />;
           }
 
