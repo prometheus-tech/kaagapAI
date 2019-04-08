@@ -17,6 +17,9 @@ import Button from '@material-ui/core/Button';
 import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
+import Divider from '@material-ui/core/Divider';
+import SessionDocumentCards from '../../components/Session/SessionDocumentCards/SessionDocumentCards';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -52,10 +55,20 @@ const styles = theme => ({
     alignItems: 'center',
     fontWeight: '400',
     textTransform: 'capitalize'
+  },
+  divider: {
+    marginTop: theme.spacing.unit * 2
   }
 });
 
 class SessionPage extends Component {
+  componentDidMount() {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss')
+    );
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -137,6 +150,10 @@ class SessionPage extends Component {
                           {/* <SearcField label="" className={classes.searchField} /> */}
                         </Grid>
                       </Grid>
+                      <Divider light className={classes.divider} />
+                      <SessionDocumentCards
+                        sessionDocuments={session.documents}
+                      />
                     </main>
                   </div>
                 );

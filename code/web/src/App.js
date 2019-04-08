@@ -23,6 +23,8 @@ const cache = new InMemoryCache({
         return 'client:' + object.c_id;
       case 'Session':
         return 'session:' + object.session_id;
+      case 'SessionDocument':
+        return 'sesssionDocument:' + object.sd_id;
       default:
         return defaultDataIdFromObject(object);
     }
