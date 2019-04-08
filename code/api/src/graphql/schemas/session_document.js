@@ -17,6 +17,8 @@ export default `
     sessionDocuments(session_id: UUID!): [SessionDocument]
 
     sessionDocument(sd_id: UUID!): SessionDocument
+
+    downloadSessionDocument(sd_id: UUID!, savePath: String!): SessionDocument! 
   }
 
   type Mutation {

@@ -7,6 +7,7 @@ import {
 import ffmpeg from 'fluent-ffmpeg';
 import shortid from 'shortid';
 import path from 'path';
+import textract from 'textract';
 
 //Google Cloud APIs
 import { Storage } from '@google-cloud/storage';
@@ -25,11 +26,17 @@ const renameFile = ({ inputPath, session_id }) => {
   const newFileName = session_id + '-' + shortid.generate() + path.parse(inputPath).ext;
   const newPath = './src/tmp/' + newFileName;
 
-  rename(inputPath, newPath, function(err) {
-    if (err) throw err;
-  });
-
-  return newFileName;
+  return new Promise((resolve, reject) => {
+    rename(inputPath, newPath, function(err) {
+      if (err) {
+        reject();
+      } else {
+        resolve(newFileName);
+      }
+    });
+  }).catch((err) => {
+    console.log(err);
+  }); 
 };
 
 //storing raw files to file system
@@ -59,6 +66,8 @@ const translateText = (text) => {
       const translation = results[0];
       resolve(translation);
     });
+  }).catch((err) => {
+    console.log(err);
   });
 }
 
@@ -134,16 +143,37 @@ const extractText = async(gcsUri) => {
   return await transcription;
 }
 
-//deleting from GCS
-const deleteFileFromGCS = (filename) => {
-  bucket.file(filename).delete();
+const extractDocumentText = async(inputPath) => {
+  return new Promise((resolve, reject) => {
+    textract.fromFileWithPath(inputPath, (error, text) => {
+      if(error) {
+        reject();
+      } else {
+        resolve(text);
+      }
+    })
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
+//deleting from GCS
+// const deleteFileFromGCS = (filename) => {
+//   bucket.file(filename).delete();
+// }
+
 //retrieving file from GCS
-const getFileFromGCS = (filename) => {
-  const blob = bucket.file(filename);
-  const blobStream = blob.createReadStream();
-  return blobStream;
+const getFileFromGCS = async (filename, savePath, originalFilename) => {
+  try {
+    const file = bucket.file(filename);
+    const newFilename = originalFilename.split('.')[0] + '.' + filename.split('.')[1];
+
+    file.download({
+      destination: savePath + newFilename
+    });
+  } catch(err) {
+    console.log(err);
+  } 
 }
 
 export default {
@@ -152,7 +182,7 @@ export default {
   translateText,
   uploadGCS,
   extractText,
+  extractDocumentText,
   convert,
-  deleteFileFromGCS,
   getFileFromGCS
 };
