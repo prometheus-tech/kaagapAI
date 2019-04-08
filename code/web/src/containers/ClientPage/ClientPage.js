@@ -22,7 +22,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { lightBlue } from '@material-ui/core/colors';
-// import SessionCard from '../../components/Client/SessionCard/SessionCard';
 import SessionList from '../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
