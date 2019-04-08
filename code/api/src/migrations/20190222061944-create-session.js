@@ -14,6 +14,10 @@ module.exports = {
       date_of_session: {
         type: Sequelize.DATEONLY
       },
+      archive_status: {
+        type: Sequelize.ENUM('archived', 'existing'),
+        allowNull: false
+      },
       c_id: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',

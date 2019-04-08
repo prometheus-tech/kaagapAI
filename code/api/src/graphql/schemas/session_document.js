@@ -2,6 +2,11 @@ export default `
   scalar Date 
   scalar UUID
 
+  enum ArchiveStatus {
+    archived
+    existing
+  }
+
   type SessionDocument {
     sd_id: UUID!
     file: String!
@@ -10,6 +15,7 @@ export default `
     date_added: Date!
     last_modified: Date
     type: String!
+    archive_status: ArchiveStatus!
     session_id: UUID!
   }
 

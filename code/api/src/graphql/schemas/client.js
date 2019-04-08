@@ -7,6 +7,11 @@ export default `
     F
   }
 
+  enum ArchiveStatus {
+    archived
+    existing
+  }
+
   type Client {
     c_id: UUID!
     fname: String!
@@ -15,6 +20,7 @@ export default `
     birthdate: Date!
     date_added: Date!
     last_opened: Date
+    archive_status: ArchiveStatus!
     p_id: UUID!
     no_of_sessions: Int
     sessions: [Session]

@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT('long'),
     date_added: DataTypes.DATE,
     last_modified: DataTypes.DATE,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    archive_status: DataTypes.ENUM('archived', 'existing')
   });
 
   Session_Document.associate = models => {

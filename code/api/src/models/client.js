@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.ENUM('M', 'F'),
     birthdate: DataTypes.DATEONLY,
     date_added: DataTypes.DATEONLY,
-    last_opened: DataTypes.DATE
+    last_opened: DataTypes.DATE,
+    archive_status: DataTypes.ENUM('archived', 'existing')
   });
 
   Client.associate = models => {

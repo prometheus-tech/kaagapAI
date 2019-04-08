@@ -2,10 +2,16 @@ export default `
   scalar Date
   scalar UUID 
 
+  enum ArchiveStatus {
+    archived
+    existing
+  }
+
   type Session {
     session_id: UUID!
     session_name: String!
     date_of_session: Date!
+    archive_status: ArchiveStatus!
     c_id: UUID!
     documents: [SessionDocument]
   }
