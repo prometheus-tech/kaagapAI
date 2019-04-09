@@ -1,40 +1,27 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import uploadModules from '../../modules/upload_modules';
+import downloadsFolder from 'downloads-folder';
 import documentModules from '../../modules/document_modules';
-// import { GraphQlUpload } from 'graphql-upload';
 
 export default {
   UUID: GraphQlUUID,
   
   Query: {
-    // sessionDocuments: async (parent, { session_id }, { models }) => {
-    //   return await models.Session_Document.findAll({
-    //     raw: true,
-    //     where: { session_id },
-    //     attributes: {
-    //       exclude: ['content']
-    //     }
-    //   });
-    // },
-    
-    // sessionDocument: async (parent, { sd_id }, { models }) => {
-    //   return await models.Session_Document.findOne({
-    //     raw: true,
-    //     where: { sd_id },
-    //     attributes: {
-    //       exclude: ['content']
-    //     }
-    //   });
-    // }
+    sessionDocument: async (parent, { sd_id }, { models }) => {
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
 
-    downloadSessionDocument: (parent, { sd_id, savePath }, { models }) => 
+    downloadSessionDocument: (parent, { sd_id }, { models }) =>
       models.Session_Document.findOne({
         raw: true,
         where: { sd_id }
       }).then(async res => {
         const filename = res.file.split('gs://kaagapai-uploads/')[1];
         const originalFilename = res.file_name;
-        savePath = savePath.replace(/\\/g, '/') + '/';
+        const savePath = downloadsFolder() + '/';
 
         await documentModules.getFileFromGCS(filename, savePath, originalFilename);
 
@@ -67,6 +54,54 @@ export default {
               exclude: ['content']
             }
           });
-        })
+        }),
+    
+    editSessionDocument: async (
+      parent,
+      { content, sd_id, file_name},
+      { models }
+    ) => {
+      await models.Session_Document.update(
+        {
+          content,
+          last_modified: new Date(),
+          file_name
+        },
+        {
+          where: { sd_id }
+        }
+      );
+
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
+
+    deleteSessionDocument: async (parent, { sd_id }, { models }) => {
+      await models.Session_Document.update(
+        { archive_status: "archived" },
+        {
+          where: { sd_id }
+      })
+
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
+
+    restoreSessionDocument: async (parent, { sd_id }, { models }) => {
+      await models.Session_Document.update(
+        { archive_status: "active" },
+        {
+          where: { sd_id }
+      })
+
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
   }
 };

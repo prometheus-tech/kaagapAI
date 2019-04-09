@@ -26,6 +26,10 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
+      archive_status: {
+        type: Sequelize.ENUM('archived', 'active'),
+        allowNull: false
+      },
       session_id: {
         type: Sequelize.UUID,
         onDelete:'CASCADE',
