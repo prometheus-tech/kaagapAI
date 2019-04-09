@@ -19,6 +19,7 @@ import Add from '@material-ui/icons/Add';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import DeleteClientDialog from '../../components/Clients/DeleteClientDialog/DeleteClientDialog';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
+import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
   mainContainer: {
@@ -40,13 +41,13 @@ const styles = theme => ({
     zIndex: 2
   },
   extendedButton: {
-    background: 'rgb(109, 84, 248)',
+    background: '#0091ea',
     color: '#ffffff',
     textTransform: 'capitalize',
     borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
-      backgroundColor: lightBlue[700],
+      backgroundColor: blue[900],
       boxShadow: theme.shadows[10]
     },
     margin: theme.spacing.unit,

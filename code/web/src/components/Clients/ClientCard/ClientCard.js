@@ -52,7 +52,8 @@ const styles = theme => ({
   session: {
     fontWeight: '300',
     fontSize: '14px',
-    marginTop: '15px'
+    marginTop: '15px',
+    color: theme.palette.grey[600]
   },
   iconHover: {
     '&:hover': {
@@ -104,22 +105,22 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
         <IconButton
           className={classes.iconHover}
           disableRipple={true}
-          aria-label="Archive"
-          onClick={() => {
-            clientDeleted(client);
-          }}
-        >
-          <Icon>archive</Icon>
-        </IconButton>
-        <IconButton
-          className={classes.iconHover}
-          disableRipple={true}
           aria-label="Edit"
           onClick={() => {
             clientEdited(client);
           }}
         >
           <Icon>edit</Icon>
+        </IconButton>
+        <IconButton
+          className={classes.iconHover}
+          disableRipple={true}
+          aria-label="Archive"
+          onClick={() => {
+            clientDeleted(client);
+          }}
+        >
+          <Icon>archive</Icon>
         </IconButton>
       </CardActions>
     </Card>

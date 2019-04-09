@@ -11,85 +11,78 @@ import FolderIcon from '@material-ui/icons/Folder';
 import orange from '@material-ui/core/colors/orange';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import grey from '@material-ui/core/colors/grey';
-import blue from '@material-ui/core/colors/blue';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
 import Moment from 'react-moment';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   listSession: {
-    height: '100px',
     boxShadow: 'none',
     backgroundColor: 'transparent',
-    borderBottom: '1px solid #b2dfdb',
-    borderRadius: '0px'
+    '&:hover': {
+      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
+      padding: '0px 0px 0px 0px',
+      borderRadius: '50px'
+    },
+    marginTop: '1rem'
   },
   sessionName: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   sessionNameAvatar: {
-    display: 'flex',
-    marginTop: theme.spacing.unit * 2.5,
     marginLeft: theme.spacing.unit * 5,
     width: 60,
     height: 60,
-    backgroundColor: 'white',
-    color: orange[700],
+    color: 'white',
+    backgroundColor: orange[800],
     padding: '2px 2px 2px 2px',
     fontSize: theme.spacing.unit * 6
   },
   listItemName: {
-    marginTop: theme.spacing.unit * 5,
+    // marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 1.5,
     fontSize: theme.spacing.unit * 2,
     fontWeight: 500,
-    color: grey[600],
+    color: '#0000000',
     letterSpacing: '2px'
   },
   lastAction: {
-    marginTop: theme.spacing.unit * 0.5,
-    // marginLeft: theme.spacing.unit * 1.5,
+    // marginTop: theme.spacing.unit * 0.5,
     fontSize: '8px',
     letterSpacing: '1px',
     lineHeight: '150%',
     fontWeight: 300
   },
   listItem: {
-    marginTop: theme.spacing.unit * 5.5,
+    // marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 5,
     letterSpacing: '1px',
     lineHeight: '150%',
-    color: grey[400],
+    color: theme.palette.grey[600],
     fontSize: '12px'
   },
   listItemActions: {
     display: 'flex'
   },
-  listItemActionView: {
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    letterSpacing: '1px',
-    lineHeight: '150%',
-    textTransform: 'capitalize',
-    color: blue[500]
-  },
   listItemActionEdit: {
-    marginTop: theme.spacing.unit * 4,
+    // marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 4,
     letterSpacing: '1px',
     lineHeight: '150%',
     textTransform: 'capitalize',
-    color: green[500]
+    '&:hover': {
+      color: orange[800]
+    }
   },
   listItemActionArchive: {
-    marginTop: theme.spacing.unit * 4,
+    // marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
     letterSpacing: '1px',
     lineHeight: '150%',
     textTransform: 'capitalize',
-    color: red[500]
+    '&:hover': {
+      color: orange[800]
+    }
   },
   buttonBase: {
     display: 'block'
@@ -111,13 +104,13 @@ function SessionListItem(props) {
       component={ListLink}
     >
       <Paper elevation={1} className={classes.listSession}>
-        <Grid container spacing={16}>
+        <Grid container spacing={16} alignItems="center">
           <Grid item xs={4}>
             <div className={classes.sessionName}>
               <Avatar className={classes.sessionNameAvatar}>
                 <FolderIcon fontSize="large" />
               </Avatar>
-              <Typography className={classes.listItemName}>
+              <Typography className={classes.listItemName} gutterBottom={false}>
                 {session.session_name}
               </Typography>
             </div>

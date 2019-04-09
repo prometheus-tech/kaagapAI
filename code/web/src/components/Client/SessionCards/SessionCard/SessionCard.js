@@ -52,9 +52,10 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 1,
     backgroundColor: 'white',
-    color: orange[700],
     padding: '2px 2px 2px 2px',
-    fontSize: theme.spacing.unit * 6
+    fontSize: theme.spacing.unit * 6,
+    color: 'white',
+    backgroundColor: orange[800]
   },
   cardTitle: {
     fontSize: theme.spacing.unit * 2.9,
@@ -64,14 +65,13 @@ const styles = theme => ({
   },
   cardSubheader: {
     fontSize: theme.spacing.unit * 1.4,
-    color: brown[200],
     fontWeight: '300',
-    fontSize: '14px'
+    fontSize: '14px',
+    color: theme.palette.grey[600]
   },
   iconAction: {
     '&:hover': {
-      backgroundColor: 'transparent',
-      color: '#1565c0'
+      color: orange[800]
     }
   },
   buttonBase: {
@@ -111,16 +111,6 @@ function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
       <CardActions className={classes.cardActions}>
         <IconButton
           disableRipple={true}
-          aria-label="Archive"
-          className={classes.iconAction}
-          onClick={() => {
-            sessionDeleted(session);
-          }}
-        >
-          <Icon fontSize="small">archive</Icon>
-        </IconButton>
-        <IconButton
-          disableRipple={true}
           aria-label="Edit"
           className={classes.iconAction}
           onClick={() => {
@@ -128,6 +118,16 @@ function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
           }}
         >
           <Icon fontSize="small">edit</Icon>
+        </IconButton>
+        <IconButton
+          disableRipple={true}
+          aria-label="Archive"
+          className={classes.iconAction}
+          onClick={() => {
+            sessionDeleted(session);
+          }}
+        >
+          <Icon fontSize="small">archive</Icon>
         </IconButton>
       </CardActions>
     </Card>
