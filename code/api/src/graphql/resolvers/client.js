@@ -5,7 +5,12 @@ export default {
   
   Client: {
     sessions: ({ c_id }, args, { models }) => {
-      return models.Session.findAll({ where: { c_id } });
+      return models.Session.findAll({ 
+        where: { 
+          c_id,
+          archive_status: 'active'
+        } 
+      });
     },
 
     no_of_sessions: ({ c_id }, args, { models }) => {
@@ -17,7 +22,10 @@ export default {
     clients: (parent, { p_id }, { models }) => {
       return models.Client.findAll({
         raw: true,
-        where: { p_id }
+        where: { 
+          p_id,
+          archive_status: 'active'
+        }
       });
     },
 
@@ -57,16 +65,39 @@ export default {
     },
 
     deleteClient: async (parent, { c_id }, { models }) => {
-      const deleteClientRes = await models.Client.findOne({
+      await models.Client.update(
+        { archive_status: "archived" },
+        {
+          where: { c_id }
+      })
+      
+      await models.Session.update(
+        { archive_status: "archived" },
+        {
+          where: { c_id }
+      })
+      
+      await models.Session.findAll({
+        where: {
+          c_id
+        },
+        attributes: [ "session_id"]
+      }).then(res => {
+        res.forEach(element => {
+          let id = element.dataValues.session_id
+
+          models.Session_Document.update(
+            { archive_status: "archived" },
+            {
+              where: { session_id: id }
+            })
+        })
+      })
+
+      return await models.Client.findOne({
         raw: true,
         where: { c_id }
       });
-
-      await models.Client.destroy({
-        where: { c_id }
-      });
-
-      return deleteClientRes;
     },
     
     updateClientInformation: async (

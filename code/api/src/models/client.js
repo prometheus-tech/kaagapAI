@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     birthdate: DataTypes.DATEONLY,
     date_added: DataTypes.DATEONLY,
     last_opened: DataTypes.DATE,
-    archive_status: DataTypes.ENUM('archived', 'active')
+    archive_status: {
+      type: DataTypes.ENUM('archived', 'active'),
+      defaultValue: 'active'
+    }
   });
 
   Client.associate = models => {

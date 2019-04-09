@@ -23,7 +23,7 @@ export default `
   type Mutation {
     addSession(session_name: String!, date_of_session: Date!, c_id: UUID!): Session!
 
-    deleteSession(session_id: UUID!, c_id: UUID!): Session!
+    deleteSession(session_id: UUID!): Session!
 
     updateSessionInformation(session_id: UUID!, session_name: String!, date_of_session: Date!): Session!
   }

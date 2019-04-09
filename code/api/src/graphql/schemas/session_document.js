@@ -24,10 +24,12 @@ export default `
 
     sessionDocument(sd_id: UUID!): SessionDocument
 
-    downloadSessionDocument(sd_id: UUID!, savePath: String!): SessionDocument! 
+    downloadSessionDocument(sd_id: UUID!): SessionDocument 
   }
 
   type Mutation {
     uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
+
+    deleteSessionDocument(sd_id: UUID!): SessionDocument!
   }
 `;
