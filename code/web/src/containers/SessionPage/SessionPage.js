@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import SessionDocumentCards from '../../components/Session/SessionDocumentCards/SessionDocumentCards';
+import orange from '@material-ui/core/colors/orange';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 const drawerWidth = '25';
@@ -54,7 +55,19 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: '400',
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    padding: '5px 15px 5px 15px',
+    borderRadius: '50px'
+  },
+  breadCrumbLinkSession: {
+    fontSize: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: '400',
+    textTransform: 'capitalize',
+    padding: '5px 15px 5px 15px',
+    borderRadius: '50px',
+    color: orange[800]
   },
   divider: {
     marginTop: theme.spacing.unit * 2
@@ -137,8 +150,7 @@ class SessionPage extends Component {
                               {client.fname + ' ' + client.lname}
                             </Button>
                             <Typography
-                              color="secondary"
-                              className={classes.breadCrumbLink}
+                              className={classes.breadCrumbLinkSession}
                               gutterBottom={false}
                             >
                               <PersonIcon className={classes.breadCrumbIcon} />

@@ -94,9 +94,7 @@ class EditSessionDialog extends Component {
           return (
             <Dialog
               open={isOpened}
-              onClose={() => {
-                this.clearFieldsHandler();
-              }}
+              onClose={closed}
               fullWidth={true}
               fullScreen={fullScreen}
               maxWidth="sm"
