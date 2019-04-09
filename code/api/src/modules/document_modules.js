@@ -157,11 +157,6 @@ const extractDocumentText = async(inputPath) => {
   });
 }
 
-//deleting from GCS
-// const deleteFileFromGCS = (filename) => {
-//   bucket.file(filename).delete();
-// }
-
 //retrieving file from GCS
 const getFileFromGCS = async (filename, savePath, originalFilename) => {
   try {

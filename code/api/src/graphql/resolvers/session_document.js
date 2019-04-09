@@ -14,21 +14,19 @@ export default {
       });
     },
 
-    downloadSessionDocument: (parent, { sd_id }, { models }) => {
-      console.log(downloadsFolder());
-    }
-      // models.Session_Document.findOne({
-      //   raw: true,
-      //   where: { sd_id }
-      // }).then(async res => {
-      //   const filename = res.file.split('gs://kaagapai-uploads/')[1];
-      //   const originalFilename = res.file_name;
-      //   savePath = savePath.replace(/\\/g, '/') + '/';
+    downloadSessionDocument: (parent, { sd_id }, { models }) =>
+      models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      }).then(async res => {
+        const filename = res.file.split('gs://kaagapai-uploads/')[1];
+        const originalFilename = res.file_name;
+        const savePath = downloadsFolder() + '/';
 
-      //   await documentModules.getFileFromGCS(filename, savePath, originalFilename);
+        await documentModules.getFileFromGCS(filename, savePath, originalFilename);
 
-      //   return res;
-      // }),
+        return res;
+      }),
   },
 
   Mutation: {
