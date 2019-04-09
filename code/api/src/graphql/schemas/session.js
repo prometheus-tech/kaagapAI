@@ -25,6 +25,8 @@ export default `
 
     deleteSession(session_id: UUID!): Session!
 
+    restoreSession(session_id: UUID!): Session!
+
     updateSessionInformation(session_id: UUID!, session_name: String!, date_of_session: Date!): Session!
   }
 `;

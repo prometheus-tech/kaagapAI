@@ -90,5 +90,18 @@ export default {
         where: { sd_id }
       });
     },
+
+    restoreSessionDocument: async (parent, { sd_id }, { models }) => {
+      await models.Session_Document.update(
+        { archive_status: "active" },
+        {
+          where: { sd_id }
+      })
+
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
   }
 };

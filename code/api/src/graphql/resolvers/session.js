@@ -59,6 +59,25 @@ export default {
         where: { session_id }
       });
     },
+
+    restoreSession: async (parent, { session_id }, { models }) => {
+      await models.Session.update(
+        { archive_status: "active" },
+        {
+          where: { session_id }
+      })
+      
+      await models.Session_Document.update(
+        { archive_status: "active" },
+        {
+          where: { session_id }
+      })
+
+      return await models.Session.findOne({
+        raw: true,
+        where: { session_id }
+      });
+    },
     
     updateSessionInformation: async (
       parent,

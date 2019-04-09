@@ -31,5 +31,7 @@ export default `
     editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
 
     deleteSessionDocument(sd_id: UUID!): SessionDocument!
+
+    restoreSessionDocument(sd_id: UUID!): SessionDocument!
   }
 `;

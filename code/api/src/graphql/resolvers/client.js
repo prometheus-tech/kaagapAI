@@ -99,6 +99,42 @@ export default {
         where: { c_id }
       });
     },
+
+    restoreClient: async (parent, { c_id }, { models }) => {
+      await models.Client.update(
+        { archive_status: "active" },
+        {
+          where: { c_id }
+      })
+      
+      await models.Session.update(
+        { archive_status: "active" },
+        {
+          where: { c_id }
+      })
+      
+      await models.Session.findAll({
+        where: {
+          c_id
+        },
+        attributes: [ "session_id"]
+      }).then(res => {
+        res.forEach(element => {
+          let id = element.dataValues.session_id
+
+          models.Session_Document.update(
+            { archive_status: "active" },
+            {
+              where: { session_id: id }
+            })
+        })
+      })
+
+      return await models.Client.findOne({
+        raw: true,
+        where: { c_id }
+      });
+    },
     
     updateClientInformation: async (
       parent,
