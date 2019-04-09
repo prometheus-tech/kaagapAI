@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
+      archive_status: {
+        type: Sequelize.ENUM('archived', 'active'),
+        allowNull: false
+      },
       p_id: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',

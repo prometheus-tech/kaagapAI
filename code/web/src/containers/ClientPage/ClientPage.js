@@ -27,11 +27,11 @@ import SessionList from '../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
 import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import SessionCards from '../../components/Client/SessionCards/SessionCards';
 import grey from '@material-ui/core/colors/grey';
+import orange from '@material-ui/core/colors/orange';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -69,7 +69,8 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: '400',
-    padding: '10px 5px 10px 5px'
+    padding: '10px 5px 10px 5px',
+    color: orange[800]
   },
   breadCrumbLinkClients: {
     fontSize: theme.spacing.unit * 2,
@@ -95,17 +96,23 @@ const styles = theme => ({
     }
   },
   extendedButton: {
-    background: 'rgb(109, 84, 248)',
+    background: orange[800],
     color: '#ffffff',
     textTransform: 'capitalize',
     borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
-      backgroundColor: lightBlue[700],
+      backgroundColor: orange[900],
       boxShadow: theme.shadows[10]
     },
     marginTop: theme.spacing.unit * 4,
     padding: '5px 25px 5px 25px'
+  },
+  iconInfo: {
+    '&:hover, &:focus': {
+      color: orange[700],
+      backgroundColor: grey[300]
+    }
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
@@ -242,7 +249,6 @@ class ClientPage extends Component {
                         Clients
                       </ButtonBase>
                       <Typography
-                        color="secondary"
                         className={classes.breadCrumbLinkClient}
                         gutterBottom={false}
                       >

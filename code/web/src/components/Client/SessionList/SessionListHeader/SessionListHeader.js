@@ -11,11 +11,12 @@ const styles = theme => ({
     margin: '0px'
   },
   paper: {
-    height: '45px',
-    backgroundColor: '#f5f5f5',
+    padding: '16px',
+    backgroundColor: 'transparent',
     marginTop: theme.spacing.unit * 3,
     borderRadius: '8px 8px 0px 0px',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    marginBottom: '10px'
   },
   sessionHeader: {
     marginTop: theme.spacing.unit * 1,

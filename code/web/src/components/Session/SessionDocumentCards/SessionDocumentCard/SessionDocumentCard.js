@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
@@ -13,11 +14,12 @@ import orange from '@material-ui/core/colors/orange';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
   card: {
-    minWidth: 180,
-    minHeight: 200,
+    minWidth: 300,
+    minHeight: 100,
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
@@ -40,8 +42,7 @@ const styles = theme => ({
     textAlign: 'center'
   },
   avatarContainer: {
-    display: 'flex',
-    justifyContent: 'center'
+    display: 'flex'
   },
   avatar: {
     width: 60,
@@ -51,10 +52,11 @@ const styles = theme => ({
     backgroundColor: orange[700],
     color: 'white',
     padding: '2px 2px 2px 2px',
-    fontSize: theme.spacing.unit * 6
+    fontSize: theme.spacing.unit * 8,
+    textAlign: 'center'
   },
   cardTitle: {
-    fontSize: theme.spacing.unit * 2,
+    fontSize: theme.spacing.unit * 2.5,
     fontWeight: 500,
     color: grey[600],
     letterSpacing: '2px'
@@ -62,12 +64,6 @@ const styles = theme => ({
   cardSubheader: {
     fontSize: theme.spacing.unit * 1.4,
     color: brown[200]
-  },
-  iconAction: {
-    '&:hover': {
-      backgroundColor: 'transparent',
-      color: '#1565c0'
-    }
   },
   buttonBase: {
     display: 'block'
@@ -93,7 +89,32 @@ function SessionDocumentCard({ sessionDocument, classes }) {
 
   return (
     <Card className={classes.card}>
-      <CardContent className={classes.cardContent}>
+      <CardHeader
+        avatar={
+          <div className={classes.avatarContainer}>
+            <Avatar className={classes.avatar} alignItems="center">
+              <Icon
+                fontSize="large"
+                className={classNames(classes.icon, avatarIconClass)}
+              />
+            </Avatar>
+          </div>
+        }
+        action={
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={
+          <Typography className={classes.cardTitle}>
+            {sessionDocument.file_name}
+          </Typography>
+        }
+        subheader={<Typography className={classes.cardSubheader}>
+          {sessionDocument.date_added}
+        </Typography>}
+      />
+      {/* <CardContent className={classes.cardContent}>
         <div className={classes.avatarContainer}>
           <Avatar className={classes.avatar}>
             <Icon
@@ -110,8 +131,8 @@ function SessionDocumentCard({ sessionDocument, classes }) {
             {sessionDocument.date_added}
           </Moment>
         </Typography>
-      </CardContent>
-      <CardActions className={classes.cardActions}>
+      </CardContent> */}
+      {/* <CardActions className={classes.cardActions}>
         <IconButton
           disableRipple={true}
           aria-label="Archive"
@@ -126,7 +147,7 @@ function SessionDocumentCard({ sessionDocument, classes }) {
         >
           <Icon fontSize="small">edit</Icon>
         </IconButton>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

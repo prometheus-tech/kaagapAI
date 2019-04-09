@@ -2,6 +2,11 @@ export default `
   scalar Date 
   scalar UUID
 
+  enum ArchiveStatus {
+    archived
+    active
+  }
+
   type SessionDocument {
     sd_id: UUID!
     file: String!
@@ -10,18 +15,23 @@ export default `
     date_added: Date!
     last_modified: Date
     type: String!
+    archive_status: ArchiveStatus!
     session_id: UUID!
   }
 
   type Query { 
-    sessionDocuments(session_id: UUID!): [SessionDocument]
+    sessionDocument(sd_id: UUID!): SessionDocument!
 
-    sessionDocument(sd_id: UUID!): SessionDocument
-
-    downloadSessionDocument(sd_id: UUID!, savePath: String!): SessionDocument! 
+    downloadSessionDocument(sd_id: UUID!): SessionDocument!
   }
 
   type Mutation {
     uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
+
+    editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
+
+    deleteSessionDocument(sd_id: UUID!): SessionDocument!
+
+    restoreSessionDocument(sd_id: UUID!): SessionDocument!
   }
 `;

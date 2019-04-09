@@ -4,7 +4,12 @@ export default {
 
   Session: {
     documents: ({ session_id }, args, { models }) => {
-      return models.Session_Document.findAll({ where: { session_id } });
+      return models.Session_Document.findAll({ 
+        where: { 
+          session_id,
+          archive_status: 'active'
+        } 
+      });
     }
   },
 
@@ -36,17 +41,42 @@ export default {
       });
     },
 
-    deleteSession: async (parent, { session_id, c_id }, { models }) => {
-      const deleteSessionRes = await models.Session.findOne({
+    deleteSession: async (parent, { session_id }, { models }) => {
+      await models.Session.update(
+        { archive_status: "archived" },
+        {
+          where: { session_id }
+      })
+      
+      await models.Session_Document.update(
+        { archive_status: "archived" },
+        {
+          where: { session_id }
+      })
+
+      return await models.Session.findOne({
         raw: true,
         where: { session_id }
       });
+    },
 
-      await models.Session.destroy({
-        where: { session_id, c_id }
+    restoreSession: async (parent, { session_id }, { models }) => {
+      await models.Session.update(
+        { archive_status: "active" },
+        {
+          where: { session_id }
+      })
+      
+      await models.Session_Document.update(
+        { archive_status: "active" },
+        {
+          where: { session_id }
+      })
+
+      return await models.Session.findOne({
+        raw: true,
+        where: { session_id }
       });
-
-      return deleteSessionRes;
     },
     
     updateSessionInformation: async (
