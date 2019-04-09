@@ -55,6 +55,28 @@ export default {
             }
           });
         }),
+    
+    editSessionDocument: async (
+      parent,
+      { content, sd_id, file_name},
+      { models }
+    ) => {
+      await models.Session_Document.update(
+        {
+          content,
+          last_modified: new Date(),
+          file_name
+        },
+        {
+          where: { sd_id }
+        }
+      );
+
+      return await models.Session_Document.findOne({
+        raw: true,
+        where: { sd_id }
+      });
+    },
 
     deleteSessionDocument: async (parent, { sd_id }, { models }) => {
       await models.Session_Document.update(

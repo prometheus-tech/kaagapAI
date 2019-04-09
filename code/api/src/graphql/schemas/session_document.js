@@ -20,15 +20,15 @@ export default `
   }
 
   type Query { 
-    sessionDocuments(session_id: UUID!): [SessionDocument]
+    sessionDocument(sd_id: UUID!): SessionDocument!
 
-    sessionDocument(sd_id: UUID!): SessionDocument
-
-    downloadSessionDocument(sd_id: UUID!): SessionDocument 
+    downloadSessionDocument(sd_id: UUID!): SessionDocument!
   }
 
   type Mutation {
     uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
+
+    editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
 
     deleteSessionDocument(sd_id: UUID!): SessionDocument!
   }
