@@ -20,23 +20,21 @@ const styles = theme => ({
   },
   sessionHeader: {
     marginTop: theme.spacing.unit * 1,
-    marginLeft: theme.spacing.unit * 5,
-    color: grey[900],
-    letterSpacing: '1px',
-    lineHeight: '150%',
-    fontWeight: 300,
-    textTransform: 'uppercase',
-    fontSize: '12px'
-  },
-  sessionName: {
-    marginTop: theme.spacing.unit * 1,
-    marginLeft: theme.spacing.unit * 5,
     color: grey[600],
     letterSpacing: '1px',
     lineHeight: '150%',
     fontWeight: 400,
     textTransform: 'uppercase',
-    fontSize: '12px'
+    fontSize: '14px'
+  },
+  sessionName: {
+    marginTop: theme.spacing.unit * 1,
+    color: grey[600],
+    letterSpacing: '1px',
+    lineHeight: '150%',
+    fontWeight: 500,
+    textTransform: 'uppercase',
+    fontSize: '14px'
   }
 });
 
@@ -57,12 +55,12 @@ function SessionListHeader(props) {
               Date of Session
             </Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Typography className={classes.sessionHeader}>
               Last Opened
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <Typography className={classes.sessionHeader}>Actions</Typography>
           </Grid>
         </Grid>
