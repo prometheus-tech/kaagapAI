@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
+import { createUploadLink } from 'apollo-upload-client';
 
 import { SnackbarProvider } from 'notistack';
 
@@ -31,8 +32,12 @@ const cache = new InMemoryCache({
   }
 });
 
+const link = createUploadLink({
+  uri: 'https://kaagapai-dev.herokuapp.com/graphql'
+});
+
 const client = new ApolloClient({
-  uri: 'http://kaagapai-dev.com:4000/graphql',
+  link,
   cache
 });
 

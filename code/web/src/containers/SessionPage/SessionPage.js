@@ -112,7 +112,8 @@ const styles = theme => ({
 class SessionPage extends Component {
   state = {
     view: 'card',
-    isNewSessionDocumentDialogOpened: false
+    isNewSessionDocumentDialogOpened: false,
+    file: null
   };
 
   componentDidMount() {
@@ -131,11 +132,19 @@ class SessionPage extends Component {
   };
 
   closeNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: false });
+    this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
   };
 
-  saveUploadsHandler = files => {
-    console.log(files);
+  addFile = file => {
+    this.setState({
+      file
+    });
+  };
+
+  clearFile = () => {
+    this.setState({
+      file: null
+    });
   };
 
   render() {
@@ -143,7 +152,7 @@ class SessionPage extends Component {
 
     const { session_id } = this.props.match.params;
 
-    const { view, isNewSessionDocumentDialogOpened } = this.state;
+    const { view, isNewSessionDocumentDialogOpened, file } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -273,6 +282,10 @@ class SessionPage extends Component {
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
                         closed={this.closeNewSessionDocumentDialogHandler}
+                        file={file}
+                        fileAdded={this.addFile}
+                        fileRemoved={this.clearFile}
+                        sessionId={session_id}
                       />
                     </main>
                   </div>

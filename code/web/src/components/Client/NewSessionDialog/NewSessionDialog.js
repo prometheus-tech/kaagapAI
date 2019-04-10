@@ -92,7 +92,9 @@ class NewSessionDialog extends Component {
       >
         {(addSession, { loading }) => {
           if (loading) {
-            return <SimpleSnackbar isOpened={loading} />;
+            return (
+              <SimpleSnackbar message="Adding session..." isOpened={loading} />
+            );
           }
 
           return (

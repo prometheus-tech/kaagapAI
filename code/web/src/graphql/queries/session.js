@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
 
 import SESSION_INFO from '../fragments/sessionInfo';
+import SESSION_DOCUMENT_BASIC_INFO from '../fragments/sessionDocumentBasicInfo';
 
 const SESSION = gql`
   query Session($session_id: UUID!) {
@@ -8,15 +9,12 @@ const SESSION = gql`
       c_id
       ...SessionInfo
       documents {
-        sd_id
-        file_name
-        file
-        date_added
-        type
+        ...SessionDocumentBasicInfo
       }
     }
   }
   ${SESSION_INFO}
+  ${SESSION_DOCUMENT_BASIC_INFO}
 `;
 
 export default SESSION;

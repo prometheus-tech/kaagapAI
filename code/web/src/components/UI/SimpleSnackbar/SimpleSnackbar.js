@@ -7,7 +7,7 @@ function TransitionRight(props) {
   return <Slide {...props} direction="right" />;
 }
 
-function SimpleSnackbar({ isOpened }) {
+function SimpleSnackbar({ isOpened, message }) {
   return (
     <Snackbar
       anchorOrigin={{
@@ -15,7 +15,7 @@ function SimpleSnackbar({ isOpened }) {
         horizontal: 'left'
       }}
       open={isOpened}
-      message={<span>Adding client...</span>}
+      message={message}
       TransitionComponent={TransitionRight}
     />
   );
