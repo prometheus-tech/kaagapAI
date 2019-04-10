@@ -8,14 +8,18 @@ import configurations from './config/appconfig';
 import cors from 'cors';
 import http from 'http';
 
-const environment = 'development'; // Change this Jessie
+const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
 
 const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
+  formatError: error => {
+    delete error.extensions.exception;
+    return error;
+  },
   context: { models },
-  playground: true
+  playground: true //change to 'false' on deploy
 });
 
 const app = express();
