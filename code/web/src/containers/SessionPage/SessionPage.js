@@ -112,7 +112,8 @@ const styles = theme => ({
 class SessionPage extends Component {
   state = {
     view: 'card',
-    isNewSessionDocumentDialogOpened: false
+    isNewSessionDocumentDialogOpened: false,
+    files: []
   };
 
   componentDidMount() {
@@ -131,11 +132,24 @@ class SessionPage extends Component {
   };
 
   closeNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: false });
+    this.setState({ isNewSessionDocumentDialogOpened: false, files: [] });
   };
 
-  saveUploadsHandler = files => {
-    console.log(files);
+  addFiles = files => {
+    this.setState({
+      files: [...this.state.files, ...files]
+    });
+
+    // this.setState({ files });
+  };
+
+  removeFile = fileIndex => {
+    const files = [...this.state.files];
+    files.splice(fileIndex, 1);
+
+    this.setState({
+      files
+    });
   };
 
   render() {
@@ -143,7 +157,7 @@ class SessionPage extends Component {
 
     const { session_id } = this.props.match.params;
 
-    const { view, isNewSessionDocumentDialogOpened } = this.state;
+    const { view, isNewSessionDocumentDialogOpened, files } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -273,6 +287,10 @@ class SessionPage extends Component {
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
                         closed={this.closeNewSessionDocumentDialogHandler}
+                        files={files}
+                        filesAdded={this.addFiles}
+                        fileRemoved={this.removeFile}
+                        sessionId={session_id}
                       />
                     </main>
                   </div>
