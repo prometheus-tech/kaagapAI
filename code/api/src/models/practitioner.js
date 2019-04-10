@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: DataTypes.STRING,
     phone_no: DataTypes.CHAR,
-    password: DataTypes.CHAR,
+    // password: DataTypes.CHAR,
     fname: DataTypes.STRING,
     lname: DataTypes.STRING,
     license: DataTypes.CHAR,

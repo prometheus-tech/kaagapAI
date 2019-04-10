@@ -31,7 +31,8 @@ export default {
 
   Mutation: {
     uploadSessionDocument: (parent, { file, session_id }, { models }) =>
-      uploadModules.uploadFile(file, session_id)
+      uploadModules
+        .uploadFile(file, session_id)
         .then(async ({ session_id, fileName, filePath, translation, mimetype }) => {
           const addFileRes = await models.Session_Document.create({
             session_id,
@@ -49,10 +50,7 @@ export default {
         .then(sd_id => {
           return models.Session_Document.findOne({
             raw: true,
-            where: { sd_id },
-            attributes: {
-              exclude: ['content']
-            }
+            where: { sd_id }
           });
         }),
     
@@ -61,16 +59,13 @@ export default {
       { content, sd_id, file_name},
       { models }
     ) => {
-      await models.Session_Document.update(
-        {
-          content,
-          last_modified: new Date(),
-          file_name
-        },
-        {
-          where: { sd_id }
-        }
-      );
+      await models.Session_Document.update({
+        content,
+        last_modified: new Date(),
+        file_name
+      }, {
+        where: { sd_id }
+      });
 
       return await models.Session_Document.findOne({
         raw: true,
@@ -79,10 +74,10 @@ export default {
     },
 
     deleteSessionDocument: async (parent, { sd_id }, { models }) => {
-      await models.Session_Document.update(
-        { archive_status: "archived" },
-        {
-          where: { sd_id }
+      await models.Session_Document.update({ 
+        archive_status: "archived" 
+      }, {
+        where: { sd_id }
       })
 
       return await models.Session_Document.findOne({
@@ -92,10 +87,10 @@ export default {
     },
 
     restoreSessionDocument: async (parent, { sd_id }, { models }) => {
-      await models.Session_Document.update(
-        { archive_status: "active" },
-        {
-          where: { sd_id }
+      await models.Session_Document.update({ 
+        archive_status: "active" 
+      }, {
+        where: { sd_id }
       })
 
       return await models.Session_Document.findOne({

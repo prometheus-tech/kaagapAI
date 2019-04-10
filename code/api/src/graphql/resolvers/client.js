@@ -30,12 +30,11 @@ export default {
     },
 
     client: async (parent, { c_id }, { models }) => {
-      await models.Client.update(
-        {
+      await models.Client.update({
           last_opened: new Date()
-        },
-        { where: { c_id } }
-      );
+        }, { 
+          where: { c_id } 
+      });
 
       return await models.Client.findOne({ where: { c_id } });
     }
@@ -65,32 +64,30 @@ export default {
     },
 
     deleteClient: async (parent, { c_id }, { models }) => {
-      await models.Client.update(
-        { archive_status: "archived" },
-        {
+      await models.Client.update({ 
+        archive_status: "archived" 
+      }, {
           where: { c_id }
       })
       
-      await models.Session.update(
-        { archive_status: "archived" },
-        {
+      await models.Session.update({ 
+        archive_status: "archived" 
+      }, {
           where: { c_id }
       })
       
       await models.Session.findAll({
-        where: {
-          c_id
-        },
+        where: { c_id },
         attributes: [ "session_id"]
       }).then(res => {
         res.forEach(element => {
           let id = element.dataValues.session_id
 
-          models.Session_Document.update(
-            { archive_status: "archived" },
-            {
-              where: { session_id: id }
-            })
+          models.Session_Document.update({ 
+            archive_status: "archived" 
+          }, {
+            where: { session_id: id }
+          })
         })
       })
 
@@ -101,32 +98,30 @@ export default {
     },
 
     restoreClient: async (parent, { c_id }, { models }) => {
-      await models.Client.update(
-        { archive_status: "active" },
-        {
+      await models.Client.update({ 
+        archive_status: "active" 
+      }, {
           where: { c_id }
       })
       
-      await models.Session.update(
-        { archive_status: "active" },
-        {
+      await models.Session.update({ 
+        archive_status: "active" 
+      }, {
           where: { c_id }
       })
       
       await models.Session.findAll({
-        where: {
-          c_id
-        },
+        where: { c_id },
         attributes: [ "session_id"]
       }).then(res => {
         res.forEach(element => {
           let id = element.dataValues.session_id
 
-          models.Session_Document.update(
-            { archive_status: "active" },
-            {
-              where: { session_id: id }
-            })
+          models.Session_Document.update({ 
+            archive_status: "active" 
+          }, {
+            where: { session_id: id }
+          })
         })
       })
 
@@ -141,17 +136,14 @@ export default {
       { c_id, fname, lname, birthdate, gender },
       { models }
     ) => {
-      await models.Client.update(
-        {
+      await models.Client.update({
           fname,
           lname,
           birthdate,
           gender
-        },
-        {
-          where: { c_id }
-        }
-      );
+      }, {
+        where: { c_id }
+      });
 
       return await models.Client.findOne({
         raw: true,
