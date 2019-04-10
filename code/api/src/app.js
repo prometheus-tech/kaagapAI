@@ -1,4 +1,5 @@
-require('dotenv').config({path: './.env'});
+require('dotenv').config({ path: './.env' });
+import '@babel/polyfill';
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import typeDefs from './graphql/schemas/schema';
@@ -15,7 +16,8 @@ const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
   context: { models },
-  playground: true
+  playground: true,
+  introspection: true
 });
 
 const app = express();

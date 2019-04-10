@@ -41,7 +41,7 @@ const styles = theme => ({
   cardTitle: {
     fontSize: theme.spacing.unit * 2.5,
     fontWeight: 500,
-    color: 'grey[900]',
+    color: grey[900],
     letterSpacing: '2px',
     width: '130px',
     overflow: 'hidden',
