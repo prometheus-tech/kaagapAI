@@ -113,7 +113,7 @@ class SessionPage extends Component {
   state = {
     view: 'card',
     isNewSessionDocumentDialogOpened: false,
-    files: []
+    file: null
   };
 
   componentDidMount() {
@@ -132,23 +132,18 @@ class SessionPage extends Component {
   };
 
   closeNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: false, files: [] });
+    this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
   };
 
-  addFiles = files => {
+  addFile = file => {
     this.setState({
-      files: [...this.state.files, ...files]
+      file
     });
-
-    // this.setState({ files });
   };
 
-  removeFile = fileIndex => {
-    const files = [...this.state.files];
-    files.splice(fileIndex, 1);
-
+  clearFile = () => {
     this.setState({
-      files
+      file: null
     });
   };
 
@@ -157,7 +152,7 @@ class SessionPage extends Component {
 
     const { session_id } = this.props.match.params;
 
-    const { view, isNewSessionDocumentDialogOpened, files } = this.state;
+    const { view, isNewSessionDocumentDialogOpened, file } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -287,9 +282,9 @@ class SessionPage extends Component {
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
                         closed={this.closeNewSessionDocumentDialogHandler}
-                        files={files}
-                        filesAdded={this.addFiles}
-                        fileRemoved={this.removeFile}
+                        file={file}
+                        fileAdded={this.addFile}
+                        fileRemoved={this.clearFile}
                         sessionId={session_id}
                       />
                     </main>
