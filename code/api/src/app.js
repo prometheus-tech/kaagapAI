@@ -14,7 +14,8 @@ const config = configurations[environment];
 const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
-  context: { models }
+  context: { models },
+  playground: true
 });
 
 const app = express();

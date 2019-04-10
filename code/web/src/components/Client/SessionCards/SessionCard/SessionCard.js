@@ -14,7 +14,6 @@ import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import brown from '@material-ui/core/colors/brown';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
@@ -51,20 +50,16 @@ const styles = theme => ({
     height: 60,
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 1,
-    backgroundColor: 'white',
     padding: '2px 2px 2px 2px',
     fontSize: theme.spacing.unit * 6,
     color: 'white',
     backgroundColor: orange[800]
   },
   cardTitle: {
-    fontSize: theme.spacing.unit * 2.9,
     fontWeight: '400',
-    color: grey[900],
-    letterSpacing: '2px'
+    color: grey[900]
   },
   cardSubheader: {
-    fontSize: theme.spacing.unit * 1.4,
     fontWeight: '300',
     fontSize: '14px',
     color: theme.palette.grey[600]
@@ -98,7 +93,12 @@ function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
               <FolderIcon fontSize="large" />
             </Avatar>
           </div>
-          <Typography className={classes.cardTitle}>
+          <Typography
+            noWrap
+            variant="h6"
+            className={classes.cardTitle}
+            align="center"
+          >
             {session.session_name}
           </Typography>
           <Typography className={classes.cardSubheader}>
