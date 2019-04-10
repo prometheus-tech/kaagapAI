@@ -7,7 +7,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
-import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -17,19 +16,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 const styles = theme => ({
   card: {
     Width: '300px',
-    // height: '100',
     boxShadow: '0 2px 1px rgba(0,0,0,.08), 0 0 2px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px'
-    // maxWidth: '230px',
-    // transition:
-    //   '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
-    // '&:hover': {
-    //   transform: 'scale(1.05)',
-    //   boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-    //   padding: '0px 0px 0px 0px'
-    // }
   },
   cardContent: {
     textAlign: 'center'
@@ -71,19 +61,25 @@ const styles = theme => ({
 
 function SessionDocumentCard({ sessionDocument, classes }) {
   let avatarIconClass = '';
+  let iconColor = '';
 
   const sessionDocumentType = sessionDocument.type.toLowerCase();
 
   if (sessionDocumentType.includes('pdf')) {
     avatarIconClass = 'fas fa-file-pdf';
+    iconColor = 'blue';
   } else if (sessionDocumentType.includes('text')) {
     avatarIconClass = 'fas fa-file-alt';
+    iconColor = 'red';
   } else if (sessionDocumentType.includes('word')) {
     avatarIconClass = 'fas fa-file-word';
+    iconColor = 'green';
   } else if (sessionDocumentType.includes('audio')) {
     avatarIconClass = 'fas fa-file-audio';
+    iconColor = 'yellow';
   } else {
     avatarIconClass = 'fas fa-file-alt';
+    iconColor = 'black';
   }
 
   return (
@@ -91,7 +87,11 @@ function SessionDocumentCard({ sessionDocument, classes }) {
       <CardHeader
         avatar={
           <div className={classes.avatarContainer}>
-            <Avatar className={classes.avatar} alignItems="center">
+            <Avatar
+              className={classes.avatar}
+              style={{ color: iconColor }}
+              alignItems="center"
+            >
               <Icon
                 fontSize="large"
                 className={classNames(classes.icon, avatarIconClass)}
@@ -117,40 +117,6 @@ function SessionDocumentCard({ sessionDocument, classes }) {
           </Typography>
         }
       />
-      {/* <CardContent className={classes.cardContent}>
-        <div className={classes.avatarContainer}>
-          <Avatar className={classes.avatar}>
-            <Icon
-              fontSize="large"
-              className={classNames(classes.icon, avatarIconClass)}
-            />
-          </Avatar>
-        </div>
-        <Typography className={classes.cardTitle}>
-          {sessionDocument.file_name}
-        </Typography>
-        <Typography className={classes.cardSubheader}>
-          <Moment format="MMM D, YYYY" withTitle>
-            {sessionDocument.date_added}
-          </Moment>
-        </Typography>
-      </CardContent> */}
-      {/* <CardActions className={classes.cardActions}>
-        <IconButton
-          disableRipple={true}
-          aria-label="Archive"
-          className={classes.iconAction}
-        >
-          <Icon fontSize="small">archive</Icon>
-        </IconButton>
-        <IconButton
-          disableRipple={true}
-          aria-label="Edit"
-          className={classes.iconAction}
-        >
-          <Icon fontSize="small">edit</Icon>
-        </IconButton>
-      </CardActions> */}
     </Card>
   );
 }

@@ -21,6 +21,13 @@ import Divider from '@material-ui/core/Divider';
 import SessionDocumentCards from '../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import orange from '@material-ui/core/colors/orange';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import Hidden from '@material-ui/core/Hidden';
+import Fab from '@material-ui/core/Fab';
+import Add from '@material-ui/icons/Add';
+import ViewControl from '../../components/UI/ViewControl/ViewControl';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
+import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -70,11 +77,44 @@ const styles = theme => ({
     color: orange[800]
   },
   divider: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 4
+  },
+  extendedButton: {
+    background: orange[800],
+    color: '#ffffff',
+    textTransform: 'capitalize',
+    borderRadius: '50px',
+    fontSize: 16,
+    '&:hover': {
+      backgroundColor: orange[900],
+      boxShadow: theme.shadows[10]
+    },
+    padding: '5px 25px 5px 25px'
+  },
+  floatingButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+    // backgroundColor: lightBlue[600],
+    boxShadow: theme.shadows[24],
+    color: '#ffffff',
+    '&:hover': {
+      // backgroundColor: lightBlue[700],
+      boxShadow: theme.shadows[10]
+    }
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit
   }
 });
 
 class SessionPage extends Component {
+  state = {
+    view: 'card',
+    isNewSessionDocumentDialogOpened: false
+  };
+
   componentDidMount() {
     loadCSS(
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
@@ -82,10 +122,28 @@ class SessionPage extends Component {
     );
   }
 
+  changeViewHandler = newView => {
+    this.setState({ view: newView });
+  };
+
+  openNewSessionDocumentDialogHandler = () => {
+    this.setState({ isNewSessionDocumentDialogOpened: true });
+  };
+
+  closeNewSessionDocumentDialogHandler = () => {
+    this.setState({ isNewSessionDocumentDialogOpened: false });
+  };
+
+  saveUploadsHandler = files => {
+    console.log(files);
+  };
+
   render() {
     const { classes } = this.props;
 
     const { session_id } = this.props.match.params;
+
+    const { view, isNewSessionDocumentDialogOpened } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -163,8 +221,58 @@ class SessionPage extends Component {
                         </Grid>
                       </Grid>
                       <Divider light className={classes.divider} />
+                      <Grid
+                        justify="space-between"
+                        alignItems="center"
+                        container
+                        spacing={16}
+                      >
+                        <Grid item>
+                          <Hidden smDown>
+                            <Fab
+                              color="primary"
+                              variant="extended"
+                              className={classes.extendedButton}
+                              onClick={this.openNewSessionDocumentDialogHandler}
+                            >
+                              <Add className={classes.extendedIcon} /> New
+                              Document
+                            </Fab>
+                          </Hidden>
+                          <Hidden mdUp>
+                            <Fab
+                              size="large"
+                              color="primary"
+                              className={classes.floatingButton}
+                              onClick={this.openNewSessionDialogHandler}
+                              disableRipple={false}
+                              disableFocusRipple={false}
+                            >
+                              <Add />
+                            </Fab>
+                          </Hidden>
+                        </Grid>
+                        <Grid item>
+                          <div className={classes.actionButton}>
+                            <ViewControl
+                              view={view}
+                              viewChanged={this.changeViewHandler}
+                            />
+                            <IconButton
+                              component="span"
+                              className={classes.iconInfo}
+                            >
+                              <InfoIcon fontSize="small" />
+                            </IconButton>
+                          </div>
+                        </Grid>
+                      </Grid>
                       <SessionDocumentCards
                         sessionDocuments={session.documents}
+                      />
+                      <NewSessionDocumentDialog
+                        opened={isNewSessionDocumentDialogOpened}
+                        closed={this.closeNewSessionDocumentDialogHandler}
                       />
                     </main>
                   </div>
