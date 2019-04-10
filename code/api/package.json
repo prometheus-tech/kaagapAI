@@ -9,11 +9,15 @@
     "setup:db": "npm run db:migrate && npm run db:seed",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
-    "start": "nodemon src/index.js --exec babel-node",
-    "start:prod": "npm run build:prod && npm run start:server",
-    "build:prod": "babel src -s -D -d build",
+    "start": "node build/app.js",
+    "build": "babel src --out-dir build",
+    "heroku-postbuild": "npm i && npm run build",
     "start:server": "node build/index.js",
     "dev:server": "nodemon src/app.js --exec babel-node"
+  },
+  "engines": {
+    "node": ">=8.11.2",
+    "npm": "5.x"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +38,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "@google-cloud/speech": "^2.3.1",
     "@google-cloud/storage": "^2.5.0",
     "@google-cloud/translate": "^3.0.0",

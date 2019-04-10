@@ -16,21 +16,27 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   listSession: {
-    boxShadow: 'none',
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
     backgroundColor: 'transparent',
+    padding: '16px',
+    // '&:hover': {
+    //   boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
+    //   borderRadius: '50px'
+    // },
+    transition:
+      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-      padding: '0px 0px 0px 0px',
-      borderRadius: '50px'
+      transform: 'scale(1.01)',
+      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)'
     },
-    marginTop: '1rem'
+    marginTop: '1rem',
+    borderRadius: '50px'
   },
   sessionName: {
     display: 'flex',
     alignItems: 'center'
   },
   sessionNameAvatar: {
-    marginLeft: theme.spacing.unit * 5,
     width: 60,
     height: 60,
     color: 'white',
@@ -39,47 +45,26 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 6
   },
   listItemName: {
-    // marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 1.5,
     fontSize: theme.spacing.unit * 2,
     fontWeight: 500,
-    color: '#0000000',
-    letterSpacing: '2px'
-  },
-  lastAction: {
-    // marginTop: theme.spacing.unit * 0.5,
-    fontSize: '8px',
-    letterSpacing: '1px',
-    lineHeight: '150%',
-    fontWeight: 300
+    color: '#0000000'
   },
   listItem: {
-    // marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 5,
-    letterSpacing: '1px',
     lineHeight: '150%',
     color: theme.palette.grey[600],
-    fontSize: '12px'
+    fontSize: '14px'
   },
   listItemActions: {
     display: 'flex'
   },
   listItemActionEdit: {
-    // marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 4,
-    letterSpacing: '1px',
-    lineHeight: '150%',
-    textTransform: 'capitalize',
     '&:hover': {
       color: orange[800]
-    }
+    },
+    marginRight: theme.spacing.unit
   },
   listItemActionArchive: {
-    // marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit,
-    letterSpacing: '1px',
-    lineHeight: '150%',
-    textTransform: 'capitalize',
     '&:hover': {
       color: orange[800]
     }
@@ -122,16 +107,13 @@ function SessionListItem(props) {
               </Moment>
             </Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Typography className={classes.listItem}>
               Not yet implemented
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <div className={classes.listItemActions}>
-              {/* <IconButton className={classes.listItemActionView}>
-                <Icon>remove_red_eye</Icon>
-              </IconButton> */}
               <IconButton
                 onClick={e => {
                   e.preventDefault();
