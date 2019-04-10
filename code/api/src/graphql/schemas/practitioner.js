@@ -11,7 +11,6 @@ export default `
     p_id: UUID!
     email: String!
     phone_no: String!
-    password: String!
     fname: String!
     lname: String!
     license: String!
@@ -21,5 +20,9 @@ export default `
     date_deactivated: Date
     last_logged: Date
     session_token: String
+  }
+
+  type Mutation {
+    login(email: String!, password: String!)
   }
 `;
