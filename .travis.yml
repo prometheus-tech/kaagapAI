@@ -1,53 +1,52 @@
 sudo: required
 matrix:
   include:
-    - language: node_js
-      node_js: lts/*
-      cache:
-        directories:
-          - node_modules
-      before_install:
-        - npm install -g firebase-tools
-        - cd code/web/
-        - npm install
-      script:
-        - npm test
-      after_success:
-        - travis_wait 40 npm run build
-        - firebase use default --token $FIREBASE_TOKEN
-        - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+  - language: node_js
+    node_js: lts/*
+    cache:
+      directories:
+      - node_modules
+    before_install:
+    - npm install -g firebase-tools
+    - cd code/web/
+    - npm install
+    script:
+    - npm test
+    after_success:
+    - travis_wait 40 npm run build
+    - firebase use default --token $FIREBASE_TOKEN
+    - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+    on:
+      branch:
+      - dev
+      project: kaagapai-dev
+  - language: node_js
+    node_js: lts/*
+    services: mysql
+    cache:
+      directories:
+      - node_modules
+    before_install:
+    - cd code/api
+    - npm install
+    script: 'true'
+    deploy:
+      provider: heroku
+      api_key:
+        secure: sANRtabICC1qaEWbPUmr4XKF6dPPiYTBC1gzY9OkQ0JdLyl2La3z4cqNUXmjaMei5EmUVb6iBI1NCW41Ye8r4CFJJUQTTaRhQszmWtXzjDOgMDmyd64JzGADGnhEQ/SlTtFs0UIWOReq+aI7WbqjURYZMXvJFT+BFhWbs/kjtqsvLccVYkKFfEeQHgIbJWibKlj8YCOfUh5AOeLv50iw+BRa1EjJXOP9aMBHFTImQ35MwNOJ7XRbfcYyql/p0r/WgDFdOtOIvrkXhABIeKdeeOq8gfju+1u+Uc5BKNI5wfzNuRJnGPlzTDvdXLViQM1OhAWg3oVKsBRCp4QsN/HqHM5zNdDfCffeztE6ZDdXh/7r9N0YJwCmOc4IHXbyB1mcU8xMkg8dCb2iLOizmytl4s6yBGjx3HgXBR1hGeyYZvpNSMAFGYX8dJ3M97sxqxhBsd/YM7dU082sCuQ7PqSXIB3qw/oWGyicJPMKX7+xzYxVMhNBfNvMoewrORWoESCTG86umNLZlS3F4yG195jbOgUYST1EfYOPoaOoQ5O6MoSeAMImT1US0h6desFwXPalq/memmHIi6lxM9SzDIfZWwibqWagIqmIjSfJ4XpgNnBukKHfkxGHD/J/V9R3AM2lWKXRBSw7cu9TYoDxNVagcGKSEtjYNYhxnksVwVW3rkg=
+      app:
+        dev: kaagapai-dev
       on:
-        branch:
+        repo: prometheus-tech/kaagapAI
+        branches:
+          only:
           - dev
-        project: kaagapai-dev
-    - language: node_js
-      node_js: lts/*
-      services: mysql
-      cache:
-        directories:
-          - node_modules
-      before_install:
-        - cd code/api
-        - npm install
-      script: "true"
-      deploy:
-        provider: heroku
-        api_key:
-          secure: MSaRq2fRM/y5+JrE48ZvvzwYLCshOSJKBpvob9wh/XDvQnPZP2hiN2NS70rCpJllIvo/0bUesT9cpPyoOVF+bq6HgE7LcMgH7LYpI3iNJEfi12fB5rBu3PocYt8Am9CEArxhhOaudpciBNzNpxUU8vpDhYDvTS6bKeZ06y1QozD39NYi/bBYf0GLuN2snJJXpB6TlAbJ5z1yoeL7nYmVI/eo7ug6mCB/txC1Rhog/4AneZEPvPYth+jxYIU1muCBfaJ5ZlAUCc5RdlUQKF0SDiOUm5uEJ3vOucm/XmHn3DUyEn0VLw25hTl4d7EUZRPZkhX2BiTP640S7FDrQGI/91vxUX8x/xfBOlcwQf5bXxy7GD9vj9qzGMxaoYA5H0R5rxiGk66M0Qw3n/rtuUsBUzIGcDt5pcoeeKsQwOKvYEy3C9F0Vg+BdmFABQNnkQvNCYmz152SUuMLEf/tSF3r4HN3rL9DrHu+yaWtbJhD3fm+6kywsunqWZ2sz+vh5n+gyDOd91b5AzyDtohDGExzJUym1DYhZ31augTxKw0NfuehqCXx6vMmPpBBf6WP+0DyaSnG2pK39TsmSA+QIAhRMd3zhJkVWlbRI27Xes5SaEpdXJ2K7kvBBdK5D+PbeI/gUo8Tho2PAdmoGNv+XjbV1KGUcx+oCiIgFA9AASA8uLw=
-
-        app:
-          dev: kaagapai-dev
-        on:
-          repo: prometheus-tech/kaagapAI
-          branches:
-            only:
-              - dev
 notifications:
   email:
-    - 2164149@slu.edu.ph
-    - 2161495@slu.edu.ph
-    - 2160809@slu.edu.ph
-    - 2160120@slu.edu.ph
-    - 2161745@slu.edu.ph
-    - 2161436@slu.edu.ph
-    - 2161794@slu.edu.ph
+  - 2164149@slu.edu.ph
+  - 2161495@slu.edu.ph
+  - 2160809@slu.edu.ph
+  - 2160120@slu.edu.ph
+  - 2161745@slu.edu.ph
+  - 2161436@slu.edu.ph
+  - 2161794@slu.edu.ph
