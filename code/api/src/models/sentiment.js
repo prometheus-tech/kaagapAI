@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     score: DataTypes.INTEGER,
     label: DataTypes.STRING
   }, {});
-  Sentiment.associate = function(models) {
+  Sentiment.associate = models => {
     Sentiment.belongsTo(models.Result, {
       foreignKey: 'result_id',
       targetKey: 'result_id',
