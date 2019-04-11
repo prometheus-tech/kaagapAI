@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
-    session_token: DataTypes.STRING
+    verification_code: DataTypes.STRING
   });
 
   Practitioner.removeAttribute('id');
