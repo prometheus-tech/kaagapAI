@@ -3,6 +3,14 @@ import GraphQlUUID from 'graphql-type-uuid';
 export default {
   UUID: GraphQlUUID,
 
+  Result: {
+    // categories:
+    // entities:
+    // emotions:
+    // sentiment:
+    // keyword:
+  },
+
   Mutation: {
     generateResults: async (
       parent, 
@@ -59,7 +67,6 @@ export default {
       return await models.Result.findOne({
         raw: true,
         where: { result_id }
-        //include child tables here
       });
     },
   }
