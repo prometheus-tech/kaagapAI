@@ -53,7 +53,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      session_token: {
+      verification_code: {
         type: Sequelize.STRING,
         allowNull: false
       }

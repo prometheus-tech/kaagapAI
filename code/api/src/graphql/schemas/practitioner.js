@@ -20,7 +20,6 @@ export default `
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date
-    session_token: String
   }
 
   type Mutation {
