@@ -44,7 +44,11 @@ export default {
   Query: {
     result: (parent, { session_id }, { models }) => {
       return models.Result.findOne({
-        where: { session_id }
+        // limit: 1,
+        where: { session_id },
+        order: [
+          ['date_generated', 'DESC']
+        ]
       })
     }
   },
