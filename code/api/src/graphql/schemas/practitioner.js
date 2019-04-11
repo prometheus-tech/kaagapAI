@@ -23,6 +23,6 @@ export default `
   }
 
   type Mutation {
-    login(email: String!, password: String!)
+    login(email: String!, password: String!): Practitioner
   }
 `;
