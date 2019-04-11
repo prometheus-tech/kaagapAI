@@ -1,4 +1,4 @@
-import React, { createRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { Mutation } from 'react-apollo';
 import ADD_SESSION_DOCUMENT from '../../../graphql/mutations/addSessionDocument';
