@@ -9,8 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import ClientCard from '../../components/Clients/ClientCard/ClientCard';
-// import ClientList from '../../components/Clients/ClientsList/ClientsList';
+import ClientCards from '../../components/Clients/ClientCards/ClientCards';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import { lightBlue } from '@material-ui/core/colors';
 import SearchField from '../../components/UI/SearchField/SearchField';
@@ -199,28 +198,11 @@ class ClientsPage extends Component {
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container spacing={8}>
-                    {data.clients.map(client => {
-                      return (
-                        <Grid
-                          item
-                          align="center"
-                          key={client.c_id}
-                          xs={12}
-                          sm={6}
-                          md={4}
-                          lg={3}
-                        >
-                          <ClientCard
-                            clientEdited={this.openEditClientDialogHandler}
-                            clientDeleted={this.openDeleteClientDialogHandler}
-                            client={client}
-                          />
-                        </Grid>
-                      );
-                    })}
-                    {/* <ClientList /> */}
-                  </Grid>
+                  <ClientCards
+                    clients={data.clients}
+                    clientEdited={this.openEditClientDialogHandler}
+                    clientDeleted={this.openDeleteClientDialogHandler}
+                  />
                 </Grid>
               </Grid>
               <NewClientDialog

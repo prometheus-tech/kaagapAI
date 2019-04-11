@@ -64,7 +64,6 @@ const styles = theme => ({
     '&:hover': {
       cursor: 'pointer'
     }
-    // width: '250px'
   }
 });
 
