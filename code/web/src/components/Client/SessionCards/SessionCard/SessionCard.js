@@ -56,7 +56,7 @@ const styles = theme => ({
     backgroundColor: orange[800]
   },
   cardTitle: {
-    fontWeight: '400',
+    fontWeight: '600',
     color: grey[900]
   },
   cardSubheader: {

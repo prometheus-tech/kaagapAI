@@ -223,6 +223,7 @@ class ClientsPage extends Component {
                   </Grid>
                 </Grid>
               </Grid>
+              {/* <ClientList /> */}
               <NewClientDialog
                 practitionerId={p_id}
                 opened={isNewClientDialogOpened}

@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import Grid from '@material-ui/core/Grid';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
@@ -63,8 +63,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '400',
-    textTransform: 'capitalize',
+    fontWeight: '600',
     padding: '5px 15px 5px 15px',
     borderRadius: '50px'
   },
@@ -72,8 +71,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '400',
-    textTransform: 'capitalize',
+    fontWeight: '600',
     padding: '5px 15px 5px 15px',
     borderRadius: '50px',
     color: orange[800]
@@ -200,7 +198,7 @@ class SessionPage extends Component {
                             separator={<NavigateNextIcon />}
                             className={classes.breadCrumb}
                           >
-                            <Button
+                            <ButtonBase
                               component={RouterLink}
                               color="inherit"
                               to="/"
@@ -208,8 +206,8 @@ class SessionPage extends Component {
                             >
                               <PeopleIcon className={classes.breadCrumbIcon} />
                               Clients
-                            </Button>
-                            <Button
+                            </ButtonBase>
+                            <ButtonBase
                               component={RouterLink}
                               color="inherit"
                               to={'/client/' + client.c_id}
@@ -217,7 +215,7 @@ class SessionPage extends Component {
                             >
                               <PersonIcon className={classes.breadCrumbIcon} />{' '}
                               {client.fname + ' ' + client.lname}
-                            </Button>
+                            </ButtonBase>
                             <Typography
                               className={classes.breadCrumbLinkSession}
                               gutterBottom={false}
