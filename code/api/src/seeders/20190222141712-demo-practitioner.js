@@ -16,7 +16,7 @@ module.exports = {
       date_registered: new Date(),
       date_deactivated: '',
       last_logged: '2019-02-27 23:20:00',
-      session_token: ''
+      verification_code: ''
     },
     {
       p_id: 'd5654875-e8ce-4e9b-97d3-bfca9c743466',
@@ -31,7 +31,7 @@ module.exports = {
       date_registered: new Date(),
       date_deactivated: '',
       last_logged: new Date(),
-      session_token: 'ksjhdf8729845'
+      verification_code: 'ksjhdf8729845'
   }], {});
   },
 
