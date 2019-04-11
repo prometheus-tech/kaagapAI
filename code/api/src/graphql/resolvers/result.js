@@ -7,7 +7,13 @@ export default {
     // categories:
     // entities:
     // emotions:
-    // sentiment:
+    sentiment: ({ result_id }, args, { models }) => {
+      return models.Sentiment.findAll({ 
+        where: { 
+          result_id
+        }
+      });
+    }
     // keyword:
   },
 
@@ -24,16 +30,20 @@ export default {
         version: '2018-11-16'
       });
 
-      // const getSessionDocumentContent = await models.Session_Document.findAll({
-      //   attributes: ['content'],
-      //   where: { 
-      //     session_id,
-      //     archive_status: 'active'
-      //   } 
-      // });
+      var contents = [];
 
-      // console.log(getSessionDocumentContent.dataValues);
-      var contents = "";
+      const getSessionDocumentContent = await models.Session_Document.findAll({
+        raw: true,
+        attributes: ['content'],
+        where: { 
+          session_id,
+          archive_status: 'active'
+        } 
+      }).then(results => {
+        results.forEach((result) => {
+          contents.push(result.content);
+        });
+      });
 
       const addResultRes = await models.Result.create({
         date_generated,
@@ -43,7 +53,7 @@ export default {
       const { result_id } = addResultRes.dataValues;
 
       var parameters = {
-        "text" : contents,
+        "text" : contents.join(),
         "features" : {
           "entities" : {
             // "model" : "735eff45-513d-499d-90bc-b4b72ead789e"
@@ -61,6 +71,11 @@ export default {
           console.log(err);
         } else {
           // console.log(JSON.stringify(response, null, 2));
+          const addSentimentRes = models.Sentiment.create({
+            score: sentiment.document.score,
+            label: sentiment.document.label,
+            result_id
+          });
         }
       });
 

@@ -6,6 +6,7 @@ export default `
     result_id: UUID!
     date_generated: Date!
     session_id: UUID!
+    sentiment: [Sentiment]
   }
 
   type Mutation {

@@ -20,7 +20,7 @@ module.exports = {
       relevance: {
         type: Sequelize.INTEGER
       },
-      session_id: {
+      result_id: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
