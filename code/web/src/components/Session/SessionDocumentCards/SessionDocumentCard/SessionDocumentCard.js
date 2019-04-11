@@ -7,16 +7,18 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
-import green from '@material-ui/core/colors/green';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import grey from '@material-ui/core/colors/grey';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
   card: {
-    Width: '300px',
+    height: '90px',
     boxShadow: '0 2px 1px rgba(0,0,0,.08), 0 0 2px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
@@ -29,14 +31,11 @@ const styles = theme => ({
     display: 'flex'
   },
   avatar: {
-    width: 60,
-    height: 60,
-    marginBottom: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 1,
+    height: '70px',
+    width: '70px',
+    borderRadius: '0px',
+    marginTop: theme.spacing.unit * -1,
     backgroundColor: 'transparent',
-    color: green[600],
-    padding: '2px 2px 2px 2px',
-    fontSize: theme.spacing.unit * 8,
     textAlign: 'center'
   },
   cardTitle: {
@@ -56,7 +55,10 @@ const styles = theme => ({
     display: 'block'
   },
   iconAction: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 2
+  },
+  icon: {
+    fontSize: theme.spacing.unit * 7
   }
 });
 
@@ -68,16 +70,16 @@ function SessionDocumentCard({ sessionDocument, classes }) {
 
   if (sessionDocumentType.includes('pdf')) {
     avatarIconClass = 'fas fa-file-pdf';
-    iconColor = 'blue';
+    iconColor = red[600];
   } else if (sessionDocumentType.includes('text')) {
     avatarIconClass = 'fas fa-file-alt';
-    iconColor = 'red';
+    iconColor = grey[600];
   } else if (sessionDocumentType.includes('word')) {
     avatarIconClass = 'fas fa-file-word';
-    iconColor = 'green';
+    iconColor = blue[700];
   } else if (sessionDocumentType.includes('audio')) {
     avatarIconClass = 'fas fa-file-audio';
-    iconColor = 'yellow';
+    iconColor = green[300];
   } else {
     avatarIconClass = 'fas fa-file-alt';
     iconColor = 'black';
@@ -93,10 +95,7 @@ function SessionDocumentCard({ sessionDocument, classes }) {
               style={{ color: iconColor }}
               alignItems="center"
             >
-              <Icon
-                fontSize="large"
-                className={classNames(classes.icon, avatarIconClass)}
-              />
+              <Icon className={classNames(classes.icon, avatarIconClass)} />
             </Avatar>
           </div>
         }
