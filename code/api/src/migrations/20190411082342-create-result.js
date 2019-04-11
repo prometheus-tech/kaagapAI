@@ -9,7 +9,8 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       date_generated: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
+        allowNull: false
       },
       session_id: {
         type: Sequelize.UUID,

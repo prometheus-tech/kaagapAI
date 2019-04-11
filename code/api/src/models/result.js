@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    date_generated: DataTypes.DATE
+    date_generated: DataTypes.DATEONLY
   }, {});
 
   Result.associate = models => {
