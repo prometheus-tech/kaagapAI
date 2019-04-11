@@ -14,11 +14,11 @@ module.exports = {
         unique: true
       },
       phone_no: {
-        type: Sequelize.CHAR,
+        type: Sequelize.STRING,
         allowNull: false
       },
       password: {
-        type: Sequelize.CHAR,
+        type: Sequelize.STRING,
         allowNull: false
       },
       fname: {
@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false
       },
       license: {
-        type: Sequelize.CHAR,
+        type: Sequelize.STRING,
         allowNull: false
       },
       profession: {
@@ -54,7 +54,7 @@ module.exports = {
         allowNull: false
       },
       session_token: {
-        type: Sequelize.CHAR,
+        type: Sequelize.STRING,
         allowNull: false
       }
     });

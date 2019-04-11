@@ -10,6 +10,7 @@ import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFull
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import ClientCard from '../../components/Clients/ClientCard/ClientCard';
+// import ClientList from '../../components/Clients/ClientsList/ClientsList';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import { lightBlue } from '@material-ui/core/colors';
 import SearchField from '../../components/UI/SearchField/SearchField';
@@ -218,6 +219,7 @@ class ClientsPage extends Component {
                         </Grid>
                       );
                     })}
+                    {/* <ClientList /> */}
                   </Grid>
                 </Grid>
               </Grid>
