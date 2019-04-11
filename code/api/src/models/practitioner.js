@@ -7,23 +7,23 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     email: DataTypes.STRING,
-    phone_no: DataTypes.CHAR,
-    password: DataTypes.CHAR,
+    phone_no: DataTypes.STRING,
+    password: DataTypes.STRING,
     fname: DataTypes.STRING,
     lname: DataTypes.STRING,
-    license: DataTypes.CHAR,
+    license: DataTypes.STRING,
     profession: DataTypes.STRING,
     status: DataTypes.ENUM('pending', 'deactivated', 'active'),
     date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
-    session_token: DataTypes.CHAR
+    session_token: DataTypes.STRING
   });
 
   Practitioner.removeAttribute('id');
 
   Practitioner.associate = models => {
-    Practitioner.hasMany(models.Client, {
+    Practitioner.hasMany( models.Client, {
       foreignKey: 'p_id',
       sourceKey: 'p_id'
     });

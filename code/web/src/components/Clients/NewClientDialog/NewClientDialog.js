@@ -113,7 +113,9 @@ class NewClientDialog extends Component {
         >
           {(addClient, { loading }) => {
             if (loading) {
-              return <SimpleSnackbar isOpened={loading} />;
+              return (
+                <SimpleSnackbar message="Adding client..." isOpened={loading} />
+              );
             }
 
             return (

@@ -35,23 +35,21 @@ export default {
 
       return await models.Session.findOne({
         raw: true,
-        where: {
-          session_id
-        }
+        where: { session_id }
       });
     },
 
     deleteSession: async (parent, { session_id }, { models }) => {
-      await models.Session.update(
-        { archive_status: "archived" },
-        {
-          where: { session_id }
+      await models.Session.update({ 
+        archive_status: "archived" 
+      }, {
+        where: { session_id }
       })
       
-      await models.Session_Document.update(
-        { archive_status: "archived" },
-        {
-          where: { session_id }
+      await models.Session_Document.update({ 
+        archive_status: "archived" 
+      }, {
+        where: { session_id }
       })
 
       return await models.Session.findOne({
@@ -61,16 +59,16 @@ export default {
     },
 
     restoreSession: async (parent, { session_id }, { models }) => {
-      await models.Session.update(
-        { archive_status: "active" },
-        {
-          where: { session_id }
+      await models.Session.update({ 
+        archive_status: "active" 
+      }, {
+        where: { session_id }
       })
       
-      await models.Session_Document.update(
-        { archive_status: "active" },
-        {
-          where: { session_id }
+      await models.Session_Document.update({ 
+        archive_status: "active" 
+      }, {
+        where: { session_id }
       })
 
       return await models.Session.findOne({
@@ -84,15 +82,12 @@ export default {
       { session_id, session_name, date_of_session },
       { models }
     ) => {
-      await models.Session.update(
-        {
-          session_name,
-          date_of_session
-        },
-        {
-          where: { session_id }
-        }
-      );
+      await models.Session.update({
+        session_name,
+        date_of_session
+      }, {
+        where: { session_id }
+      });
 
       return await models.Session.findOne({
         raw: true,
