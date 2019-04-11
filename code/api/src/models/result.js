@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     });
+
+    Result.hasMany(models.Sentiment, {
+      foreignKey: 'result_id',
+      sourceKey: 'result_id'
+    });
   };
-  
+
   return Result;
 };
