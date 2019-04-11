@@ -15,6 +15,9 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
   card: {
@@ -100,9 +103,35 @@ function SessionDocumentCard({ sessionDocument, classes }) {
           </div>
         }
         action={
-          <IconButton className={classes.iconAction}>
-            <MoreVertIcon />
-          </IconButton>
+          <PopupState variant="popover" popupId="demo-popup-menu">
+            {popupState => (
+              <React.Fragment>
+                <IconButton
+                  className={classes.iconAction}
+                  {...bindTrigger(popupState)}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  {...bindPopover(popupState)}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                >
+                  <MenuItem>View content</MenuItem>
+                  <MenuItem>Edit content</MenuItem>
+                  <MenuItem>Rename</MenuItem>
+                  <MenuItem>Download</MenuItem>
+                  <MenuItem>Archive</MenuItem>
+                </Menu>
+              </React.Fragment>
+            )}
+          </PopupState>
         }
         title={
           <Typography noWrap className={classes.cardTitle}>

@@ -9,22 +9,22 @@ import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import ClientCard from '../../components/Clients/ClientCard/ClientCard';
-// import ClientList from '../../components/Clients/ClientsList/ClientsList';
+import ClientCards from '../../components/Clients/ClientCards/ClientCards';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
 import { lightBlue } from '@material-ui/core/colors';
 import SearchField from '../../components/UI/SearchField/SearchField';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
-import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import DeleteClientDialog from '../../components/Clients/DeleteClientDialog/DeleteClientDialog';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 import blue from '@material-ui/core/colors/blue';
+import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 
 const styles = theme => ({
-  mainContainer: {
-    paddingBottom: theme.spacing.unit * 10
+  container: {
+    paddingBottom: theme.spacing.unit * 10,
+    width: '100vw'
   },
   controls: {
     marginBottom: theme.spacing.unit * 6
@@ -140,7 +140,8 @@ class ClientsPage extends Component {
       isNewClientDialogOpened,
       isEditClientDialogOpened,
       isDeleteClientDialogOpened,
-      selectedClient
+      selectedClient,
+      view
     } = this.state;
 
     const p_id = localStorage.getItem(USER_ID);
@@ -157,8 +158,8 @@ class ClientsPage extends Component {
           }
 
           return (
-            <Auxilliary>
-              <Grid container className={classes.mainContainer}>
+            <div className={classes.container}>
+              <Grid container>
                 <Grid item xs={12} className={classes.controls}>
                   <Grid container alignItems="center">
                     <Grid item md={3}>
@@ -198,32 +199,16 @@ class ClientsPage extends Component {
                     </Hidden>
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={8}>
-                    {data.clients.map(client => {
-                      return (
-                        <Grid
-                          item
-                          align="center"
-                          key={client.c_id}
-                          xs={12}
-                          sm={6}
-                          md={4}
-                          lg={3}
-                        >
-                          <ClientCard
-                            clientEdited={this.openEditClientDialogHandler}
-                            clientDeleted={this.openDeleteClientDialogHandler}
-                            client={client}
-                          />
-                        </Grid>
-                      );
-                    })}
-                    {/* <ClientList /> */}
-                  </Grid>
-                </Grid>
               </Grid>
-              {/* <ClientList /> */}
+              {view === 'card' ? (
+                <ClientCards
+                  clients={data.clients}
+                  clientEdited={this.openEditClientDialogHandler}
+                  clientDeleted={this.openDeleteClientDialogHandler}
+                />
+              ) : (
+                <ClientsList clients={data.clients} />
+              )}
               <NewClientDialog
                 practitionerId={p_id}
                 opened={isNewClientDialogOpened}
@@ -240,7 +225,7 @@ class ClientsPage extends Component {
                 practitionerId={p_id}
                 client={selectedClient}
               />
-            </Auxilliary>
+            </div>
           );
         }}
       </Query>

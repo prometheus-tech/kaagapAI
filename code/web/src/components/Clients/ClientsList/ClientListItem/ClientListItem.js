@@ -9,7 +9,6 @@ import blue from '@material-ui/core/colors/blue';
 import { getInitials } from '../../../../util/helperFunctions';
 import Moment from 'react-moment';
 import Hidden from '@material-ui/core/Hidden';
-import ClientMoreActions from '../../ClientMoreActions/ClientMoreActions';
 
 const styles = theme => ({
   listItem: {
@@ -86,7 +85,7 @@ function ClientListItem({ classes, client }) {
           </Grid>
         </Hidden>
         <Grid item md={1} sm={1} xs={2} align="right">
-          <ClientMoreActions client={client} />
+          {/* Insert Actions Here */}
         </Grid>
       </Grid>
     </Paper>
