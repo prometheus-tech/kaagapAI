@@ -70,7 +70,7 @@ const styles = theme => ({
     alignItems: 'center',
     fontWeight: '400',
     padding: '10px 5px 10px 5px',
-    color: orange[800]
+    color: '#0091ea'
   },
   breadCrumbLinkClients: {
     fontSize: theme.spacing.unit * 2,
@@ -110,7 +110,7 @@ const styles = theme => ({
   },
   iconInfo: {
     '&:hover, &:focus': {
-      color: orange[700],
+      color: '#0091ea',
       backgroundColor: grey[300]
     }
   },

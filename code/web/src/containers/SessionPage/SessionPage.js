@@ -27,7 +27,9 @@ import Add from '@material-ui/icons/Add';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
+import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
+import purple from '@material-ui/core/colors/purple';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -81,13 +83,13 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4
   },
   extendedButton: {
-    background: orange[800],
+    background: purple[500],
     color: '#ffffff',
     textTransform: 'capitalize',
     borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
-      backgroundColor: orange[900],
+      backgroundColor: purple[700],
       boxShadow: theme.shadows[10]
     },
     padding: '5px 25px 5px 25px'
@@ -235,8 +237,10 @@ class SessionPage extends Component {
                               className={classes.extendedButton}
                               onClick={this.openNewSessionDocumentDialogHandler}
                             >
-                              <Add className={classes.extendedIcon} /> New
-                              Document
+                              <Icon className={classes.extendedIcon}>
+                                cloud_upload
+                              </Icon>
+                              Upload File
                             </Fab>
                           </Hidden>
                           <Hidden mdUp>

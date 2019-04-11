@@ -148,7 +148,7 @@ class ClientInformation extends Component {
                 </Moment>
               }
             />
-            <Grid item xs={12} align="left">
+            <Grid item xs={12} align="right">
               {/* <IconButton onClick={this.openEditClientDialogHandler}>
                 <EditIcon fontSize="small" />
               </IconButton> */}
