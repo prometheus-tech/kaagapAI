@@ -145,7 +145,10 @@ const extractText = async(gcsUri) => {
 
 const extractDocumentText = async(inputPath) => {
   return new Promise((resolve, reject) => {
-    textract.fromFileWithPath(inputPath, (error, text) => {
+    textract.fromFileWithPath(inputPath, 
+      {
+        preserveLineBreaks: true
+      },(error, text) => {
       if(error) {
         reject();
       } else {
