@@ -42,8 +42,8 @@ const styles = theme => ({
     textAlign: 'center'
   },
   cardTitle: {
-    fontSize: theme.spacing.unit * 2.5,
-    fontWeight: 500,
+    fontSize: theme.spacing.unit * 2.2,
+    fontWeight: 400,
     color: grey[900],
     letterSpacing: '2px',
     width: '130px',
@@ -51,7 +51,7 @@ const styles = theme => ({
     textOverflow: 'ellipsis'
   },
   cardSubheader: {
-    fontSize: theme.spacing.unit * 1.4,
+    fontSize: theme.spacing.unit * 1.6,
     color: brown[200]
   },
   buttonBase: {
