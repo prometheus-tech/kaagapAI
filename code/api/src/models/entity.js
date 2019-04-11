@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     type: DataTypes.STRING,
-    subtype: DataTypes.STRING,
     text: DataTypes.STRING,
     relevance: DataTypes.INTEGER
   }, {});

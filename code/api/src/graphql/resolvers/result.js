@@ -4,17 +4,49 @@ export default {
   UUID: GraphQlUUID,
 
   Result: {
-    // categories:
-    // entities:
-    // emotions:
+    categories: ({ result_id }, args, { models }) => {
+      return models.Category.findAll({ 
+        where: { 
+          result_id
+        }
+      });
+    },
+    entities: ({ result_id }, args, { models }) => {
+      return models.Entity.findAll({ 
+        where: { 
+          result_id
+        }
+      });
+    },
+    emotions: ({ result_id }, args, { models }) => {
+      return models.Emotion.findAll({ 
+        where: { 
+          result_id
+        }
+      });
+    },
     sentiment: ({ result_id }, args, { models }) => {
       return models.Sentiment.findAll({ 
         where: { 
           result_id
         }
       });
+    },
+    keywords: ({ result_id }, args, { models }) => {
+      return models.Keyword.findAll({ 
+        where: { 
+          result_id
+        }
+      });
     }
-    // keyword:
+  },
+
+  Query: {
+    result: (parent, { session_id }, { models }) => {
+      return models.Result.findOne({
+        where: { session_id }
+      })
+    }
   },
 
   Mutation: {
@@ -70,10 +102,55 @@ export default {
         if(err) {
           console.log(err);
         } else {
-          // console.log(JSON.stringify(response, null, 2));
-          const addSentimentRes = models.Sentiment.create({
-            score: sentiment.document.score,
-            label: sentiment.document.label,
+          //store sentiment to db
+          models.Sentiment.create({
+            score: response.sentiment.document.score,
+            label: response.sentiment.document.label,
+            result_id
+          });
+
+          //store keywords to db
+          var keywordsRes = response.keywords;
+
+          keywordsRes.forEach((keywordRes) => {
+            models.Keyword.create({
+              text: keywordRes.text,
+              relevance: keywordRes.relevance,
+              count: keywordRes.count,
+              result_id
+            });
+          });
+
+          //store categories to db
+          var categoriesRes = response.categories;
+
+          categoriesRes.forEach((categoryRes) => {
+            models.Category.create({
+              score: categoryRes.score,
+              label: categoryRes.label,
+              result_id
+            });
+          });
+
+          //store entities to db
+          var entitiesRes = response.entities;
+
+          entitiesRes.forEach((entityRes) => {
+            models.Entity.create({
+              type: entityRes.type,
+              text: entityRes.text,
+              relevance: entityRes.relevance,
+              result_id
+            });
+          });
+
+          //store emotions to db
+          models.Emotion.create({
+            sadness: response.emotion.document.emotion.sadness,
+            anger: response.emotion.document.emotion.anger,
+            joy: response.emotion.document.emotion.joy,
+            fear: response.emotion.document.emotion.fear,
+            disgust: response.emotion.document.emotion.disgust,
             result_id
           });
         }
