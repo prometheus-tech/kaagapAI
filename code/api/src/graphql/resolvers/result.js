@@ -11,6 +11,7 @@ export default {
         }
       });
     },
+
     entities: ({ result_id }, args, { models }) => {
       return models.Entity.findAll({ 
         where: { 
@@ -18,6 +19,7 @@ export default {
         }
       });
     },
+
     emotions: ({ result_id }, args, { models }) => {
       return models.Emotion.findAll({ 
         where: { 
@@ -25,6 +27,7 @@ export default {
         }
       });
     },
+
     sentiment: ({ result_id }, args, { models }) => {
       return models.Sentiment.findAll({ 
         where: { 
@@ -32,6 +35,7 @@ export default {
         }
       });
     },
+    
     keywords: ({ result_id }, args, { models }) => {
       return models.Keyword.findAll({ 
         where: { 
