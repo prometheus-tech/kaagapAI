@@ -30,6 +30,7 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import purple from '@material-ui/core/colors/purple';
+import ViewContentSessionDocumentDialog from '../../components/Session/ViewContentSessionDocumentDialog/ViewContentSessionDocumentDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -115,7 +116,9 @@ class SessionPage extends Component {
   state = {
     view: 'card',
     isNewSessionDocumentDialogOpened: false,
-    file: null
+    file: null,
+    isViewContentSessionDocumentDialogOpened: false,
+    selectedSessionDocument: null
   };
 
   componentDidMount() {
@@ -149,12 +152,32 @@ class SessionPage extends Component {
     });
   };
 
+  openViewContentSessionDocumentDialog = sessionDocument => {
+    this.setState({
+      isViewContentSessionDocumentDialogOpened: true,
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  closeViewContentSessionDocumentDialog = () => {
+    this.setState({
+      isViewContentSessionDocumentDialogOpened: false,
+      selectedSessionDocument: null
+    });
+  };
+
   render() {
     const { classes } = this.props;
 
     const { session_id } = this.props.match.params;
 
-    const { view, isNewSessionDocumentDialogOpened, file } = this.state;
+    const {
+      view,
+      isNewSessionDocumentDialogOpened,
+      file,
+      isViewContentSessionDocumentDialogOpened,
+      selectedSessionDocument
+    } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -282,6 +305,9 @@ class SessionPage extends Component {
                       </Grid>
                       <SessionDocumentCards
                         sessionDocuments={session.documents}
+                        sessionDocumentViewed={
+                          this.openViewContentSessionDocumentDialog
+                        }
                       />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
@@ -291,6 +317,13 @@ class SessionPage extends Component {
                         fileRemoved={this.clearFile}
                         sessionId={session_id}
                       />
+                      {selectedSessionDocument ? (
+                        <ViewContentSessionDocumentDialog
+                          opened={isViewContentSessionDocumentDialogOpened}
+                          closed={this.closeViewContentSessionDocumentDialog}
+                          sessionDocument={selectedSessionDocument}
+                        />
+                      ) : null}
                     </main>
                   </div>
                 );

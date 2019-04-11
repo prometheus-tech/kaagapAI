@@ -65,7 +65,11 @@ const styles = theme => ({
   }
 });
 
-function SessionDocumentCard({ sessionDocument, classes }) {
+function SessionDocumentCard({
+  sessionDocument,
+  sessionDocumentViewed,
+  classes
+}) {
   let avatarIconClass = '';
   let iconColor = '';
 
@@ -123,7 +127,14 @@ function SessionDocumentCard({ sessionDocument, classes }) {
                     horizontal: 'right'
                   }}
                 >
-                  <MenuItem>View content</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      sessionDocumentViewed(sessionDocument);
+                      popupState.close();
+                    }}
+                  >
+                    View content
+                  </MenuItem>
                   <MenuItem>Edit content</MenuItem>
                   <MenuItem>Rename</MenuItem>
                   <MenuItem>Download</MenuItem>

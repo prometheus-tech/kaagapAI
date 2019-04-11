@@ -6,6 +6,7 @@ const SESSION_DOCUMENT_BASIC_INFO = gql`
     file_name
     date_added
     type
+    content
   }
 `;
 
