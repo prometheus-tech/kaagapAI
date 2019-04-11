@@ -12,14 +12,18 @@ import http from 'http';
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
 
+const SECRET = process.env.JWT_SECRET;
+
 const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
   formatError: error => {
-    delete error.extensions.exception;
-    return error;
+    return error.message;
   },
-  context: { models },
+  context: { 
+    models,
+    SECRET 
+  },
   playground: true, //change to 'false' on deploy
   introspection: true
 });

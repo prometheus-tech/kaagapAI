@@ -1,5 +1,6 @@
 export default `
   scalar Date 
+  scalar JSON
   
   enum Status {
     pending
@@ -23,6 +24,6 @@ export default `
   }
 
   type Mutation {
-    login(email: String!, password: String!): Practitioner
+    login(email: String!, password: String!): JSON
   }
 `;
