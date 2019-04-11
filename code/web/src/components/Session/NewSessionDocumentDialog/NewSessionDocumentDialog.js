@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useMemo } from 'react';
 
 import { Mutation } from 'react-apollo';
 import ADD_SESSION_DOCUMENT from '../../../graphql/mutations/addSessionDocument';
@@ -11,7 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
-import Dropzone from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -108,6 +108,22 @@ const DialogActions = withStyles(theme => ({
   }
 }))(MuiDialogActions);
 
+const baseStyle = {
+  minWidth: '100%'
+};
+
+const activeStyle = {
+  backgroundColor: '#f6f6f6'
+};
+
+const acceptStyle = {
+  backgroundColor: '#f6f6f6'
+};
+
+const rejectStyle = {
+  backgroundColor: '#F08080'
+};
+
 function NewSessionDocumentDialog(props) {
   const {
     opened,
@@ -119,12 +135,30 @@ function NewSessionDocumentDialog(props) {
     classes
   } = props;
 
-  const dropzoneRef = createRef();
-  const openDialog = () => {
-    if (dropzoneRef.current) {
-      dropzoneRef.current.open();
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+    open
+  } = useDropzone({
+    noClick: true,
+    noKeyboard: true,
+    onDropAccepted: ([file]) => {
+      fileAdded(file);
     }
-  };
+  });
+
+  const dropzoneStyle = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {})
+    }),
+    [isDragActive, isDragReject]
+  );
 
   let avatarIconClass = '';
   let iconColor = '';
@@ -192,72 +226,59 @@ function NewSessionDocumentDialog(props) {
               New Session Document Upload
             </DialogTitle>
             <DialogContent>
-              <Dropzone
-                ref={dropzoneRef}
-                noClick
-                noKeyboard
-                onDrop={([file]) => {
-                  fileAdded(file);
-                }}
-                multiple={false}
-                disabled={loading}
-              >
-                {({ getRootProps, getInputProps }) => (
-                  <section {...getRootProps({ className: classes.section })}>
-                    {file ? null : (
-                      <div className={classes.dropzone}>
-                        <input {...getInputProps()} />
+              <section {...getRootProps({ style: dropzoneStyle })}>
+                {file ? null : (
+                  <div className={classes.dropzone}>
+                    <input {...getInputProps()} />
 
-                        <div className={classes.infoTextContainer}>
-                          <Typography variant="h5" className={classes.infoText}>
-                            Drag file here
-                          </Typography>
-                          <Typography variant="h6" className={classes.infoText}>
-                            - or -
-                          </Typography>
-                          <Button variant="contained" onClick={openDialog}>
-                            Select file from your device
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                    {file ? (
-                      <Grid container spacing={16} className={classes.grid}>
-                        <Grid item xs={12}>
-                          <List>
-                            <ListItem>
-                              <ListItemAvatar>
-                                <Icon
-                                  fontSize="large"
-                                  className={avatarIconClass}
-                                  style={{ color: iconColor }}
-                                />
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={file.name}
-                                secondary={toHumanFileSize(file.size)}
-                              />
-                              <ListItemSecondaryAction>
-                                {loading ? (
-                                  <CircularProgress />
-                                ) : (
-                                  <IconButton
-                                    onClick={() => {
-                                      fileRemoved();
-                                    }}
-                                  >
-                                    <CloseIcon fontSize="small" />
-                                  </IconButton>
-                                )}
-                              </ListItemSecondaryAction>
-                            </ListItem>
-                          </List>
-                        </Grid>
-                      </Grid>
-                    ) : null}
-                  </section>
+                    <div className={classes.infoTextContainer}>
+                      <Typography variant="h5" className={classes.infoText}>
+                        Drag file here
+                      </Typography>
+                      <Typography variant="h6" className={classes.infoText}>
+                        - or -
+                      </Typography>
+                      <Button variant="contained" onClick={open}>
+                        Select file from your device
+                      </Button>
+                    </div>
+                  </div>
                 )}
-              </Dropzone>
+                {file ? (
+                  <Grid container spacing={16} className={classes.grid}>
+                    <Grid item xs={12}>
+                      <List>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Icon
+                              fontSize="large"
+                              className={avatarIconClass}
+                              style={{ color: iconColor }}
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={file.name}
+                            secondary={toHumanFileSize(file.size)}
+                          />
+                          <ListItemSecondaryAction>
+                            {loading ? (
+                              <CircularProgress />
+                            ) : (
+                              <IconButton
+                                onClick={() => {
+                                  fileRemoved();
+                                }}
+                              >
+                                <CloseIcon fontSize="small" />
+                              </IconButton>
+                            )}
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                ) : null}
+              </section>
             </DialogContent>
             <DialogActions>
               <Button onClick={closed} disabled={loading}>
