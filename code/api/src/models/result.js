@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'result_id',
       sourceKey: 'result_id'
     });
+
+    Result.hasMany(models.Entity, {
+      foreignKey: 'result_id',
+      sourceKey: 'result_id'
+    });
   };
 
   return Result;

@@ -1,18 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Categories', {
-      category_id: {
+    return queryInterface.createTable('Entities', {
+      entity_id: {
         type: Sequelize.UUID,
         primaryKey: true,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      score: {
-        type: Sequelize.INTEGER
-      },
-      label: {
+      type: {
         type: Sequelize.STRING
+      },
+      subtype: {
+        type: Sequelize.STRING
+      },
+      text: {
+        type: Sequelize.STRING
+      },
+      relevance: {
+        type: Sequelize.INTEGER
       },
       session_id: {
         type: Sequelize.UUID,
@@ -27,6 +33,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Categories');
+    return queryInterface.dropTable('Entities');
   }
 };
