@@ -12,20 +12,12 @@ import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import grey from '@material-ui/core/colors/grey';
-import Popper from '@material-ui/core/Popper';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import Auxilliary from '../../../../hoc/Auxilliary/Auxilliary';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   card: {
     height: '90px',
-    boxShadow: '0 2px 1px rgba(0,0,0,.08), 0 0 2px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px'
@@ -65,17 +57,16 @@ const styles = theme => ({
   },
   icon: {
     fontSize: theme.spacing.unit * 7
+  },
+  paper: {
+    boxShadow: theme.shadows[2]
   }
 });
 
 function SessionDocumentCard({
   sessionDocument,
   sessionDocumentViewed,
-  contentEdited,
-  isMoreActionsOpened,
   moreActionsOpened,
-  moreActionsClosed,
-  anchorEl,
   classes
 }) {
   const { avatarIconClass, iconColor } = getSessionDocumentIcon(
@@ -84,8 +75,9 @@ function SessionDocumentCard({
 
   return (
     <Card
+      elevation={1}
       className={classes.card}
-      onClick={e => {
+      onClick={() => {
         sessionDocumentViewed(sessionDocument);
       }}
     >
@@ -102,126 +94,17 @@ function SessionDocumentCard({
           </div>
         }
         action={
-          <Auxilliary>
+          <div>
             <IconButton
               className={classes.iconAction}
               onClick={e => {
                 e.stopPropagation();
-                moreActionsOpened(e);
+                moreActionsOpened(e, sessionDocument);
               }}
             >
               <MoreVertIcon />
             </IconButton>
-            <Popper
-              open={isMoreActionsOpened}
-              anchorEl={anchorEl}
-              transition
-              disablePortal
-              placement="bottom-end"
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === 'bottom-end' ? 'right top' : 'left bottom'
-                  }}
-                >
-                  <Paper elevation={1}>
-                    <ClickAwayListener onClickAway={moreActionsClosed}>
-                      <MenuList>
-                        <MenuItem
-                          onClick={e => {
-                            e.stopPropagation();
-                            sessionDocumentViewed(sessionDocument);
-                          }}
-                        >
-                          View content
-                        </MenuItem>
-                        <MenuItem
-                          onClick={e => {
-                            e.stopPropagation();
-                            sessionDocumentViewed(sessionDocument);
-                            contentEdited();
-                          }}
-                        >
-                          Edit content
-                        </MenuItem>
-                        <MenuItem
-                          onClick={e => {
-                            e.stopPropagation();
-                            alert('Not yet implemented');
-                          }}
-                        >
-                          Rename
-                        </MenuItem>
-                        <MenuItem
-                          onClick={e => {
-                            e.stopPropagation();
-                            alert('Not yet implemented');
-                          }}
-                        >
-                          Download
-                        </MenuItem>
-                        <MenuItem
-                          onClick={e => {
-                            e.stopPropagation();
-                            alert('Not yet implemented');
-                          }}
-                        >
-                          Archive
-                        </MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </Auxilliary>
-          // <PopupState variant="popover" popupId="demo-popup-menu">
-          //   {popupState => (
-          //     <Auxilliary>
-          //       <IconButton
-          //         className={classes.iconAction}
-          //         {...bindTrigger(popupState)}
-          //       >
-          //         <MoreVertIcon />
-          //       </IconButton>
-          //       <Menu
-          //         {...bindPopover(popupState)}
-          //         anchorOrigin={{
-          //           vertical: 'bottom',
-          //           horizontal: 'right'
-          //         }}
-          //         transformOrigin={{
-          //           vertical: 'top',
-          //           horizontal: 'right'
-          //         }}
-          //       >
-          //         <MenuItem
-          //           onClick={() => {
-          //             sessionDocumentViewed(sessionDocument);
-          //             popupState.close();
-          //           }}
-          //         >
-          //           View content
-          //         </MenuItem>
-          //         <MenuItem
-          //           onClick={() => {
-          //             sessionDocumentViewed(sessionDocument);
-          //             contentEdited();
-          //             popupState.close();
-          //           }}
-          //         >
-          //           Edit content
-          //         </MenuItem>
-          //         <MenuItem>Rename</MenuItem>
-          //         <MenuItem>Download</MenuItem>
-          //         <MenuItem>Archive</MenuItem>
-          //       </Menu>
-          //     </Auxilliary>
-          //   )}
-          // </PopupState>
+          </div>
         }
         title={
           <Typography noWrap className={classes.cardTitle}>

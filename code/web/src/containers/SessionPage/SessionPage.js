@@ -31,6 +31,7 @@ import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import purple from '@material-ui/core/colors/purple';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
+import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -97,11 +98,9 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
-    // backgroundColor: lightBlue[600],
     boxShadow: theme.shadows[24],
     color: '#ffffff',
     '&:hover': {
-      // backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     }
   },
@@ -134,7 +133,9 @@ class SessionPage extends Component {
   };
 
   openNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: true });
+    this.setState({
+      isNewSessionDocumentDialogOpened: true
+    });
   };
 
   closeNewSessionDocumentDialogHandler = () => {
@@ -154,10 +155,16 @@ class SessionPage extends Component {
   };
 
   openContentSessionDocumentDialog = sessionDocument => {
-    this.setState({
-      isContentSessionDocumentDialogOpened: true,
-      selectedSessionDocument: sessionDocument
-    });
+    if (sessionDocument) {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true,
+        selectedSessionDocument: sessionDocument
+      });
+    } else {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true
+      });
+    }
   };
 
   closeContentSessionDocumentDialog = () => {
@@ -184,11 +191,12 @@ class SessionPage extends Component {
     this.setState({ isEditContentSessionDocument: false });
   };
 
-  openMoreActionsHandler = event => {
+  openMoreActionsHandler = (event, sessionDocument) => {
     const { currentTarget } = event;
     this.setState({
       isMoreActionsOpened: true,
-      anchorEl: currentTarget
+      anchorEl: currentTarget,
+      selectedSessionDocument: sessionDocument
     });
   };
 
@@ -341,11 +349,7 @@ class SessionPage extends Component {
                         sessionDocumentViewed={
                           this.openContentSessionDocumentDialog
                         }
-                        contentEdited={this.editContentSessionDocumentHandler}
-                        isMoreActionsOpened={isMoreActionsOpened}
                         moreActionsOpened={this.openMoreActionsHandler}
-                        moreActionsClosed={this.closeMoreActionsHandler}
-                        anchorEl={anchorEl}
                       />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
@@ -370,6 +374,15 @@ class SessionPage extends Component {
                           }
                         />
                       ) : null}
+                      <SessionDocumentMoreActionsPopper
+                        isMoreActionsOpened={isMoreActionsOpened}
+                        anchorEl={anchorEl}
+                        moreActionsClosed={this.closeMoreActionsHandler}
+                        sessionDocumentViewed={
+                          this.openContentSessionDocumentDialog
+                        }
+                        contentEdited={this.editContentSessionDocumentHandler}
+                      />
                     </main>
                   </div>
                 );
