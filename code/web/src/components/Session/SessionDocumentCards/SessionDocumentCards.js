@@ -3,7 +3,11 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import SessionDocumentCard from './SessionDocumentCard/SessionDocumentCard';
 
-function SessionDocumentCards({ sessionDocuments, sessionDocumentViewed }) {
+function SessionDocumentCards({
+  sessionDocuments,
+  sessionDocumentViewed,
+  contentEdited
+}) {
   return (
     <Grid container spacing={16}>
       {sessionDocuments.map(sessionDocument => {
@@ -12,6 +16,7 @@ function SessionDocumentCards({ sessionDocuments, sessionDocumentViewed }) {
             <SessionDocumentCard
               sessionDocument={sessionDocument}
               sessionDocumentViewed={sessionDocumentViewed}
+              contentEdited={contentEdited}
             />
           </Grid>
         );

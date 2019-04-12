@@ -12,12 +12,11 @@ import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import grey from '@material-ui/core/colors/grey';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   card: {
@@ -68,29 +67,12 @@ const styles = theme => ({
 function SessionDocumentCard({
   sessionDocument,
   sessionDocumentViewed,
+  contentEdited,
   classes
 }) {
-  let avatarIconClass = '';
-  let iconColor = '';
-
-  const sessionDocumentType = sessionDocument.type.toLowerCase();
-
-  if (sessionDocumentType.includes('pdf')) {
-    avatarIconClass = 'fas fa-file-pdf';
-    iconColor = red[600];
-  } else if (sessionDocumentType.includes('text')) {
-    avatarIconClass = 'fas fa-file-alt';
-    iconColor = grey[600];
-  } else if (sessionDocumentType.includes('word')) {
-    avatarIconClass = 'fas fa-file-word';
-    iconColor = blue[700];
-  } else if (sessionDocumentType.includes('audio')) {
-    avatarIconClass = 'fas fa-file-audio';
-    iconColor = green[300];
-  } else {
-    avatarIconClass = 'fas fa-file-alt';
-    iconColor = 'black';
-  }
+  const { avatarIconClass, iconColor } = getSessionDocumentIcon(
+    sessionDocument.type.toLowerCase()
+  );
 
   return (
     <Card className={classes.card}>
@@ -135,7 +117,15 @@ function SessionDocumentCard({
                   >
                     View content
                   </MenuItem>
-                  <MenuItem>Edit content</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      sessionDocumentViewed(sessionDocument);
+                      contentEdited();
+                      popupState.close();
+                    }}
+                  >
+                    Edit content
+                  </MenuItem>
                   <MenuItem>Rename</MenuItem>
                   <MenuItem>Download</MenuItem>
                   <MenuItem>Archive</MenuItem>

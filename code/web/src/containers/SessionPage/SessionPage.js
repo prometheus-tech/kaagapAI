@@ -30,7 +30,7 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import purple from '@material-ui/core/colors/purple';
-import ViewContentSessionDocumentDialog from '../../components/Session/ViewContentSessionDocumentDialog/ViewContentSessionDocumentDialog';
+import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -115,7 +115,8 @@ class SessionPage extends Component {
     view: 'card',
     isNewSessionDocumentDialogOpened: false,
     file: null,
-    isViewContentSessionDocumentDialogOpened: false,
+    isContentSessionDocumentDialogOpened: false,
+    isEditContentSessionDocument: false,
     selectedSessionDocument: null
   };
 
@@ -150,18 +151,35 @@ class SessionPage extends Component {
     });
   };
 
-  openViewContentSessionDocumentDialog = sessionDocument => {
+  openContentSessionDocumentDialog = sessionDocument => {
     this.setState({
-      isViewContentSessionDocumentDialogOpened: true,
+      isContentSessionDocumentDialogOpened: true,
       selectedSessionDocument: sessionDocument
     });
   };
 
-  closeViewContentSessionDocumentDialog = () => {
+  closeContentSessionDocumentDialog = () => {
     this.setState({
-      isViewContentSessionDocumentDialogOpened: false,
+      isContentSessionDocumentDialogOpened: false,
+      isEditContentSessionDocument: false,
       selectedSessionDocument: null
     });
+  };
+
+  editContentSessionDocumentHandler = () => {
+    this.setState({
+      isEditContentSessionDocument: true
+    });
+  };
+
+  saveEditContentSessionDocumentHandler = sessionDocument => {
+    this.setState({
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  stopEditContentSessionDocumentHandler = () => {
+    this.setState({ isEditContentSessionDocument: false });
   };
 
   render() {
@@ -173,7 +191,8 @@ class SessionPage extends Component {
       view,
       isNewSessionDocumentDialogOpened,
       file,
-      isViewContentSessionDocumentDialogOpened,
+      isContentSessionDocumentDialogOpened,
+      isEditContentSessionDocument,
       selectedSessionDocument
     } = this.state;
 
@@ -304,8 +323,9 @@ class SessionPage extends Component {
                       <SessionDocumentCards
                         sessionDocuments={session.documents}
                         sessionDocumentViewed={
-                          this.openViewContentSessionDocumentDialog
+                          this.openContentSessionDocumentDialog
                         }
+                        contentEdited={this.editContentSessionDocumentHandler}
                       />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
@@ -316,10 +336,18 @@ class SessionPage extends Component {
                         sessionId={session_id}
                       />
                       {selectedSessionDocument ? (
-                        <ViewContentSessionDocumentDialog
-                          opened={isViewContentSessionDocumentDialogOpened}
-                          closed={this.closeViewContentSessionDocumentDialog}
+                        <ContentSessionDocumentDialog
+                          opened={isContentSessionDocumentDialogOpened}
+                          closed={this.closeContentSessionDocumentDialog}
+                          editing={isEditContentSessionDocument}
                           sessionDocument={selectedSessionDocument}
+                          contentEdited={this.editContentSessionDocumentHandler}
+                          contentEditStopped={
+                            this.stopEditContentSessionDocumentHandler
+                          }
+                          contentEditSaved={
+                            this.saveEditContentSessionDocumentHandler
+                          }
                         />
                       ) : null}
                     </main>
