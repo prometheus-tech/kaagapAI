@@ -12,7 +12,8 @@ function SessionDocumentMoreActionsPopper({
   anchorEl,
   moreActionsClosed,
   sessionDocumentViewed,
-  contentEdited
+  contentEdited,
+  sessionDocumentRenamed
 }) {
   return (
     <Popper
@@ -50,10 +51,10 @@ function SessionDocumentMoreActionsPopper({
                   Edit content
                 </MenuItem>
                 <MenuItem
-                // onClick={e => {
-                //   e.stopPropagation();
-                //   alert('Not yet implemented');
-                // }}
+                  onClick={() => {
+                    sessionDocumentRenamed();
+                    moreActionsClosed();
+                  }}
                 >
                   Rename
                 </MenuItem>

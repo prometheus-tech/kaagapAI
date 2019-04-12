@@ -7,6 +7,7 @@ import SESSION from '../../graphql/queries/session';
 import { Query } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
+import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
@@ -32,6 +33,7 @@ import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumen
 import purple from '@material-ui/core/colors/purple';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
+import RenameSessionDocumentDialog from '../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -114,11 +116,12 @@ class SessionPage extends Component {
     view: 'card',
     isNewSessionDocumentDialogOpened: false,
     file: null,
-    isContentSessionDocumentDialogOpened: false,
-    isEditContentSessionDocument: false,
     selectedSessionDocument: null,
     isMoreActionsOpened: false,
-    anchorEl: null
+    anchorEl: null,
+    isContentSessionDocumentDialogOpened: false,
+    isEditContentSessionDocument: false,
+    isRenameSessionDocumentDialogOpened: false
   };
 
   componentDidMount() {
@@ -154,6 +157,19 @@ class SessionPage extends Component {
     });
   };
 
+  openMoreActionsHandler = (event, sessionDocument) => {
+    const { currentTarget } = event;
+    this.setState({
+      isMoreActionsOpened: true,
+      anchorEl: currentTarget,
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  closeMoreActionsHandler = () => {
+    this.setState({ isMoreActionsOpened: false });
+  };
+
   openContentSessionDocumentDialog = sessionDocument => {
     if (sessionDocument) {
       this.setState({
@@ -181,7 +197,7 @@ class SessionPage extends Component {
     });
   };
 
-  saveEditContentSessionDocumentHandler = sessionDocument => {
+  updateSelectedSessionDocumentHandler = sessionDocument => {
     this.setState({
       selectedSessionDocument: sessionDocument
     });
@@ -191,17 +207,12 @@ class SessionPage extends Component {
     this.setState({ isEditContentSessionDocument: false });
   };
 
-  openMoreActionsHandler = (event, sessionDocument) => {
-    const { currentTarget } = event;
-    this.setState({
-      isMoreActionsOpened: true,
-      anchorEl: currentTarget,
-      selectedSessionDocument: sessionDocument
-    });
+  openRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: true });
   };
 
-  closeMoreActionsHandler = () => {
-    this.setState({ isMoreActionsOpened: false });
+  closeRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: false });
   };
 
   render() {
@@ -217,7 +228,8 @@ class SessionPage extends Component {
       isEditContentSessionDocument,
       isMoreActionsOpened,
       anchorEl,
-      selectedSessionDocument
+      selectedSessionDocument,
+      isRenameSessionDocumentDialogOpened
     } = this.state;
 
     return (
@@ -351,6 +363,18 @@ class SessionPage extends Component {
                         }
                         moreActionsOpened={this.openMoreActionsHandler}
                       />
+                      <SessionDocumentMoreActionsPopper
+                        isMoreActionsOpened={isMoreActionsOpened}
+                        anchorEl={anchorEl}
+                        moreActionsClosed={this.closeMoreActionsHandler}
+                        sessionDocumentViewed={
+                          this.openContentSessionDocumentDialog
+                        }
+                        contentEdited={this.editContentSessionDocumentHandler}
+                        sessionDocumentRenamed={
+                          this.openRenameSessionDocumentHandler
+                        }
+                      />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
                         closed={this.closeNewSessionDocumentDialogHandler}
@@ -360,29 +384,32 @@ class SessionPage extends Component {
                         sessionId={session_id}
                       />
                       {selectedSessionDocument ? (
-                        <ContentSessionDocumentDialog
-                          opened={isContentSessionDocumentDialogOpened}
-                          closed={this.closeContentSessionDocumentDialog}
-                          editing={isEditContentSessionDocument}
-                          sessionDocument={selectedSessionDocument}
-                          contentEdited={this.editContentSessionDocumentHandler}
-                          contentEditStopped={
-                            this.stopEditContentSessionDocumentHandler
-                          }
-                          contentEditSaved={
-                            this.saveEditContentSessionDocumentHandler
-                          }
-                        />
+                        <Auxilliary>
+                          <ContentSessionDocumentDialog
+                            opened={isContentSessionDocumentDialogOpened}
+                            closed={this.closeContentSessionDocumentDialog}
+                            editing={isEditContentSessionDocument}
+                            sessionDocument={selectedSessionDocument}
+                            contentEdited={
+                              this.editContentSessionDocumentHandler
+                            }
+                            contentEditStopped={
+                              this.stopEditContentSessionDocumentHandler
+                            }
+                            contentEditSaved={
+                              this.updateSelectedSessionDocumentHandler
+                            }
+                          />
+                          <RenameSessionDocumentDialog
+                            opened={isRenameSessionDocumentDialogOpened}
+                            closed={this.closeRenameSessionDocumentHandler}
+                            sessionDocument={selectedSessionDocument}
+                            selectedSessionDocumentUpdated={
+                              this.updateSelectedSessionDocumentHandler
+                            }
+                          />
+                        </Auxilliary>
                       ) : null}
-                      <SessionDocumentMoreActionsPopper
-                        isMoreActionsOpened={isMoreActionsOpened}
-                        anchorEl={anchorEl}
-                        moreActionsClosed={this.closeMoreActionsHandler}
-                        sessionDocumentViewed={
-                          this.openContentSessionDocumentDialog
-                        }
-                        contentEdited={this.editContentSessionDocumentHandler}
-                      />
                     </main>
                   </div>
                 );
