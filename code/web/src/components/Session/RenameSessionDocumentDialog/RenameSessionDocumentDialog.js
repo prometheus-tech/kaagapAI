@@ -94,7 +94,10 @@ class RenameSessionDocumentDialog extends Component {
                 onSubmit={() => {
                   editSessionDocument({
                     variables: {
-                      ...updatedSessionDocument
+                      sd_id,
+                      file_name:
+                        file_name.trim() + '.' + file_name_extension.trim(),
+                      content
                     }
                   });
 

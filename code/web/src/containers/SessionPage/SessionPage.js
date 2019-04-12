@@ -396,7 +396,7 @@ class SessionPage extends Component {
                             contentEditStopped={
                               this.stopEditContentSessionDocumentHandler
                             }
-                            contentEditSaved={
+                            selectedSessionDocumentUpdated={
                               this.updateSelectedSessionDocumentHandler
                             }
                           />

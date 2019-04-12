@@ -150,13 +150,21 @@ class ContentSessionDocumentDialog extends Component {
       opened,
       closed,
       editing,
-      contentEditSaved,
+      selectedSessionDocumentUpdated,
       contentEdited,
       contentEditStopped,
       classes
     } = this.props;
 
     const { sd_id, file_name, date_added, type, content } = this.state;
+
+    const updatedSessionDocument = {
+      sd_id: sd_id,
+      file_name: file_name,
+      date_added: date_added,
+      type: type,
+      content: content
+    };
 
     return (
       <Mutation
@@ -165,11 +173,7 @@ class ContentSessionDocumentDialog extends Component {
           __typename: 'Mutation',
           editSessionDocument: {
             __typename: 'SessionDocument',
-            sd_id: sd_id,
-            file_name: file_name,
-            date_added: date_added,
-            type: type,
-            content: content
+            ...updatedSessionDocument
           }
         }}
       >
@@ -185,15 +189,10 @@ class ContentSessionDocumentDialog extends Component {
               <DialogTitle
                 onClose={closed}
                 editing={editing}
-                contentEditSaved={contentEditSaved}
+                selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
                 contentEdited={contentEdited}
                 contentEditStopped={contentEditStopped}
                 editSessionDocument={editSessionDocument}
-                sd_id={sd_id}
-                file_name={file_name}
-                date_added={date_added}
-                type={type}
-                content={content}
               >
                 {file_name}
               </DialogTitle>
@@ -220,18 +219,14 @@ class ContentSessionDocumentDialog extends Component {
                     onClick={() => {
                       editSessionDocument({
                         variables: {
-                          sd_id: sd_id,
-                          content: content,
-                          file_name: file_name
+                          sd_id,
+                          content,
+                          file_name
                         }
                       });
 
-                      contentEditSaved({
-                        sd_id,
-                        content,
-                        file_name,
-                        type,
-                        date_added
+                      selectedSessionDocumentUpdated({
+                        ...updatedSessionDocument
                       });
 
                       contentEditStopped();
