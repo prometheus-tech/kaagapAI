@@ -8,11 +8,24 @@ import models from './models';
 import configurations from './config/appconfig';
 import cors from 'cors';
 import http from 'http';
+import jwt from 'jsonwebtoken';
 
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
+
+const addUser = async (req) => {
+  const token = req.headers.authorization;
+  try {
+    const { user } = await jwt.verify(token, SECRET);
+    req.user = user;
+  } catch (err) {
+    console.log(err);
+  }
+
+  req.next();
+}
 
 const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
@@ -20,16 +33,18 @@ const apollo = new ApolloServer({
   formatError: error => {
     return error.message;
   },
-  context: { 
+  context: ({ req }) => ({
     models,
-    SECRET 
-  },
+    SECRET,
+    user: req.user
+  }),
   playground: true, //change to 'false' on deploy
   introspection: true
 });
 
 const app = express();
 app.use(cors());
+app.use(addUser);
 
 apollo.applyMiddleware({ app });
 
