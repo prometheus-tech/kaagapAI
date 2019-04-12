@@ -84,6 +84,7 @@ const styles = theme => ({
     }
   },
   floatingButton: {
+    zIndex: 1,
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
