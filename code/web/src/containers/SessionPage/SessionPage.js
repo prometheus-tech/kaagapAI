@@ -117,7 +117,9 @@ class SessionPage extends Component {
     file: null,
     isContentSessionDocumentDialogOpened: false,
     isEditContentSessionDocument: false,
-    selectedSessionDocument: null
+    selectedSessionDocument: null,
+    isMoreActionsOpened: false,
+    anchorEl: null
   };
 
   componentDidMount() {
@@ -182,6 +184,18 @@ class SessionPage extends Component {
     this.setState({ isEditContentSessionDocument: false });
   };
 
+  openMoreActionsHandler = event => {
+    const { currentTarget } = event;
+    this.setState({
+      isMoreActionsOpened: true,
+      anchorEl: currentTarget
+    });
+  };
+
+  closeMoreActionsHandler = () => {
+    this.setState({ isMoreActionsOpened: false });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -193,6 +207,8 @@ class SessionPage extends Component {
       file,
       isContentSessionDocumentDialogOpened,
       isEditContentSessionDocument,
+      isMoreActionsOpened,
+      anchorEl,
       selectedSessionDocument
     } = this.state;
 
@@ -326,6 +342,10 @@ class SessionPage extends Component {
                           this.openContentSessionDocumentDialog
                         }
                         contentEdited={this.editContentSessionDocumentHandler}
+                        isMoreActionsOpened={isMoreActionsOpened}
+                        moreActionsOpened={this.openMoreActionsHandler}
+                        moreActionsClosed={this.closeMoreActionsHandler}
+                        anchorEl={anchorEl}
                       />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}

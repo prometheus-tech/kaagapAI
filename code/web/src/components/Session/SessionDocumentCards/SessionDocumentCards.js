@@ -6,6 +6,10 @@ import SessionDocumentCard from './SessionDocumentCard/SessionDocumentCard';
 function SessionDocumentCards({
   sessionDocuments,
   sessionDocumentViewed,
+  isMoreActionsOpened,
+  moreActionsOpened,
+  moreActionsClosed,
+  anchorEl,
   contentEdited
 }) {
   return (
@@ -17,6 +21,10 @@ function SessionDocumentCards({
               sessionDocument={sessionDocument}
               sessionDocumentViewed={sessionDocumentViewed}
               contentEdited={contentEdited}
+              isMoreActionsOpened={isMoreActionsOpened}
+              moreActionsOpened={moreActionsOpened}
+              moreActionsClosed={moreActionsClosed}
+              anchorEl={anchorEl}
             />
           </Grid>
         );
