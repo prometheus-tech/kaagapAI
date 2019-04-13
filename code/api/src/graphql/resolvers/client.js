@@ -29,7 +29,7 @@ export default {
       });
     },
 
-    client: async (parent, { c_id }, { models, user }) => { //add user after models,
+    client: async (parent, { c_id }, { models }) => { //add user after models,
       // if(user) {
         await models.Client.update({
           last_opened: new Date()
