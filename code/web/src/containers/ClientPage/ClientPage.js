@@ -266,16 +266,18 @@ class ClientPage extends Component {
                 <Divider light className={classes.divider} />
                 <Grid justify="space-between" container spacing={16}>
                   <Grid item>
-                    <Hidden smDown>
-                      <Fab
-                        color="primary"
-                        variant="extended"
-                        className={classes.extendedButton}
-                        onClick={this.openNewSessionDialogHandler}
-                      >
-                        <Add className={classes.extendedIcon} /> New Session
-                      </Fab>
-                    </Hidden>
+                    {data.client.sessions.length > 0 ? (
+                      <Hidden smDown>
+                        <Fab
+                          color="primary"
+                          variant="extended"
+                          className={classes.extendedButton}
+                          onClick={this.openNewSessionDialogHandler}
+                        >
+                          <Add className={classes.extendedIcon} /> New Session
+                        </Fab>
+                      </Hidden>
+                    ) : null}
                     <Hidden mdUp>
                       <Fab
                         size="large"
@@ -310,7 +312,7 @@ class ClientPage extends Component {
                   </Grid>
                 </Grid>
                 {data.client.sessions.length === 0 ? (
-                  <p>None</p>
+                  <EmptySession newSessionOpened={this.openNewSessionDialogHandler} />
                 ) : view === 'card' && data.client.sessions.length > 0 ? (
                   <SessionCards
                     sessions={data.client.sessions}
