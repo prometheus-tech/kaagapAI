@@ -29,12 +29,15 @@ export default {
       });
     },
 
-    client: async (parent, { c_id }, { models }) => {
-      await models.Client.update({
+    client: async (parent, { c_id }, { models }) => { //add user after models,
+      // console.log(user);
+      //if(user) {
+        await models.Client.update({
           last_opened: new Date()
         }, { 
           where: { c_id } 
-      });
+        });
+      //}
 
       return await models.Client.findOne({ where: { c_id } });
     }

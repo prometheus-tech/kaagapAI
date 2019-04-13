@@ -25,7 +25,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { withSnackbar } from 'notistack';
-import { toHumanFileSize } from '../../../util/helperFunctions';
+import {
+  toHumanFileSize,
+  getSessionDocumentIcon
+} from '../../../util/helperFunctions';
 
 const styles = theme => ({
   section: {
@@ -166,22 +169,8 @@ function NewSessionDocumentDialog(props) {
   if (file) {
     const extensionType = file.name.split('.')[1];
 
-    if (extensionType === 'pdf') {
-      avatarIconClass = 'fas fa-file-pdf';
-      iconColor = 'blue';
-    } else if (extensionType === 'txt') {
-      avatarIconClass = 'fas fa-file-alt';
-      iconColor = 'red';
-    } else if (extensionType === 'doc' || extensionType === 'docx') {
-      avatarIconClass = 'fas fa-file-word';
-      iconColor = 'green';
-    } else if (extensionType === 'wav' || extensionType === 'mp4') {
-      avatarIconClass = 'fas fa-file-audio';
-      iconColor = 'yellow';
-    } else {
-      avatarIconClass = 'fas fa-file-alt';
-      iconColor = 'black';
-    }
+    avatarIconClass = getSessionDocumentIcon(extensionType).avatarIconClass;
+    iconColor = getSessionDocumentIcon(extensionType).iconColor;
   }
 
   return (

@@ -1,3 +1,8 @@
+import grey from '@material-ui/core/colors/grey';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
+
 export function getInitials(firstName, lastName) {
   return firstName.charAt(0) + lastName.charAt(0);
 }
@@ -28,4 +33,31 @@ export function toHumanFileSize(size) {
     ' ' +
     ['B', 'kB', 'MB', 'GB', 'TB'][i]
   );
+}
+
+export function getSessionDocumentIcon(type) {
+  let avatarIconClass = '';
+  let iconColor = '';
+
+  if (type.includes('pdf') || type === 'pdf') {
+    avatarIconClass = 'fas fa-file-pdf';
+    iconColor = red[600];
+  } else if (type.includes('text') || type === 'txt') {
+    avatarIconClass = 'fas fa-file-alt';
+    iconColor = grey[600];
+  } else if (type.includes('word') || type === 'doc') {
+    avatarIconClass = 'fas fa-file-word';
+    iconColor = blue[700];
+  } else if (type.includes('audio') || type === 'wav') {
+    avatarIconClass = 'fas fa-file-audio';
+    iconColor = green[300];
+  } else {
+    avatarIconClass = 'fas fa-file-alt';
+    iconColor = 'black';
+  }
+
+  return {
+    avatarIconClass,
+    iconColor
+  };
 }
