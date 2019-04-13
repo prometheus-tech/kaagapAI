@@ -26,8 +26,10 @@ const styles = theme => ({
     lineHeight: '150%',
     textAlign: 'justify',
     border: '0px',
-    width: '50vw',
-    marginLeft: '9vw'
+    paddingRight: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2
   },
   popperPaper: {
     padding: theme.spacing.unit,
@@ -99,10 +101,7 @@ const DialogTitle = withStyles(theme => ({
 const DialogContent = withStyles(theme => ({
   root: {
     margin: 0,
-    paddingRight: theme.spacing.unit * 4,
-    paddingLeft: theme.spacing.unit * 4,
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    padding: 0
   }
 }))(MuiDialogContent);
 
