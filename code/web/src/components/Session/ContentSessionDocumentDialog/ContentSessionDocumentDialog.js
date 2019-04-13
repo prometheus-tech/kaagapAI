@@ -21,7 +21,13 @@ const styles = theme => ({
     width: '100%',
     resize: 'none',
     minHeight: '70vh',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    fontSize: theme.spacing.unit * 2,
+    lineHeight: '150%',
+    textAlign: 'justify',
+    border: '0px',
+    width: '50vw',
+    marginLeft: '9vw'
   },
   popperPaper: {
     padding: theme.spacing.unit,
