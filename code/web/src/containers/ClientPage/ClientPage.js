@@ -32,6 +32,7 @@ import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import SessionCards from '../../components/Client/SessionCards/SessionCards';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
+import EmptySession from '../../components/UI/Placeholder/EmptySession';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -84,6 +85,7 @@ const styles = theme => ({
     }
   },
   floatingButton: {
+    zIndex: 1,
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
@@ -307,7 +309,9 @@ class ClientPage extends Component {
                     </div>
                   </Grid>
                 </Grid>
-                {view === 'card' ? (
+                {data.client.sessions.length === 0 ? (
+                  <p>None</p>
+                ) : view === 'card' && data.client.sessions.length > 0 ? (
                   <SessionCards
                     sessions={data.client.sessions}
                     sessionEdited={this.openEditSessionDialogHandler}
@@ -320,6 +324,7 @@ class ClientPage extends Component {
                     sessionDeleted={this.openDeleteSessionDialogHandler}
                   />
                 )}
+
                 <NewSessionDialog
                   clientId={c_id}
                   opened={isNewSessionDialogOpened}

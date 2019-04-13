@@ -15,6 +15,9 @@ import orange from '@material-ui/core/colors/orange';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Hidden from '@material-ui/core/Hidden';
+import CardHeader from '@material-ui/core/CardHeader';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
   card: {
@@ -32,6 +35,14 @@ const styles = theme => ({
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
       padding: '0px 0px 0px 0px'
     }
+  },
+  cardMobile: {
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
+    marginTop: '1rem',
+    background: '#fff',
+    borderRadius: '6px',
+    transition:
+      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)'
   },
   cardActions: {
     padding: 0,
@@ -80,57 +91,102 @@ function SessionCard({ session, classes, sessionEdited, sessionDeleted }) {
   );
 
   return (
-    <Card className={classes.card}>
-      <ButtonBase
-        className={classes.buttonBase}
-        disableRipple={true}
-        disableTouchRipple={true}
-        component={CardLink}
-      >
-        <CardContent className={classes.cardContent}>
-          <div className={classes.avatarContainer}>
-            <Avatar className={classes.avatar}>
-              <FolderIcon fontSize="large" />
-            </Avatar>
-          </div>
-          <Typography
-            noWrap
-            variant="h6"
-            className={classes.cardTitle}
-            align="center"
+    <div>
+      <Hidden smDown>
+        <Card className={classes.card}>
+          <ButtonBase
+            className={classes.buttonBase}
+            disableRipple={true}
+            disableTouchRipple={true}
+            component={CardLink}
           >
-            {session.session_name}
-          </Typography>
-          <Typography className={classes.cardSubheader}>
-            <Moment format="MMM D, YYYY" withTitle>
-              {session.date_of_session}
-            </Moment>
-          </Typography>
-        </CardContent>
-      </ButtonBase>
-      <CardActions className={classes.cardActions}>
-        <IconButton
+            <CardContent className={classes.cardContent}>
+              <div className={classes.avatarContainer}>
+                <Avatar className={classes.avatar}>
+                  <FolderIcon fontSize="large" />
+                </Avatar>
+              </div>
+              <Typography
+                noWrap
+                variant="h6"
+                className={classes.cardTitle}
+                align="center"
+              >
+                {session.session_name}
+              </Typography>
+              <Typography className={classes.cardSubheader}>
+                <Moment format="MMM D, YYYY" withTitle>
+                  {session.date_of_session}
+                </Moment>
+              </Typography>
+            </CardContent>
+          </ButtonBase>
+          <CardActions className={classes.cardActions}>
+            <IconButton
+              disableRipple={true}
+              aria-label="Edit"
+              className={classes.iconAction}
+              onClick={() => {
+                sessionEdited(session);
+              }}
+            >
+              <Icon fontSize="small">edit</Icon>
+            </IconButton>
+            <IconButton
+              disableRipple={true}
+              aria-label="Archive"
+              className={classes.iconAction}
+              onClick={() => {
+                sessionDeleted(session);
+              }}
+            >
+              <Icon fontSize="small">archive</Icon>
+            </IconButton>
+          </CardActions>
+        </Card>
+      </Hidden>
+      <Hidden mdUp>
+        <ButtonBase
+          className={classes.buttonBase}
           disableRipple={true}
-          aria-label="Edit"
-          className={classes.iconAction}
-          onClick={() => {
-            sessionEdited(session);
-          }}
+          disableTouchRipple={true}
+          component={CardLink}
         >
-          <Icon fontSize="small">edit</Icon>
-        </IconButton>
-        <IconButton
-          disableRipple={true}
-          aria-label="Archive"
-          className={classes.iconAction}
-          onClick={() => {
-            sessionDeleted(session);
-          }}
-        >
-          <Icon fontSize="small">archive</Icon>
-        </IconButton>
-      </CardActions>
-    </Card>
+          <CardHeader
+            className={classes.cardMobile}
+            avatar={
+              <div className={classes.avatarContainer}>
+                <Avatar className={classes.avatar}>
+                  <FolderIcon fontSize="large" />
+                </Avatar>
+              </div>
+            }
+            action={
+              <IconButton style={{ transform: 'rotate(90deg)' }}>
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={
+              <Typography
+                noWrap
+                variant="h6"
+                className={classes.cardTitle}
+                align="left"
+              >
+                {session.session_name}
+              </Typography>
+            }
+            subheader={
+              <Typography className={classes.cardSubheader}>
+                <Moment format="MMM D, YYYY" withTitle>
+                  {session.date_of_session}
+                </Moment>
+              </Typography>
+            }
+          />
+        </ButtonBase>
+      </Hidden>
+    </div>
   );
 }
 
