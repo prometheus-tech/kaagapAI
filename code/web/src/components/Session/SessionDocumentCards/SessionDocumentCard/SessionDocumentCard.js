@@ -12,17 +12,12 @@ import Icon from '@material-ui/core/Icon';
 import brown from '@material-ui/core/colors/brown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import grey from '@material-ui/core/colors/grey';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+
+import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   card: {
     height: '90px',
-    boxShadow: '0 2px 1px rgba(0,0,0,.08), 0 0 2px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px'
@@ -62,34 +57,30 @@ const styles = theme => ({
   },
   icon: {
     fontSize: theme.spacing.unit * 7
+  },
+  paper: {
+    boxShadow: theme.shadows[2]
   }
 });
 
-function SessionDocumentCard({ sessionDocument, classes }) {
-  let avatarIconClass = '';
-  let iconColor = '';
-
-  const sessionDocumentType = sessionDocument.type.toLowerCase();
-
-  if (sessionDocumentType.includes('pdf')) {
-    avatarIconClass = 'fas fa-file-pdf';
-    iconColor = red[600];
-  } else if (sessionDocumentType.includes('text')) {
-    avatarIconClass = 'fas fa-file-alt';
-    iconColor = grey[600];
-  } else if (sessionDocumentType.includes('word')) {
-    avatarIconClass = 'fas fa-file-word';
-    iconColor = blue[700];
-  } else if (sessionDocumentType.includes('audio')) {
-    avatarIconClass = 'fas fa-file-audio';
-    iconColor = green[300];
-  } else {
-    avatarIconClass = 'fas fa-file-alt';
-    iconColor = 'black';
-  }
+function SessionDocumentCard({
+  sessionDocument,
+  sessionDocumentViewed,
+  moreActionsOpened,
+  classes
+}) {
+  const { avatarIconClass, iconColor } = getSessionDocumentIcon(
+    sessionDocument.type.toLowerCase()
+  );
 
   return (
-    <Card className={classes.card}>
+    <Card
+      elevation={1}
+      className={classes.card}
+      onClick={() => {
+        sessionDocumentViewed(sessionDocument);
+      }}
+    >
       <CardHeader
         avatar={
           <div className={classes.avatarContainer}>
@@ -103,35 +94,17 @@ function SessionDocumentCard({ sessionDocument, classes }) {
           </div>
         }
         action={
-          <PopupState variant="popover" popupId="demo-popup-menu">
-            {popupState => (
-              <React.Fragment>
-                <IconButton
-                  className={classes.iconAction}
-                  {...bindTrigger(popupState)}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  {...bindPopover(popupState)}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                >
-                  <MenuItem>View content</MenuItem>
-                  <MenuItem>Edit content</MenuItem>
-                  <MenuItem>Rename</MenuItem>
-                  <MenuItem>Download</MenuItem>
-                  <MenuItem>Archive</MenuItem>
-                </Menu>
-              </React.Fragment>
-            )}
-          </PopupState>
+          <div>
+            <IconButton
+              className={classes.iconAction}
+              onClick={e => {
+                e.stopPropagation();
+                moreActionsOpened(e, sessionDocument);
+              }}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </div>
         }
         title={
           <Typography noWrap className={classes.cardTitle}>

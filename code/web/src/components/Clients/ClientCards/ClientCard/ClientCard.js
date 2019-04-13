@@ -14,9 +14,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import grey from '@material-ui/core/colors/grey';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const styles = theme => ({
-  // Responsive breakpoints
   avatar: {
     backgroundColor: '#0091ea',
     margin: '10px auto',
@@ -24,7 +24,6 @@ const styles = theme => ({
     width: '70px',
     textTransform: 'uppercase',
     [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing.unit * 3.2,
       marginRight: theme.spacing.unit * 2,
       height: '60px',
       width: '60px'
@@ -36,10 +35,6 @@ const styles = theme => ({
     background: '#fff',
     borderRadius: '6px',
     width: '230px',
-    [theme.breakpoints.down('sm')]: {
-      minWidth: '85vw',
-      height: '150px'
-    },
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
@@ -53,6 +48,14 @@ const styles = theme => ({
       justifyContent: 'flex-start'
     }
   },
+  mobileCard: {
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
+    marginTop: '1rem',
+    backgroundColor: '#fff',
+    borderRadius: '6px',
+    transition:
+      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)'
+  },
   nameClient: {
     position: 'relative',
     top: '12px',
@@ -61,17 +64,31 @@ const styles = theme => ({
     color: grey[900],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    fontWeight: '600'
+  },
+  nameClientMobile: {
+    position: 'relative',
+    top: '12px',
+    width: '200px',
+    marginRight: 'auto',
+    color: grey[900],
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     fontWeight: '600',
-    [theme.breakpoints.down('sm')]: {
-      width: '250px',
-      textAlign: 'left'
-    }
+    marginBottom: theme.spacing.unit
   },
   session: {
     fontWeight: '300',
     fontSize: '14px',
     marginTop: '15px',
     color: theme.palette.grey[600]
+  },
+  sessionMobile: {
+    fontWeight: '300',
+    fontSize: '14px',
+    marginTop: '15px',
+    color: theme.palette.grey[600],
+    marginBottom: theme.spacing.unit * 2
   },
   iconHover: {
     '&:hover': {
@@ -81,20 +98,7 @@ const styles = theme => ({
   cardContent: {
     '&:hover': {
       cursor: 'pointer'
-    },
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
     }
-  },
-  divider: {
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing.unit * 3,
-      textAlign: 'left'
-    }
-  },
-  moreIcon: {
-    transform: 'rotate(90deg)',
-    marginLeft: 'auto'
   }
 });
 
@@ -108,21 +112,18 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.card}>
-        <ButtonBase
-          className={classes.buttonBase}
-          disableRipple={true}
-          disableTouchRipple={true}
-          component={CardLink}
-        >
-          <CardContent className={classes.cardContent}>
-            <Hidden smUp>
-              <MoreVertIcon className={classes.moreIcon} />
-            </Hidden>
-            <Avatar className={classes.avatar}>
-              <Icon fontSize="large">person</Icon>
-            </Avatar>
-            <div className={classes.divider}>
+      <Hidden smDown>
+        <Card className={classes.card}>
+          <ButtonBase
+            className={classes.buttonBase}
+            disableRipple={true}
+            disableTouchRipple={true}
+            component={CardLink}
+          >
+            <CardContent className={classes.cardContent}>
+              <Avatar className={classes.avatar}>
+                <Icon fontSize="large">person</Icon>
+              </Avatar>
               <Typography
                 noWrap
                 variant="h6"
@@ -132,10 +133,8 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
                 {name}
               </Typography>
               <Typography className={classes.session}>{sessions}</Typography>
-            </div>
-          </CardContent>
-        </ButtonBase>
-        <Hidden smDown>
+            </CardContent>
+          </ButtonBase>
           <CardActions className={classes.action}>
             <IconButton
               className={classes.iconHover}
@@ -158,8 +157,45 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
               <Icon>archive</Icon>
             </IconButton>
           </CardActions>
-        </Hidden>
-      </Card>
+        </Card>
+      </Hidden>
+      <Hidden mdUp>
+        <ButtonBase
+          className={classes.buttonBase}
+          disableRipple={true}
+          disableTouchRipple={true}
+          component={CardLink}
+        >
+          <CardHeader
+            className={classes.mobileCard}
+            avatar={
+              <Avatar className={classes.avatar}>
+                <Icon fontSize="large">person</Icon>
+              </Avatar>
+            }
+            action={
+              <IconButton style={{ transform: 'rotate(90deg)' }}>
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={
+              <Typography
+                noWrap
+                variant="h6"
+                align="left"
+                className={classes.nameClientMobile}
+              >
+                {name}
+              </Typography>
+            }
+            subheader={
+              <Typography align="left" className={classes.sessionMobile}>
+                {sessions}
+              </Typography>
+            }
+          />
+        </ButtonBase>
+      </Hidden>
     </div>
   );
 }

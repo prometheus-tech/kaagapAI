@@ -4,9 +4,13 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import CLIENT from '../../graphql/queries/client';
 import SESSION from '../../graphql/queries/session';
-import { Query } from 'react-apollo';
+import DELETE_SESSION_DOCUMENT from '../../graphql/mutations/deleteSessionDocument';
+import { Query, Mutation } from 'react-apollo';
+
+import { withSnackbar } from 'notistack';
 
 import { withStyles } from '@material-ui/core/styles';
+import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
@@ -30,6 +34,10 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import purple from '@material-ui/core/colors/purple';
+import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
+import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
+import RenameSessionDocumentDialog from '../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
+import { cloneDeep } from 'apollo-utilities';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -96,11 +104,9 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
-    // backgroundColor: lightBlue[600],
     boxShadow: theme.shadows[24],
     color: '#ffffff',
     '&:hover': {
-      // backgroundColor: lightBlue[700],
       boxShadow: theme.shadows[10]
     }
   },
@@ -113,7 +119,13 @@ class SessionPage extends Component {
   state = {
     view: 'card',
     isNewSessionDocumentDialogOpened: false,
-    file: null
+    file: null,
+    selectedSessionDocument: null,
+    isMoreActionsOpened: false,
+    anchorEl: null,
+    isContentSessionDocumentDialogOpened: false,
+    isEditContentSessionDocument: false,
+    isRenameSessionDocumentDialogOpened: false
   };
 
   componentDidMount() {
@@ -128,7 +140,9 @@ class SessionPage extends Component {
   };
 
   openNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: true });
+    this.setState({
+      isNewSessionDocumentDialogOpened: true
+    });
   };
 
   closeNewSessionDocumentDialogHandler = () => {
@@ -147,12 +161,80 @@ class SessionPage extends Component {
     });
   };
 
+  openMoreActionsHandler = (event, sessionDocument) => {
+    const { currentTarget } = event;
+    this.setState({
+      isMoreActionsOpened: true,
+      anchorEl: currentTarget,
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  closeMoreActionsHandler = () => {
+    this.setState({ isMoreActionsOpened: false });
+  };
+
+  openContentSessionDocumentDialog = sessionDocument => {
+    if (sessionDocument) {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true,
+        selectedSessionDocument: sessionDocument
+      });
+    } else {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true
+      });
+    }
+  };
+
+  closeContentSessionDocumentDialog = () => {
+    this.setState({
+      isContentSessionDocumentDialogOpened: false,
+      isEditContentSessionDocument: false,
+      selectedSessionDocument: null
+    });
+  };
+
+  editContentSessionDocumentHandler = () => {
+    this.setState({
+      isEditContentSessionDocument: true
+    });
+  };
+
+  updateSelectedSessionDocumentHandler = sessionDocument => {
+    this.setState({
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  stopEditContentSessionDocumentHandler = () => {
+    this.setState({ isEditContentSessionDocument: false });
+  };
+
+  openRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: true });
+  };
+
+  closeRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: false });
+  };
+
   render() {
     const { classes } = this.props;
 
     const { session_id } = this.props.match.params;
 
-    const { view, isNewSessionDocumentDialogOpened, file } = this.state;
+    const {
+      view,
+      isNewSessionDocumentDialogOpened,
+      file,
+      isContentSessionDocumentDialogOpened,
+      isEditContentSessionDocument,
+      isMoreActionsOpened,
+      anchorEl,
+      selectedSessionDocument,
+      isRenameSessionDocumentDialogOpened
+    } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -280,6 +362,10 @@ class SessionPage extends Component {
                       </Grid>
                       <SessionDocumentCards
                         sessionDocuments={session.documents}
+                        sessionDocumentViewed={
+                          this.openContentSessionDocumentDialog
+                        }
+                        moreActionsOpened={this.openMoreActionsHandler}
                       />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
@@ -289,6 +375,97 @@ class SessionPage extends Component {
                         fileRemoved={this.clearFile}
                         sessionId={session_id}
                       />
+                      {selectedSessionDocument ? (
+                        <Auxilliary>
+                          <Mutation
+                            mutation={DELETE_SESSION_DOCUMENT}
+                            update={(
+                              cache,
+                              {
+                                data: {
+                                  deleteSessionDocument: { sd_id, file_name }
+                                }
+                              }
+                            ) => {
+                              const { session } = cloneDeep(
+                                cache.readQuery({
+                                  query: SESSION,
+                                  variables: { session_id }
+                                })
+                              );
+
+                              session.documents = session.documents.filter(
+                                d => d.sd_id !== sd_id
+                              );
+
+                              cache.writeQuery({
+                                query: SESSION,
+                                variables: { session_id },
+                                data: { session }
+                              });
+
+                              this.props.enqueueSnackbar(
+                                file_name + ' archived!'
+                              );
+                            }}
+                            optimisticResponse={{
+                              __typename: 'Mutation',
+                              deleteSessionDocument: {
+                                __typename: 'SessionDocument',
+                                sd_id: selectedSessionDocument.sd_id,
+                                file_name: selectedSessionDocument.file_name
+                              }
+                            }}
+                          >
+                            {deleteSessionDocument => (
+                              <SessionDocumentMoreActionsPopper
+                                isMoreActionsOpened={isMoreActionsOpened}
+                                anchorEl={anchorEl}
+                                moreActionsClosed={this.closeMoreActionsHandler}
+                                sessionDocumentViewed={
+                                  this.openContentSessionDocumentDialog
+                                }
+                                contentEdited={
+                                  this.editContentSessionDocumentHandler
+                                }
+                                sessionDocumentRenamed={
+                                  this.openRenameSessionDocumentHandler
+                                }
+                                sessionDocumentDeleted={() => {
+                                  deleteSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                              />
+                            )}
+                          </Mutation>
+                          <ContentSessionDocumentDialog
+                            opened={isContentSessionDocumentDialogOpened}
+                            closed={this.closeContentSessionDocumentDialog}
+                            editing={isEditContentSessionDocument}
+                            sessionDocument={selectedSessionDocument}
+                            contentEdited={
+                              this.editContentSessionDocumentHandler
+                            }
+                            contentEditStopped={
+                              this.stopEditContentSessionDocumentHandler
+                            }
+                            selectedSessionDocumentUpdated={
+                              this.updateSelectedSessionDocumentHandler
+                            }
+                          />
+                          <RenameSessionDocumentDialog
+                            opened={isRenameSessionDocumentDialogOpened}
+                            closed={this.closeRenameSessionDocumentHandler}
+                            sessionDocument={selectedSessionDocument}
+                            selectedSessionDocumentUpdated={
+                              this.updateSelectedSessionDocumentHandler
+                            }
+                          />
+                        </Auxilliary>
+                      ) : null}
                     </main>
                   </div>
                 );
@@ -301,4 +478,4 @@ class SessionPage extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(SessionPage));
+export default withRouter(withStyles(styles)(withSnackbar(SessionPage)));
