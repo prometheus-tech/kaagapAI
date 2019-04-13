@@ -4,7 +4,10 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import CLIENT from '../../graphql/queries/client';
 import SESSION from '../../graphql/queries/session';
-import { Query } from 'react-apollo';
+import DELETE_SESSION_DOCUMENT from '../../graphql/mutations/deleteSessionDocument';
+import { Query, Mutation } from 'react-apollo';
+
+import { withSnackbar } from 'notistack';
 
 import { withStyles } from '@material-ui/core/styles';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
@@ -34,6 +37,7 @@ import purple from '@material-ui/core/colors/purple';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
+import { cloneDeep } from 'apollo-utilities';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -363,18 +367,6 @@ class SessionPage extends Component {
                         }
                         moreActionsOpened={this.openMoreActionsHandler}
                       />
-                      <SessionDocumentMoreActionsPopper
-                        isMoreActionsOpened={isMoreActionsOpened}
-                        anchorEl={anchorEl}
-                        moreActionsClosed={this.closeMoreActionsHandler}
-                        sessionDocumentViewed={
-                          this.openContentSessionDocumentDialog
-                        }
-                        contentEdited={this.editContentSessionDocumentHandler}
-                        sessionDocumentRenamed={
-                          this.openRenameSessionDocumentHandler
-                        }
-                      />
                       <NewSessionDocumentDialog
                         opened={isNewSessionDocumentDialogOpened}
                         closed={this.closeNewSessionDocumentDialogHandler}
@@ -385,6 +377,70 @@ class SessionPage extends Component {
                       />
                       {selectedSessionDocument ? (
                         <Auxilliary>
+                          <Mutation
+                            mutation={DELETE_SESSION_DOCUMENT}
+                            update={(
+                              cache,
+                              {
+                                data: {
+                                  deleteSessionDocument: { sd_id, file_name }
+                                }
+                              }
+                            ) => {
+                              const { session } = cloneDeep(
+                                cache.readQuery({
+                                  query: SESSION,
+                                  variables: { session_id }
+                                })
+                              );
+
+                              session.documents = session.documents.filter(
+                                d => d.sd_id !== sd_id
+                              );
+
+                              cache.writeQuery({
+                                query: SESSION,
+                                variables: { session_id },
+                                data: { session }
+                              });
+
+                              this.props.enqueueSnackbar(
+                                file_name + ' archived!'
+                              );
+                            }}
+                            optimisticResponse={{
+                              __typename: 'Mutation',
+                              deleteSessionDocument: {
+                                __typename: 'SessionDocument',
+                                sd_id: selectedSessionDocument.sd_id,
+                                file_name: selectedSessionDocument.file_name
+                              }
+                            }}
+                          >
+                            {deleteSessionDocument => (
+                              <SessionDocumentMoreActionsPopper
+                                isMoreActionsOpened={isMoreActionsOpened}
+                                anchorEl={anchorEl}
+                                moreActionsClosed={this.closeMoreActionsHandler}
+                                sessionDocumentViewed={
+                                  this.openContentSessionDocumentDialog
+                                }
+                                contentEdited={
+                                  this.editContentSessionDocumentHandler
+                                }
+                                sessionDocumentRenamed={
+                                  this.openRenameSessionDocumentHandler
+                                }
+                                sessionDocumentDeleted={() => {
+                                  deleteSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                              />
+                            )}
+                          </Mutation>
                           <ContentSessionDocumentDialog
                             opened={isContentSessionDocumentDialogOpened}
                             closed={this.closeContentSessionDocumentDialog}
@@ -422,4 +478,4 @@ class SessionPage extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(SessionPage));
+export default withRouter(withStyles(styles)(withSnackbar(SessionPage)));

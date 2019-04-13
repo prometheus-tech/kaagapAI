@@ -13,7 +13,8 @@ function SessionDocumentMoreActionsPopper({
   moreActionsClosed,
   sessionDocumentViewed,
   contentEdited,
-  sessionDocumentRenamed
+  sessionDocumentRenamed,
+  sessionDocumentDeleted
 }) {
   return (
     <Popper
@@ -67,10 +68,10 @@ function SessionDocumentMoreActionsPopper({
                   Download
                 </MenuItem>
                 <MenuItem
-                // onClick={e => {
-                //   e.stopPropagation();
-                //   alert('Not yet implemented');
-                // }}
+                  onClick={e => {
+                    sessionDocumentDeleted();
+                    moreActionsClosed();
+                  }}
                 >
                   Archive
                 </MenuItem>
