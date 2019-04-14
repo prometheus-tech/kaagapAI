@@ -4,7 +4,7 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SessionListHeader from './SessionListHeader/SessionListHeader';
 import SessionListItem from './SessionListItem/SessionListItem';
 
-function SessionList({ sessions, sessionEdited, sessionDeleted }) {
+function SessionList({ sessions, sessionEdited }) {
   return (
     <Auxilliary>
       <SessionListHeader />
@@ -14,7 +14,6 @@ function SessionList({ sessions, sessionEdited, sessionDeleted }) {
             key={session.session_id}
             session={session}
             sessionEdited={sessionEdited}
-            sessionDeleted={sessionDeleted}
           />
         );
       })}

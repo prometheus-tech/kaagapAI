@@ -111,26 +111,6 @@ class ClientsPage extends Component {
     });
   };
 
-  openDeleteClientDialogHandler = client => {
-    this.setState({
-      isDeleteClientDialogOpened: true,
-      selectedClient: {
-        c_id: client.c_id,
-        fname: client.fname,
-        lname: client.lname,
-        gender: client.gender,
-        birthdate: client.birthdate,
-        no_of_sessions: client.no_of_sessions
-      }
-    });
-  };
-
-  closeDeleteClientDialogHandler = () => {
-    this.setState({
-      isDeleteClientDialogOpened: false
-    });
-  };
-
   render() {
     const { classes } = this.props;
 

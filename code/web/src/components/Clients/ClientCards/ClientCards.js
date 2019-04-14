@@ -3,7 +3,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ClientCard from './ClientCard/ClientCard';
 
-function ClientCards({ clients, clientEdited, clientDeleted }) {
+function ClientCards({ clients, clientEdited }) {
   return (
     <Grid container spacing={8}>
       {clients.map(client => {
@@ -17,11 +17,7 @@ function ClientCards({ clients, clientEdited, clientDeleted }) {
             md={4}
             lg={3}
           >
-            <ClientCard
-              clientEdited={clientEdited}
-              clientDeleted={clientDeleted}
-              client={client}
-            />
+            <ClientCard clientEdited={clientEdited} client={client} />
           </Grid>
         );
       })}
