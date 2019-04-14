@@ -6,7 +6,6 @@ import SESSION_DOCUMENT_BASIC_INFO from '../fragments/sessionDocumentBasicInfo';
 const SESSION = gql`
   query Session($session_id: UUID!) {
     session(session_id: $session_id) {
-      c_id
       ...SessionInfo
       documents {
         ...SessionDocumentBasicInfo

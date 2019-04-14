@@ -29,7 +29,6 @@ import { lightBlue } from '@material-ui/core/colors';
 import SessionList from '../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../components/Client/EditSessionDialog/EditSessionDialog';
-import DeleteSessionDialog from '../../components/Client/DeleteSessionDialog/DeleteSessionDialog';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import SessionCards from '../../components/Client/SessionCards/SessionCards';
@@ -191,7 +190,6 @@ class ClientPage extends Component {
     isClientDetailsOpened: false,
     isNewSessionDialogOpened: false,
     isEditSessionDialogOpened: false,
-    isDeleteSessionDialogOpened: false,
     selectedSession: {
       session_id: '',
       session_name: '',
@@ -240,23 +238,6 @@ class ClientPage extends Component {
     });
   };
 
-  openDeleteSessionDialogHandler = session => {
-    this.setState({
-      isDeleteSessionDialogOpened: true,
-      selectedSession: {
-        session_id: session.session_id,
-        session_name: session.session_name,
-        date_of_session: session.date_of_session
-      }
-    });
-  };
-
-  closeDeleteSessionDialogHandler = () => {
-    this.setState({
-      isDeleteSessionDialogOpened: false
-    });
-  };
-
   render() {
     const { classes } = this.props;
 
@@ -267,7 +248,6 @@ class ClientPage extends Component {
       isClientDetailsOpened,
       isNewSessionDialogOpened,
       isEditSessionDialogOpened,
-      isDeleteSessionDialogOpened,
       selectedSession
     } = this.state;
 
@@ -386,13 +366,11 @@ class ClientPage extends Component {
                   <SessionCards
                     sessions={data.client.sessions}
                     sessionEdited={this.openEditSessionDialogHandler}
-                    sessionDeleted={this.openDeleteSessionDialogHandler}
                   />
                 ) : (
                   <SessionList
                     sessions={data.client.sessions}
                     sessionEdited={this.openEditSessionDialogHandler}
-                    sessionDeleted={this.openDeleteSessionDialogHandler}
                   />
                 )}
 
@@ -404,12 +382,6 @@ class ClientPage extends Component {
                 <EditSessionDialog
                   isOpened={isEditSessionDialogOpened}
                   closed={this.closeEditSessionDialogHandler}
-                  session={selectedSession}
-                />
-                <DeleteSessionDialog
-                  isOpened={isDeleteSessionDialogOpened}
-                  closed={this.closeDeleteSessionDialogHandler}
-                  clientId={c_id}
                   session={selectedSession}
                 />
               </main>
