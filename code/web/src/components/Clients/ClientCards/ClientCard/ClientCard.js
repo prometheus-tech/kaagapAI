@@ -2,6 +2,10 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
+import DELETE_CLIENT from '../../../../graphql/mutations/deleteClient';
+import { Mutation } from 'react-apollo';
+import CLIENTS from '../../../../graphql/queries/clients';
+
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
@@ -15,6 +19,10 @@ import grey from '@material-ui/core/colors/grey';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import CardHeader from '@material-ui/core/CardHeader';
+
+import { cloneDeep } from 'apollo-utilities';
+
+import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
   avatar: {
@@ -102,8 +110,9 @@ const styles = theme => ({
   }
 });
 
-function ClientCard({ classes, client, clientEdited, clientDeleted }) {
-  const { fname, lname, no_of_sessions } = client;
+function ClientCard(props) {
+  const { classes, client, clientEdited } = props;
+  const { c_id, fname, lname, no_of_sessions, p_id } = client;
   const name = fname + ' ' + lname;
   const sessions =
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
@@ -111,93 +120,134 @@ function ClientCard({ classes, client, clientEdited, clientDeleted }) {
   const CardLink = props => <Link to={'/client/' + client.c_id} {...props} />;
 
   return (
-    <div className={classes.root}>
-      <Hidden smDown>
-        <Card className={classes.card}>
-          <ButtonBase
-            className={classes.buttonBase}
-            disableRipple={true}
-            disableTouchRipple={true}
-            component={CardLink}
-          >
-            <CardContent className={classes.cardContent}>
-              <Avatar className={classes.avatar}>
-                <Icon fontSize="large">person</Icon>
-              </Avatar>
-              <Typography
-                noWrap
-                variant="h6"
-                align="center"
-                className={classes.nameClient}
+    <Mutation
+      mutation={DELETE_CLIENT}
+      update={(
+        cache,
+        {
+          data: {
+            deleteClient: { c_id, fname, lname }
+          }
+        }
+      ) => {
+        const clientsQueryParams = {
+          query: CLIENTS,
+          variables: { p_id }
+        };
+
+        const { clients } = cloneDeep(cache.readQuery(clientsQueryParams));
+
+        cache.writeQuery({
+          ...clientsQueryParams,
+          data: {
+            clients: clients.filter(c => c.c_id !== c_id)
+          }
+        });
+
+        props.enqueueSnackbar(fname + ' ' + lname + ' successfully archived!');
+      }}
+      optimisticResponse={{
+        __typename: 'Mutation',
+        deleteClient: {
+          __typename: 'Client',
+          c_id: client.c_id,
+          fname: client.fname,
+          lname: client.lname
+        }
+      }}
+    >
+      {deleteClient => (
+        <div className={classes.root}>
+          <Hidden smDown>
+            <Card className={classes.card}>
+              <ButtonBase
+                className={classes.buttonBase}
+                disableRipple={true}
+                disableTouchRipple={true}
+                component={CardLink}
               >
-                {name}
-              </Typography>
-              <Typography className={classes.session}>{sessions}</Typography>
-            </CardContent>
-          </ButtonBase>
-          <CardActions className={classes.action}>
-            <IconButton
-              className={classes.iconHover}
+                <CardContent className={classes.cardContent}>
+                  <Avatar className={classes.avatar}>
+                    <Icon fontSize="large">person</Icon>
+                  </Avatar>
+                  <Typography
+                    noWrap
+                    variant="h6"
+                    align="center"
+                    className={classes.nameClient}
+                  >
+                    {name}
+                  </Typography>
+                  <Typography className={classes.session}>
+                    {sessions}
+                  </Typography>
+                </CardContent>
+              </ButtonBase>
+              <CardActions className={classes.action}>
+                <IconButton
+                  className={classes.iconHover}
+                  disableRipple={true}
+                  aria-label="Edit"
+                  onClick={() => {
+                    clientEdited(client);
+                  }}
+                >
+                  <Icon>edit</Icon>
+                </IconButton>
+                <IconButton
+                  className={classes.iconHover}
+                  disableRipple={true}
+                  aria-label="Archive"
+                  onClick={() => {
+                    deleteClient({ variables: { c_id } });
+                  }}
+                >
+                  <Icon>archive</Icon>
+                </IconButton>
+              </CardActions>
+            </Card>
+          </Hidden>
+          <Hidden mdUp>
+            <ButtonBase
+              className={classes.buttonBase}
               disableRipple={true}
-              aria-label="Edit"
-              onClick={() => {
-                clientEdited(client);
-              }}
+              disableTouchRipple={true}
+              component={CardLink}
             >
-              <Icon>edit</Icon>
-            </IconButton>
-            <IconButton
-              className={classes.iconHover}
-              disableRipple={true}
-              aria-label="Archive"
-              onClick={() => {
-                clientDeleted(client);
-              }}
-            >
-              <Icon>archive</Icon>
-            </IconButton>
-          </CardActions>
-        </Card>
-      </Hidden>
-      <Hidden mdUp>
-        <ButtonBase
-          className={classes.buttonBase}
-          disableRipple={true}
-          disableTouchRipple={true}
-          component={CardLink}
-        >
-          <CardHeader
-            className={classes.mobileCard}
-            avatar={
-              <Avatar className={classes.avatar}>
-                <Icon fontSize="large">person</Icon>
-              </Avatar>
-            }
-            action={
-              <IconButton style={{ transform: 'rotate(90deg)' }}>
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={
-              <Typography
-                noWrap
-                variant="h6"
-                align="left"
-                className={classes.nameClientMobile}
-              >
-                {name}
-              </Typography>
-            }
-            subheader={
-              <Typography align="left" className={classes.sessionMobile}>
-                {sessions}
-              </Typography>
-            }
-          />
-        </ButtonBase>
-      </Hidden>
-    </div>
+              <CardHeader
+                className={classes.mobileCard}
+                avatar={
+                  <Avatar className={classes.avatar}>
+                    <Icon fontSize="large">person</Icon>
+                  </Avatar>
+                }
+                action={
+                  <IconButton style={{ transform: 'rotate(90deg)' }}>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={
+                  <Typography
+                    noWrap
+                    variant="h6"
+                    align="left"
+                    className={classes.nameClientMobile}
+                  >
+                    {name}
+                  </Typography>
+                }
+                subheader={
+                  <Typography align="left" className={classes.sessionMobile}>
+                    {sessions}
+                  </Typography>
+                }
+              />
+            </ButtonBase>
+          </Hidden>
+        </div>
+      )}
+    </Mutation>
   );
 }
 
-export default withStyles(styles)(ClientCard);
+export default withStyles(styles)(withSnackbar(ClientCard));

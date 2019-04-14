@@ -16,7 +16,6 @@ import SearchField from '../../components/UI/SearchField/SearchField';
 import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
-import DeleteClientDialog from '../../components/Clients/DeleteClientDialog/DeleteClientDialog';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 import blue from '@material-ui/core/colors/blue';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
@@ -62,7 +61,6 @@ const styles = theme => ({
 class ClientsPage extends Component {
   state = {
     isNewClientDialogOpened: false,
-    isDeleteClientDialogOpened: false,
     isEditClientDialogOpened: false,
     selectedClient: {
       c_id: '',
@@ -139,7 +137,6 @@ class ClientsPage extends Component {
     const {
       isNewClientDialogOpened,
       isEditClientDialogOpened,
-      isDeleteClientDialogOpened,
       selectedClient,
       view
     } = this.state;
@@ -217,12 +214,6 @@ class ClientsPage extends Component {
               <EditClientDialog
                 opened={isEditClientDialogOpened}
                 closed={this.closeEditClientDialogHandler}
-                client={selectedClient}
-              />
-              <DeleteClientDialog
-                opened={isDeleteClientDialogOpened}
-                closed={this.closeDeleteClientDialogHandler}
-                practitionerId={p_id}
                 client={selectedClient}
               />
             </div>
