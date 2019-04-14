@@ -1,44 +1,65 @@
 import GraphQlUUID from 'graphql-type-uuid';
+import nluModules from '../../modules/nlu';
 
 export default {
   UUID: GraphQlUUID,
 
   Result: {
-    categories: ({ result_id }, args, { models }) => {
-      return models.Category.findAll({ 
-        where: { 
+    categories: ({
+      result_id
+    }, args, {
+      models
+    }) => {
+      return models.Category.findAll({
+        where: {
           result_id
         }
       });
     },
 
-    entities: ({ result_id }, args, { models }) => {
-      return models.Entity.findAll({ 
-        where: { 
+    entities: ({
+      result_id
+    }, args, {
+      models
+    }) => {
+      return models.Entity.findAll({
+        where: {
           result_id
         }
       });
     },
 
-    emotions: ({ result_id }, args, { models }) => {
-      return models.Emotion.findAll({ 
-        where: { 
+    emotions: ({
+      result_id
+    }, args, {
+      models
+    }) => {
+      return models.Emotion.findAll({
+        where: {
           result_id
         }
       });
     },
 
-    sentiment: ({ result_id }, args, { models }) => {
-      return models.Sentiment.findAll({ 
-        where: { 
+    sentiment: ({
+      result_id
+    }, args, {
+      models
+    }) => {
+      return models.Sentiment.findAll({
+        where: {
           result_id
         }
       });
     },
-    
-    keywords: ({ result_id }, args, { models }) => {
-      return models.Keyword.findAll({ 
-        where: { 
+
+    keywords: ({
+      result_id
+    }, args, {
+      models
+    }) => {
+      return models.Keyword.findAll({
+        where: {
           result_id
         }
       });
@@ -46,10 +67,16 @@ export default {
   },
 
   Query: {
-    result: (parent, { session_id }, { models }) => {
+    result: (parent, {
+      session_id
+    }, {
+      models
+    }) => {
       return models.Result.findOne({
         // limit: 1,
-        where: { session_id },
+        where: {
+          session_id
+        },
         order: [
           ['date_generated', 'DESC']
         ]
@@ -59,26 +86,22 @@ export default {
 
   Mutation: {
     generateResults: async (
-      parent, 
-      { date_generated, session_id },
-      { models }
+      parent, {
+        date_generated,
+        session_id
+      }, {
+        models
+      }
     ) => {
-      //NLU
-      var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
-
-      var nlu = new NaturalLanguageUnderstandingV1({
-        version: '2018-11-16'
-      });
-
       var contents = [];
 
       const getSessionDocumentContent = await models.Session_Document.findAll({
         raw: true,
         attributes: ['content'],
-        where: { 
+        where: {
           session_id,
           archive_status: 'active'
-        } 
+        }
       }).then(results => {
         results.forEach((result) => {
           contents.push(result.content);
@@ -90,28 +113,15 @@ export default {
         session_id
       });
 
-      const { result_id } = addResultRes.dataValues;
+      const {
+        result_id
+      } = addResultRes.dataValues;
 
-      var parameters = {
-        "text" : contents.join(),
-        "features" : {
-          "entities" : {
-            // "model" : "735eff45-513d-499d-90bc-b4b72ead789e"
-          },
-          "sentiment" : {},
-          "categories" : {},
-          "keywords" : {},
-          "emotion" : {}
-        } 
-      }
+      await nluModules.analyzeContent(contents)
+        .then(async response => {
 
-      //insert code for storing in Results' child tables
-      nlu.analyze(parameters, (err, response) => {
-        if(err) {
-          console.log(err);
-        } else {
           //store sentiment to db
-          models.Sentiment.create({
+          await models.Sentiment.create({
             score: response.sentiment.document.score,
             label: response.sentiment.document.label,
             result_id
@@ -120,8 +130,8 @@ export default {
           //store keywords to db
           var keywordsRes = response.keywords;
 
-          keywordsRes.forEach((keywordRes) => {
-            models.Keyword.create({
+          keywordsRes.forEach(async (keywordRes) => {
+            await models.Keyword.create({
               text: keywordRes.text,
               relevance: keywordRes.relevance,
               count: keywordRes.count,
@@ -132,8 +142,8 @@ export default {
           //store categories to db
           var categoriesRes = response.categories;
 
-          categoriesRes.forEach((categoryRes) => {
-            models.Category.create({
+          categoriesRes.forEach(async (categoryRes) => {
+            await models.Category.create({
               score: categoryRes.score,
               label: categoryRes.label,
               result_id
@@ -143,8 +153,8 @@ export default {
           //store entities to db
           var entitiesRes = response.entities;
 
-          entitiesRes.forEach((entityRes) => {
-            models.Entity.create({
+          entitiesRes.forEach(async (entityRes) => {
+            await models.Entity.create({
               type: entityRes.type,
               text: entityRes.text,
               relevance: entityRes.relevance,
@@ -153,7 +163,7 @@ export default {
           });
 
           //store emotions to db
-          models.Emotion.create({
+          await models.Emotion.create({
             sadness: response.emotion.document.emotion.sadness,
             anger: response.emotion.document.emotion.anger,
             joy: response.emotion.document.emotion.joy,
@@ -161,13 +171,16 @@ export default {
             disgust: response.emotion.document.emotion.disgust,
             result_id
           });
-        }
-      });
 
-      return await models.Result.findOne({
-        raw: true,
-        where: { result_id }
-      });
+          return result_id;
+        });
+
+        return await models.Result.findOne({
+          raw: true,
+          where: {
+            result_id
+          }
+        });
     },
   }
 };
