@@ -115,8 +115,8 @@ const styles = theme => ({
     padding: '5px 25px 5px 25px'
   },
   iconInfo: {
-    marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit,
     borderRadius: '100%',
     '&:hover, &:focus': {
       color: '#0091ea',
@@ -145,7 +145,8 @@ const styles = theme => ({
     }
   },
   actionButton: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   searchIcon: {
     width: theme.spacing.unit * 8,
@@ -222,8 +223,6 @@ class ClientPage extends Component {
   };
 
   openEditSessionDialogHandler = session => {
-    console.log(session.date_of_session);
-
     this.setState({
       isEditSessionDialogOpened: true,
       selectedSession: {
@@ -296,7 +295,7 @@ class ClientPage extends Component {
                       </Typography>
                     </Breadcrumbs>
                   </Grid>
-                  <Grid item xs={6} align="flex-end">
+                  <Grid item xs={6}>
                     <div className={classes.actionButton}>
                       <div className={classes.grow} />
                       <div className={classes.search}>
