@@ -15,13 +15,12 @@ const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
 
-const addUser = async (req) => {
+const getUser = async (req) => {
   const token = req.headers.authorization;
   try {
     const { user } = await jwt.verify(token, SECRET);
     req.user = user;
   } catch (err) {
-    console.log(err);
   }
 
   req.next();
@@ -44,7 +43,7 @@ const apollo = new ApolloServer({
 
 const app = express();
 app.use(cors());
-app.use(addUser);
+app.use(getUser);
 
 apollo.applyMiddleware({ app });
 
