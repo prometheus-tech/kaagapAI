@@ -222,6 +222,8 @@ class ClientPage extends Component {
   };
 
   openEditSessionDialogHandler = session => {
+    console.log(session.date_of_session);
+
     this.setState({
       isEditSessionDialogOpened: true,
       selectedSession: {

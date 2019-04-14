@@ -35,7 +35,7 @@ class EditSessionDialog extends Component {
     this.state = {
       session_id,
       session_name,
-      date_of_session
+      date_of_session: getUTCDate(new Date(date_of_session))
     };
 
     // Needed for validation
@@ -48,7 +48,7 @@ class EditSessionDialog extends Component {
     this.setState({
       session_id: session_id,
       session_name,
-      date_of_session
+      date_of_session: getUTCDate(new Date(date_of_session))
     });
   }
 
@@ -61,13 +61,6 @@ class EditSessionDialog extends Component {
       return value.match(date);
     });
   }
-
-  clearFieldsHandler = () => {
-    this.setState({
-      session_name: '',
-      date_of_session: getUTCDate(new Date())
-    });
-  };
 
   inputChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -84,9 +77,9 @@ class EditSessionDialog extends Component {
           __typename: 'Mutation',
           updateSessionInformation: {
             __typename: 'Session',
-            session_id: session_id,
-            session_name: session_name,
-            date_of_session: date_of_session
+            session_id,
+            session_name,
+            date_of_session
           }
         }}
       >
@@ -103,9 +96,9 @@ class EditSessionDialog extends Component {
                 onSubmit={() => {
                   editSession({
                     variables: {
-                      session_id: session_id,
-                      session_name: session_name,
-                      date_of_session: date_of_session
+                      session_id,
+                      session_name,
+                      date_of_session
                     }
                   });
 
