@@ -1,6 +1,5 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import nluModules from '../../modules/nlu';
-import nlu from '../../modules/nlu';
 
 export default {
   UUID: GraphQlUUID,
@@ -175,7 +174,7 @@ export default {
 
           return result_id;
         });
-        
+
         return await models.Result.findOne({
           raw: true,
           where: {
