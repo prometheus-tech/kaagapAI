@@ -9,7 +9,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import brown from '@material-ui/core/colors/brown';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import grey from '@material-ui/core/colors/grey';
 
@@ -40,20 +39,18 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2.2,
     fontWeight: 400,
     color: grey[900],
-    letterSpacing: '2px',
-    width: '130px',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   },
   cardSubheader: {
     fontSize: theme.spacing.unit * 1.6,
-    color: brown[200]
+    color: grey[600]
   },
   buttonBase: {
     display: 'block'
   },
   iconAction: {
-    marginTop: theme.spacing.unit * 2
+    // marginTop: theme.spacing.unit * 2
   },
   icon: {
     fontSize: theme.spacing.unit * 7

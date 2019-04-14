@@ -108,7 +108,7 @@ class RenameSessionDocumentDialog extends Component {
                   closed();
                 }}
               >
-                <DialogTitle>Rename Session</DialogTitle>
+                <DialogTitle>Rename Document</DialogTitle>
                 <DialogContent>
                   <TextValidator
                     value={file_name}

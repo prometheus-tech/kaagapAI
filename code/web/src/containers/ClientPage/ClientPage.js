@@ -17,7 +17,10 @@ import ClientInformation from '../../components/Client/ClientInformation/ClientI
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import PeopleIcon from '@material-ui/icons/People';
+import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
+import InputBase from '@material-ui/core/InputBase';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
@@ -38,7 +41,9 @@ const drawerWidth = '25';
 const styles = theme => ({
   root: {
     display: 'flex',
-    width: '100vw'
+    width: '100vw',
+    padding: '0px',
+    marginTop: theme.spacing.unit * -4
   },
   content: {
     flexGrow: 1,
@@ -63,13 +68,13 @@ const styles = theme => ({
   },
   breadCrumb: {
     fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit
   },
   breadCrumbLinkClient: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '10px 5px 10px 5px',
     color: '#0091ea'
   },
@@ -77,7 +82,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '5px 15px 5px 15px',
     borderRadius: '50px',
     '&:hover': {
@@ -111,6 +116,9 @@ const styles = theme => ({
     padding: '5px 25px 5px 25px'
   },
   iconInfo: {
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 2,
+    borderRadius: '100%',
     '&:hover, &:focus': {
       color: '#0091ea',
       backgroundColor: grey[300]
@@ -119,14 +127,61 @@ const styles = theme => ({
   extendedIcon: {
     marginRight: theme.spacing.unit
   },
-  actionButton: {
-    marginTop: theme.spacing.unit * 4
-  },
-  searchField: {
-    marginBottom: theme.spacing.unit * 4
-  },
   divider: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * -1
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginLeft: 0,
+    marginRight: theme.spacing.unit * 4,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit,
+      width: 'auto'
+    }
+  },
+  actionButton: {
+    display: 'flex'
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 8,
+    height: '5vh',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: theme.spacing.unit
+  },
+  grow: {
+    flexGrow: 1
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+    background: grey[200],
+    borderRadius: theme.spacing.unit,
+    height: '5vh',
+    margin: theme.spacing.unit
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200
+      }
+    }
   }
 });
 
@@ -236,7 +291,7 @@ class ClientPage extends Component {
                 })}
               >
                 <Grid justify="space-between" container spacing={16}>
-                  <Grid item>
+                  <Grid item xs={6}>
                     <Breadcrumbs
                       separator={<NavigateNextIcon />}
                       className={classes.breadCrumb}
@@ -259,41 +314,25 @@ class ClientPage extends Component {
                       </Typography>
                     </Breadcrumbs>
                   </Grid>
-                  <Grid item>
-                    {/* <SearcField label="" className={classes.searchField} /> */}
-                  </Grid>
-                </Grid>
-                <Divider light className={classes.divider} />
-                <Grid justify="space-between" container spacing={16}>
-                  <Grid item>
-                    <Hidden smDown>
-                      <Fab
-                        color="primary"
-                        variant="extended"
-                        className={classes.extendedButton}
-                        onClick={this.openNewSessionDialogHandler}
-                      >
-                        <Add className={classes.extendedIcon} /> New Session
-                      </Fab>
-                    </Hidden>
-                    <Hidden mdUp>
-                      <Fab
-                        size="large"
-                        color="primary"
-                        className={classes.floatingButton}
-                        onClick={this.openNewSessionDialogHandler}
-                        disableRipple={false}
-                        disableFocusRipple={false}
-                      >
-                        <Add />
-                      </Fab>
-                    </Hidden>
-                  </Grid>
-                  <Grid item align="flex-end">
+                  <Grid item xs={6} align="flex-end">
                     <div className={classes.actionButton}>
+                      <div className={classes.grow} />
+                      <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                          <SearchIcon />
+                        </div>
+                        <InputBase
+                          placeholder="Search…"
+                          classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput
+                          }}
+                        />
+                      </div>
                       <ViewControl
                         view={view}
                         viewChanged={this.changeViewHandler}
+                        className={classes.actionIconView}
                       />
                       <IconButton
                         component="span"
@@ -309,8 +348,40 @@ class ClientPage extends Component {
                     </div>
                   </Grid>
                 </Grid>
+                <Divider light className={classes.divider} />
+                <Grid justify="space-between" container spacing={16}>
+                  <Grid item>
+                    {data.client.sessions.length > 0 ? (
+                      <Hidden smDown>
+                        <Fab
+                          color="primary"
+                          variant="extended"
+                          className={classes.extendedButton}
+                          onClick={this.openNewSessionDialogHandler}
+                        >
+                          <Add className={classes.extendedIcon} /> New Session
+                        </Fab>
+                      </Hidden>
+                    ) : null}
+                    <Hidden mdUp>
+                      <Fab
+                        size="large"
+                        color="primary"
+                        className={classes.floatingButton}
+                        onClick={this.openNewSessionDialogHandler}
+                        disableRipple={false}
+                        disableFocusRipple={false}
+                      >
+                        <Add />
+                      </Fab>
+                    </Hidden>
+                  </Grid>
+                  <Grid item align="flex-end" />
+                </Grid>
                 {data.client.sessions.length === 0 ? (
-                  <p>None</p>
+                  <EmptySession
+                    newSessionOpened={this.openNewSessionDialogHandler}
+                  />
                 ) : view === 'card' && data.client.sessions.length > 0 ? (
                   <SessionCards
                     sessions={data.client.sessions}
