@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { cloneDeep } from 'apollo-utilities';
-import { getUTCDate } from '../../../util/helperFunctions';
+import { getUTCDate, trimAll } from '../../../util/helperFunctions';
 
 const styles = theme => ({
   inputGroup: {
@@ -66,7 +66,7 @@ class NewSessionDialog extends Component {
             cache.readQuery({
               query: CLIENT,
               variables: {
-                c_id: c_id
+                c_id
               }
             })
           );
@@ -113,7 +113,7 @@ class NewSessionDialog extends Component {
                   addSession({
                     variables: {
                       c_id: c_id,
-                      session_name: session_name,
+                      session_name: trimAll(session_name),
                       date_of_session: date_of_session
                     }
                   });

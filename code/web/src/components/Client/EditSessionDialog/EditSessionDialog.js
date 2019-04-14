@@ -14,7 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { getUTCDate } from '../../../util/helperFunctions';
+import { getUTCDate, trimAll } from '../../../util/helperFunctions';
 
 const styles = theme => ({
   inputGroup: {
@@ -97,7 +97,7 @@ class EditSessionDialog extends Component {
                   editSession({
                     variables: {
                       session_id,
-                      session_name,
+                      session_name: trimAll(session_name),
                       date_of_session
                     }
                   });
