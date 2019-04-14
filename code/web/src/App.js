@@ -13,9 +13,9 @@ import Button from '@material-ui/core/Button';
 import Layout from './hoc/Layout/Layout';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
+import SessionPage from './containers/SessionPage/SessionPage';
 
 import { USER_ID, AUTH_TOKEN } from './util/constants';
-import SessionPage from './containers/SessionPage/SessionPage';
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
@@ -33,7 +33,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-dev.herokuapp.com/graphql'
+  uri: 'https://kaagapai-test.herokuapp.com/graphql'
 });
 
 const client = new ApolloClient({

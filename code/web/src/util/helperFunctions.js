@@ -3,6 +3,10 @@ import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 
+export function trimAll(string) {
+  return string.replace(/\s\s+/g, ' ').trim();
+}
+
 export function getInitials(firstName, lastName) {
   return firstName.charAt(0) + lastName.charAt(0);
 }

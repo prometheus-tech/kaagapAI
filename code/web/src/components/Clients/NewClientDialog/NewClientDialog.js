@@ -25,6 +25,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { cloneDeep } from 'apollo-utilities';
 
+import { trimAll } from '../../../util/helperFunctions';
+
 const styles = theme => ({
   inputGroup: {
     marginTop: 16,
@@ -72,6 +74,10 @@ class NewClientDialog extends Component {
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
     });
+
+    ValidatorForm.addValidationRule('isNotTooLong', value => {
+      return trimAll(value).length < 100;
+    });
   }
 
   render() {
@@ -91,6 +97,7 @@ class NewClientDialog extends Component {
                 }
               })
             );
+
             clients.push(addClient);
 
             cache.writeQuery({
@@ -134,8 +141,8 @@ class NewClientDialog extends Component {
                     addClient({
                       variables: {
                         p_id: p_id,
-                        fname: fname.trim(),
-                        lname: lname.trim(),
+                        fname: trimAll(fname),
+                        lname: trimAll(lname),
                         gender: gender,
                         birthdate: birthdate
                       }
@@ -159,11 +166,7 @@ class NewClientDialog extends Component {
                               name="fname"
                               onChange={this.inputChangeHandler}
                               margin="dense"
-                              validators={[
-                                'required',
-                                'trim',
-                                'maxStringLength:' + 100
-                              ]}
+                              validators={['required', 'trim', 'isNotTooLong']}
                               errorMessages={[
                                 'This field is required',
                                 'This field must have at least one non-whitespace character',
@@ -180,11 +183,7 @@ class NewClientDialog extends Component {
                               name="lname"
                               onChange={this.inputChangeHandler}
                               margin="dense"
-                              validators={[
-                                'required',
-                                'trim',
-                                'maxStringLength:' + 100
-                              ]}
+                              validators={['required', 'trim', 'isNotTooLong']}
                               errorMessages={[
                                 'This field is required',
                                 'This field must contain at least one non-whitespace character',

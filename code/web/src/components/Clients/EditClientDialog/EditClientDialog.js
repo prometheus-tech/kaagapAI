@@ -22,6 +22,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
+import { trimAll } from '../../../util/helperFunctions';
+
 const styles = theme => ({
   extendedButton: {
     backgroundColor: lightBlue[600],
@@ -92,6 +94,10 @@ class EditClientDialog extends Component {
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
     });
+
+    ValidatorForm.addValidationRule('isNotTooLong', value => {
+      return trimAll(value).length < 100;
+    });
   }
 
   inputChangeHandler = e => {
@@ -139,8 +145,8 @@ class EditClientDialog extends Component {
                   editClient({
                     variables: {
                       c_id: c_id,
-                      fname: fname,
-                      lname: lname,
+                      fname: trimAll(fname),
+                      lname: trimAll(lname),
                       gender: gender,
                       birthdate: birthdate
                     }
