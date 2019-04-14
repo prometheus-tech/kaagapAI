@@ -17,12 +17,8 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 const styles = theme => ({
   listSession: {
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     padding: '16px',
-    // '&:hover': {
-    //   boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-    //   borderRadius: '50px'
-    // },
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {

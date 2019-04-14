@@ -67,11 +67,13 @@ const styles = theme => ({
     backgroundColor: orange[800]
   },
   cardTitle: {
-    fontWeight: '600',
-    color: grey[900]
+    fontWeight: '500',
+    color: grey[900],
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   },
   cardSubheader: {
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: '14px',
     color: theme.palette.grey[600]
   },

@@ -33,6 +33,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@material-ui/core/Icon';
 import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
+import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
@@ -71,15 +72,18 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '5px 15px 5px 15px',
-    borderRadius: '50px'
+    borderRadius: '50px',
+    '&:hover': {
+      backgroundColor: grey[300]
+    }
   },
   breadCrumbLinkSession: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '5px 15px 5px 15px',
     borderRadius: '50px',
     color: orange[800]

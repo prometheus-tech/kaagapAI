@@ -161,7 +161,6 @@ class DeleteSessionDialog extends Component {
                 onClick={() => {
                   deleteSession({
                     variables: {
-                      c_id: this.state.c_id,
                       session_id: this.state.session_id
                     }
                   });

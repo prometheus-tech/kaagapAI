@@ -64,7 +64,7 @@ const styles = theme => ({
     color: grey[900],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontWeight: '600'
+    fontWeight: '500'
   },
   nameClientMobile: {
     position: 'relative',
@@ -78,7 +78,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   session: {
-    fontWeight: '300',
+    fontWeight: '400',
     fontSize: '14px',
     marginTop: '15px',
     color: theme.palette.grey[600]

@@ -69,7 +69,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '10px 5px 10px 5px',
     color: '#0091ea'
   },
@@ -77,7 +77,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
+    fontWeight: '500',
     padding: '5px 15px 5px 15px',
     borderRadius: '50px',
     '&:hover': {
