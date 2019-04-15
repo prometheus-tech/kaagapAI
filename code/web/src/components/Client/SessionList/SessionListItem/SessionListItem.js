@@ -21,6 +21,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Moment from 'react-moment';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   listSession: {
@@ -166,28 +167,32 @@ function SessionListItem(props) {
               </Grid>
               <Grid item xs={2}>
                 <div className={classes.listItemActions}>
-                  <IconButton
-                    onClick={e => {
-                      e.preventDefault();
-                      sessionEdited(session);
-                    }}
-                    className={classes.listItemActionEdit}
-                  >
-                    <Icon>edit</Icon>
-                  </IconButton>
-                  <IconButton
-                    onClick={e => {
-                      e.preventDefault();
-                      deleteSession({
-                        variables: {
-                          session_id
-                        }
-                      });
-                    }}
-                    className={classes.listItemActionArchive}
-                  >
-                    <Icon>archive</Icon>
-                  </IconButton>
+                  <Tooltip title="Edit">
+                    <IconButton
+                      onClick={e => {
+                        e.preventDefault();
+                        sessionEdited(session);
+                      }}
+                      className={classes.listItemActionEdit}
+                    >
+                      <Icon>edit</Icon>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Archive">
+                    <IconButton
+                      onClick={e => {
+                        e.preventDefault();
+                        deleteSession({
+                          variables: {
+                            session_id
+                          }
+                        });
+                      }}
+                      className={classes.listItemActionArchive}
+                    >
+                      <Icon>archive</Icon>
+                    </IconButton>
+                  </Tooltip>
                 </div>
               </Grid>
             </Grid>
