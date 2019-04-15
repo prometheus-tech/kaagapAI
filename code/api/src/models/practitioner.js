@@ -17,10 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('pending', 'deactivated', 'active'),
       defaultValue: 'pending'
     },
-    date_registered: {
-      type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW
-    },
+    date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
     verification_code: DataTypes.STRING
