@@ -8,13 +8,16 @@ export default {
       return models.Session.findAll({ 
         where: { 
           c_id,
-          archive_status: 'active'
+          status: 'active'
         } 
       });
     },
 
     no_of_sessions: ({ c_id }, args, { models }) => {
-      return models.Session.count({ where: { c_id } });
+      return models.Session.count({ where: { 
+        c_id ,
+        status: 'active'
+      } });
     }
   },
 
@@ -24,7 +27,7 @@ export default {
         raw: true,
         where: { 
           p_id,
-          archive_status: 'active'
+          status: 'active'
         }
       });
     },
@@ -69,13 +72,13 @@ export default {
 
     deleteClient: async (parent, { c_id }, { models }) => {
       await models.Client.update({ 
-        archive_status: "archived" 
+        status: "archived" 
       }, {
           where: { c_id }
       })
       
       await models.Session.update({ 
-        archive_status: "archived" 
+        status: "archived" 
       }, {
           where: { c_id }
       })
@@ -88,7 +91,7 @@ export default {
           let id = element.dataValues.session_id
 
           models.Session_Document.update({ 
-            archive_status: "archived" 
+            status: "archived" 
           }, {
             where: { session_id: id }
           })
@@ -103,13 +106,13 @@ export default {
 
     restoreClient: async (parent, { c_id }, { models }) => {
       await models.Client.update({ 
-        archive_status: "active" 
+        status: "active" 
       }, {
           where: { c_id }
       })
       
       await models.Session.update({ 
-        archive_status: "active" 
+        status: "active" 
       }, {
           where: { c_id }
       })
@@ -122,7 +125,7 @@ export default {
           let id = element.dataValues.session_id
 
           models.Session_Document.update({ 
-            archive_status: "active" 
+            status: "active" 
           }, {
             where: { session_id: id }
           })

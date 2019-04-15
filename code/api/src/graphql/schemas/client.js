@@ -20,7 +20,7 @@ export default `
     birthdate: Date!
     date_added: Date!
     last_opened: Date
-    archive_status: ArchiveStatus!
+    status: ArchiveStatus!
     p_id: UUID!
     no_of_sessions: Int
     sessions: [Session]

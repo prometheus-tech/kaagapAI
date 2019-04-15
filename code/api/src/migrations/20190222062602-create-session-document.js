@@ -26,7 +26,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
-      archive_status: {
+      status: {
         type: Sequelize.ENUM('archived', 'active'),
         allowNull: false
       },

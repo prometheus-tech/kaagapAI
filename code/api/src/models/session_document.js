@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     date_added: DataTypes.DATE,
     last_modified: DataTypes.DATE,
     type: DataTypes.STRING,
-    archive_status: {
+    status: {
       type: DataTypes.ENUM('archived', 'active'),
       defaultValue: 'active'
     }

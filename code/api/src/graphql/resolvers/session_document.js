@@ -75,7 +75,7 @@ export default {
 
     deleteSessionDocument: async (parent, { sd_id }, { models }) => {
       await models.Session_Document.update({ 
-        archive_status: "archived" 
+        status: "archived" 
       }, {
         where: { sd_id }
       })
@@ -88,7 +88,7 @@ export default {
 
     restoreSessionDocument: async (parent, { sd_id }, { models }) => {
       await models.Session_Document.update({ 
-        archive_status: "active" 
+        status: "active" 
       }, {
         where: { sd_id }
       })

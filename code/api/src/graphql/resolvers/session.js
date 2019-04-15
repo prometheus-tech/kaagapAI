@@ -7,7 +7,7 @@ export default {
       return models.Session_Document.findAll({ 
         where: { 
           session_id,
-          archive_status: 'active'
+          status: 'active'
         } 
       });
     }
@@ -41,13 +41,13 @@ export default {
 
     deleteSession: async (parent, { session_id }, { models }) => {
       await models.Session.update({ 
-        archive_status: "archived" 
+        status: "archived" 
       }, {
         where: { session_id }
       })
       
       await models.Session_Document.update({ 
-        archive_status: "archived" 
+        status: "archived" 
       }, {
         where: { session_id }
       })
@@ -60,13 +60,13 @@ export default {
 
     restoreSession: async (parent, { session_id }, { models }) => {
       await models.Session.update({ 
-        archive_status: "active" 
+        status: "active" 
       }, {
         where: { session_id }
       })
       
       await models.Session_Document.update({ 
-        archive_status: "active" 
+        status: "active" 
       }, {
         where: { session_id }
       })

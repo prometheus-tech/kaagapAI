@@ -15,7 +15,7 @@ export default `
     date_added: Date!
     last_modified: Date
     type: String!
-    archive_status: ArchiveStatus!
+    status: ArchiveStatus!
     session_id: UUID!
   }
 

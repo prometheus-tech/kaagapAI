@@ -11,7 +11,7 @@ export default `
     session_id: UUID!
     session_name: String!
     date_of_session: Date!
-    archive_status: ArchiveStatus!
+    status: ArchiveStatus!
     c_id: UUID!
     documents: [SessionDocument]
   }

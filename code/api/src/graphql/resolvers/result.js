@@ -100,7 +100,7 @@ export default {
         attributes: ['content'],
         where: {
           session_id,
-          archive_status: 'active'
+          status: 'active'
         }
       }).then(results => {
         results.forEach((result) => {

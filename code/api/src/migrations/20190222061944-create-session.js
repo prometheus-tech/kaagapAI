@@ -14,7 +14,7 @@ module.exports = {
       date_of_session: {
         type: Sequelize.DATEONLY
       },
-      archive_status: {
+      status: {
         type: Sequelize.ENUM('archived', 'active'),
         allowNull: false
       },
