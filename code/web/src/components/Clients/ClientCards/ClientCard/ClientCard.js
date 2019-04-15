@@ -19,6 +19,7 @@ import grey from '@material-ui/core/colors/grey';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import CardHeader from '@material-ui/core/CardHeader';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { cloneDeep } from 'apollo-utilities';
 
@@ -184,26 +185,30 @@ function ClientCard(props) {
                 </CardContent>
               </ButtonBase>
               <CardActions className={classes.action}>
-                <IconButton
-                  className={classes.iconHover}
-                  disableRipple={true}
-                  aria-label="Edit"
-                  onClick={() => {
-                    clientEdited(client);
-                  }}
-                >
-                  <Icon>edit</Icon>
-                </IconButton>
-                <IconButton
-                  className={classes.iconHover}
-                  disableRipple={true}
-                  aria-label="Archive"
-                  onClick={() => {
-                    deleteClient({ variables: { c_id } });
-                  }}
-                >
-                  <Icon>archive</Icon>
-                </IconButton>
+                <Tooltip title="Edit">
+                  <IconButton
+                    className={classes.iconHover}
+                    disableRipple={true}
+                    aria-label="Edit"
+                    onClick={() => {
+                      clientEdited(client);
+                    }}
+                  >
+                    <Icon>edit</Icon>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Archive">
+                  <IconButton
+                    className={classes.iconHover}
+                    disableRipple={true}
+                    aria-label="Archive"
+                    onClick={() => {
+                      deleteClient({ variables: { c_id } });
+                    }}
+                  >
+                    <Icon>archive</Icon>
+                  </IconButton>
+                </Tooltip>
               </CardActions>
             </Card>
           </Hidden>
