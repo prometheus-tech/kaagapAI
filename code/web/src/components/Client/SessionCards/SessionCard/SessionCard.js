@@ -24,6 +24,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Hidden from '@material-ui/core/Hidden';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { cloneDeep } from 'apollo-utilities';
 
@@ -179,30 +180,34 @@ function SessionCard(props) {
                 </CardContent>
               </ButtonBase>
               <CardActions className={classes.cardActions}>
-                <IconButton
-                  disableRipple={true}
-                  aria-label="Edit"
-                  className={classes.iconAction}
-                  onClick={() => {
-                    sessionEdited(session);
-                  }}
-                >
-                  <Icon fontSize="small">edit</Icon>
-                </IconButton>
-                <IconButton
-                  disableRipple={true}
-                  aria-label="Archive"
-                  className={classes.iconAction}
-                  onClick={() => {
-                    deleteSession({
-                      variables: {
-                        session_id
-                      }
-                    });
-                  }}
-                >
-                  <Icon fontSize="small">archive</Icon>
-                </IconButton>
+                <Tooltip title="Edit">
+                  <IconButton
+                    disableRipple={true}
+                    aria-label="Edit"
+                    className={classes.iconAction}
+                    onClick={() => {
+                      sessionEdited(session);
+                    }}
+                  >
+                    <Icon fontSize="small">edit</Icon>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Archive">
+                  <IconButton
+                    disableRipple={true}
+                    aria-label="Archive"
+                    className={classes.iconAction}
+                    onClick={() => {
+                      deleteSession({
+                        variables: {
+                          session_id
+                        }
+                      });
+                    }}
+                  >
+                    <Icon fontSize="small">archive</Icon>
+                  </IconButton>
+                </Tooltip>
               </CardActions>
             </Card>
           </Hidden>

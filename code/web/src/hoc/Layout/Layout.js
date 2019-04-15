@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   mainGrid: {
     padding: theme.spacing.unit * 6,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing.unit * 4
     },

@@ -35,14 +35,14 @@ import SessionCards from '../../components/Client/SessionCards/SessionCards';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import EmptySession from '../../components/UI/Placeholder/EmptySession';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
     display: 'flex',
     width: '100vw',
-    padding: '0px',
-    marginTop: theme.spacing.unit * -4
+    padding: '0px'
   },
   content: {
     flexGrow: 1,
@@ -315,17 +315,19 @@ class ClientPage extends Component {
                         viewChanged={this.changeViewHandler}
                         className={classes.actionIconView}
                       />
-                      <IconButton
-                        component="span"
-                        className={classes.iconInfo}
-                        onClick={
-                          isClientDetailsOpened
-                            ? this.closeClientDetailsHandler
-                            : this.openClientDetailsHandler
-                        }
-                      >
-                        <InfoIcon fontSize="small" />
-                      </IconButton>
+                      <Tooltip title="View client information">
+                        <IconButton
+                          component="span"
+                          className={classes.iconInfo}
+                          onClick={
+                            isClientDetailsOpened
+                              ? this.closeClientDetailsHandler
+                              : this.openClientDetailsHandler
+                          }
+                        >
+                          <InfoIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
                     </div>
                   </Grid>
                 </Grid>
