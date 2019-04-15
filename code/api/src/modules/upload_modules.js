@@ -12,11 +12,11 @@ const uploadFile = async(file, session_id) => {
   await documentModules.storeUpload({ stream, inputPath });
   var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
-  var filePath = 'gs://kaagapai-uploads/' + newFileName;
+  var filePath = 'gs://kaagapai-files/' + newFileName;
 
   if (mimetype.indexOf('wave') + 1) {
     inputPath = './src/tmp/' + newFileName;
-    filePath = 'gs://kaagapai-uploads/' + newFileName;
+    filePath = 'gs://kaagapai-files/' + newFileName;
 
     await documentModules.uploadGCS(inputPath);
 
@@ -35,7 +35,7 @@ const uploadFile = async(file, session_id) => {
     try {
       inputPath = './src/tmp/' + newFileName;
       newFileName = path.parse(newFileName).name + '.wav';
-      filePath = 'gs://kaagapai-uploads/' + newFileName;
+      filePath = 'gs://kaagapai-files/' + newFileName;
       const params = {
         inputPath: inputPath,
         outputPath: './src/tmp/' + newFileName
@@ -48,7 +48,7 @@ const uploadFile = async(file, session_id) => {
             .then(wavFile => {
               (async () => {
                 const transcription = await documentModules.extractText(
-                  'gs://kaagapai-uploads/' + wavFile.name
+                  'gs://kaagapai-files/' + wavFile.name
                 );
                 translation = await documentModules.translateText(transcription
                 );
