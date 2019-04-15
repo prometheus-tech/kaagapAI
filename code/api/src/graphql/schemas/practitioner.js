@@ -20,10 +20,12 @@ export default `
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date
+    verification_code: String!
   }
 
   type Mutation {
     login(email: String!, password: String!): JSON
-    register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): JSON
+    register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): Practitioner
+    verifyRegistration(email: String!,input_code:String!):Practitioner
   }
 `;

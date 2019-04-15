@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     fear: DataTypes.INTEGER,
     disgust: DataTypes.INTEGER
   }, {});
+
   Emotion.associate = models => {
     Emotion.belongsTo(models.Result, {
       foreignKey: 'result_id',
@@ -20,5 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
+  
   return Emotion;
 };

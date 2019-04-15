@@ -5,78 +5,41 @@ export default {
   UUID: GraphQlUUID,
 
   Result: {
-    categories: ({
-      result_id
-    }, args, {
-      models
-    }) => {
+    categories: ({ result_id }, args, { models }) => {
       return models.Category.findAll({
-        where: {
-          result_id
-        }
+        where: { result_id }
       });
     },
 
-    entities: ({
-      result_id
-    }, args, {
-      models
-    }) => {
+    entities: ({ result_id }, args, { models }) => {
       return models.Entity.findAll({
-        where: {
-          result_id
-        }
+        where: { result_id }
       });
     },
 
-    emotions: ({
-      result_id
-    }, args, {
-      models
-    }) => {
+    emotions: ({ result_id }, args, { models }) => {
       return models.Emotion.findAll({
-        where: {
-          result_id
-        }
+        where: { result_id }
       });
     },
 
-    sentiment: ({
-      result_id
-    }, args, {
-      models
-    }) => {
+    sentiment: ({ result_id }, args, { models }) => {
       return models.Sentiment.findAll({
-        where: {
-          result_id
-        }
+        where: { result_id }
       });
     },
 
-    keywords: ({
-      result_id
-    }, args, {
-      models
-    }) => {
+    keywords: ({ result_id }, args, { models }) => {
       return models.Keyword.findAll({
-        where: {
-          result_id
-        }
+        where: { result_id }
       });
     }
   },
 
   Query: {
-    result: (parent, {
-      session_id
-    }, {
-      models
-    }) => {
+    result: (parent, { session_id }, { models }) => {
       return models.Result.findOne({
-        // limit: 1,
-        where: {
-          session_id
-        },
+        where: { session_id },
         order: [
           ['date_generated', 'DESC']
         ]
@@ -89,9 +52,7 @@ export default {
       parent, {
         date_generated,
         session_id
-      }, {
-        models
-      }
+      }, { models }
     ) => {
       var contents = [];
 
@@ -113,9 +74,7 @@ export default {
         session_id
       });
 
-      const {
-        result_id
-      } = addResultRes.dataValues;
+      const { result_id } = addResultRes.dataValues;
 
       await nluModules.analyzeContent(contents)
         .then(async response => {
@@ -177,9 +136,7 @@ export default {
 
         return await models.Result.findOne({
           raw: true,
-          where: {
-            result_id
-          }
+          where: { result_id }
         });
     },
   }
