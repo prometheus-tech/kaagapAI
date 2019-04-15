@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING,
     relevance: DataTypes.INTEGER
   }, {});
+
   Entity.associate = models => {
     Entity.belongsTo(models.Result, {
       foreignKey: 'result_id',
@@ -18,5 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
+  
   return Entity;
 };
