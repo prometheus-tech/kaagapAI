@@ -51,7 +51,7 @@ module.exports = {
       },
       last_logged: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       verification_code: {
         type: Sequelize.STRING,

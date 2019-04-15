@@ -2,6 +2,7 @@ import GraphQlUUID from 'graphql-type-uuid';
 import GraphQlJSON from 'graphql-type-json';
 import auth from '../../modules/auth';
 import register from '../../modules/registration';
+import registration from '../../modules/registration';
 
 export default {
   UUID: GraphQlUUID,
@@ -36,6 +37,12 @@ export default {
       const session_token = auth.generateToken(practitioner, SECRET);
 
       return { p_id: practitioner.p_id, session_token };
+    },
+
+    register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models, SECRET }) => {
+      const verificationCode = registration.generateCode();
+
+      
     }
   }
 };
