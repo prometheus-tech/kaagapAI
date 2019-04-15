@@ -17,10 +17,7 @@ import ClientInformation from '../../components/Client/ClientInformation/ClientI
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import PeopleIcon from '@material-ui/icons/People';
-import SearchIcon from '@material-ui/icons/Search';
 import PersonIcon from '@material-ui/icons/Person';
-import InputBase from '@material-ui/core/InputBase';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
@@ -36,13 +33,13 @@ import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import EmptySession from '../../components/UI/Placeholder/EmptySession';
 import Tooltip from '@material-ui/core/Tooltip';
+import SearchField from '../../components/UI/SearchField/SearchField';
 
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
     display: 'flex',
-    width: '100vw',
-    padding: '0px'
+    width: '100vw'
   },
   content: {
     flexGrow: 1,
@@ -59,22 +56,16 @@ const styles = theme => ({
     }),
     marginRight: +drawerWidth + '%'
   },
-  secondaryHeader: {
-    marginBottom: theme.spacing.unit * 2
-  },
   breadCrumbIcon: {
     marginRight: theme.spacing.unit
-  },
-  breadCrumb: {
-    fontSize: theme.spacing.unit * 2.5,
-    marginTop: theme.spacing.unit
   },
   breadCrumbLinkClient: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
     alignItems: 'center',
     fontWeight: '500',
-    padding: '10px 5px 10px 5px',
+    borderRadius: '50px',
+    padding: '5px 15px 5px 15px',
     color: '#0091ea'
   },
   breadCrumbLinkClients: {
@@ -111,7 +102,6 @@ const styles = theme => ({
       backgroundColor: orange[900],
       boxShadow: theme.shadows[10]
     },
-    marginTop: theme.spacing.unit * 4,
     padding: '5px 25px 5px 25px'
   },
   iconInfo: {
@@ -127,61 +117,12 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   divider: {
-    marginTop: theme.spacing.unit * -1
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginLeft: 0,
-    marginRight: theme.spacing.unit * 4,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit,
-      width: 'auto'
-    }
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 4
   },
   actionButton: {
     display: 'flex',
     alignItems: 'center'
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 8,
-    height: '5vh',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: theme.spacing.unit
-  },
-  grow: {
-    flexGrow: 1
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-    background: grey[200],
-    borderRadius: theme.spacing.unit,
-    height: '5vh',
-    margin: theme.spacing.unit
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200
-      }
-    }
   }
 });
 
@@ -271,7 +212,12 @@ class ClientPage extends Component {
                   [classes.contentShift]: isClientDetailsOpened
                 })}
               >
-                <Grid justify="space-between" container spacing={16}>
+                <Grid
+                  container
+                  spacing={16}
+                  justify="space-between"
+                  alignItems="center"
+                >
                   <Grid item xs={6}>
                     <Breadcrumbs
                       separator={<NavigateNextIcon />}
@@ -297,19 +243,7 @@ class ClientPage extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <div className={classes.actionButton}>
-                      <div className={classes.grow} />
-                      <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                          <SearchIcon />
-                        </div>
-                        <InputBase
-                          placeholder="Search…"
-                          classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput
-                          }}
-                        />
-                      </div>
+                      <SearchField placeholder="Search session..." />
                       <ViewControl
                         view={view}
                         viewChanged={this.changeViewHandler}
