@@ -12,7 +12,6 @@
     "start": "node build/app.js",
     "build": "babel src --out-dir build",
     "heroku-postbuild": "npm i && npm run build",
-    "postinstall": "echo $GOOGLE_APPLICATION_CREDENTIALS > PT-kaagapai-9ff173d5bf95.json",
     "start:server": "node build/index.js",
     "dev:server": "nodemon src/app.js --exec babel-node"
   },
