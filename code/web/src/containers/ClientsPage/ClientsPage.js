@@ -26,7 +26,7 @@ const styles = theme => ({
     width: '100vw'
   },
   controls: {
-    marginBottom: theme.spacing.unit * 6
+    marginBottom: theme.spacing.unit * 4
   },
   floatingButton: {
     position: 'fixed',
@@ -55,6 +55,10 @@ const styles = theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
+  },
+  controlsContainer: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -139,7 +143,7 @@ class ClientsPage extends Component {
               <Grid container>
                 <Grid item xs={12} className={classes.controls}>
                   <Grid container alignItems="center">
-                    <Grid item md={3}>
+                    <Grid item md={6}>
                       <Hidden smDown>
                         <Fab
                           color="primary"
@@ -164,16 +168,14 @@ class ClientsPage extends Component {
                       </Hidden>
                     </Grid>
                     <Grid item xs={12} sm={8} md={6}>
-                      <SearchField label="client" />
-                    </Grid>
-                    <Hidden xsDown>
-                      <Grid item sm={4} md={3} align="right">
+                      <div className={classes.controlsContainer}>
+                        <SearchField placeholder="Search client..." />
                         <ViewControl
                           view={this.state.view}
                           viewChanged={this.changeViewHandler}
                         />
-                      </Grid>
-                    </Hidden>
+                      </div>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
@@ -184,7 +186,10 @@ class ClientsPage extends Component {
                   clientDeleted={this.openDeleteClientDialogHandler}
                 />
               ) : (
-                <ClientsList clients={data.clients} />
+                <ClientsList
+                  clients={data.clients}
+                  clientEdited={this.openEditClientDialogHandler}
+                />
               )}
               <NewClientDialog
                 practitionerId={p_id}

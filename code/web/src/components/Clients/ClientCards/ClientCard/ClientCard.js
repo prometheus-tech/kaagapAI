@@ -26,12 +26,16 @@ import { cloneDeep } from 'apollo-utilities';
 import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
+  avatarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '10px auto',
+    marginBottom: theme.spacing.unit * 2
+  },
   avatar: {
     backgroundColor: '#0091ea',
-    margin: '10px auto',
     height: '70px',
     width: '70px',
-    textTransform: 'uppercase',
     [theme.breakpoints.down('sm')]: {
       marginRight: theme.spacing.unit * 2,
       height: '60px',
@@ -50,11 +54,6 @@ const styles = theme => ({
       transform: 'scale(1.05)',
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
       padding: '0px 0px 0px 0px'
-    },
-    action: {
-      padding: 0,
-      display: 'flex',
-      justifyContent: 'flex-start'
     }
   },
   mobileCard: {
@@ -66,20 +65,14 @@ const styles = theme => ({
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)'
   },
   nameClient: {
-    position: 'relative',
-    top: '12px',
-    width: '200px',
-    marginRight: 'auto',
+    width: '90%',
     color: grey[900],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontWeight: '500'
   },
   nameClientMobile: {
-    position: 'relative',
-    top: '12px',
     width: '200px',
-    marginRight: 'auto',
     color: grey[900],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -89,7 +82,7 @@ const styles = theme => ({
   session: {
     fontWeight: '400',
     fontSize: '14px',
-    marginTop: '15px',
+    marginBottom: 0,
     color: theme.palette.grey[600]
   },
   sessionMobile: {
@@ -97,17 +90,15 @@ const styles = theme => ({
     fontSize: '14px',
     marginTop: '15px',
     color: theme.palette.grey[600],
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit
   },
   iconHover: {
     '&:hover': {
       color: '#2196f3'
     }
   },
-  cardContent: {
-    '&:hover': {
-      cursor: 'pointer'
-    }
+  buttonBase: {
+    display: 'block'
   }
 });
 
@@ -158,19 +149,21 @@ function ClientCard(props) {
       }}
     >
       {deleteClient => (
-        <div className={classes.root}>
+        <div>
           <Hidden smDown>
             <Card className={classes.card}>
               <ButtonBase
-                className={classes.buttonBase}
                 disableRipple={true}
                 disableTouchRipple={true}
                 component={CardLink}
+                className={classes.buttonBase}
               >
-                <CardContent className={classes.cardContent}>
-                  <Avatar className={classes.avatar}>
-                    <Icon fontSize="large">person</Icon>
-                  </Avatar>
+                <CardContent>
+                  <div className={classes.avatarContainer}>
+                    <Avatar className={classes.avatar}>
+                      <Icon fontSize="large">person</Icon>
+                    </Avatar>
+                  </div>
                   <Typography
                     noWrap
                     variant="h6"
@@ -179,7 +172,7 @@ function ClientCard(props) {
                   >
                     {name}
                   </Typography>
-                  <Typography className={classes.session}>
+                  <Typography className={classes.session} align="center">
                     {sessions}
                   </Typography>
                 </CardContent>
@@ -190,7 +183,8 @@ function ClientCard(props) {
                     className={classes.iconHover}
                     disableRipple={true}
                     aria-label="Edit"
-                    onClick={() => {
+                    onClick={e => {
+                      e.preventDefault();
                       clientEdited(client);
                     }}
                   >
@@ -202,7 +196,8 @@ function ClientCard(props) {
                     className={classes.iconHover}
                     disableRipple={true}
                     aria-label="Archive"
-                    onClick={() => {
+                    onClick={e => {
+                      e.preventDefault();
                       deleteClient({ variables: { c_id } });
                     }}
                   >

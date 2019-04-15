@@ -14,24 +14,19 @@ const styles = theme => ({
     padding: '16px',
     backgroundColor: 'transparent',
     marginTop: theme.spacing.unit * 3,
-    borderRadius: '8px 8px 0px 0px',
     boxShadow: 'none',
     marginBottom: '10px'
   },
   sessionHeader: {
-    marginTop: theme.spacing.unit * 1,
     color: grey[600],
     letterSpacing: '1px',
-    lineHeight: '150%',
     fontWeight: 400,
     textTransform: 'uppercase',
     fontSize: '14px'
   },
   sessionName: {
-    marginTop: theme.spacing.unit * 1,
     color: grey[600],
     letterSpacing: '1px',
-    lineHeight: '150%',
     fontWeight: 500,
     textTransform: 'uppercase',
     fontSize: '14px'
@@ -44,7 +39,7 @@ function SessionListHeader(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container spacing={16}>
+        <Grid container spacing={16} alignItems="center">
           <Grid item xs={4}>
             <Typography className={classes.sessionName}>
               Session Name

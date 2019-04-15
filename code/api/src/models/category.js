@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     score: DataTypes.INTEGER,
     label: DataTypes.STRING
   }, {});
+
   Category.associate = models => {
     Category.belongsTo(models.Result, {
       foreignKey: 'result_id',
@@ -17,5 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
+  
   return Category;
 };

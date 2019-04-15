@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     relevance: DataTypes.INTEGER,
     count: DataTypes.INTEGER
   }, {});
+  
   Keyword.associate = models => {
     Keyword.belongsTo(models.Result, {
       foreignKey: 'result_id',
