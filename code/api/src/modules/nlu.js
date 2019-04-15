@@ -1,7 +1,9 @@
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
-  version: '2018-11-16'
+  version: '2018-11-16',
+  iam_apikey: 'hJxegcYhRcW8uh4uFV-k96tLJh_e8tEefRuOjbcNGD5C',
+  url: 'https://gateway-tok.watsonplatform.net/natural-language-understanding/api'
 });
 
 const analyzeContent = async(contents) => {
