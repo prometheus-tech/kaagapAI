@@ -13,13 +13,13 @@ import textract from 'textract';
 import { Storage } from '@google-cloud/storage';
 import { Translate } from  '@google-cloud/translate';
 const speech = require('@google-cloud/speech').v1p1beta1;
-const projectId = 'Prometheus-kaagapai';
+const projectId = 'PT-kaagapai';
 
 const storage = new Storage({
   projectId: projectId
 });
 
-const bucket = storage.bucket('kaagapai-uploads');
+const bucket = storage.bucket('kaagapai-files');
 
 //renaming filename of files
 const renameFile = ({ inputPath, session_id }) => {

@@ -1,6 +1,7 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import GraphQlJSON from 'graphql-type-json';
 import auth from '../../modules/auth';
+import register from '../../modules/registration';
 
 export default {
   UUID: GraphQlUUID,
