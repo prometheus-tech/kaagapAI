@@ -16,7 +16,7 @@ export default `
     lname: String!
     license: String!
     profession: String!
-    status: Status!
+    user_status: Status!
     date_registered: Date!
     date_deactivated: Date
     last_logged: Date

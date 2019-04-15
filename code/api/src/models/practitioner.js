@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     lname: DataTypes.STRING,
     license: DataTypes.STRING,
     profession: DataTypes.STRING,
-    status: DataTypes.ENUM('pending', 'deactivated', 'active'),
+    user_status: DataTypes.ENUM('pending', 'deactivated', 'active'),
     date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,

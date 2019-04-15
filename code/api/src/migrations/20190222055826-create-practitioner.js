@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      status: {
+      user_status: {
         type: Sequelize.ENUM('pending', 'deactivated', 'active'),
         allowNull: false
       },
