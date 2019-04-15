@@ -15,7 +15,7 @@ export default {
         raw: true,
         where: {
           email,
-          status: 'active'
+          user_status: 'active'
         }
       })
       .then(practitioner => {
@@ -25,9 +25,11 @@ export default {
           return practitioner;
         }
       })
-      .then(practitioner => {
-        if (!auth.validatePassword({ password, practitioner })) {
-          throw new Error('Invalid password. Try again');
+      .then(async practitioner => {
+        const validPassword = await auth.validatePassword({ password, practitioner });
+        
+        if (!validPassword) {
+          throw new Error('Invalid password');
         } else {
           return practitioner;
         }
@@ -35,7 +37,7 @@ export default {
       
       const session_token = auth.generateToken(practitioner, SECRET);
 
-      return { p_id: practitioner.p_id, session_token };
+      return { session_token };
     },
 
     register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models, SECRET }) => {

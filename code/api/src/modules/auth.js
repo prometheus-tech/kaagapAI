@@ -10,14 +10,20 @@ const validateEmail = ( practitioner ) => {
 }
 
 const validatePassword = ({ password, practitioner }) => {
-  // const validPassword = await bcrypt.compare(password, user.password);
-  
-  // if(!validPassword) {
-  if(password != practitioner.password){ //change with code above
-    return false;
-  } else {
-    return true;
-  }
+
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, practitioner.password, function(err, res) {
+      if(err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  })
+
+  // const validPassword = await bcrypt.compare(password, practitioner.password);
+
+  // return validPassword;
 }
 
 const generateToken = (practitioner, SECRET) => {
