@@ -102,7 +102,8 @@ const styles = theme => ({
       backgroundColor: orange[900],
       boxShadow: theme.shadows[10]
     },
-    padding: '5px 25px 5px 25px'
+    padding: '5px 25px 5px 25px',
+    marginBottom: theme.spacing.unit * 2
   },
   iconInfo: {
     marginRight: theme.spacing.unit * 2,
@@ -266,35 +267,30 @@ class ClientPage extends Component {
                   </Grid>
                 </Grid>
                 <Divider light className={classes.divider} />
-                <Grid justify="space-between" container spacing={16}>
-                  <Grid item>
-                    {data.client.sessions.length > 0 ? (
-                      <Hidden smDown>
-                        <Fab
-                          color="primary"
-                          variant="extended"
-                          className={classes.extendedButton}
-                          onClick={this.openNewSessionDialogHandler}
-                        >
-                          <Add className={classes.extendedIcon} /> New Session
-                        </Fab>
-                      </Hidden>
-                    ) : null}
-                    <Hidden mdUp>
-                      <Fab
-                        size="large"
-                        color="primary"
-                        className={classes.floatingButton}
-                        onClick={this.openNewSessionDialogHandler}
-                        disableRipple={false}
-                        disableFocusRipple={false}
-                      >
-                        <Add />
-                      </Fab>
-                    </Hidden>
-                  </Grid>
-                  <Grid item align="flex-end" />
-                </Grid>
+                {data.client.sessions.length > 0 ? (
+                  <Hidden smDown>
+                    <Fab
+                      color="primary"
+                      variant="extended"
+                      className={classes.extendedButton}
+                      onClick={this.openNewSessionDialogHandler}
+                    >
+                      <Add className={classes.extendedIcon} /> New Session
+                    </Fab>
+                  </Hidden>
+                ) : null}
+                <Hidden mdUp>
+                  <Fab
+                    size="large"
+                    color="primary"
+                    className={classes.floatingButton}
+                    onClick={this.openNewSessionDialogHandler}
+                    disableRipple={false}
+                    disableFocusRipple={false}
+                  >
+                    <Add />
+                  </Fab>
+                </Hidden>
                 {data.client.sessions.length === 0 ? (
                   <EmptySession
                     newSessionOpened={this.openNewSessionDialogHandler}

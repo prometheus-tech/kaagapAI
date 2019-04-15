@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   emptyImg: {
     marginTop: theme.spacing.unit * 5,
-    height: '48vh'
+    height: '40vh'
   },
   actionSaying: {
     display: 'inline-block',
@@ -44,6 +44,9 @@ const styles = theme => ({
     },
     marginTop: theme.spacing.unit * 4,
     padding: '5px 25px 5px 25px'
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit
   }
 });
 class EmptySession extends Component {
@@ -60,7 +63,7 @@ class EmptySession extends Component {
         </div>
         <div className={classes.actionSaying}>
           <Typography variant="h4" className={classes.sayingEmpty}>
-            Let's be productive and stay positive....
+            Let's be productive and stay positive...
           </Typography>
           <Fab
             color="primary"

@@ -30,13 +30,11 @@ import { cloneDeep } from 'apollo-utilities';
 
 const styles = theme => ({
   card: {
-    minWidth: 180,
-    minHeight: 200,
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
     marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px',
-    maxWidth: '230px',
+    width: '230px',
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
@@ -53,29 +51,20 @@ const styles = theme => ({
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)'
   },
-  cardActions: {
-    padding: 0,
-    display: 'flex',
-    justifyContent: 'flex-start'
-  },
-  cardContent: {
-    textAlign: 'center'
-  },
   avatarContainer: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin: '10px auto',
+    marginBottom: theme.spacing.unit * 2
   },
   avatar: {
-    width: 60,
-    height: 60,
-    marginBottom: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 1,
-    padding: '2px 2px 2px 2px',
-    fontSize: theme.spacing.unit * 6,
+    width: '70px',
+    height: '70px',
     color: 'white',
     backgroundColor: orange[800]
   },
   cardTitle: {
+    width: '90%',
     fontWeight: '500',
     color: grey[900],
     overflow: 'hidden',
@@ -84,6 +73,7 @@ const styles = theme => ({
   cardSubheader: {
     fontWeight: '400',
     fontSize: '14px',
+    marginBottom: 0,
     color: theme.palette.grey[600]
   },
   iconAction: {
@@ -158,7 +148,7 @@ function SessionCard(props) {
                 disableTouchRipple={true}
                 component={CardLink}
               >
-                <CardContent className={classes.cardContent}>
+                <CardContent>
                   <div className={classes.avatarContainer}>
                     <Avatar className={classes.avatar}>
                       <FolderIcon fontSize="large" />
@@ -172,24 +162,25 @@ function SessionCard(props) {
                   >
                     {session_name}
                   </Typography>
-                  <Typography className={classes.cardSubheader}>
+                  <Typography className={classes.cardSubheader} align="center">
                     <Moment format="MMM D, YYYY" withTitle>
                       {date_of_session}
                     </Moment>
                   </Typography>
                 </CardContent>
               </ButtonBase>
-              <CardActions className={classes.cardActions}>
+              <CardActions>
                 <Tooltip title="Edit">
                   <IconButton
                     disableRipple={true}
                     aria-label="Edit"
                     className={classes.iconAction}
-                    onClick={() => {
+                    onClick={e => {
+                      e.preventDefault();
                       sessionEdited(session);
                     }}
                   >
-                    <Icon fontSize="small">edit</Icon>
+                    <Icon>edit</Icon>
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Archive">
@@ -197,7 +188,8 @@ function SessionCard(props) {
                     disableRipple={true}
                     aria-label="Archive"
                     className={classes.iconAction}
-                    onClick={() => {
+                    onClick={e => {
+                      e.preventDefault();
                       deleteSession({
                         variables: {
                           session_id
@@ -205,7 +197,7 @@ function SessionCard(props) {
                       });
                     }}
                   >
-                    <Icon fontSize="small">archive</Icon>
+                    <Icon>archive</Icon>
                   </IconButton>
                 </Tooltip>
               </CardActions>
