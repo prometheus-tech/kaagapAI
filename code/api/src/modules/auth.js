@@ -22,7 +22,7 @@ const validatePassword = ({ password, practitioner }) => {
 
 const generateToken = (practitioner, SECRET) => {
   return jwt.sign({
-      user: practitioner.email
+      practitioner: practitioner.p_id
   }, SECRET, {
     expiresIn: '1h'
   })

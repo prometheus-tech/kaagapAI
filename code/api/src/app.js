@@ -15,12 +15,14 @@ const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
 
-const getUser = async (req) => {
+const getPractitioner = async (req) => {
   const token = req.headers.authorization;
   try {
-    const { user } = await jwt.verify(token, SECRET);
-    req.user = user;
+    const { practitioner } = await jwt.verify(token, SECRET);
+    req.practitioner = practitioner;
   } catch (err) {
+    // console.log(err);
+    //throw new Error('You must be authenticated');
   }
 
   req.next();
@@ -35,7 +37,7 @@ const apollo = new ApolloServer({
   context: ({ req }) => ({
     models,
     SECRET,
-    user: req.user
+    practitioner: req.practitioner
   }),
   playground: true, //change to 'false' on deploy
   introspection: true
@@ -43,7 +45,7 @@ const apollo = new ApolloServer({
 
 const app = express();
 app.use(cors());
-app.use(getUser);
+app.use(getPractitioner);
 
 apollo.applyMiddleware({ app });
 
