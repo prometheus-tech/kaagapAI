@@ -184,7 +184,10 @@ class ClientsPage extends Component {
                   clientDeleted={this.openDeleteClientDialogHandler}
                 />
               ) : (
-                <ClientsList clients={data.clients} />
+                <ClientsList
+                  clients={data.clients}
+                  clientEdited={this.openEditClientDialogHandler}
+                />
               )}
               <NewClientDialog
                 practitionerId={p_id}
