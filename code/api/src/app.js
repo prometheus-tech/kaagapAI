@@ -6,6 +6,7 @@ import typeDefs from './graphql/schemas/schema';
 import resolvers from './graphql/resolvers/resolvers';
 import models from './models';
 import configurations from './config/appconfig';
+import auth from './modules/auth';
 import cors from 'cors';
 import http from 'http';
 import jwt from 'jsonwebtoken';
@@ -18,19 +19,6 @@ const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
 
-const getPractitioner = async req => {
-  const token = req.headers.authorization;
-  try {
-    const { practitioner } = await jwt.verify(token, SECRET);
-    req.practitioner = practitioner;
-  } catch (err) {
-    // console.log(err);
-    //throw new Error('You must be authenticated');
-  }
-
-  req.next();
-};
-
 const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
@@ -40,7 +28,7 @@ const apollo = new ApolloServer({
   context: ({ req }) => ({
     models,
     SECRET,
-    practitioner: req.practitioner
+    practitioner: auth.getPractitioner(req, SECRET)
   }),
   playground: true, //change to 'false' on deploy
   introspection: true
@@ -48,7 +36,6 @@ const apollo = new ApolloServer({
 
 const app = express();
 app.use(cors());
-app.use(getPractitioner);
 
 apollo.applyMiddleware({ app });
 

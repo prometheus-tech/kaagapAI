@@ -40,7 +40,7 @@ export default {
       return { session_token };
     },
 
-    register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models, SECRET }) => {
+    register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models }) => {
       const verificationCode = registration.generateCode().toString();
       const body = "To verify your email please input the following verification code: "+verificationCode;
       const subject = "Email verification";

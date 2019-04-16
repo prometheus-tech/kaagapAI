@@ -20,10 +20,6 @@ const validatePassword = ({ password, practitioner }) => {
       }
     });
   })
-
-  // const validPassword = await bcrypt.compare(password, practitioner.password);
-
-  // return validPassword;
 }
 
 const generateToken = (practitioner, SECRET) => {
@@ -34,8 +30,19 @@ const generateToken = (practitioner, SECRET) => {
   })
 }
 
+const getPractitioner = (req, SECRET) => {
+  try {
+    const token = req.headers.authorization || '';
+    const { practitioner } = jwt.verify(token, SECRET);
+    return practitioner;
+  } catch(err) {
+    // console.log(err);
+  }
+}
+
 export default {
   validateEmail,
   validatePassword,
-  generateToken
+  generateToken,
+  getPractitioner
 }

@@ -6,7 +6,8 @@ const transporter = nodemailer.createTransport({
   auth : {
     user: 'prometheustechofficial@gmail.com',
     pass: 'promtech2018'
-  }
+  },
+  tls: { rejectUnauthorized: false }
 });
 
 const generateCode = () => {
