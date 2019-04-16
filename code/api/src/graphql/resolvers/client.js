@@ -26,16 +26,24 @@ export default {
   },
 
   Query: {
-    clients: (parent, args, { models, practitioner }) => {
+    clients: (parent, { orderByInput, orderByColumn }, { models, practitioner }) => {
       if(!practitioner) {
         throw new Error("Please log in to continue");
       } else {
+        if (!orderByInput || !orderByColumn) {
+          orderByColumn = 'lname';
+          orderByInput = 'ASC';
+        }
+
         return models.Client.findAll({
           raw: true,
           where: { 
             p_id: practitioner,
             status: 'active'
-          }
+          },
+          order: [
+            [orderByColumn, orderByInput]
+          ]
         });
       }
     },
@@ -53,17 +61,6 @@ export default {
         // throw new Error('You must be logged in!');
       // }
     },
-
-    clientsbyname: async (parent, { p_id }, { models }) => {
-      return models.Client.findAll({
-        raw: true,
-        where: { 
-          p_id,
-          status: 'active'
-        },
-        order: [['lname', 'ASC']]
-      });
-    }
   },
 
   Mutation: {

@@ -12,6 +12,17 @@ export default `
     active
   }
 
+  enum OrderByInput {
+    DESC
+    ASC
+  }
+
+  enum OrderByColumn {
+    lname
+    date_added
+    last_opened
+  } 
+
   type Client {
     c_id: UUID!
     fname: String!
@@ -27,11 +38,9 @@ export default `
   }
 
   type Query { 
-    clients: [Client!]
+    clients(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Client!]
     
     client(c_id: UUID!): Client
-
-    clientsbyname(p_id: UUID!): [Client!]
   }
 
   type Mutation {
