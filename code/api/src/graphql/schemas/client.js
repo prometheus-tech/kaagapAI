@@ -30,6 +30,8 @@ export default `
     clients(p_id: UUID!): [Client!]
     
     client(c_id: UUID!): Client
+
+    clientsbyname(p_id: UUID!): [Client!]
   }
 
   type Mutation {
