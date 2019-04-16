@@ -9,7 +9,11 @@ export default {
         where: { 
           c_id,
           status: 'active'
-        } 
+        },
+        order: [
+          ['session_name', 'ASC'],
+          ['date_of_session','DESC']
+        ] 
       });
     },
 
