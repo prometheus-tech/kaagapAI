@@ -9,7 +9,11 @@ export default {
         where: { 
           c_id,
           status: 'active'
-        } 
+        },
+        order: [
+          ['session_name', 'ASC'],
+          ['date_of_session','DESC']
+        ] 
       });
     },
 
@@ -22,14 +26,18 @@ export default {
   },
 
   Query: {
-    clients: (parent, { p_id }, { models }) => {
-      return models.Client.findAll({
-        raw: true,
-        where: { 
-          p_id,
-          status: 'active'
-        }
-      });
+    clients: (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new Error("Please log in to continue");
+      } else {
+        return models.Client.findAll({
+          raw: true,
+          where: { 
+            p_id: practitioner,
+            status: 'active'
+          }
+        });
+      }
     },
 
     client: async (parent, { c_id }, { models }) => { //add user after models,
@@ -44,6 +52,17 @@ export default {
       // } else {
         // throw new Error('You must be logged in!');
       // }
+    },
+
+    clientsbyname: async (parent, { p_id }, { models }) => {
+      return models.Client.findAll({
+        raw: true,
+        where: { 
+          p_id,
+          status: 'active'
+        },
+        order: [['lname', 'ASC']]
+      });
     }
   },
 

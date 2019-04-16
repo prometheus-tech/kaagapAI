@@ -27,9 +27,11 @@ export default `
   }
 
   type Query { 
-    clients(p_id: UUID!): [Client!]
+    clients: [Client!]
     
     client(c_id: UUID!): Client
+
+    clientsbyname(p_id: UUID!): [Client!]
   }
 
   type Mutation {
