@@ -10,6 +10,8 @@ import cors from 'cors';
 import http from 'http';
 import jwt from 'jsonwebtoken';
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS='config/PT-kaagapai-9ff173d5bf95.json'
+
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
 
