@@ -9,7 +9,11 @@ export default {
         where: { 
           c_id,
           status: 'active'
-        } 
+        },
+        order: [
+          ['session_name', 'ASC'],
+          ['date_of_session','DESC']
+        ] 
       });
     },
 
@@ -48,6 +52,17 @@ export default {
       // } else {
         // throw new Error('You must be logged in!');
       // }
+    },
+
+    clientsbyname: async (parent, { p_id }, { models }) => {
+      return models.Client.findAll({
+        raw: true,
+        where: { 
+          p_id,
+          status: 'active'
+        },
+        order: [['lname', 'ASC']]
+      });
     }
   },
 
