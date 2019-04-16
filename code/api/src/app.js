@@ -11,7 +11,6 @@ import cors from 'cors';
 import http from 'http';
 import jwt from 'jsonwebtoken';
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS
 
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
