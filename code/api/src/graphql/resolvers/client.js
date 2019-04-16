@@ -28,7 +28,7 @@ export default {
   Query: {
     clients: (parent, { orderByInput, orderByColumn }, { models, practitioner }) => {
       if(!practitioner) {
-        throw new Error("Please log in to continue");
+        throw new Error('Please log in to continue');
       } else {
         if (!orderByInput || !orderByColumn) {
           orderByColumn = 'lname';
@@ -48,18 +48,29 @@ export default {
       }
     },
 
-    client: async (parent, { c_id }, { models }) => { //add user after models,
-      // if(user) {
-        await models.Client.update({
-          last_opened: new Date()
-        }, { 
-          where: { c_id } 
+    client: async (parent, { c_id }, { models, practitioner }) => { //add user after models,
+      if(!practitioner) {
+        throw new Error('Please log in to continue');
+      } else {
+        const client = await models.Client.findOne({ 
+          where: { 
+            c_id,
+            p_id: practitioner
+          } 
         });
 
-        return await models.Client.findOne({ where: { c_id } });
-      // } else {
-        // throw new Error('You must be logged in!');
-      // }
+        if(!client) {
+          throw new Error('Unauthorized Access')
+        } else {
+          await models.Client.update({
+            last_opened: new Date()
+          }, { 
+            where: { c_id } 
+          });
+  
+          return client;
+        }
+      }
     },
   },
 
