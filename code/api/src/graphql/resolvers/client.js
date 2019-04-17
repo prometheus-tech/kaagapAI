@@ -1,21 +1,34 @@
 import GraphQlUUID from 'graphql-type-uuid';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError } from 'apollo-server-express';
 
 export default {
   UUID: GraphQlUUID,
   
   Client: {
-    sessions: ({ c_id }, args, { models }) => {
-      return models.Session.findAll({ 
-        where: { 
-          c_id,
-          status: 'active'
-        },
-        order: [
-          ['session_name', 'ASC'],
-          ['date_of_session','DESC']
-        ] 
-      });
+    sessions: ({ c_id, orderByInput, orderByColumn }, args, { models }) => {
+
+      if (!orderByInput || !orderByColumn) {
+        return models.Session.findAll({ 
+          where: { 
+            c_id,
+            status: 'active'
+          },
+          order: [
+            ['session_name', 'ASC'],
+            ['date_of_session','DESC']
+          ] 
+        });
+      } else {
+        return models.Session.findAll({ 
+          where: { 
+            c_id,
+            status: 'active'
+          },
+          order: [
+            [orderByColumn, orderByInput],
+          ] 
+        });
+      }
     },
 
     no_of_sessions: ({ c_id }, args, { models }) => {

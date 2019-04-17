@@ -21,6 +21,8 @@ export default `
     lname
     date_added
     last_opened
+    session_name
+    date_of_session
   } 
 
   type Client {
@@ -34,7 +36,7 @@ export default `
     status: ArchiveStatus!
     p_id: UUID!
     no_of_sessions: Int
-    sessions: [Session]
+    sessions(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Session]
   }
 
   type Query { 
