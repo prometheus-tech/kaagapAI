@@ -41,7 +41,6 @@ class Login extends Component {
         {(login, { loading }) => {
           return (
             <ValidatorForm
-              instantValidate={false}
               onSubmit={() => {
                 login({ variables: { email, password } });
               }}
@@ -59,6 +58,7 @@ class Login extends Component {
                     validators={['required', 'isEmail']}
                     errorMessages={['Enter an email', 'Invalid email']}
                     onChange={this.inputChangeHandler}
+                    disabled={loading}
                   />
                   <TextValidator
                     label="Password"
@@ -70,7 +70,8 @@ class Login extends Component {
                     value={password}
                     onChange={this.inputChangeHandler}
                     validators={['required']}
-                    errorMessages={['Password is required']}
+                    errorMessages={['Enter a password']}
+                    disabled={loading}
                   />
                   <Button type="submit" variant="contained" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}

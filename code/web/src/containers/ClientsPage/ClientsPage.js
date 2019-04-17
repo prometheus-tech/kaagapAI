@@ -130,7 +130,7 @@ class ClientsPage extends Component {
     const p_id = localStorage.getItem(USER_ID);
 
     return (
-      <Query query={CLIENTS}>
+      <Query query={CLIENTS} errorPolicy="all">
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
