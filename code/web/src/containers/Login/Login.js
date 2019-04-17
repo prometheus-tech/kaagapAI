@@ -5,8 +5,6 @@ import { AUTH_TOKEN } from '../../util/constants';
 import { Mutation } from 'react-apollo';
 import LOGIN from '../../graphql/mutations/login';
 
-import { Redirect } from 'react-router-dom';
-
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
