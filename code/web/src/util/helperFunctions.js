@@ -3,6 +3,13 @@ import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
 
+import { AUTH_TOKEN } from './constants';
+
+export function logout(client) {
+  localStorage.removeItem(AUTH_TOKEN);
+  client.resetStore();
+}
+
 export function trimAll(string) {
   return string.replace(/\s\s+/g, ' ').trim();
 }

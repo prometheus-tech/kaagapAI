@@ -14,6 +14,12 @@ import 'typeface-overpass';
 
 import Logo from '../../../assets/kaagapai-logo.svg';
 
+import { logout } from '../../../util/helperFunctions';
+
+import { withRouter } from 'react-router-dom';
+
+import { ApolloConsumer } from 'react-apollo';
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -79,74 +85,78 @@ class Header extends Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-        color="primary"
-      >
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed" className={classes.root}>
-          <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-            />
-            <img src={Logo} className={classes.logo} alt="kaagapAI" />
-            <Typography variant="h6" className={classes.nameLogo} noWrap>
-              kaagapAI
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
+      <ApolloConsumer>
+        {client => (
+          <div className={classes.root}>
+            <AppBar position="fixed" className={classes.root}>
+              <Toolbar>
+                <IconButton
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="Open drawer"
+                />
+                <img src={Logo} className={classes.logo} alt="kaagapAI" />
+                <Typography variant="h6" className={classes.nameLogo} noWrap>
+                  kaagapAI
+                </Typography>
+                <div className={classes.grow} />
+                <div className={classes.sectionDesktop}>
+                  <IconButton
+                    aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleProfileMenuOpen}
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </div>
+                <div className={classes.sectionMobile}>
+                  <IconButton
+                    aria-haspopup="true"
+                    onClick={this.handleMobileMenuOpen}
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </div>
+              </Toolbar>
+            </AppBar>
+            <Menu
+              anchorEl={anchorEl}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={isMenuOpen}
+              onClose={this.handleMenuClose}
+            >
+              <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+              <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  logout(client);
+                  this.props.history.push('/login');
+                }}
               >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {renderMenu}
-        {renderMobileMenu}
-      </div>
+                Logout
+              </MenuItem>
+            </Menu>
+            <Menu
+              anchorEl={mobileMoreAnchorEl}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              open={isMobileMenuOpen}
+              onClose={this.handleMenuClose}
+              color="primary"
+            >
+              <MenuItem onClick={this.handleProfileMenuOpen}>
+                <IconButton color="inherit">
+                  <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+              </MenuItem>
+            </Menu>
+          </div>
+        )}
+      </ApolloConsumer>
     );
   }
 }
@@ -155,4 +165,4 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(withRouter(Header));

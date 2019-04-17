@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
+import Typography from '@material-ui/core/Typography';
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +40,7 @@ class Login extends Component {
           this.props.history.push('/');
         }}
       >
-        {(login, { loading }) => {
+        {(login, { loading, error }) => {
           return (
             <ValidatorForm
               onSubmit={() => {
@@ -46,6 +48,13 @@ class Login extends Component {
               }}
             >
               <Grid container spacing={16}>
+                {error ? (
+                  <Grid item xs={12}>
+                    {error.graphQLErrors.map(error => {
+                      return <Typography>{error}</Typography>;
+                    })}
+                  </Grid>
+                ) : null}
                 <Grid item xs={5}>
                   <TextValidator
                     label="Email"
@@ -70,7 +79,7 @@ class Login extends Component {
                     value={password}
                     onChange={this.inputChangeHandler}
                     validators={['required']}
-                    errorMessages={['Enter a password']}
+                    errorMessages={['Enter a password', 'Incorrect password']}
                     disabled={loading}
                   />
                   <Button type="submit" variant="contained" disabled={loading}>

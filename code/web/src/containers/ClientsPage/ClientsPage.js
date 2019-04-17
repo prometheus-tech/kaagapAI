@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { USER_ID } from '../../util/constants';
+import { logout } from '../../util/helperFunctions';
 
 import { Query } from 'react-apollo';
 import CLIENTS from '../../graphql/queries/clients';
@@ -131,12 +132,13 @@ class ClientsPage extends Component {
 
     return (
       <Query query={CLIENTS} errorPolicy="all">
-        {({ loading, error, data }) => {
+        {({ client, loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
+            logout(client);
             return <Redirect to="/login" />;
           }
 
