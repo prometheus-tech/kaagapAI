@@ -1,20 +1,34 @@
 import GraphQlUUID from 'graphql-type-uuid';
+import { AuthenticationError } from 'apollo-server-express';
 
 export default {
   UUID: GraphQlUUID,
   
   Client: {
-    sessions: ({ c_id }, args, { models }) => {
-      return models.Session.findAll({ 
-        where: { 
-          c_id,
-          status: 'active'
-        },
-        order: [
-          ['session_name', 'ASC'],
-          ['date_of_session','DESC']
-        ] 
-      });
+    sessions: ({ c_id, orderByInput, orderByColumn }, args, { models }) => {
+
+      if (!orderByInput || !orderByColumn) {
+        return models.Session.findAll({ 
+          where: { 
+            c_id,
+            status: 'active'
+          },
+          order: [
+            ['session_name', 'ASC'],
+            ['date_of_session','DESC']
+          ] 
+        });
+      } else {
+        return models.Session.findAll({ 
+          where: { 
+            c_id,
+            status: 'active'
+          },
+          order: [
+            [orderByColumn, orderByInput],
+          ] 
+        });
+      }
     },
 
     no_of_sessions: ({ c_id }, args, { models }) => {
@@ -28,7 +42,7 @@ export default {
   Query: {
     clients: (parent, { orderByInput, orderByColumn }, { models, practitioner }) => {
       if(!practitioner) {
-        throw new Error('Please log in to continue');
+        throw new AuthenticationError('You must be logged in');
       } else {
         if (!orderByInput || !orderByColumn) {
           orderByColumn = 'lname';
@@ -50,7 +64,7 @@ export default {
 
     client: async (parent, { c_id }, { models, practitioner }) => { //add user after models,
       if(!practitioner) {
-        throw new Error('Please log in to continue');
+        throw new AuthenticationError('You must be logged in');
       } else {
         const client = await models.Client.findOne({ 
           where: { 
