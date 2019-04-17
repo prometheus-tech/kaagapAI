@@ -50,7 +50,6 @@ export default {
   Mutation: {
     generateResults: async (
       parent, {
-        date_generated,
         session_id
       }, { models }
     ) => {
@@ -70,7 +69,7 @@ export default {
       });
 
       const addResultRes = await models.Result.create({
-        date_generated,
+        date_generated: new Date(),
         session_id
       });
 

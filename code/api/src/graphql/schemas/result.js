@@ -18,6 +18,6 @@ export default `
   }
 
   type Mutation {
-    generateResults(date_generated: Date!, session_id: UUID!): Result
+    generateResults(session_id: UUID!): Result
   }
 `;
