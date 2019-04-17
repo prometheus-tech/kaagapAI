@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from 'apollo-link-context';
 
 import { SnackbarProvider } from 'notistack';
 
 import Button from '@material-ui/core/Button';
+
 import Layout from './hoc/Layout/Layout';
+import Login from './containers/Login/Login';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
 
-import { USER_ID, AUTH_TOKEN } from './util/constants';
+import { AUTH_TOKEN } from './util/constants';
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
@@ -33,17 +36,23 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-dev.herokuapp.com/graphql'
+  uri: 'http://kaagapai-dev.com:4000/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : ''
+    }
+  };
 });
 
 const client = new ApolloClient({
-  link,
+  link: authLink.concat(link),
   cache
 });
-
-// Remove this upon implementing authentication functionality
-localStorage.setItem(USER_ID, '67b8ba58-301e-45a3-ba01-ed6d0d229785');
-localStorage.setItem(AUTH_TOKEN, 'kaagapai');
 
 class App extends Component {
   render() {
@@ -59,11 +68,14 @@ class App extends Component {
               </Button>
             ]}
           >
-            <Layout>
-              <Route exact path="/" component={ClientsPage} />
-              <Route path="/client/:c_id" component={ClientPage} />
-              <Route path="/session/:session_id" component={SessionPage} />
-            </Layout>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Layout>
+                <Route exact path="/" component={ClientsPage} />
+                <Route path="/client/:c_id" component={ClientPage} />
+                <Route path="/session/:session_id" component={SessionPage} />
+              </Layout>
+            </Switch>
           </SnackbarProvider>
         </BrowserRouter>
       </ApolloProvider>

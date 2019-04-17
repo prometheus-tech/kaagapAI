@@ -5,6 +5,8 @@ import { USER_ID } from '../../util/constants';
 import { Query } from 'react-apollo';
 import CLIENTS from '../../graphql/queries/clients';
 
+import { Redirect } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
@@ -128,14 +130,14 @@ class ClientsPage extends Component {
     const p_id = localStorage.getItem(USER_ID);
 
     return (
-      <Query query={CLIENTS} variables={{ p_id }}>
+      <Query query={CLIENTS}>
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            return <p>Error</p>; // replace later
+            return <Redirect to="/login" />;
           }
 
           return (

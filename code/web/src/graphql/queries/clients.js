@@ -4,8 +4,8 @@ import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 import CLIENT_META_DATA from '../fragments/clientMetaData';
 
 const CLIENTS = gql`
-  query Clients($p_id: UUID!) {
-    clients(p_id: $p_id) {
+  query Clients {
+    clients {
       ...ClientBasicInfo
       ...ClientMetaData
     }
