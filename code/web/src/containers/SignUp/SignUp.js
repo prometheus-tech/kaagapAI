@@ -4,10 +4,10 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
-import Typography from '@material-ui/core/Typography';
 
 import AccountRegistrationInfo from './AccountRegistrationInfo/AccountRegistrationInfo';
 import VerifyEmail from './VerifyEmail/VerifyEmail';
+import AssessAccount from './AssessAccount/AssessAccount';
 
 class SignUp extends Component {
   constructor(props) {
@@ -20,11 +20,7 @@ class SignUp extends Component {
   }
 
   getSteps = () => {
-    return [
-      'Account Information',
-      'Email Verification',
-      'Terms and Agreements'
-    ];
+    return ['Account Information', 'Email Verification', 'Account Validation'];
   };
 
   getStepContent = step => {
@@ -39,9 +35,9 @@ class SignUp extends Component {
           />
         );
       case 2:
-        return <Typography variant="h1">Terms and Agreements</Typography>;
+        return <AssessAccount />;
       default:
-        return 'Unknown step';
+        return <p>Unknown step</p>;
     }
   };
 
