@@ -139,7 +139,7 @@ class ClientsPage extends Component {
 
           if (error) {
             logout(client);
-            return <Redirect to="/login" />;
+            return <Redirect to="/signin" />;
           }
 
           return (

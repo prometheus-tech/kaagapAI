@@ -12,21 +12,23 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+class SignIn extends Component {
+  state = {
+    email: '',
+    password: ''
+  };
 
-    this.state = {
-      email: '',
-      password: ''
-    };
-
-    // Needed for validation
-    this.inputChangeHandler = this.inputChangeHandler.bind(this);
-  }
+  emailRef = React.createRef();
 
   inputChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleBlur = e => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      this.emailRef.current.validate(value, true);
+    }
   };
 
   render() {
@@ -39,6 +41,9 @@ class Login extends Component {
           localStorage.setItem(AUTH_TOKEN, data.login.session_token);
           this.props.history.push('/');
         }}
+        onError={error => {
+          // Ignore error
+        }}
       >
         {(login, { loading, error }) => {
           return (
@@ -46,6 +51,7 @@ class Login extends Component {
               onSubmit={() => {
                 login({ variables: { email, password } });
               }}
+              instantValidate={false}
             >
               <Grid container spacing={16}>
                 {error ? (
@@ -66,10 +72,11 @@ class Login extends Component {
                     value={email}
                     validators={['required', 'isEmail']}
                     errorMessages={['Enter an email', 'Invalid email']}
-                    onChange={this.inputChangeHandler}
                     disabled={loading}
+                    onChange={this.inputChangeHandler}
                   />
                   <TextValidator
+                    ref="password"
                     label="Password"
                     variant="outlined"
                     margin="dense"
@@ -77,10 +84,11 @@ class Login extends Component {
                     fullWidth
                     name="password"
                     value={password}
-                    onChange={this.inputChangeHandler}
                     validators={['required']}
                     errorMessages={['Enter a password', 'Incorrect password']}
                     disabled={loading}
+                    onChange={this.inputChangeHandler}
+                    onBlur={this.handleBlur}
                   />
                   <Button type="submit" variant="contained" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}
@@ -95,4 +103,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignIn;

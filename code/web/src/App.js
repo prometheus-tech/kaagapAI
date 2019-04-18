@@ -14,7 +14,7 @@ import { SnackbarProvider } from 'notistack';
 import Button from '@material-ui/core/Button';
 
 import Layout from './hoc/Layout/Layout';
-import Login from './containers/Login/Login';
+import SignIn from './containers/SignIn/SignIn';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
@@ -86,7 +86,7 @@ class App extends Component {
             ]}
           >
             <Switch>
-              <Route path="/login" component={Login} />
+              <Route path="/signin" component={SignIn} />
               <Layout>
                 <Route exact path="/" component={ClientsPage} />
                 <Route path="/client/:c_id" component={ClientPage} />

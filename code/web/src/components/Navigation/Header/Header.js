@@ -133,7 +133,7 @@ class Header extends Component {
               <MenuItem
                 onClick={() => {
                   logout(client);
-                  this.props.history.push('/login');
+                  this.props.history.push('/signin');
                 }}
               >
                 Logout
