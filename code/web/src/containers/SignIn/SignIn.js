@@ -13,22 +13,17 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Typography from '@material-ui/core/Typography';
 
 class SignIn extends Component {
-  state = {
-    email: '',
-    password: ''
-  };
+  constructor(props) {
+    super(props);
 
-  emailRef = React.createRef();
+    this.state = {
+      email: '',
+      password: ''
+    };
+  }
 
   inputChangeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleBlur = e => {
-    const { name, value } = e.target;
-    if (name === 'email') {
-      this.emailRef.current.validate(value, true);
-    }
   };
 
   render() {
@@ -76,7 +71,6 @@ class SignIn extends Component {
                     onChange={this.inputChangeHandler}
                   />
                   <TextValidator
-                    ref="password"
                     label="Password"
                     variant="outlined"
                     margin="dense"
@@ -88,7 +82,6 @@ class SignIn extends Component {
                     errorMessages={['Enter a password', 'Incorrect password']}
                     disabled={loading}
                     onChange={this.inputChangeHandler}
-                    onBlur={this.handleBlur}
                   />
                   <Button type="submit" variant="contained" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}
