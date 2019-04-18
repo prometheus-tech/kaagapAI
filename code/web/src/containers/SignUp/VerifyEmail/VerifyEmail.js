@@ -57,6 +57,15 @@ class VerifyEmail extends Component {
               instantValidate={false}
             >
               <Grid container spacing={16}>
+                <Grid item xs={12}>
+                  <Typography variant="h5" gutterBottom>
+                    Verify Email
+                  </Typography>
+                  <Typography variant="body1">
+                    A verification code was sent to your email ({email}). Enter
+                    the code below in order to verify your email.
+                  </Typography>
+                </Grid>
                 {error ? (
                   <Grid item xs={12}>
                     {error.graphQLErrors.map(error => {
