@@ -62,7 +62,7 @@ class AccountRegistrationInfo extends Component {
       <Mutation
         mutation={REGISTER}
         onCompleted={data => {
-          steppedNext();
+          steppedNext(data.register.email);
         }}
         onError={error => {
           this.partiallyResetFormHandler();
@@ -83,7 +83,6 @@ class AccountRegistrationInfo extends Component {
                     password
                   }
                 });
-                steppedNext();
               }}
               instantValidate={false}
             >

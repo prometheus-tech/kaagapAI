@@ -7,13 +7,15 @@ import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import Typography from '@material-ui/core/Typography';
 
 import AccountRegistrationInfo from './AccountRegistrationInfo/AccountRegistrationInfo';
+import VerifyEmail from './VerifyEmail/VerifyEmail';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeStep: 0
+      activeStep: 0,
+      email: ''
     };
   }
 
@@ -30,7 +32,12 @@ class SignUp extends Component {
       case 0:
         return <AccountRegistrationInfo steppedNext={this.nextStepHandler} />;
       case 1:
-        return 'What is an ad group anyways?';
+        return (
+          <VerifyEmail
+            email={this.state.email}
+            steppedNext={this.nextStepHandler}
+          />
+        );
       case 2:
         return <Typography variant="h1">Terms and Agreements</Typography>;
       default:
@@ -38,7 +45,11 @@ class SignUp extends Component {
     }
   };
 
-  nextStepHandler = () => {
+  nextStepHandler = email => {
+    if (email) {
+      this.setState({ email });
+    }
+
     const { activeStep } = this.state;
     this.setState({
       activeStep: activeStep + 1
