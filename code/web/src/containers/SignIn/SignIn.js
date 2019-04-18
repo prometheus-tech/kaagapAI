@@ -12,6 +12,8 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
 
+import { Link } from 'react-router-dom';
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,8 @@ class SignIn extends Component {
 
   render() {
     const { email, password } = this.state;
+
+    const SignInButtonLink = props => <Link to={'/signup'} {...props} />;
 
     return (
       <Mutation
@@ -83,9 +87,19 @@ class SignIn extends Component {
                     disabled={loading}
                     onChange={this.inputChangeHandler}
                   />
-                  <Button type="submit" variant="contained" disabled={loading}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={loading}
+                    color="primary"
+                  >
                     {loading ? 'Logging in...' : 'Login'}
                   </Button>
+                  <Grid item xs={12}>
+                    <Button variant="contained" component={SignInButtonLink}>
+                      Create account
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </ValidatorForm>
