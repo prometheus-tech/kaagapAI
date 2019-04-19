@@ -42,7 +42,6 @@ class NewClientDialog extends Component {
     super(props);
 
     this.state = {
-      p_id: props.practitionerId,
       fname: '',
       lname: '',
       gender: 'M',
@@ -81,8 +80,8 @@ class NewClientDialog extends Component {
   }
 
   render() {
-    const { classes, fullScreen, opened, closed, practitionerId } = this.props;
-    const { p_id, fname, lname, gender, birthdate } = this.state;
+    const { classes, fullScreen, opened, closed } = this.props;
+    const { fname, lname, gender, birthdate } = this.state;
 
     return (
       <Auxilliary>
@@ -91,10 +90,7 @@ class NewClientDialog extends Component {
           update={(cache, { data: { addClient } }) => {
             const { clients } = cloneDeep(
               cache.readQuery({
-                query: CLIENTS,
-                variables: {
-                  p_id: practitionerId
-                }
+                query: CLIENTS
               })
             );
 
@@ -102,9 +98,6 @@ class NewClientDialog extends Component {
 
             cache.writeQuery({
               query: CLIENTS,
-              variables: {
-                p_id: practitionerId
-              },
               data: {
                 clients
               }
@@ -140,7 +133,6 @@ class NewClientDialog extends Component {
                   onSubmit={() => {
                     addClient({
                       variables: {
-                        p_id: p_id,
                         fname: trimAll(fname),
                         lname: trimAll(lname),
                         gender: gender,

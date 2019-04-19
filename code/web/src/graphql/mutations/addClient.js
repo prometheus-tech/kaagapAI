@@ -5,14 +5,12 @@ import CLIENT_META_DATA from '../fragments/clientMetaData';
 
 const ADD_CLIENT = gql`
   mutation AddClient(
-    $p_id: UUID!
     $fname: String!
     $lname: String!
     $gender: [Gender!]!
     $birthdate: Date!
   ) {
     addClient(
-      p_id: $p_id
       fname: $fname
       lname: $lname
       gender: $gender

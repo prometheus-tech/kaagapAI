@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { USER_ID } from '../../util/constants';
 import { logout } from '../../util/helperFunctions';
 
 import { Query } from 'react-apollo';
@@ -128,8 +127,6 @@ class ClientsPage extends Component {
       view
     } = this.state;
 
-    const p_id = localStorage.getItem(USER_ID);
-
     return (
       <Query query={CLIENTS} errorPolicy="all">
         {({ client, loading, error, data }) => {
@@ -196,7 +193,6 @@ class ClientsPage extends Component {
                 />
               )}
               <NewClientDialog
-                practitionerId={p_id}
                 opened={isNewClientDialogOpened}
                 closed={this.closeNewClientDialogHandler}
               />
