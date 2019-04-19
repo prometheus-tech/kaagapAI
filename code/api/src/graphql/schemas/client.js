@@ -46,7 +46,7 @@ export default `
   }
 
   type Mutation {
-    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!, p_id: UUID!): Client!
+    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!
 
     deleteClient(c_id: UUID!): Client!
 

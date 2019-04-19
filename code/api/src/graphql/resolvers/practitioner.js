@@ -2,6 +2,7 @@ import GraphQlUUID from 'graphql-type-uuid';
 import GraphQlJSON from 'graphql-type-json';
 import auth from '../../modules/auth';
 import registration from '../../modules/registration';
+import { AuthenticationError, ApolloError } from 'apollo-server-express';
 
 export default {
   UUID: GraphQlUUID,
@@ -13,14 +14,19 @@ export default {
     login: async (parent, { email, password }, { models, SECRET }) => {
       const practitioner = await models.Practitioner.findOne({
         raw: true,
-        where: {
-          email,
-          user_status: 'active'
+        where: { email }
+      })
+      .then(practitioner => {
+        const errorMessage = auth.verifyPractitioner(practitioner);
+        if(!errorMessage){
+          return practitioner;
+        } else {
+          throw new AuthenticationError(errorMessage);
         }
       })
       .then(practitioner => {
         if (!auth.validateEmail(practitioner)) {
-          throw new Error('Email is not yet registered');
+          throw new AuthenticationError('Email is not yet registered');
         } else {
           return practitioner;
         }
@@ -29,7 +35,7 @@ export default {
         const validPassword = await auth.validatePassword({ password, practitioner });
         
         if (!validPassword) {
-          throw new Error('Invalid password');
+          throw new AuthenticationError('Invalid password');
         } else {
           return practitioner;
         }
@@ -41,30 +47,41 @@ export default {
     },
 
     register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models }) => {
-      const verificationCode = registration.generateCode().toString();
-      const body = "To verify your email please input the following verification code: "+verificationCode;
-      const subject = "Email verification";
-      const hashPassword = await registration.hashPassword(password);
+      const existingPractitioner = await models.Practitioner.findOne({
+        raw: true,
+        where: {
+          email
+        }
+      });
 
-      if(await registration.sendEmail(body, subject, email)) {
-        const addRegistration = await models.Practitioner.create({
-          email,
-          phone_no,
-          password: hashPassword,
-          fname,
-          lname,
-          license,
-          profession,
-          date_registered: new Date(),
-          verification_code: verificationCode
-        });
+      if(existingPractitioner){
+        throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
+      } else {
+        const verificationCode = registration.generateCode().toString();
+        const body = 'To verify your email, please enter the following verification code: ' + verificationCode;
+        const subject = 'Email verification';
+        const hashPassword = await registration.hashPassword(password);
 
-        const { p_id } = addRegistration.dataValues;
+        if(await registration.sendEmail(subject, body, email)) {
+          const addRegistration = await models.Practitioner.create({
+            email,
+            phone_no,
+            password: hashPassword,
+            fname,
+            lname,
+            license,
+            profession,
+            date_registered: new Date(),
+            verification_code: verificationCode
+          });
 
-        return await models.Practitioner.findOne({
-          raw: true,
-          where: { p_id }
-        });
+          const { p_id } = addRegistration.dataValues;
+
+          return await models.Practitioner.findOne({
+            raw: true,
+            where: { p_id }
+          });
+        }
       }
     },
 
@@ -89,16 +106,16 @@ export default {
             where: { email }
           });
 
-          const body = "Your account has been verified. We will get back to you on your account's status.";
+          const body = "Your account has been successfully verified! We will get back to you on your account's status.";
           const subject = "Assessing Account Status";
-          await registration.sendEmail(body, subject, email);
+          await registration.sendEmail(subject, body, email);
   
           return models.Practitioner.findOne({
             raw: true,
             where: { email }
           });
         } else {
-          throw new Error('Invalid Verification Code')
+          throw new AuthenticationError('Invalid Verification Code')
         }
       })
   }

@@ -21,7 +21,8 @@ const apollo = new ApolloServer({
   typeDefs: gql(typeDefs),
   resolvers,
   formatError: error => {
-    return error.message;
+    delete error.extensions.exception;
+    return error;
   },
   context: ({ req }) => ({
     models,

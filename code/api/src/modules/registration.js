@@ -14,7 +14,7 @@ const generateCode = () => {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
-const sendEmail = (body, subject, email) => {
+const sendEmail = (subject, body, email) => {
   var sent = "";
 
   const mailOptions = {

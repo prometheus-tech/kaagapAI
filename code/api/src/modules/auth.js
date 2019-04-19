@@ -40,9 +40,24 @@ const getPractitioner = (req, SECRET) => {
   }
 }
 
+const verifyPractitioner = (practitioner) => {
+  var errorMessage = null;
+
+  if (!practitioner) {
+    errorMessage = 'User does not exist';
+  } else if (practitioner.user_status == 'pending' && practitioner.verification_code == 'verified'){
+    errorMessage = 'Your account is still being processed. Thank you for waiting';
+  } else if (practitioner.user_status == 'pending' && practitioner.verification_code != 'verified'){
+    errorMessage = 'Please verify your account first';
+  }
+  
+  return errorMessage;
+}
+
 export default {
   validateEmail,
   validatePassword,
   generateToken,
-  getPractitioner
+  getPractitioner,
+  verifyPractitioner
 }
