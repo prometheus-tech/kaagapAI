@@ -40,7 +40,9 @@ class AccountRegistrationInfo extends Component {
   partiallyResetFormHandler = () => {
     this.setState({
       email: '',
-      license: ''
+      license: '',
+      password: '',
+      confirm_password: ''
     });
   };
 
