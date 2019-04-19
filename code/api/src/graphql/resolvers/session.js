@@ -16,8 +16,12 @@ export default {
   },
 
   Query: {
-    session: async (parent, { session_id }, { models }) => {
-      return await models.Session.findOne({ where: { session_id } });
+    session: async (parent, { session_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        return await models.Session.findOne({ where: { session_id } });
+      }
     }
   },
 
