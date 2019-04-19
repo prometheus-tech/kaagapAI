@@ -41,10 +41,11 @@ export default {
 
   Mutation: {
     uploadSessionDocument: (parent, { file, session_id }, { models, practitioner }) => {
-      if(!practitioner) {
+      console.log(practitioner);
+      if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
-        uploadModules
+        return uploadModules
         .uploadFile(file, session_id)
         .then(async ({ session_id, fileName, filePath, translation, mimetype }) => {
           const addFileRes = await models.Session_Document.create({
@@ -55,9 +56,7 @@ export default {
             type: mimetype,
             date_added: new Date()
           });
-
           const { sd_id } = addFileRes.dataValues;
-
           return sd_id;
         })
         .then(sd_id => {
@@ -71,7 +70,7 @@ export default {
     
     editSessionDocument: async (
       parent,
-      { content, sd_id, file_name},
+      { content, sd_id, file_name },
       { models, practitioner }
     ) => {
       if(!practitioner) {
