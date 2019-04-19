@@ -17,7 +17,8 @@ const styles = theme => ({
   card: {
     '&:hover': {
       cursor: 'pointer'
-    }
+    },
+    marginTop: '1rem'
   },
   cardContent: {
     display: 'flex',
