@@ -163,27 +163,6 @@ export default {
             where: { c_id }
         })
         
-        await models.Session.update({ 
-          status: "active" 
-        }, {
-            where: { c_id }
-        })
-        
-        await models.Session.findAll({
-          where: { c_id },
-          attributes: [ "session_id"]
-        }).then(res => {
-          res.forEach(element => {
-            let id = element.dataValues.session_id
-
-            models.Session_Document.update({ 
-              status: "active" 
-            }, {
-              where: { session_id: id }
-            })
-          })
-        })
-
         return await models.Client.findOne({
           raw: true,
           where: { c_id }
