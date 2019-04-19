@@ -55,8 +55,8 @@ class SignIn extends Component {
               <Grid container spacing={16}>
                 {error ? (
                   <Grid item xs={12}>
-                    {error.graphQLErrors.map(error => {
-                      return <Typography>{error}</Typography>;
+                    {error.graphQLErrors.map(({ message }) => {
+                      return <Typography key={message}>{message}</Typography>;
                     })}
                   </Grid>
                 ) : null}

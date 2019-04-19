@@ -59,7 +59,7 @@ class VerifyEmail extends Component {
               <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <Typography variant="h5" gutterBottom>
-                    Verify Email
+                    Email Verification
                   </Typography>
                   <Typography variant="body1">
                     A verification code was sent to your email ({email}). Enter
@@ -68,14 +68,14 @@ class VerifyEmail extends Component {
                 </Grid>
                 {error ? (
                   <Grid item xs={12}>
-                    {error.graphQLErrors.map(error => {
-                      return <Typography>{error}</Typography>;
+                    {error.graphQLErrors.map(({ message }) => {
+                      return <Typography key={message}>{message}</Typography>;
                     })}
                   </Grid>
                 ) : null}
                 <Grid item xs={5}>
                   <TextValidator
-                    label="Input Code"
+                    label="Verification code"
                     variant="outlined"
                     margin="dense"
                     fullWidth
