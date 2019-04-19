@@ -4,13 +4,11 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import CLIENT from '../../graphql/queries/client';
 import SESSION from '../../graphql/queries/session';
-import DELETE_SESSION_DOCUMENT from '../../graphql/mutations/deleteSessionDocument';
-import { Query, Mutation } from 'react-apollo';
+import { Query } from 'react-apollo';
 
 import { withSnackbar } from 'notistack';
 
 import { withStyles } from '@material-ui/core/styles';
-import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import classNames from 'classnames';
@@ -23,26 +21,17 @@ import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import FolderIcon from '@material-ui/icons/Folder';
 import Divider from '@material-ui/core/Divider';
-import SessionDocumentCards from '../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import orange from '@material-ui/core/colors/orange';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import Hidden from '@material-ui/core/Hidden';
-import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
-import Icon from '@material-ui/core/Icon';
-import NewSessionDocumentDialog from '../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import grey from '@material-ui/core/colors/grey';
 import purple from '@material-ui/core/colors/purple';
-import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
-import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
-import RenameSessionDocumentDialog from '../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
-import { cloneDeep } from 'apollo-utilities';
 import SearchField from '../../components/UI/SearchField/SearchField';
 import Tooltip from '@material-ui/core/Tooltip';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -92,32 +81,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2
   },
-  extendedButton: {
-    background: purple[500],
-    color: '#ffffff',
-    textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
-    '&:hover': {
-      backgroundColor: purple[700],
-      boxShadow: theme.shadows[10]
-    },
-    padding: '5px 25px 5px 25px',
-    marginBottom: theme.spacing.unit * 2
-  },
-  floatingButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    boxShadow: theme.shadows[24],
-    color: '#ffffff',
-    '&:hover': {
-      boxShadow: theme.shadows[10]
-    }
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
   actionButton: {
     display: 'flex',
     alignItems: 'center'
@@ -159,14 +122,6 @@ const styles = theme => ({
 
 class SessionPage extends Component {
   state = {
-    isNewSessionDocumentDialogOpened: false,
-    file: null,
-    selectedSessionDocument: null,
-    isMoreActionsOpened: false,
-    anchorEl: null,
-    isContentSessionDocumentDialogOpened: false,
-    isEditContentSessionDocument: false,
-    isRenameSessionDocumentDialogOpened: false,
     tabValue: 0
   };
 
@@ -177,90 +132,6 @@ class SessionPage extends Component {
     );
   }
 
-  changeViewHandler = newView => {
-    this.setState({ view: newView });
-  };
-
-  openNewSessionDocumentDialogHandler = () => {
-    this.setState({
-      isNewSessionDocumentDialogOpened: true
-    });
-  };
-
-  closeNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
-  };
-
-  addFile = file => {
-    this.setState({
-      file
-    });
-  };
-
-  clearFile = () => {
-    this.setState({
-      file: null
-    });
-  };
-
-  openMoreActionsHandler = (event, sessionDocument) => {
-    const { currentTarget } = event;
-    this.setState({
-      isMoreActionsOpened: true,
-      anchorEl: currentTarget,
-      selectedSessionDocument: sessionDocument
-    });
-  };
-
-  closeMoreActionsHandler = () => {
-    this.setState({ isMoreActionsOpened: false });
-  };
-
-  openContentSessionDocumentDialog = sessionDocument => {
-    if (sessionDocument) {
-      this.setState({
-        isContentSessionDocumentDialogOpened: true,
-        selectedSessionDocument: sessionDocument
-      });
-    } else {
-      this.setState({
-        isContentSessionDocumentDialogOpened: true
-      });
-    }
-  };
-
-  closeContentSessionDocumentDialog = () => {
-    this.setState({
-      isContentSessionDocumentDialogOpened: false,
-      isEditContentSessionDocument: false,
-      selectedSessionDocument: null
-    });
-  };
-
-  editContentSessionDocumentHandler = () => {
-    this.setState({
-      isEditContentSessionDocument: true
-    });
-  };
-
-  updateSelectedSessionDocumentHandler = sessionDocument => {
-    this.setState({
-      selectedSessionDocument: sessionDocument
-    });
-  };
-
-  stopEditContentSessionDocumentHandler = () => {
-    this.setState({ isEditContentSessionDocument: false });
-  };
-
-  openRenameSessionDocumentHandler = () => {
-    this.setState({ isRenameSessionDocumentDialogOpened: true });
-  };
-
-  closeRenameSessionDocumentHandler = () => {
-    this.setState({ isRenameSessionDocumentDialogOpened: false });
-  };
-
   changeTabValueHandler = (e, value) => {
     this.setState({ tabValue: value });
   };
@@ -270,17 +141,7 @@ class SessionPage extends Component {
 
     const { session_id } = this.props.match.params;
 
-    const {
-      isNewSessionDocumentDialogOpened,
-      file,
-      isContentSessionDocumentDialogOpened,
-      isEditContentSessionDocument,
-      isMoreActionsOpened,
-      anchorEl,
-      selectedSessionDocument,
-      isRenameSessionDocumentDialogOpened,
-      tabValue
-    } = this.state;
+    const { tabValue } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -395,144 +256,10 @@ class SessionPage extends Component {
                         />
                       </Tabs>
                       {tabValue === 0 && (
-                        <Auxilliary>
-                          <Hidden smDown>
-                            <Fab
-                              color="primary"
-                              variant="extended"
-                              className={classes.extendedButton}
-                              onClick={this.openNewSessionDocumentDialogHandler}
-                            >
-                              <Icon className={classes.extendedIcon}>
-                                cloud_upload
-                              </Icon>
-                              Upload File
-                            </Fab>
-                          </Hidden>
-                          <Hidden mdUp>
-                            <Fab
-                              size="large"
-                              color="primary"
-                              className={classes.floatingButton}
-                              onClick={this.openNewSessionDialogHandler}
-                              disableRipple={false}
-                              disableFocusRipple={false}
-                            >
-                              <Add />
-                            </Fab>
-                          </Hidden>
-                          <SessionDocumentCards
-                            sessionDocuments={session.documents}
-                            sessionDocumentViewed={
-                              this.openContentSessionDocumentDialog
-                            }
-                            moreActionsOpened={this.openMoreActionsHandler}
-                          />
-                          <NewSessionDocumentDialog
-                            opened={isNewSessionDocumentDialogOpened}
-                            closed={this.closeNewSessionDocumentDialogHandler}
-                            file={file}
-                            fileAdded={this.addFile}
-                            fileRemoved={this.clearFile}
-                            sessionId={session_id}
-                          />
-                          {selectedSessionDocument ? (
-                            <Auxilliary>
-                              <Mutation
-                                mutation={DELETE_SESSION_DOCUMENT}
-                                update={(
-                                  cache,
-                                  {
-                                    data: {
-                                      deleteSessionDocument: {
-                                        sd_id,
-                                        file_name
-                                      }
-                                    }
-                                  }
-                                ) => {
-                                  const { session } = cloneDeep(
-                                    cache.readQuery({
-                                      query: SESSION,
-                                      variables: { session_id }
-                                    })
-                                  );
-
-                                  session.documents = session.documents.filter(
-                                    d => d.sd_id !== sd_id
-                                  );
-
-                                  cache.writeQuery({
-                                    query: SESSION,
-                                    variables: { session_id },
-                                    data: { session }
-                                  });
-
-                                  this.props.enqueueSnackbar(
-                                    file_name + ' archived!'
-                                  );
-                                }}
-                                optimisticResponse={{
-                                  __typename: 'Mutation',
-                                  deleteSessionDocument: {
-                                    __typename: 'SessionDocument',
-                                    sd_id: selectedSessionDocument.sd_id,
-                                    file_name: selectedSessionDocument.file_name
-                                  }
-                                }}
-                              >
-                                {deleteSessionDocument => (
-                                  <SessionDocumentMoreActionsPopper
-                                    isMoreActionsOpened={isMoreActionsOpened}
-                                    anchorEl={anchorEl}
-                                    moreActionsClosed={
-                                      this.closeMoreActionsHandler
-                                    }
-                                    sessionDocumentViewed={
-                                      this.openContentSessionDocumentDialog
-                                    }
-                                    contentEdited={
-                                      this.editContentSessionDocumentHandler
-                                    }
-                                    sessionDocumentRenamed={
-                                      this.openRenameSessionDocumentHandler
-                                    }
-                                    sessionDocumentDeleted={() => {
-                                      deleteSessionDocument({
-                                        variables: {
-                                          sd_id: selectedSessionDocument.sd_id
-                                        }
-                                      });
-                                    }}
-                                  />
-                                )}
-                              </Mutation>
-                              <ContentSessionDocumentDialog
-                                opened={isContentSessionDocumentDialogOpened}
-                                closed={this.closeContentSessionDocumentDialog}
-                                editing={isEditContentSessionDocument}
-                                sessionDocument={selectedSessionDocument}
-                                contentEdited={
-                                  this.editContentSessionDocumentHandler
-                                }
-                                contentEditStopped={
-                                  this.stopEditContentSessionDocumentHandler
-                                }
-                                selectedSessionDocumentUpdated={
-                                  this.updateSelectedSessionDocumentHandler
-                                }
-                              />
-                              <RenameSessionDocumentDialog
-                                opened={isRenameSessionDocumentDialogOpened}
-                                closed={this.closeRenameSessionDocumentHandler}
-                                sessionDocument={selectedSessionDocument}
-                                selectedSessionDocumentUpdated={
-                                  this.updateSelectedSessionDocumentHandler
-                                }
-                              />
-                            </Auxilliary>
-                          ) : null}
-                        </Auxilliary>
+                        <SessionDocumentsPage
+                          session_id={session_id}
+                          documents={session.documents}
+                        />
                       )}
                     </main>
                   </div>
