@@ -21,6 +21,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
+import FolderIcon from '@material-ui/icons/Folder';
 import Divider from '@material-ui/core/Divider';
 import SessionDocumentCards from '../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import orange from '@material-ui/core/colors/orange';
@@ -28,7 +29,6 @@ import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import Hidden from '@material-ui/core/Hidden';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
-import ViewControl from '../../components/UI/ViewControl/ViewControl';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@material-ui/core/Icon';
@@ -39,6 +39,8 @@ import ContentSessionDocumentDialog from '../../components/Session/ContentSessio
 import SessionDocumentMoreActionsPopper from '../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import { cloneDeep } from 'apollo-utilities';
+import SearchField from '../../components/UI/SearchField/SearchField';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -64,10 +66,6 @@ const styles = theme => ({
   breadCrumbIcon: {
     marginRight: theme.spacing.unit
   },
-  breadCrumb: {
-    fontSize: theme.spacing.unit * 2.5,
-    marginBottom: theme.spacing.unit * 2
-  },
   breadCrumbLink: {
     fontSize: theme.spacing.unit * 2,
     display: 'flex',
@@ -84,8 +82,8 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: '500',
-    padding: '5px 15px 5px 15px',
     borderRadius: '50px',
+    padding: '5px 15px 5px 15px',
     color: orange[800]
   },
   divider: {
@@ -102,7 +100,8 @@ const styles = theme => ({
       backgroundColor: purple[700],
       boxShadow: theme.shadows[10]
     },
-    padding: '5px 25px 5px 25px'
+    padding: '5px 25px 5px 25px',
+    marginBottom: theme.spacing.unit * 2
   },
   floatingButton: {
     position: 'fixed',
@@ -116,12 +115,23 @@ const styles = theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
+  },
+  actionButton: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  iconInfo: {
+    marginLeft: theme.spacing.unit,
+    borderRadius: '100%',
+    '&:hover, &:focus': {
+      color: orange[800],
+      backgroundColor: grey[300]
+    }
   }
 });
 
 class SessionPage extends Component {
   state = {
-    view: 'card',
     isNewSessionDocumentDialogOpened: false,
     file: null,
     selectedSessionDocument: null,
@@ -229,7 +239,6 @@ class SessionPage extends Component {
     const { session_id } = this.props.match.params;
 
     const {
-      view,
       isNewSessionDocumentDialogOpened,
       file,
       isContentSessionDocumentDialogOpened,
@@ -278,12 +287,14 @@ class SessionPage extends Component {
                         [classes.contentShift]: false
                       })}
                     >
-                      <Grid justify="space-between" container spacing={16}>
-                        <Grid item>
-                          <Breadcrumbs
-                            separator={<NavigateNextIcon />}
-                            className={classes.breadCrumb}
-                          >
+                      <Grid
+                        container
+                        spacing={16}
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid item xs={6}>
+                          <Breadcrumbs separator={<NavigateNextIcon />}>
                             <ButtonBase
                               component={RouterLink}
                               color="inherit"
@@ -304,66 +315,52 @@ class SessionPage extends Component {
                             </ButtonBase>
                             <Typography
                               className={classes.breadCrumbLinkSession}
-                              gutterBottom={false}
                             >
-                              <PersonIcon className={classes.breadCrumbIcon} />
+                              <FolderIcon className={classes.breadCrumbIcon} />
                               {session.session_name}
                             </Typography>
                           </Breadcrumbs>
                         </Grid>
-                        <Grid item>
-                          {/* <SearcField label="" className={classes.searchField} /> */}
-                        </Grid>
-                      </Grid>
-                      <Divider light className={classes.divider} />
-                      <Grid
-                        justify="space-between"
-                        alignItems="center"
-                        container
-                        spacing={16}
-                      >
-                        <Grid item>
-                          <Hidden smDown>
-                            <Fab
-                              color="primary"
-                              variant="extended"
-                              className={classes.extendedButton}
-                              onClick={this.openNewSessionDocumentDialogHandler}
-                            >
-                              <Icon className={classes.extendedIcon}>
-                                cloud_upload
-                              </Icon>
-                              Upload File
-                            </Fab>
-                          </Hidden>
-                          <Hidden mdUp>
-                            <Fab
-                              size="large"
-                              color="primary"
-                              className={classes.floatingButton}
-                              onClick={this.openNewSessionDialogHandler}
-                              disableRipple={false}
-                              disableFocusRipple={false}
-                            >
-                              <Add />
-                            </Fab>
-                          </Hidden>
-                        </Grid>
-                        <Grid item>
+                        <Grid item xs={6}>
                           <div className={classes.actionButton}>
-                            <ViewControl
-                              view={view}
-                              viewChanged={this.changeViewHandler}
-                            />
-                            <IconButton
-                              component="span"
-                              className={classes.iconInfo}
-                            >
-                              <InfoIcon fontSize="small" />
-                            </IconButton>
+                            <SearchField placeholder="Search document..." />
+                            <Tooltip title="View session information">
+                              <IconButton
+                                component="span"
+                                className={classes.iconInfo}
+                              >
+                                <InfoIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
                           </div>
                         </Grid>
                       </Grid>
+                      <Divider light className={classes.divider} />
+                      <Hidden smDown>
+                        <Fab
+                          color="primary"
+                          variant="extended"
+                          className={classes.extendedButton}
+                          onClick={this.openNewSessionDocumentDialogHandler}
+                        >
+                          <Icon className={classes.extendedIcon}>
+                            cloud_upload
+                          </Icon>
+                          Upload File
+                        </Fab>
+                      </Hidden>
+                      <Hidden mdUp>
+                        <Fab
+                          size="large"
+                          color="primary"
+                          className={classes.floatingButton}
+                          onClick={this.openNewSessionDialogHandler}
+                          disableRipple={false}
+                          disableFocusRipple={false}
+                        >
+                          <Add />
+                        </Fab>
+                      </Hidden>
                       <SessionDocumentCards
                         sessionDocuments={session.documents}
                         sessionDocumentViewed={

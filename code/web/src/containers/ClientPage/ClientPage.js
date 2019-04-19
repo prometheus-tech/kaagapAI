@@ -220,10 +220,7 @@ class ClientPage extends Component {
                   alignItems="center"
                 >
                   <Grid item xs={6}>
-                    <Breadcrumbs
-                      separator={<NavigateNextIcon />}
-                      className={classes.breadCrumb}
-                    >
+                    <Breadcrumbs separator={<NavigateNextIcon />}>
                       <ButtonBase
                         component={RouterLink}
                         color="inherit"
@@ -233,10 +230,7 @@ class ClientPage extends Component {
                         <PeopleIcon className={classes.breadCrumbIcon} />
                         Clients
                       </ButtonBase>
-                      <Typography
-                        className={classes.breadCrumbLinkClient}
-                        gutterBottom={false}
-                      >
+                      <Typography className={classes.breadCrumbLinkClient}>
                         <PersonIcon className={classes.breadCrumbIcon} />
                         {data.client.fname + ' ' + data.client.lname}
                       </Typography>

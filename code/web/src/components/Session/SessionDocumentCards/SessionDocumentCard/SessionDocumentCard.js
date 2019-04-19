@@ -3,60 +3,55 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import grey from '@material-ui/core/colors/grey';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   card: {
-    height: '90px',
-    marginTop: '1rem',
-    background: '#fff',
-    borderRadius: '6px'
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
   cardContent: {
-    textAlign: 'center'
+    display: 'flex',
+    justifyContent: 'space-between'
   },
-  avatarContainer: {
-    display: 'flex'
+  cardGeneralInfoContainer: {
+    display: 'flex',
+    alignItems: 'center'
   },
   avatar: {
-    height: '70px',
-    width: '70px',
-    borderRadius: '0px',
-    marginTop: theme.spacing.unit * -1,
+    width: '60px',
+    height: '60px',
     backgroundColor: 'transparent',
-    textAlign: 'center'
-  },
-  cardTitle: {
-    fontSize: theme.spacing.unit * 2.2,
-    fontWeight: 400,
-    color: grey[900],
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  },
-  cardSubheader: {
-    fontSize: theme.spacing.unit * 1.6,
-    color: grey[600]
-  },
-  buttonBase: {
-    display: 'block'
-  },
-  iconAction: {
-    // marginTop: theme.spacing.unit * 2
+    borderRadius: '0px',
+    textAlign: 'center',
+    marginRight: theme.spacing.unit
   },
   icon: {
-    fontSize: theme.spacing.unit * 7
+    fontSize: theme.spacing.unit * 5
   },
-  paper: {
-    boxShadow: theme.shadows[2]
+  cardTitle: {
+    fontWeight: 500,
+    fontSize: theme.spacing.unit * 2,
+    maxWidth: 140
+  },
+  cardSubTitle: {
+    fontWeight: 400,
+    fontSize: theme.spacing.unit * 1.75,
+    color: theme.palette.grey[600]
+  },
+  moreActionButton: {
+    position: 'relative',
+    top: -theme.spacing.unit * 1.5,
+    right: -theme.spacing.unit * 1.5
   }
 });
 
@@ -73,49 +68,39 @@ function SessionDocumentCard({
   return (
     <Card
       elevation={1}
-      className={classes.card}
       onClick={() => {
         sessionDocumentViewed(sessionDocument);
       }}
+      className={classes.card}
     >
-      <CardHeader
-        avatar={
-          <div className={classes.avatarContainer}>
-            <Avatar
-              className={classes.avatar}
-              style={{ color: iconColor }}
-              alignItems="center"
-            >
-              <Icon className={classNames(classes.icon, avatarIconClass)} />
-            </Avatar>
+      <CardContent className={classes.cardContent}>
+        <div className={classes.cardGeneralInfoContainer}>
+          <Avatar className={classes.avatar} style={{ color: iconColor }}>
+            <Icon className={classNames(avatarIconClass, classes.icon)} />
+          </Avatar>
+          <div className={classes.cardTextInfo}>
+            <Typography className={classes.cardTitle} noWrap>
+              {sessionDocument.file_name}
+            </Typography>
+            <Typography className={classes.cardSubTitle}>
+              <Moment format="MMM D, YYYY" withTitle>
+                {sessionDocument.date_added}
+              </Moment>
+            </Typography>
           </div>
-        }
-        action={
-          <div>
-            <IconButton
-              className={classes.iconAction}
-              onClick={e => {
-                e.stopPropagation();
-                moreActionsOpened(e, sessionDocument);
-              }}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </div>
-        }
-        title={
-          <Typography noWrap className={classes.cardTitle}>
-            {sessionDocument.file_name}
-          </Typography>
-        }
-        subheader={
-          <Typography className={classes.cardSubheader}>
-            <Moment format="MMM D, YYYY" withTitle>
-              {sessionDocument.date_added}
-            </Moment>
-          </Typography>
-        }
-      />
+        </div>
+        <div>
+          <IconButton
+            className={classes.moreActionButton}
+            onClick={e => {
+              e.stopPropagation();
+              moreActionsOpened(e, sessionDocument);
+            }}
+          >
+            <MoreVertIcon fontSize="small" />
+          </IconButton>
+        </div>
+      </CardContent>
     </Card>
   );
 }
