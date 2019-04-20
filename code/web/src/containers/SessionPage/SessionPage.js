@@ -32,6 +32,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
+import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -133,7 +134,9 @@ class SessionPage extends Component {
   }
 
   changeTabValueHandler = (e, value) => {
-    this.setState({ tabValue: value });
+    if (this.state.tabValue !== value) {
+      this.setState({ tabValue: value });
+    }
   };
 
   render() {
@@ -260,6 +263,9 @@ class SessionPage extends Component {
                           session_id={session_id}
                           documents={session.documents}
                         />
+                      )}
+                      {tabValue === 1 && (
+                        <SessionResultsPage session_id={session_id} />
                       )}
                     </main>
                   </div>
