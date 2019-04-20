@@ -1,6 +1,6 @@
 const fs = require('fs');
 fs.writeFile(
-  process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  './google-credentials-heroku.json’',
   process.env.GOOGLE_CONFIG,
   err => {}
 );
