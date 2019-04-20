@@ -31,6 +31,18 @@ const cache = new InMemoryCache({
         return 'session:' + object.session_id;
       case 'SessionDocument':
         return 'sesssionDocument:' + object.sd_id;
+      case 'Result':
+        return 'result:' + object.result_id;
+      case 'Sentiment':
+        return 'sentiment:' + object.sentiment_id;
+      case 'Keyword':
+        return 'keyword:' + object.keyword_id;
+      case 'Category':
+        return 'category:' + object.category_id;
+      case 'Entity':
+        return 'entity:' + object.entity_id;
+      case 'Emotion':
+        return 'emotion:' + object.emotion_id;
       default:
         return defaultDataIdFromObject(object);
     }
@@ -38,7 +50,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-dev.herokuapp.com/graphql'
+  uri: 'https://kaagapai-test.herokuapp.com/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -53,13 +65,11 @@ const authLink = setContext((_, { headers }) => {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    // graphQLErrors.map(({ message, locations, path }) =>
-    //   console.log(
-    //     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-    //   )
-    // );
-
-    graphQLErrors.map(e => console.log(`[GraphQL error]: ${e}`));
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
   }
 
   if (networkError) {
