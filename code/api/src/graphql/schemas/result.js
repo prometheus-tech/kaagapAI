@@ -53,11 +53,7 @@ export default `
     emotions: [Emotion]
   }
 
-  type Query {
-    result(session_id: UUID!):Result!
-  }
-
   type Mutation {
-    generateResults(session_id: UUID!): Result
+   result(session_id: UUID!): Result
   }
 `;
