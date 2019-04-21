@@ -1,5 +1,6 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import Sequelize from 'sequelize';
 
 export default {
   UUID: GraphQlUUID,
@@ -19,6 +20,19 @@ export default {
         order: [
           [args.orderByColumn, args.orderByInput],
         ] 
+      });
+    },
+
+    searchdocument: ({ session_id }, args, { models }) => {
+      const Op = Sequelize.Op;
+      return models.Session_Document.findAll({ 
+        where: { 
+          session_id,
+          status: 'active',
+          file_name: {
+            [Op.like]: args.filter
+          }
+        }
       });
     }
   },

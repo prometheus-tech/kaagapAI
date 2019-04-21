@@ -14,6 +14,7 @@ export default `
     status: ArchiveStatus!
     c_id: UUID!
     documents(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [SessionDocument]
+    searchdocument(filter: String): [SessionDocument]
   }
 
   type Query { 
