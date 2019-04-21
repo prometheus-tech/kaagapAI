@@ -94,23 +94,20 @@ export default {
       if(!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
-        console.log(name);
+        var filter = name.split(" ");
         const Op = Sequelize.Op;
         return models.Client.findAll({
           raw: true,
-          // where: { 
-          //   p_id: practitioner,
-          //   status: 'active',
-          //   fname: {
-          //     [Op.like]: filter[0],
-          //   },
-          //   lname: {
-          //     [Op.like]: filter[1]
-          //   }
-          // }
-          where: Sequelize.where(Sequelize.fn("CONCAT", "fname", "lname"), {
-            [Op.like]: name
-          })
+          where: { 
+            p_id: practitioner,
+            status: 'active',
+            fname: {
+              [Op.like]: filter[0],
+            },
+            lname: {
+              [Op.like]: filter[filter.length-1]
+            }
+          }
         });
       }
     }
