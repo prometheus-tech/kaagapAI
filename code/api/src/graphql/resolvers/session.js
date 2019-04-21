@@ -6,11 +6,19 @@ export default {
 
   Session: {
     documents: ({ session_id }, args, { models }) => {
+      if (!args.orderByInput || !args.orderByColumn) {
+        orderByColumn = 'file_name';
+        orderByInput = 'ASC';
+      }
+
       return models.Session_Document.findAll({ 
         where: { 
           session_id,
           status: 'active'
-        } 
+        },
+        order: [
+          [args.orderByColumn, args.orderByInput],
+        ] 
       });
     }
   },

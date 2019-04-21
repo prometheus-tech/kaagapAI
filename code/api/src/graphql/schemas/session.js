@@ -13,7 +13,7 @@ export default `
     date_of_session: Date!
     status: ArchiveStatus!
     c_id: UUID!
-    documents: [SessionDocument]
+    documents(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [SessionDocument]
   }
 
   type Query { 
