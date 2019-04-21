@@ -58,7 +58,9 @@ export default {
           const { sd_id } = addFileRes.dataValues;
           return sd_id;
         })
-        .then(sd_id => {
+        .then(async sd_id => {
+          await models.Result.destroy({ where: { session_id } });
+
           return models.Session_Document.findOne({
             raw: true,
             where: { sd_id }
@@ -82,11 +84,15 @@ export default {
         }, {
           where: { sd_id }
         });
-  
-        return await models.Session_Document.findOne({
+        
+        const sessionDocument =  await models.Session_Document.findOne({
           raw: true,
           where: { sd_id }
         });
+
+        await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+
+        return sessionDocument;
       }
     },
 
@@ -98,12 +104,16 @@ export default {
           status: "archived" 
         }, {
           where: { sd_id }
-        })
-  
-        return await models.Session_Document.findOne({
+        });
+
+        const sessionDocument =  await models.Session_Document.findOne({
           raw: true,
           where: { sd_id }
         });
+
+        await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+
+        return sessionDocument;
       }
     },
 
@@ -131,12 +141,16 @@ export default {
               status: "active" 
             }, {
               where: { sd_id }
-            })
+            });
 
-            return await models.Session_Document.findOne({
+            const sessionDocument =  await models.Session_Document.findOne({
               raw: true,
               where: { sd_id }
             });
+    
+            await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+    
+            return sessionDocument;
           }
         })
       }

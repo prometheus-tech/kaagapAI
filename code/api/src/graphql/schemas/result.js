@@ -54,6 +54,6 @@ export default `
   }
 
   type Mutation {
-   result(session_id: UUID!): Result
+   result(session_id: UUID!): Result!
   }
 `;
