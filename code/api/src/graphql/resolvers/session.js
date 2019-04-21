@@ -1,16 +1,38 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import Sequelize from 'sequelize';
 
 export default {
   UUID: GraphQlUUID,
 
   Session: {
     documents: ({ session_id }, args, { models }) => {
+      if (!args.orderByInput || !args.orderByColumn) {
+        args.orderByColumn = 'file_name';
+        args.orderByInput = 'ASC';
+      }
+
       return models.Session_Document.findAll({ 
         where: { 
           session_id,
           status: 'active'
-        } 
+        },
+        order: [
+          [args.orderByColumn, args.orderByInput],
+        ] 
+      });
+    },
+
+    searchdocument: ({ session_id }, args, { models }) => {
+      const Op = Sequelize.Op;
+      return models.Session_Document.findAll({ 
+        where: { 
+          session_id,
+          status: 'active',
+          file_name: {
+            [Op.like]: args.filter
+          }
+        }
       });
     }
   },
@@ -22,7 +44,7 @@ export default {
       } else {
         return await models.Session.findOne({ where: { session_id } });
       }
-    }
+    },
   },
 
   Mutation: {
@@ -80,10 +102,14 @@ export default {
           raw: true,
           where: { session_id }
         }).then( res => {
-          return models.Client.findOne({
-            raw: true,
-            where: { c_id: res.c_id }
-          })
+          if(!res) {
+            throw new ForbiddenError('Session does not exist');
+          } else {
+            return models.Client.findOne({
+              raw: true,
+              where: { c_id: res.c_id }
+            })
+          }
         }).then( async res => {
           if(res.status == 'archived'){
             throw new ForbiddenError('Client has been deleted, please restore client first.');

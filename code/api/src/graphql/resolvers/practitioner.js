@@ -54,16 +54,18 @@ export default {
         }
       });
 
-      if(existingPractitioner){
-        throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
-      } else {
-        const verificationCode = registration.generateCode().toString();
-        const body = 'To verify your email, please enter the following verification code: ' + verificationCode;
-        const subject = 'Email verification';
-        const hashPassword = await registration.hashPassword(password);
+      var verificationCode = null;
+      var body = 'To verify your email, please enter the following verification code: ';
+      const subject = 'Email verification';
+      var hashPassword = null;
+
+      if(!existingPractitioner){
+        verificationCode = registration.generateCode().toString();
+        body = body + verificationCode;
+        hashPassword = await registration.hashPassword(password);
 
         if(await registration.sendEmail(subject, body, email)) {
-          const addRegistration = await models.Practitioner.create({
+          await models.Practitioner.create({
             email,
             phone_no,
             password: hashPassword,
@@ -75,12 +77,29 @@ export default {
             verification_code: verificationCode
           });
 
-          const { p_id } = addRegistration.dataValues;
+          return { email };
+        }
+      } else if(existingPractitioner.verification_code == 'verified'){
+        throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
+      } else {
+        verificationCode = registration.generateCode().toString();
+        body = body + verificationCode;
+        hashPassword = await registration.hashPassword(password);
 
-          return await models.Practitioner.findOne({
-            raw: true,
-            where: { p_id }
+        if(await registration.sendEmail(subject, body, email)) {
+          await models.Practitioner.update({
+            phone_no,
+            password: hashPassword,
+            fname,
+            lname,
+            license,
+            profession,
+            verification_code: verificationCode
+          }, {
+            where: { email }
           });
+
+          return { email };
         }
       }
     },
@@ -110,10 +129,7 @@ export default {
           const subject = "Assessing Account Status";
           await registration.sendEmail(subject, body, email);
   
-          return models.Practitioner.findOne({
-            raw: true,
-            where: { email }
-          });
+          return { email };
         } else {
           throw new AuthenticationError('Invalid Verification Code')
         }

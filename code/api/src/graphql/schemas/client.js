@@ -23,6 +23,8 @@ export default `
     last_opened
     session_name
     date_of_session
+    file_name
+    last_modified
   } 
 
   type Client {
@@ -37,12 +39,15 @@ export default `
     p_id: UUID!
     no_of_sessions: Int
     sessions(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Session]
+    searchsession(filter: String): [Session]
   }
 
   type Query { 
     clients(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Client!]
     
     client(c_id: UUID!): Client
+
+    searchclients(name: String!): [Client!]
   }
 
   type Mutation {
