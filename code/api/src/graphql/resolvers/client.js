@@ -8,8 +8,8 @@ export default {
   Client: {
     sessions: ({ c_id }, args, { models }) => {
       if (!args.orderByInput || !args.orderByColumn) {
-        orderByColumn = 'session_name';
-        orderByInput = 'ASC';
+        args.orderByColumn = 'session_name';
+        args.orderByInput = 'ASC';
       }
       
       return models.Session.findAll({ 
@@ -43,13 +43,13 @@ export default {
   },
 
   Query: {
-    clients: (parent, { orderByInput, orderByColumn }, { models, practitioner }) => {
+    clients: (parent, args, { models, practitioner }) => {
       if(!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
-        if (!orderByInput || !orderByColumn) {
-          orderByColumn = 'lname';
-          orderByInput = 'ASC';
+        if (!args.orderByInput || !args.orderByColumn) {
+          args.orderByColumn = 'lname';
+          args.orderByInput = 'ASC';
         }
 
         return models.Client.findAll({
@@ -59,7 +59,7 @@ export default {
             status: 'active'
           },
           order: [
-            [orderByColumn, orderByInput]
+            [args.orderByColumn, args.orderByInput]
           ]
         });
       }

@@ -41,7 +41,6 @@ export default {
 
   Mutation: {
     uploadSessionDocument: (parent, { file, session_id }, { models, practitioner }) => {
-      console.log(practitioner);
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -116,10 +115,14 @@ export default {
           raw: true,
           where: { sd_id }
         }).then( res => {
-          return models.Session.findOne({
-            raw: true,
-            where: { session_id: res.session_id }
-          })
+          if(!res) {
+            throw new ForbiddenError('Session Document does not exist');
+          } else {
+            return models.Session.findOne({
+              raw: true,
+              where: { session_id: res.session_id }
+            })
+          }
         }).then( async res => {
           if(res.status == 'archived'){
             throw new ForbiddenError('Session has been deleted, please restore session folder first.');

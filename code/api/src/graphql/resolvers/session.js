@@ -80,10 +80,14 @@ export default {
           raw: true,
           where: { session_id }
         }).then( res => {
-          return models.Client.findOne({
-            raw: true,
-            where: { c_id: res.c_id }
-          })
+          if(!res) {
+            throw new ForbiddenError('Session does not exist');
+          } else {
+            return models.Client.findOne({
+              raw: true,
+              where: { c_id: res.c_id }
+            })
+          }
         }).then( async res => {
           if(res.status == 'archived'){
             throw new ForbiddenError('Client has been deleted, please restore client first.');
