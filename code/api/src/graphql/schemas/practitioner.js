@@ -28,8 +28,12 @@ export default `
   }
 
   type Mutation {
-    login(email: String!, password: String!): JSON
+    login(email: String!, password: String!): JSON!
+
     register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): JSON
+
     verifyRegistration(email: String!,input_code:String!):JSON
+
+    updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!
   }
 `;
