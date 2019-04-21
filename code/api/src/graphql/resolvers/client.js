@@ -1,12 +1,13 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import Sequelize from 'sequelize';
 
 export default {
   UUID: GraphQlUUID,
   
   Client: {
-    sessions: ({ c_id, orderByInput, orderByColumn }, args, { models }) => {
-      if (!orderByInput || !orderByColumn) {
+    sessions: ({ c_id }, args, { models }) => {
+      if (!args.orderByInput || !args.orderByColumn) {
         orderByColumn = 'session_name';
         orderByInput = 'ASC';
       }
@@ -17,7 +18,7 @@ export default {
           status: 'active'
         },
         order: [
-          [orderByColumn, orderByInput],
+          [args.orderByColumn, args.orderByInput],
         ] 
       });
     },
@@ -29,6 +30,15 @@ export default {
           status: 'active'
         } 
       });
+    },
+
+    searchsession: async ({ c_id }, args, { models }) => {
+      return models.Session.findAll({
+        where: {
+          c_id,
+          session_name: args.filter
+        }
+      })
     }
   },
 
@@ -79,6 +89,31 @@ export default {
         }
       }
     },
+
+    searchclients: (parent, { name }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        console.log(name);
+        const Op = Sequelize.Op;
+        return models.Client.findAll({
+          raw: true,
+          // where: { 
+          //   p_id: practitioner,
+          //   status: 'active',
+          //   fname: {
+          //     [Op.like]: filter[0],
+          //   },
+          //   lname: {
+          //     [Op.like]: filter[1]
+          //   }
+          // }
+          where: Sequelize.where(Sequelize.fn("CONCAT", "fname", "lname"), {
+            [Op.like]: name
+          })
+        });
+      }
+    }
   },
 
   Mutation: {

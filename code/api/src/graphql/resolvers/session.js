@@ -22,7 +22,7 @@ export default {
       } else {
         return await models.Session.findOne({ where: { session_id } });
       }
-    }
+    },
   },
 
   Mutation: {
