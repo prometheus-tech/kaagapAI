@@ -51,7 +51,9 @@ class CustomWordCloud extends Component {
             count
           });
         }}
-        padding={3}
+        padding={1}
+        width={400}
+        height={300}
       />
     );
   }

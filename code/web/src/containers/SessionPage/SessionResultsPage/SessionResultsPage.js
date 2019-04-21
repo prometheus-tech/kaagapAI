@@ -14,6 +14,11 @@ import InsertChartIcon from '@material-ui/icons/InsertChart';
 import AddIcon from '@material-ui/icons/Add';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   extendedButton: {
@@ -41,6 +46,9 @@ const styles = theme => ({
     '&:hover': {
       boxShadow: theme.shadows[10]
     }
+  },
+  expansionPanelContainer: {
+    padding: 24
   }
 });
 
@@ -59,7 +67,7 @@ class SessionResultsPage extends Component {
             return <p>Error</p>;
           }
 
-          const { keywords } = data.result;
+          const { keywords, sentiment, emotions } = data.result;
 
           return (
             <Mutation mutation={GENERATE_RESULTS}>
@@ -89,7 +97,16 @@ class SessionResultsPage extends Component {
                       <AddIcon />
                     </Fab>
                   </Hidden>
-                  <KeywordsContainer keywords={keywords} />
+                  <div className={classes.expansionPanelContainer}>
+                    <ExpansionPanel>
+                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography variant="h6">Keywords</Typography>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <KeywordsContainer keywords={keywords} />
+                      </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                  </div>
                 </Auxilliary>
               )}
             </Mutation>
