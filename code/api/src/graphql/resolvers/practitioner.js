@@ -50,12 +50,40 @@ export default {
       const existingPractitioner = await models.Practitioner.findOne({
         raw: true,
         where: {
+          email,
+          verification_code: 'verified'
+        }
+      });
+
+      const unverifiedPractitioner = await 
+      models.Practitioner.findOne({
+        raw: true,
+        where: {
           email
         }
       });
 
       if(existingPractitioner){
         throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
+      } else if (unverifiedPractitioner) {
+        const verificationCode = registration.generateCode().toString();
+        const body = 'To verify your email, please enter the following verification code: ' + verificationCode;
+        const subject = 'Email verification';
+
+        if(await registration.sendEmail(subject, body, email)) {
+          const updateRegistration = await models.Practitioner.update({
+            date_registered: new Date(),
+            verification_code: verificationCode
+          }, {
+            where: { email },
+            returning: true
+          });
+
+          return await models.Practitioner.findOne({
+            raw: true,
+            where: { email }
+          });
+        }
       } else {
         const verificationCode = registration.generateCode().toString();
         const body = 'To verify your email, please enter the following verification code: ' + verificationCode;
