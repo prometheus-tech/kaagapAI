@@ -8,8 +8,8 @@ export default {
   Session: {
     documents: ({ session_id }, args, { models }) => {
       if (!args.orderByInput || !args.orderByColumn) {
-        orderByColumn = 'file_name';
-        orderByInput = 'ASC';
+        args.orderByColumn = 'file_name';
+        args.orderByInput = 'ASC';
       }
 
       return models.Session_Document.findAll({ 

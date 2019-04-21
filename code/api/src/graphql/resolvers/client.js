@@ -8,8 +8,8 @@ export default {
   Client: {
     sessions: ({ c_id }, args, { models }) => {
       if (!args.orderByInput || !args.orderByColumn) {
-        orderByColumn = 'session_name';
-        orderByInput = 'ASC';
+        args.orderByColumn = 'session_name';
+        args.orderByInput = 'ASC';
       }
       
       return models.Session.findAll({ 

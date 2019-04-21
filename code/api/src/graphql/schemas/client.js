@@ -38,7 +38,7 @@ export default `
     status: ArchiveStatus!
     p_id: UUID!
     no_of_sessions: Int
-    sessions: [Session]
+    sessions(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Session]
     searchsession(filter: String): [Session]
   }
 
