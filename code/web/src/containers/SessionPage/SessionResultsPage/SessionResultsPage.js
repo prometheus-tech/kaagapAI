@@ -19,6 +19,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
+import Categories from './Categories/Categories';
 
 const styles = theme => ({
   extendedButton: {
@@ -67,7 +68,7 @@ class SessionResultsPage extends Component {
             return <p>Error</p>;
           }
 
-          const { keywords, sentiment, emotions } = data.result;
+          const { keywords, categories } = data.result;
 
           return (
             <Mutation mutation={GENERATE_RESULTS}>
@@ -98,12 +99,20 @@ class SessionResultsPage extends Component {
                     </Fab>
                   </Hidden>
                   <div className={classes.expansionPanelContainer}>
-                    <ExpansionPanel>
+                    <ExpansionPanel defaultExpanded={true}>
                       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography variant="h6">Keywords</Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
                         <KeywordsContainer keywords={keywords} />
+                      </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                    <ExpansionPanel defaultExpanded={true}>
+                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography variant="h6">Categories</Typography>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <Categories categories={categories} />
                       </ExpansionPanelDetails>
                     </ExpansionPanel>
                   </div>
