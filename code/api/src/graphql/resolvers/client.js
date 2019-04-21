@@ -33,10 +33,13 @@ export default {
     },
 
     searchsession: async ({ c_id }, args, { models }) => {
+      const Op = Sequelize.Op;
       return models.Session.findAll({
         where: {
           c_id,
-          session_name: args.filter
+          session_name: {
+            [Op.like]: args.filter
+          }
         }
       })
     }

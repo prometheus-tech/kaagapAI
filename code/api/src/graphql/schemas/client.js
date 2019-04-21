@@ -23,6 +23,8 @@ export default `
     last_opened
     session_name
     date_of_session
+    file_name
+    last_modified
   } 
 
   type Client {
