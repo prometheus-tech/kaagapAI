@@ -265,7 +265,10 @@ class SessionPage extends Component {
                         />
                       )}
                       {tabValue === 1 && (
-                        <SessionResultsPage session_id={session_id} />
+                        <SessionResultsPage
+                          session_id={session_id}
+                          documents={session.documents}
+                        />
                       )}
                     </main>
                   </div>

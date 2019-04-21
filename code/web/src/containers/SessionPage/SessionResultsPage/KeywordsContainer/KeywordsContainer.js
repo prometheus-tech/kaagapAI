@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import CustomWordCloud from './CustomWordCloud/CustomWordCloud';
+import KeywordMapper from './KeywordMapper/KeywordMapper';
 
 class KeywordsContainer extends Component {
   state = {
@@ -15,6 +16,8 @@ class KeywordsContainer extends Component {
   render() {
     const { keywords } = this.props;
 
+    const { selectedKeyword } = this.state;
+
     return (
       <Grid container spacing={16}>
         <Grid item xs={8}>
@@ -23,6 +26,11 @@ class KeywordsContainer extends Component {
             keywordSelected={this.selectKeywordHandler}
           />
         </Grid>
+        {selectedKeyword ? (
+          <Grid item xs={4}>
+            <KeywordMapper keyword={selectedKeyword} />
+          </Grid>
+        ) : null}
       </Grid>
     );
   }
