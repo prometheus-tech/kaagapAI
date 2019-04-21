@@ -23,6 +23,10 @@ export default `
     verification_code: String!
   }
 
+  type Query {
+    profile: JSON!
+  }
+
   type Mutation {
     login(email: String!, password: String!): JSON
     register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): JSON

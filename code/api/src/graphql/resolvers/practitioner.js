@@ -8,7 +8,28 @@ export default {
   UUID: GraphQlUUID,
   JSON: GraphQlJSON,
 
-  Query: {},
+  Query: {
+    profile:async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        return await models.Practitioner.findOne({
+          raw: true,
+          where: { p_id: practitioner },
+          attributes: [ 
+            'email', 
+            'fname', 
+            'lname', 
+            'phone_no',
+            'license',
+            'profession',
+            'date_registered',
+            'last_logged'
+          ]
+        })
+      }
+    }
+  },
 
   Mutation: {
     login: async (parent, { email, password }, { models, SECRET }) => {
@@ -41,6 +62,12 @@ export default {
         }
       })
       
+      await models.Practitioner.update({
+        last_logged: new Date()
+      }, {
+        where: { p_id: practitioner.p_id }
+      });
+
       const session_token = auth.generateToken(practitioner, SECRET);
 
       return { session_token };
@@ -49,9 +76,7 @@ export default {
     register: async (parent, { email, password, phone_no, fname, lname, license, profession }, { models }) => {
       const existingPractitioner = await models.Practitioner.findOne({
         raw: true,
-        where: {
-          email
-        }
+        where: { email }
       });
 
       var verificationCode = null;
