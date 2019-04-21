@@ -20,14 +20,14 @@ class KeywordsContainer extends Component {
 
     return (
       <Grid container spacing={16}>
-        <Grid item xs={8}>
+        <Grid item xs={5}>
           <CustomWordCloud
             keywords={keywords}
             keywordSelected={this.selectKeywordHandler}
           />
         </Grid>
         {selectedKeyword ? (
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <KeywordMapper keyword={selectedKeyword} />
           </Grid>
         ) : null}
