@@ -18,9 +18,7 @@ const REGISTER = gql`
       lname: $lname
       license: $license
       profession: $profession
-    ) {
-      email
-    }
+    )
   }
 `;
 

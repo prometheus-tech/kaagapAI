@@ -41,7 +41,6 @@ export default {
 
   Mutation: {
     uploadSessionDocument: (parent, { file, session_id }, { models, practitioner }) => {
-      console.log(practitioner);
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -59,7 +58,9 @@ export default {
           const { sd_id } = addFileRes.dataValues;
           return sd_id;
         })
-        .then(sd_id => {
+        .then(async sd_id => {
+          await models.Result.destroy({ where: { session_id } });
+
           return models.Session_Document.findOne({
             raw: true,
             where: { sd_id }
@@ -83,11 +84,15 @@ export default {
         }, {
           where: { sd_id }
         });
-  
-        return await models.Session_Document.findOne({
+        
+        const sessionDocument =  await models.Session_Document.findOne({
           raw: true,
           where: { sd_id }
         });
+
+        await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+
+        return sessionDocument;
       }
     },
 
@@ -99,12 +104,16 @@ export default {
           status: "archived" 
         }, {
           where: { sd_id }
-        })
-  
-        return await models.Session_Document.findOne({
+        });
+
+        const sessionDocument =  await models.Session_Document.findOne({
           raw: true,
           where: { sd_id }
         });
+
+        await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+
+        return sessionDocument;
       }
     },
 
@@ -116,10 +125,14 @@ export default {
           raw: true,
           where: { sd_id }
         }).then( res => {
-          return models.Session.findOne({
-            raw: true,
-            where: { session_id: res.session_id }
-          })
+          if(!res) {
+            throw new ForbiddenError('Session Document does not exist');
+          } else {
+            return models.Session.findOne({
+              raw: true,
+              where: { session_id: res.session_id }
+            })
+          }
         }).then( async res => {
           if(res.status == 'archived'){
             throw new ForbiddenError('Session has been deleted, please restore session folder first.');
@@ -128,12 +141,16 @@ export default {
               status: "active" 
             }, {
               where: { sd_id }
-            })
+            });
 
-            return await models.Session_Document.findOne({
+            const sessionDocument =  await models.Session_Document.findOne({
               raw: true,
               where: { sd_id }
             });
+    
+            await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+    
+            return sessionDocument;
           }
         })
       }

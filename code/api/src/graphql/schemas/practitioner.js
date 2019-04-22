@@ -23,9 +23,17 @@ export default `
     verification_code: String!
   }
 
+  type Query {
+    profile: JSON!
+  }
+
   type Mutation {
-    login(email: String!, password: String!): JSON
-    register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): Practitioner
-    verifyRegistration(email: String!,input_code:String!):Practitioner
+    login(email: String!, password: String!): JSON!
+
+    register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): JSON
+
+    verifyRegistration(email: String!,input_code:String!):JSON
+
+    updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!
   }
 `;

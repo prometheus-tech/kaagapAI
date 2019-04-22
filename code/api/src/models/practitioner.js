@@ -20,18 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     date_registered: DataTypes.DATEONLY,
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
-    verification_code: DataTypes.STRING
+    verification_code: DataTypes.STRING,
+    change_password_UUID: DataTypes.UUID
   });
 
   Practitioner.removeAttribute('id');
 
   Practitioner.associate = models => {
     Practitioner.hasMany( models.Client, {
-      foreignKey: 'p_id',
-      sourceKey: 'p_id'
-    });
-
-    Practitioner.hasMany(models.Practitioner_Feedback, {
       foreignKey: 'p_id',
       sourceKey: 'p_id'
     });

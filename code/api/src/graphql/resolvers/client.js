@@ -1,14 +1,15 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import Sequelize from 'sequelize';
 
 export default {
   UUID: GraphQlUUID,
   
   Client: {
-    sessions: ({ c_id, orderByInput, orderByColumn }, args, { models }) => {
-      if (!orderByInput || !orderByColumn) {
-        orderByColumn = 'session_name';
-        orderByInput = 'ASC';
+    sessions: ({ c_id }, args, { models }) => {
+      if (!args.orderByInput || !args.orderByColumn) {
+        args.orderByColumn = 'session_name';
+        args.orderByInput = 'ASC';
       }
       
       return models.Session.findAll({ 
@@ -17,7 +18,7 @@ export default {
           status: 'active'
         },
         order: [
-          [orderByColumn, orderByInput],
+          [args.orderByColumn, args.orderByInput],
         ] 
       });
     },
@@ -29,17 +30,29 @@ export default {
           status: 'active'
         } 
       });
+    },
+
+    searchsession: async ({ c_id }, args, { models }) => {
+      const Op = Sequelize.Op;
+      return models.Session.findAll({
+        where: {
+          c_id,
+          session_name: {
+            [Op.like]: args.filter
+          }
+        }
+      })
     }
   },
 
   Query: {
-    clients: (parent, { orderByInput, orderByColumn }, { models, practitioner }) => {
+    clients: (parent, args, { models, practitioner }) => {
       if(!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
-        if (!orderByInput || !orderByColumn) {
-          orderByColumn = 'lname';
-          orderByInput = 'ASC';
+        if (!args.orderByInput || !args.orderByColumn) {
+          args.orderByColumn = 'lname';
+          args.orderByInput = 'ASC';
         }
 
         return models.Client.findAll({
@@ -49,7 +62,7 @@ export default {
             status: 'active'
           },
           order: [
-            [orderByColumn, orderByInput]
+            [args.orderByColumn, args.orderByInput]
           ]
         });
       }
@@ -79,6 +92,28 @@ export default {
         }
       }
     },
+
+    searchclients: (parent, { name }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        var filter = name.split(" ");
+        const Op = Sequelize.Op;
+        return models.Client.findAll({
+          raw: true,
+          where: { 
+            p_id: practitioner,
+            status: 'active',
+            fname: {
+              [Op.like]: filter[0],
+            },
+            lname: {
+              [Op.like]: filter[filter.length-1]
+            }
+          }
+        });
+      }
+    }
   },
 
   Mutation: {

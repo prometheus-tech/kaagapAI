@@ -23,7 +23,6 @@ const models = {
   Client: sequelize.import('./client'),
   Session: sequelize.import('./session'),
   Session_Document: sequelize.import('./session_document'),
-  Practitioner_Feedback: sequelize.import('./practitioner_feedback'),
   Result: sequelize.import('./result'),
   Sentiment: sequelize.import('./sentiment'),
   Emotion: sequelize.import('./emotion'),
