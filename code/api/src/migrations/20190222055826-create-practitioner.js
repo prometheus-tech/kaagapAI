@@ -59,8 +59,7 @@ module.exports = {
       },
       change_password_UUID: {
         type: Sequelize.UUID,
-        allowNull: true,
-        defaultValue: Sequelize.UUIDV4
+        allowNull: true
       }
     });
   },

@@ -21,10 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     date_deactivated: DataTypes.DATEONLY,
     last_logged: DataTypes.DATE,
     verification_code: DataTypes.STRING,
-    change_password_UUID: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
-    }
+    change_password_UUID: DataTypes.UUID
   });
 
   Practitioner.removeAttribute('id');
