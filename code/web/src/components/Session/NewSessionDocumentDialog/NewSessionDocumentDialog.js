@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Mutation } from 'react-apollo';
 import ADD_SESSION_DOCUMENT from '../../../graphql/mutations/addSessionDocument';
+import RESULTS from '../../../graphql/queries/results';
 import SESSION from '../../../graphql/queries/session';
 import { cloneDeep } from 'apollo-utilities';
 
@@ -207,6 +208,10 @@ function NewSessionDocumentDialog(props) {
 
         closed();
       }}
+      refetchQueries={() => {
+        return [{ query: RESULTS, variables: { session_id: sessionId } }];
+      }}
+      awaitRefetchQueries={true}
     >
       {(addSessionDocument, { loading }) => {
         return (
