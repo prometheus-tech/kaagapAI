@@ -1,2 +1,4 @@
+'use strict';
+
 const fs = require('fs');
-fs.writeFile('./gcpconfig.json', process.env.GCP_CRED, err => {});
+fs.writeFile(process.env.GCP_KEY_FILE, process.env.GCP_CRED, err => {});
