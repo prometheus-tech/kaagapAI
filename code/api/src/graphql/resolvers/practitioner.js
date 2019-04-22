@@ -4,6 +4,7 @@ import Sequelize from 'sequelize';
 import auth from '../../modules/auth';
 import registration from '../../modules/registration';
 import { AuthenticationError, ApolloError } from 'apollo-server-express';
+import uuid from 'uuid/v4';
 
 export default {
   UUID: GraphQlUUID,
@@ -218,6 +219,45 @@ export default {
           })
         }
       }
+    },
+
+    forgotPassword: async (parent, { email }, { models }) => {
+      const changePasswordUUID = uuid();
+      //change body base on final url
+      var body =
+        'To change your password please click on the link: kaagapai-dev.com/forgotpassword/'+changePasswordUUID;
+      const subject = 'Change Password';
+
+      return models.Practitioner.findOne({
+        raw: true,
+        where: { 
+          email,
+          user_status: 'active'
+        }
+      }).then(async res => {
+        if(!res) {
+          //throw error that email is not registered
+          throw new Error('Email is not registered');
+        } else {
+          if (await registration.sendEmail(subject, body, email)) {
+            await models.Practitioner.update({
+              change_password_UUID: changePasswordUUID
+            }, {
+              where: {
+                email
+              }
+            });
+  
+            return await models.Practitioner.findOne({
+              raw: true,
+              where: { 
+                email,
+                user_status: 'active'
+              }
+            });
+          }
+        }
+      })
     }
   }
 };

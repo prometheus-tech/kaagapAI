@@ -35,5 +35,7 @@ export default `
     verifyRegistration(email: String!,input_code:String!):JSON
 
     updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!
+
+    forgotPassword(email: String!): JSON
   }
 `;
