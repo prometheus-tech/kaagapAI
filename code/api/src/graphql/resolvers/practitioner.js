@@ -268,12 +268,17 @@ export default {
         if (res.change_password_UUID == changePasswordToken) {
           const hashPassword = await registration.hashPassword(password);
 
+          //link to be changed
+          var body =
+            'Your account password has been successfully changed. Please click the link to login: kaagapai-dev.com/login';
+          const subject = 'Password Successfully Changed';
+
           await models.Practitioner.update({
             password: hashPassword,
             change_password_UUID: null
           }, { 
             where: { email } 
-          })
+          }).then(async res => await registration.sendEmail(subject, body, email));
 
           return { email };
         } else {
