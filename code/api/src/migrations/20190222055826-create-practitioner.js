@@ -56,6 +56,11 @@ module.exports = {
       verification_code: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      change_password_UUID: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        defaultValue: Sequelize.UUIDV4
       }
     });
   },
