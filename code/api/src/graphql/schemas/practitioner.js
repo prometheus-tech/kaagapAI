@@ -37,5 +37,7 @@ export default `
     updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!
 
     forgotPassword(email: String!): JSON
+
+    changePassword(email: String!, changePasswordToken: String!, password: String!): JSON
   }
 `;
