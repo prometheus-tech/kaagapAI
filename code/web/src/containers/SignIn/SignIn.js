@@ -7,12 +7,11 @@ import LOGIN from '../../graphql/mutations/login';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
-import SignInIllustration from '../../assets/credentialillustration.svg';
+import animationLog from '../../assets/animationLog.svg';
 import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
@@ -26,7 +25,9 @@ const styles = theme => ({
     width: '100vw',
     height: '100vh',
     padding: '0vh',
-    margin: '0'
+    margin: '0',
+    overflowX: 'hidden',
+    overflowY: 'hidden'
   },
   logo: {
     margin: 20,
@@ -51,19 +52,19 @@ const styles = theme => ({
     backgroundColor: 'rgb(252, 252, 252)'
   },
   formItems: {
-    marginTop: '4vh',
     marginLeft: theme.spacing.unit * 5
   },
   illustrationContainer: {
     display: 'inline',
     textAlign: 'center'
-    // background: '#f12711',
-    // background: '-webkit-linear-gradient(to bottom, #f5af19, #f12711)',
-    // background: 'linear-gradient(to bottom, #f5af19, #f12711)'
   },
   sigInIllustration: {
     height: '70vh',
     marginTop: '10vh'
+  },
+  inputActionField: {
+    marginTop: theme.spacing.unit * 4,
+    fontWeight: '300'
   },
   fab: {
     margin: theme.spacing.unit,
@@ -80,7 +81,7 @@ const styles = theme => ({
   },
   createAccount: {
     display: 'flex',
-    marginTop: '20vh'
+    marginTop: '15vh'
   },
   createQuestion: {
     fontWeight: '300',
@@ -140,9 +141,11 @@ class SignIn extends Component {
                     })}
                   </Grid>
                 ) : null}
-                <Grid item xs={5} className={classes.formContainer}>
+                <Grid item xs={4} className={classes.formContainer}>
                   <img src={Logo} className={classes.logo} alt="kaagapAI" />
-                  <Typography className={classes.signIn}>Login.</Typography>
+                  <Typography className={classes.signIn}>
+                    Login to kaagapAI.
+                  </Typography>
                   <Typography className={classes.signInInformation}>
                     To Login fill in the the necessary information, please
                     provide the necessary message here.
@@ -156,7 +159,6 @@ class SignIn extends Component {
                     <Grid item xs={10}>
                       <TextValidator
                         label="Email"
-                        variant="outlined"
                         margin="dense"
                         autoComplete="email"
                         fullWidth
@@ -166,10 +168,10 @@ class SignIn extends Component {
                         errorMessages={['Enter an email', 'Invalid email']}
                         disabled={loading}
                         onChange={this.inputChangeHandler}
+                        className={classes.inputActionField}
                       />
                       <TextValidator
                         label="Password"
-                        variant="outlined"
                         margin="dense"
                         type="password"
                         fullWidth
@@ -182,6 +184,7 @@ class SignIn extends Component {
                         ]}
                         disabled={loading}
                         onChange={this.inputChangeHandler}
+                        className={classes.inputActionField}
                       />
                     </Grid>
                     <Grid item xs={10} className={classes.alignMent}>
@@ -208,9 +211,9 @@ class SignIn extends Component {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item className={classes.illustrationContainer} xs={7}>
+                <Grid item className={classes.illustrationContainer} xs={8}>
                   <img
-                    src={SignInIllustration}
+                    src={animationLog}
                     className={classes.sigInIllustration}
                     alt="Sign in illustration"
                   />
