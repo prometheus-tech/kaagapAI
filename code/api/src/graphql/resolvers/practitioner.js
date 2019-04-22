@@ -151,14 +151,15 @@ export default {
         .then(async res => {
           if (res) {
             await models.Practitioner.update({ 
-              verification_code: 'verified' 
+              verification_code: 'verified',
+              user_status: 'active'
             }, {
                 where: { email }
             });
 
             const body =
-              "Your account has been successfully verified! We will get back to you on your account's status.";
-            const subject = 'Assessing Account Status';
+              "Your account has been successfully verified! Please log in to continue";
+            const subject = 'Account Verified';
             await registration.sendEmail(subject, body, email);
 
             return { email };
