@@ -37,7 +37,7 @@ export default {
     }
   },
 
-  Mutation: {
+  Query: {
     result: async (
       parent, {
         session_id
