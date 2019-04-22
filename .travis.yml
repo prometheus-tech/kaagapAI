@@ -9,6 +9,7 @@ matrix:
     before_install:
     - npm install -g firebase-tools
     - cd code/web/
+    - npm install
     script:
     - npm test
     after_success:
