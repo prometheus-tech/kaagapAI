@@ -3,7 +3,7 @@ import GraphQlJSON from 'graphql-type-json';
 import Sequelize from 'sequelize';
 import auth from '../../modules/auth';
 import registration from '../../modules/registration';
-import { AuthenticationError, ApolloError } from 'apollo-server-express';
+import { AuthenticationError, ApolloError, ForbiddenError } from 'apollo-server-express';
 import uuid from 'uuid/v4';
 
 export default {
@@ -114,7 +114,7 @@ export default {
 
           return { email };
         }
-      } else if (existingPractitioner.verification_code == 'verified') {
+      } else if (existingPractitioner.user_status == 'active') {
         throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
       } else {
         verificationCode = registration.generateCode().toString();
@@ -226,26 +226,25 @@ export default {
       //change body base on final url
       var body =
         'To change your password please click on the link: kaagapai-dev.com/forgotpassword/'+changePasswordUUID;
-      const subject = 'Change Password';
+      const subject = 'Change Account Password';
 
       return models.Practitioner.findOne({
         raw: true,
         where: { 
           email,
           user_status: 'active'
-        }
+        },
+        attributes: [ 'email' ]
       }).then(async res => {
         if(!res) {
           //throw error that email is not registered
-          throw new Error('Email is not registered');
+          throw new AuthenticationError('Email is not yet registered');
         } else {
           if (await registration.sendEmail(subject, body, email)) {
             await models.Practitioner.update({
               change_password_UUID: changePasswordUUID
             }, {
-              where: {
-                email
-              }
+              where: { email }
             });
   
             return await models.Practitioner.findOne({
@@ -253,9 +252,37 @@ export default {
               where: { 
                 email,
                 user_status: 'active'
-              }
+              },
+              attributes: [ 'email' ]
             });
           }
+        }
+      })
+    },
+
+    changePassword: async ( parent, { changePasswordToken, email, password }, { models } ) => {
+      return await models.Practitioner.findOne({
+        raw: true,
+        where: { email }
+      }).then(async res => {
+        if (res.change_password_UUID == changePasswordToken) {
+          const hashPassword = await registration.hashPassword(password);
+
+          //link to be changed
+          var body =
+            'Your account password has been successfully changed. Please click the link to login: kaagapai-dev.com/login';
+          const subject = 'Password Successfully Changed';
+
+          await models.Practitioner.update({
+            password: hashPassword,
+            change_password_UUID: null
+          }, { 
+            where: { email } 
+          }).then(async res => await registration.sendEmail(subject, body, email));
+
+          return { email };
+        } else {
+          throw new ForbiddenError('Invalid change password token');
         }
       })
     }
