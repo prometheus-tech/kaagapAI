@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
-import LoginAnimation from '../../assets/login_animation.svg';
+import LoginAnimation from '../../assets/Landing_Animation.svg';
 import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
