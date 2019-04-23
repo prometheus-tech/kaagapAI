@@ -120,6 +120,12 @@ export default {
               where: { session_id }
             })
 
+            await models.Session_Document.update({ 
+              status: "active" 
+            }, {
+              where: { session_id }
+            })
+
             return await models.Session.findOne({
               raw: true,
               where: { session_id }
