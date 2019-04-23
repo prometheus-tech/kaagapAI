@@ -1,6 +1,4 @@
+'use strict';
+
 const fs = require('fs');
-fs.writeFile(
-  './google-credentials-heroku.json',
-  process.env.GOOGLE_CONFIG,
-  err => {}
-);
+fs.writeFile('./gcpconfig.json',  process.env.GCP_CRED, err => {});
