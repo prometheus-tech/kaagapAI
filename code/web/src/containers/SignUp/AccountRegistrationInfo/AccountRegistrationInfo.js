@@ -12,13 +12,12 @@ import SignUpIllustration from '../../../assets/signup_illustration.svg';
 import kaagapaiLogo from '../../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   accountRegContainer: {
     padding: '0',
     margin: '0',
-    oveflowX: 'hidden',
-    overflowY: 'hidden',
     height: '100vh',
     width: '100vw'
   },
@@ -26,9 +25,6 @@ const styles = theme => ({
     margin: 20,
     width: 60,
     height: 60
-  },
-  inputFields: {
-    marginTop: theme.spacing.unit * 5
   },
   illustrationContainer: {
     textAlign: 'center'
@@ -52,7 +48,7 @@ const styles = theme => ({
   },
   inputFields: {
     display: 'flex',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   signUpMessageContainer: {
     textAlign: 'left'
@@ -122,6 +118,7 @@ class AccountRegistrationInfo extends Component {
   };
 
   render() {
+    const SignUpButtonLink = props => <Link to={'/signin'} {...props} />;
     const {
       fname,
       lname,
@@ -325,7 +322,10 @@ class AccountRegistrationInfo extends Component {
                             <Typography className={classes.signInLinkMessage}>
                               Already have an account?
                             </Typography>
-                            <Typography className={classes.signInlink}>
+                            <Typography
+                              className={classes.signInlink}
+                              component={SignUpButtonLink}
+                            >
                               Sign in
                             </Typography>
                           </Grid>
