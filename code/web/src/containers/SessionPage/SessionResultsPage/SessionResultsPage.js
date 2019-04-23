@@ -68,57 +68,31 @@ class SessionResultsPage extends Component {
             return <p>Error</p>;
           }
 
-          const { keywords, categories } = data.result;
-
           return (
-            <Mutation mutation={GENERATE_RESULTS}>
-              {generateResults => (
-                <Auxilliary>
-                  <Hidden smDown>
-                    <Fab
-                      color="primary"
-                      variant="extended"
-                      className={classes.extendedButton}
-                      onClick={() =>
-                        generateResults({ variables: { session_id } })
-                      }
-                    >
-                      <InsertChartIcon className={classes.extendedIcon} />{' '}
-                      Generate Results
-                    </Fab>
-                  </Hidden>
-                  <Hidden mdUp>
-                    <Fab
-                      size="large"
-                      color="primary"
-                      className={classes.floatingButton}
-                      disableRipple={false}
-                      disableFocusRipple={false}
-                    >
-                      <AddIcon />
-                    </Fab>
-                  </Hidden>
-                  <div className={classes.expansionPanelContainer}>
-                    <ExpansionPanel defaultExpanded={true}>
-                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant="h6">Keywords</Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <KeywordsContainer keywords={keywords} />
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                    <ExpansionPanel defaultExpanded={true}>
-                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant="h6">Categories</Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <Categories categories={categories} />
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  </div>
-                </Auxilliary>
+            <Auxilliary>
+              {data.result ? (
+                <div className={classes.expansionPanelContainer}>
+                  <ExpansionPanel defaultExpanded={true}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography variant="h6">Keywords</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <KeywordsContainer keywords={data.result.keywords} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                  <ExpansionPanel defaultExpanded={true}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography variant="h6">Categories</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <Categories categories={data.result.categories} />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                </div>
+              ) : (
+                <p>Put illustration here</p>
               )}
-            </Mutation>
+            </Auxilliary>
           );
         }}
       </Query>
