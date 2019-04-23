@@ -15,7 +15,6 @@ import loginAnimation from '../../assets/login_animation.svg';
 import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 
