@@ -10,6 +10,10 @@ export default {
   UUID: GraphQlUUID,
   JSON: GraphQlJSON,
 
+  Archives: {
+
+  }, 
+
   Query: {
     profile: async (parent, args, { models, practitioner }) => {
       if (!practitioner) {
@@ -29,6 +33,69 @@ export default {
             'last_logged'
           ]
         });
+      }
+    },
+
+    archives: async (parent, args, { models, practitioner }) => {
+      if (!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+
+        var clientArchives = [];
+        var sessionArchives = [];
+
+        const clientsActive = await models.Client.findAll({
+          raw: true,
+          where: { 
+            p_id: practitioner
+          }
+        }).then(async clients => {
+          var clientActive = [];
+          clients.forEach(client => {
+            if(client.status == 'archived'){
+              clientArchives.push(client);
+            } else {
+              clientActive.push(client.c_id);
+            }
+          });
+          return clientActive;
+        });
+
+        const sessionsActive = await models.Session.findAll({
+          raw: true,
+          where: {
+            c_id: {
+              [Op.in]: clientsActive
+            }
+          }
+        }).then(async sessions => {
+          var sessionActive = [];
+          sessions.forEach(session => {
+            if(session.status == 'archived'){
+              sessionArchives.push(session);
+            } else {
+              sessionActive.push(session.session_id);
+            }
+          });
+          return sessionActive;
+        });
+        
+        const sessionDocumentsArchives = await models.Session_Document.findAll({
+          raw: true,
+          where: {
+            session_id: {
+              [Op.in]: sessionsActive,
+            },
+            status: 'archived'
+          }
+        });
+
+        return { 
+          clients: clientArchives, 
+          sessions: sessionArchives,
+          session_documents: sessionDocumentsArchives
+        };
       }
     }
   },

@@ -27,7 +27,6 @@ const styles = theme => ({
     padding: '0vh',
     margin: '0',
     overflowX: 'hidden',
-    overflowY: 'hidden'
   },
   logo: {
     margin: 20,

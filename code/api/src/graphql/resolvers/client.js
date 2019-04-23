@@ -122,21 +122,25 @@ export default {
       { fname, lname, gender, birthdate },
       { models, practitioner }
     ) => {
-      const addClientRes = await models.Client.create({
-        fname,
-        lname,
-        gender,
-        birthdate,
-        p_id: practitioner,
-        date_added: new Date()
-      });
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const addClientRes = await models.Client.create({
+          fname,
+          lname,
+          gender,
+          birthdate,
+          p_id: practitioner,
+          date_added: new Date()
+        });
 
-      const { c_id } = addClientRes.dataValues;
+        const { c_id } = addClientRes.dataValues;
 
-      return await models.Client.findOne({
-        raw: true,
-        where: { c_id }
-      });
+        return await models.Client.findOne({
+          raw: true,
+          where: { c_id }
+        });
+      }
     },
 
     deleteClient: async (parent, { c_id }, { models, practitioner }) => {
