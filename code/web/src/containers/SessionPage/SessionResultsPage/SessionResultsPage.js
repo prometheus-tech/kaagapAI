@@ -2,23 +2,14 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { Query, Mutation } from 'react-apollo';
+import { Query } from 'react-apollo';
 import RESULTS from '../../../graphql/queries/results';
-import GENERATE_RESULTS from '../../../graphql/mutations/generateResults';
 
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import Hidden from '@material-ui/core/Hidden';
-import Fab from '@material-ui/core/Fab';
 import purple from '@material-ui/core/colors/purple';
-import InsertChartIcon from '@material-ui/icons/InsertChart';
-import AddIcon from '@material-ui/icons/Add';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
+import Grid from '@material-ui/core/Grid';
 import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
 import Categories from './Categories/Categories';
 
 const styles = theme => ({
@@ -48,17 +39,23 @@ const styles = theme => ({
       boxShadow: theme.shadows[10]
     }
   },
-  expansionPanelContainer: {
-    padding: 24
+  paper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2
   }
 });
 
 class SessionResultsPage extends Component {
   render() {
-    const { classes, session_id } = this.props;
+    const { session_id } = this.props;
 
     return (
-      <Query query={RESULTS} variables={{ session_id }}>
+      <Query
+        query={RESULTS}
+        variables={{ session_id }}
+        fetchPolicy="network-only"
+      >
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
@@ -71,24 +68,14 @@ class SessionResultsPage extends Component {
           return (
             <Auxilliary>
               {data.result ? (
-                <div className={classes.expansionPanelContainer}>
-                  <ExpansionPanel defaultExpanded={true}>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography variant="h6">Keywords</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <KeywordsContainer keywords={data.result.keywords} />
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                  <ExpansionPanel defaultExpanded={true}>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography variant="h6">Categories</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <Categories categories={data.result.categories} />
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                </div>
+                <Grid container spacing={16}>
+                  <Grid item xs={7}>
+                    <KeywordsContainer keywords={data.result.keywords} />
+                  </Grid>
+                  <Grid item xs={5}>
+                    <Categories categories={data.result.categories} />
+                  </Grid>
+                </Grid>
               ) : (
                 <p>Put illustration here</p>
               )}
