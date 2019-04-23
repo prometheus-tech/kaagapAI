@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import EDIT_SESSION_DOCUMENT from '../../../graphql/mutations/editSessionDocument';
+import RESULTS from '../../../graphql/queries/results';
 import { Mutation } from 'react-apollo';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -158,7 +159,8 @@ class ContentSessionDocumentDialog extends Component {
       selectedSessionDocumentUpdated,
       contentEdited,
       contentEditStopped,
-      classes
+      classes,
+      session_id
     } = this.props;
 
     const { sd_id, file_name, date_added, type, content } = this.state;
@@ -181,6 +183,10 @@ class ContentSessionDocumentDialog extends Component {
             ...updatedSessionDocument
           }
         }}
+        refetchQueries={() => {
+          return [{ query: RESULTS, variables: { session_id } }];
+        }}
+        awaitRefetchQueries={true}
       >
         {editSessionDocument => {
           return (

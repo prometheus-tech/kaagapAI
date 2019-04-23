@@ -7,6 +7,7 @@ import { withSnackbar } from 'notistack';
 import { cloneDeep } from 'apollo-utilities';
 import DELETE_SESSION_DOCUMENT from '../../../graphql/mutations/deleteSessionDocument';
 import SESSION from '../../../graphql/queries/session';
+import RESULTS from '../../../graphql/queries/results';
 import { Mutation } from 'react-apollo';
 
 import purple from '@material-ui/core/colors/purple';
@@ -233,6 +234,10 @@ class SessionDocumentsPage extends Component {
                   file_name: selectedSessionDocument.file_name
                 }
               }}
+              refetchQueries={() => {
+                return [{ query: RESULTS, variables: { session_id } }];
+              }}
+              awaitRefetchQueries={true}
             >
               {deleteSessionDocument => (
                 <SessionDocumentMoreActionsPopper
@@ -262,6 +267,7 @@ class SessionDocumentsPage extends Component {
               selectedSessionDocumentUpdated={
                 this.updateSelectedSessionDocumentHandler
               }
+              session_id={session_id}
             />
             <RenameSessionDocumentDialog
               opened={isRenameSessionDocumentDialogOpened}

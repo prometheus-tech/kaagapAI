@@ -60,10 +60,9 @@ function SessionDocumentMoreActionsPopper({
                   Rename
                 </MenuItem>
                 <MenuItem
-                // onClick={e => {
-                //   e.stopPropagation();
-                //   alert('Not yet implemented');
-                // }}
+                  onClick={e => {
+                    alert('Not yet implemented');
+                  }}
                 >
                   Download
                 </MenuItem>

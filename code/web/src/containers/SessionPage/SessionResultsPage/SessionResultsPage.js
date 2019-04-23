@@ -58,7 +58,11 @@ class SessionResultsPage extends Component {
     const { classes, session_id } = this.props;
 
     return (
-      <Query query={RESULTS} variables={{ session_id }}>
+      <Query
+        query={RESULTS}
+        variables={{ session_id }}
+        fetchPolicy="network-only"
+      >
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
