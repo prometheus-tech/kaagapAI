@@ -58,7 +58,7 @@ function Categories(props) {
         </Grid>
         {categories.map(category => {
           return (
-            <Grid item xs={12}>
+            <Grid key={category.category_id} item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12}>
                   <div className={classes.categoryItemContent}>

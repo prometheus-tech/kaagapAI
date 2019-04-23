@@ -72,3 +72,46 @@ export function getSessionDocumentIcon(type) {
     iconColor
   };
 }
+
+export function getDocumentSentences(documents) {
+  let documentSentences = [];
+
+  for (let i = 0; i < documents.length; i++) {
+    const documentWithoutConsecutiveSpaces = documents[i].content.replace(
+      /[\r\n]+/g,
+      '\n'
+    );
+
+    documentSentences.push({
+      ...documents[i],
+      formattedContent: [...documentWithoutConsecutiveSpaces.split(/[.?!]/)]
+    });
+  }
+
+  return documentSentences;
+}
+
+export function searchMatchingSentencesFromDocuments(documents, keyword) {
+  let matchingDocuments = [];
+  let matchingSentences = [];
+
+  for (let i = 0; i < documents.length; i++) {
+    for (let j = 0; j < documents[i].formattedContent.length; j++) {
+      if (
+        documents[i].formattedContent[j]
+          .toLowerCase()
+          .includes(keyword.toLowerCase())
+      ) {
+        matchingSentences.push(documents[i].formattedContent[j].trim());
+      }
+    }
+
+    if (matchingSentences.length > 0) {
+      matchingDocuments.push({ ...documents[i], matchingSentences });
+    }
+
+    matchingSentences = [];
+  }
+
+  return matchingDocuments;
+}
