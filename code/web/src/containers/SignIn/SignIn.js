@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
-import loginAnimation from '../../assets/login_animation.svg';
+import LoginAnimation from '../../assets/login_animation.svg';
 import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
@@ -228,7 +228,7 @@ class SignIn extends Component {
                 </Grid>
                 <Grid item className={classes.illustrationContainer} xs={7}>
                   <img
-                    src={loginAnimation}
+                    src={LoginAnimation}
                     className={classes.sigInIllustration}
                     alt="Sign in illustration"
                   />
