@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   categoryContainer: {
@@ -26,6 +27,10 @@ const styles = theme => ({
     fontWeight: 500,
     fontSize: 16,
     color: theme.palette.grey[600]
+  },
+  paperHeader: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2
   }
 });
 
@@ -33,37 +38,42 @@ function Categories(props) {
   const { categories, classes } = props;
 
   return (
-    <Grid container className={classes.categoryContainer}>
-      <Grid item xs={12}>
-        <Grid container alignItems="center">
-          <Grid item md={6}>
-            <div
-              className={classes.categoryItemContent}
-              style={{ borderBottom: 'none' }}
-            >
-              <Typography className={classes.header}>Hierarchy</Typography>
-              <Typography className={classes.header}>Score</Typography>
-            </div>
-          </Grid>
+    <Paper elevation={1}>
+      <Grid container className={classes.categoryContainer}>
+        <Grid item xs={12} className={classes.paperHeader}>
+          <Typography variant="h5">Categories</Typography>
         </Grid>
-      </Grid>
-      {categories.map(category => {
-        return (
-          <Grid item xs={12}>
-            <Grid container alignItems="center">
-              <Grid item md={6}>
-                <div className={classes.categoryItemContent}>
-                  <Typography className={classes.label}>
-                    {category.label}
-                  </Typography>
-                  <Typography>{category.score}</Typography>
-                </div>
-              </Grid>
+        <Grid item xs={12}>
+          <Grid container alignItems="center">
+            <Grid item xs={12}>
+              <div
+                className={classes.categoryItemContent}
+                style={{ borderBottom: 'none' }}
+              >
+                <Typography className={classes.header}>Hierarchy</Typography>
+                <Typography className={classes.header}>Score</Typography>
+              </div>
             </Grid>
           </Grid>
-        );
-      })}
-    </Grid>
+        </Grid>
+        {categories.map(category => {
+          return (
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12}>
+                  <div className={classes.categoryItemContent}>
+                    <Typography className={classes.label}>
+                      {category.label}
+                    </Typography>
+                    <Typography>{category.score}</Typography>
+                  </div>
+                </Grid>
+              </Grid>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Paper>
   );
 }
 
