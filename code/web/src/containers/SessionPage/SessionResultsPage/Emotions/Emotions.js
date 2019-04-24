@@ -7,8 +7,10 @@ import Paper from '@material-ui/core/Paper';
 import { Doughnut } from 'react-chartjs-2';
 
 const styles = theme => ({
-  emotionsContainer: {
-    padding: theme.spacing.unit * 2
+  paper: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    ...theme.mixins.gutters()
   },
   paperHeader: {
     paddingBottom: theme.spacing.unit * 2
@@ -44,8 +46,8 @@ function Emotions(props) {
   };
 
   return (
-    <Paper elevation={1}>
-      <Grid container className={classes.emotionsContainer}>
+    <Paper elevation={1} className={classes.paper}>
+      <Grid container spacing={16}>
         <Grid item xs={12} className={classes.paperHeader}>
           <Typography variant="h5">Emotions</Typography>
         </Grid>

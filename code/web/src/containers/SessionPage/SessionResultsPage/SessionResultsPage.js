@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
 import Categories from './Categories/Categories';
 import Emotions from './Emotions/Emotions';
+import Entities from './Entities/Entities';
 
 const styles = theme => ({
   extendedButton: {
@@ -79,8 +80,14 @@ class SessionResultsPage extends Component {
                   <Grid item xs={5}>
                     <Categories categories={data.result.categories} />
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={5}>
                     <Emotions emotions={data.result.emotions} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Entities
+                      entities={data.result.entities}
+                      documents={documents}
+                    />
                   </Grid>
                 </Grid>
               ) : (
