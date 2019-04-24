@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
 
-    Result.hasMany(models.Sentiment, {
+    Result.hasOne(models.Sentiment, {
       foreignKey: 'result_id',
       sourceKey: 'result_id'
     });
 
-    Result.hasMany(models.Emotion, {
+    Result.hasOne(models.Emotion, {
       foreignKey: 'result_id',
       sourceKey: 'result_id'
     });
