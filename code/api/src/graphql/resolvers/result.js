@@ -8,13 +8,15 @@ export default {
   Result: {
     categories: ({ result_id }, args, { models }) => {
       return models.Category.findAll({
-        where: { result_id }
+        where: { result_id },
+        order: [['score', 'DESC']]
       });
     },
 
     entities: ({ result_id }, args, { models }) => {
       return models.Entity.findAll({
-        where: { result_id }
+        where: { result_id },
+        order: [['relevance', 'DESC']]
       });
     },
 
@@ -32,7 +34,11 @@ export default {
 
     keywords: ({ result_id }, args, { models }) => {
       return models.Keyword.findAll({
-        where: { result_id }
+        where: { result_id },
+        order: [
+          ['count', 'DESC'],
+          ['relevance', 'DESC']
+        ]
       });
     }
   },
