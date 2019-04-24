@@ -33,7 +33,7 @@ matrix:
     deploy:
       provider: heroku
       api_key:
-        secure: rgZwskH/y/Z4dc9YH6wfZ+/nmYcFUtFqBbEkFHe9nqv+dxRuzhemRWWyWuBqvb9nHYQGrUWQnMMX1bZgfBkajOhRgMgVcNIK0aVb0QX8dMiU5YHo/T8YuSrph4wau+tA256yLTPbHcbTABxXaPvkpmCdjQI9GpgmZmI7ahXVHwW9g032R4PEeJkMy9+hD3JXBFByTxqrXv2nqWimRZqRMm6yplYOaycQm9PuGMMQNly+PH9ApUfYDD+2AAPDLiUh6gk17UHrTZHOCIZORBuT1uQqZ69mpOKL+AP3vqhO0X1XgEZtbCg4kbdi6nPzcRV3bc5Ma/53PxNzMDccYHURppV5tiCSsQUtSWpoKTak4x8h/grvWbk5FjbopBAlDddVfNVDw1jzsAZRN4wmjwuJ2L9EK50Pl8DwXh2Pl1GxckLP1W32HQo8vHTRjj6Ch5xFUJ4XVg68Ex7F7OZRY0u88CyaDUC670x6nd63b3hxWg9Ei/W/7MFuHkbcdFyhe15lZYyX533vMkZMB4l9DDdSXcOV/SFHJ3hXHVUR5ZlQGzl3gIWsnhad1V1tFDbJOT4AXoHO3lR9wNGcGyhfrCjTP45wDwecxEi/dbQju2Jc3YP4ZNPO3By3ersvbhZGJNtrBpSSmIr+FDQL57w74UZrjQ0RvyUOFHtIA3/lQHIYwhs=
+        secure: MMLyvGNJzKAFeBjWNs2mQ6fGy7VzXZLg5PVKnXEnT/BBtpWRfJQwBVnuWsyblRnLxDOiFZih0Kl43edPgCT3pCEZFXgZ+QxeHHAobSIFo/E0HosS/TEhsQREqkDgOeDUt6ssTXxvtqpiyQL9CSzxtA63vumlwN2vCffeNy3cW7fpHUvWcVLCysk1x/ZZggQ6nrhZmLWpPNOQ9izta159PSJhGRNCzVXKqv1ZgFZeHT2BvDafyIZltVuWgpwwcR5gWB4Yq1GAhxfkx4yk5U59roKCIuly6eo+9plgkDXfyEE2zpMYUGLde2yxOeixeBWJrRFDGfBiOcVYavw+WZU/UnXRno5ULg0XS0V8l/vVVavhj439RwBUTt7/Pu0D+tV96CxZjiEhtWKYDpbXRzcZOPE6/ATQA3rmLQjmlR+Zxtk/vyGGMB/lwZTeY8hqOl9MnarKetrbaqoe39SZfriT/QPWxUGQb8MMUjYRcDk914T7P7PB+SMiyvG8MbS7HknV/39LrKseZeDZ0Y24h2ubzsVi5Cz11zVogWM+m8H8S7A5GbRzu4xYcJ0F2zEmcewHBdbV+Obv/fyeeQLv2b8Z1H/v04skklErUEDFUhw6MXQjx96L4sx1m8WHpJ2Z3ar45DhaQ+D0Z9H1IzKeutDykkXXJvUiDtZ6uGllZam7McU=
       app:
         dev: kaagapai-dev
       on:
@@ -50,3 +50,4 @@ notifications:
   - 2161745@slu.edu.ph
   - 2161436@slu.edu.ph
   - 2161794@slu.edu.ph
+
