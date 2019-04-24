@@ -8,6 +8,12 @@ export default `
     active
   }
 
+  type Archives {
+    clients: [Client]
+    sessions: [Session]
+    session_documents: [SessionDocument]
+  }
+
   type Practitioner {
     p_id: UUID!
     email: String!
@@ -25,6 +31,8 @@ export default `
 
   type Query {
     profile: JSON!
+
+    archives: Archives
   }
 
   type Mutation {
