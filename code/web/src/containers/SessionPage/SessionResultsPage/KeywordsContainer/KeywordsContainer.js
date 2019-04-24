@@ -8,6 +8,8 @@ import KeywordMapper from './KeywordMapper/KeywordMapper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import { getDocumentSentences } from '../../../../util/helperFunctions';
+
 const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
@@ -29,9 +31,11 @@ class KeywordsContainer extends Component {
   };
 
   render() {
-    const { keywords, classes } = this.props;
+    const { keywords, documents, classes } = this.props;
 
     const { selectedKeyword } = this.state;
+
+    const preprocessedDocuments = getDocumentSentences(documents);
 
     return (
       <Paper className={classes.paper} elevation={1}>
@@ -47,7 +51,10 @@ class KeywordsContainer extends Component {
           </Grid>
           {selectedKeyword ? (
             <Grid item xs={12}>
-              <KeywordMapper keyword={selectedKeyword} />
+              <KeywordMapper
+                keyword={selectedKeyword}
+                documents={preprocessedDocuments}
+              />
             </Grid>
           ) : null}
         </Grid>

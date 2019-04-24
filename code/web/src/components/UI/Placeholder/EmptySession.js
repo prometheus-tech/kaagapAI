@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EmptySessionImg from '../../../assets/Empty_Session.svg';
+import EmptySessionImg from '../../../assets/empty_session.svg';
 import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';

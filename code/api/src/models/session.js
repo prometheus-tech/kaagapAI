@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'session_id',
       sourceKey: 'session_id'
     });
+
+    Session.hasOne(models.Result, {
+      foreignKey: 'session_id',
+      sourceKey: 'session_id'
+    })
   };
 
   return Session;

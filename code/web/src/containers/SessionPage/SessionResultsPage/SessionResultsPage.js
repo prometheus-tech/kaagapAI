@@ -48,7 +48,7 @@ const styles = theme => ({
 
 class SessionResultsPage extends Component {
   render() {
-    const { session_id } = this.props;
+    const { session_id, documents } = this.props;
 
     return (
       <Query
@@ -70,7 +70,10 @@ class SessionResultsPage extends Component {
               {data.result ? (
                 <Grid container spacing={16}>
                   <Grid item xs={7}>
-                    <KeywordsContainer keywords={data.result.keywords} />
+                    <KeywordsContainer
+                      keywords={data.result.keywords}
+                      documents={documents}
+                    />
                   </Grid>
                   <Grid item xs={5}>
                     <Categories categories={data.result.categories} />
