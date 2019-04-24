@@ -11,7 +11,6 @@ import cors from 'cors';
 import http from 'http';
 import jwt from 'jsonwebtoken';
 
-
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
 
@@ -60,5 +59,5 @@ models.sequelize
     });
   })
   .catch(err => {
-    console.log('Failed to run the server: ' + err);
+    console.log('There is an error on th server: ' + err);
   });
