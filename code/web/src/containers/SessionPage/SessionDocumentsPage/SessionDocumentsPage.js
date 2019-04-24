@@ -21,6 +21,7 @@ import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocu
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
+import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 
 const styles = theme => ({
   extendedButton: {
@@ -159,34 +160,44 @@ class SessionDocumentsPage extends Component {
 
     return (
       <Auxilliary>
-        <Hidden smDown>
-          <Fab
-            color="primary"
-            variant="extended"
-            className={classes.extendedButton}
-            onClick={this.openNewSessionDocumentDialogHandler}
-          >
-            <Icon className={classes.extendedIcon}>cloud_upload</Icon>
-            Upload File
-          </Fab>
-        </Hidden>
-        <Hidden mdUp>
-          <Fab
-            size="large"
-            color="primary"
-            className={classes.floatingButton}
-            onClick={this.openNewSessionDialogHandler}
-            disableRipple={false}
-            disableFocusRipple={false}
-          >
-            <Add />
-          </Fab>
-        </Hidden>
-        <SessionDocumentCards
-          sessionDocuments={documents}
-          sessionDocumentViewed={this.openContentSessionDocumentDialog}
-          moreActionsOpened={this.openMoreActionsHandler}
-        />
+        {documents.length > 0 ? (
+          <div>
+            <Hidden smDown>
+              <Fab
+                color="primary"
+                variant="extended"
+                className={classes.extendedButton}
+                onClick={this.openNewSessionDocumentDialogHandler}
+              >
+                <Icon className={classes.extendedIcon}>cloud_upload</Icon>
+                Upload File
+              </Fab>
+            </Hidden>
+            <Hidden mdUp>
+              <Fab
+                size="large"
+                color="primary"
+                className={classes.floatingButton}
+                onClick={this.openNewSessionDialogHandler}
+                disableRipple={false}
+                disableFocusRipple={false}
+              >
+                <Add />
+              </Fab>
+            </Hidden>
+          </div>
+        ) : null}
+        {documents.length === 0 ? (
+          <EmptyDocumentIllustration
+            newUploadDocuments={this.openNewSessionDocumentDialogHandler}
+          />
+        ) : (
+          <SessionDocumentCards
+            sessionDocuments={documents}
+            sessionDocumentViewed={this.openContentSessionDocumentDialog}
+            moreActionsOpened={this.openMoreActionsHandler}
+          />
+        )}
         <NewSessionDocumentDialog
           opened={isNewSessionDocumentDialogOpened}
           closed={this.closeNewSessionDocumentDialogHandler}

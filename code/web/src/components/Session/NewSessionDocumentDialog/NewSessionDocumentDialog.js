@@ -24,6 +24,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import UploadIllustration from '../../../assets/Upload_Illustration.svg';
 
 import { withSnackbar } from 'notistack';
 import {
@@ -43,7 +44,8 @@ const styles = theme => ({
     alignItems: 'center'
   },
   infoTextContainer: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: theme.spacing.unit * -8
   },
   infoText: {
     color: theme.palette.grey[600],
@@ -62,6 +64,17 @@ const styles = theme => ({
   grid: {
     paddingRight: theme.spacing.unit * 1,
     paddingLeft: theme.spacing.unit * 1
+  },
+  uploadIllustration: {
+    height: '25vh'
+  },
+  uploadDialog: {
+    textAlign: 'center',
+    marginTop: theme.spacing.unit * 2
+  },
+  selectFileButton: {
+    borderRadius: '30px',
+    padding: '10px 20px 10px 20px'
   }
 });
 
@@ -219,7 +232,11 @@ function NewSessionDocumentDialog(props) {
             <DialogTitle onClose={closed} isLoading={loading}>
               New Session Document Upload
             </DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.uploadDialog}>
+              <img
+                src={UploadIllustration}
+                className={classes.uploadIllustration}
+              />
               <section {...getRootProps({ style: dropzoneStyle })}>
                 {file ? null : (
                   <div className={classes.dropzone}>
@@ -232,7 +249,11 @@ function NewSessionDocumentDialog(props) {
                       <Typography variant="h6" className={classes.infoText}>
                         - or -
                       </Typography>
-                      <Button variant="contained" onClick={open}>
+                      <Button
+                        variant="contained"
+                        onClick={open}
+                        className={classes.selectFileButton}
+                      >
                         Select file from your device
                       </Button>
                     </div>

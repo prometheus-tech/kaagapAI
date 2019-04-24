@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import EmptySessionImg from '../../../assets/Empty_Session.svg';
+import EmptyClients from '../../../assets/Empty_Clients.svg';
 import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import grey from '@material-ui/core/colors/grey';
+import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
   emptyContainer: {
@@ -17,7 +18,6 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   emptyImg: {
-    marginTop: theme.spacing.unit * 5,
     height: '45vh'
   },
   actionSaying: {
@@ -34,12 +34,12 @@ const styles = theme => ({
   },
   extendedButton: {
     color: '#ffffff',
-    background: '#ef6c00',
+    background: '#0091ea',
     textTransform: 'capitalize',
     borderRadius: '50px',
     fontSize: 16,
     '&:hover': {
-      backgroundColor: '#e65100',
+      backgroundColor: blue[900],
       boxShadow: theme.shadows[10]
     },
     marginTop: theme.spacing.unit * 4,
@@ -49,14 +49,14 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   }
 });
-class EmptySession extends Component {
+class EmptyClient extends Component {
   render() {
-    const { classes, newSessionOpened } = this.props;
+    const { classes, newClientsOpened } = this.props;
     return (
       <div className={classes.emptyContainer}>
         <div className={classes.imgEmpty}>
           <img
-            src={EmptySessionImg}
+            src={EmptyClients}
             className={classes.emptyImg}
             alt="Empty client"
           />
@@ -69,13 +69,13 @@ class EmptySession extends Component {
             color="primary"
             variant="extended"
             className={classes.extendedButton}
-            onClick={newSessionOpened}
+            onClick={newClientsOpened}
           >
-            <Add className={classes.extendedIcon} /> New Session
+            <Add className={classes.extendedIcon} /> New Client
           </Fab>
         </div>
       </div>
     );
   }
 }
-export default withStyles(styles)(EmptySession);
+export default withStyles(styles)(EmptyClient);
