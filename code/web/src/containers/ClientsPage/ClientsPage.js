@@ -21,6 +21,7 @@ import Add from '@material-ui/icons/Add';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 import blue from '@material-ui/core/colors/blue';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
+import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 
 const styles = theme => ({
   container: {
@@ -145,16 +146,18 @@ class ClientsPage extends Component {
                 <Grid item xs={12} className={classes.controls}>
                   <Grid container alignItems="center">
                     <Grid item md={6}>
-                      <Hidden smDown>
-                        <Fab
-                          color="primary"
-                          variant="extended"
-                          className={classes.extendedButton}
-                          onClick={this.openNewClientDialogHandler}
-                        >
-                          <Add className={classes.extendedIcon} /> New Client
-                        </Fab>
-                      </Hidden>
+                      {data.clients.length > 0 ? (
+                        <Hidden smDown>
+                          <Fab
+                            color="primary"
+                            variant="extended"
+                            className={classes.extendedButton}
+                            onClick={this.openNewClientDialogHandler}
+                          >
+                            <Add className={classes.extendedIcon} /> New Client
+                          </Fab>
+                        </Hidden>
+                      ) : null}
                       <Hidden mdUp>
                         <Fab
                           size="large"
@@ -180,7 +183,11 @@ class ClientsPage extends Component {
                   </Grid>
                 </Grid>
               </Grid>
-              {view === 'card' ? (
+              {data.clients.length === 0 ? (
+                <EmptyClient
+                  newClientsOpened={this.openNewClientDialogHandler}
+                />
+              ) : view === 'card' && data.clients.length > 0 ? (
                 <ClientCards
                   clients={data.clients}
                   clientEdited={this.openEditClientDialogHandler}
@@ -192,6 +199,7 @@ class ClientsPage extends Component {
                   clientEdited={this.openEditClientDialogHandler}
                 />
               )}
+
               <NewClientDialog
                 opened={isNewClientDialogOpened}
                 closed={this.closeNewClientDialogHandler}

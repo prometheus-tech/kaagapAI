@@ -15,7 +15,6 @@ import LoginAnimation from '../../assets/Landing_Animation.svg';
 import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
-import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 
 import { Link } from 'react-router-dom';
@@ -23,10 +22,10 @@ import { Link } from 'react-router-dom';
 const styles = theme => ({
   loginContainer: {
     width: '100vw',
-    height: '100vh',
+    minHeight: '100vh',
     padding: '0vh',
     margin: '0',
-    overflowX: 'hidden',
+    overflowX: 'hidden'
   },
   logo: {
     margin: 20,
@@ -207,7 +206,6 @@ class SignIn extends Component {
                             type="submit"
                           >
                             {loading ? 'Logging in...' : 'Login'}
-                            <Icon>arrow_right_alt</Icon>
                           </Fab>
                         </Grid>
                         <Grid item className={classes.createAccount} xs={12}>

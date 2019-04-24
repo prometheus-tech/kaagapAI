@@ -18,8 +18,9 @@ const styles = theme => ({
   accountRegContainer: {
     padding: '0',
     margin: '0',
-    height: '100vh',
-    width: '100vw'
+    minHeight: '100vh',
+    width: '100vw',
+    overflowX: 'hidden'
   },
   logo: {
     margin: 20,
@@ -48,7 +49,7 @@ const styles = theme => ({
   },
   inputFields: {
     display: 'flex',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   signUpMessageContainer: {
     textAlign: 'left'
