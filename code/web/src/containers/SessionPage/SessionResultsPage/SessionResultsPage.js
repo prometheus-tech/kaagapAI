@@ -11,6 +11,7 @@ import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingF
 import Grid from '@material-ui/core/Grid';
 import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
 import Categories from './Categories/Categories';
+import Emotions from './Emotions/Emotions';
 
 const styles = theme => ({
   extendedButton: {
@@ -77,6 +78,9 @@ class SessionResultsPage extends Component {
                   </Grid>
                   <Grid item xs={5}>
                     <Categories categories={data.result.categories} />
+                  </Grid>
+                  <Grid item xs={7}>
+                    <Emotions emotions={data.result.emotions} />
                   </Grid>
                 </Grid>
               ) : (
