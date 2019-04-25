@@ -411,6 +411,9 @@ class SessionPage extends Component {
                         <SessionResultsPage
                           session_id={session_id}
                           documents={session.documents}
+                          contentSessionDocumentDialogOpened={
+                            this.openContentSessionDocumentDialog
+                          }
                         />
                       )}
                     </main>

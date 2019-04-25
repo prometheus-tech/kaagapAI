@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
 import EntityMapper from './EntityMapper/EntityMapper';
 
-import { getDocumentTalkTurns } from '../../../../util/helperFunctions';
-import RangeBar from '../../../../components/UI/RangeBar/RangeBar';
+import { getDocumentTalkTurns } from '../../../util/helperFunctions';
+import RangeBar from '../../UI/RangeBar/RangeBar';
 
 const styles = theme => ({
   entitiesContainer: {

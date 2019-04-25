@@ -2,12 +2,12 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { searchMatchingTalkTurnsFromDocuments } from '../../../../../util/helperFunctions';
+import { searchMatchingTalkTurnsFromDocuments } from '../../../../util/helperFunctions';
 
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import DocumentMapItem from '../../../../../components/UI/DocumentMapItem/DocumentMapItem';
+import DocumentMapItem from '../../../UI/DocumentMapItem/DocumentMapItem';
 
 const styles = theme => ({
   box: {

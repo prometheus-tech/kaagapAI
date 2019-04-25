@@ -8,7 +8,7 @@ import WordMapper from './WordMapper/WordMapper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { getDocumentTalkTurns } from '../../../../util/helperFunctions';
+import { getDocumentTalkTurns } from '../../../util/helperFunctions';
 
 const styles = theme => ({
   paper: {

@@ -9,10 +9,10 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import purple from '@material-ui/core/colors/purple';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
-import Keywords from './Keywords/Keywords';
+import Keywords from '../../../components/Session/Keywords/Keywords';
 import Categories from '../../../components/Session/Categories/Categories';
 import EmotionsSentiment from '../../../components/Session/EmotionsSentiment/EmotionsSentiment';
-import Entities from './Entities/Entities';
+import Entities from '../../../components/Session/Entities/Entities';
 
 const styles = theme => ({
   extendedButton: {
