@@ -187,9 +187,12 @@ class SessionResultsPage extends Component {
                     {activeIndex === 2 && (
                       <TabContainer>
                         <Grid item xs={12}>
-                          <EmotionsSentiment
-                            emotions={data.result.emotions}
-                            sentiment={data.result.sentiment}
+                          <Entities
+                            entities={data.result.entities}
+                            documents={documents}
+                            contentSessionDocumentDialogOpened={
+                              contentSessionDocumentDialogOpened
+                            }
                           />
                         </Grid>
                       </TabContainer>
@@ -197,12 +200,9 @@ class SessionResultsPage extends Component {
                     {activeIndex === 3 && (
                       <TabContainer>
                         <Grid item xs={12}>
-                          <Entities
-                            entities={data.result.entities}
-                            documents={documents}
-                            contentSessionDocumentDialogOpened={
-                              contentSessionDocumentDialogOpened
-                            }
+                          <EmotionsSentiment
+                            emotions={data.result.emotions}
+                            sentiment={data.result.sentiment}
                           />
                         </Grid>
                       </TabContainer>
