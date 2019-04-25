@@ -191,16 +191,6 @@ class SessionDocumentsPage extends Component {
                 />
               )}
             </Mutation>
-            <ContentSessionDocumentDialog
-              opened={isContentSessionDocumentDialogOpened}
-              closed={contentSessionDocumentDialogClosed}
-              editing={isEditContentSessionDocument}
-              sessionDocument={selectedSessionDocument}
-              contentEdited={contentEdited}
-              contentEditStopped={contentEditStopped}
-              selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
-              session_id={session_id}
-            />
             <RenameSessionDocumentDialog
               opened={isRenameSessionDocumentDialogOpened}
               closed={sessionDocumentRenameDialogClosed}

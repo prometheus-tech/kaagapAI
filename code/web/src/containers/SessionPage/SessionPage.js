@@ -33,6 +33,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
+import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -416,6 +417,22 @@ class SessionPage extends Component {
                           }
                         />
                       )}
+                      {selectedSessionDocument ? (
+                        <ContentSessionDocumentDialog
+                          opened={isContentSessionDocumentDialogOpened}
+                          closed={this.closeContentSessionDocumentDialog}
+                          editing={isEditContentSessionDocument}
+                          sessionDocument={selectedSessionDocument}
+                          contentEdited={this.editContentSessionDocumentHandler}
+                          contentEditStopped={
+                            this.stopEditContentSessionDocumentHandler
+                          }
+                          selectedSessionDocumentUpdated={
+                            this.updateSelectedSessionDocumentHandler
+                          }
+                          session_id={session_id}
+                        />
+                      ) : null}
                     </main>
                   </div>
                 );

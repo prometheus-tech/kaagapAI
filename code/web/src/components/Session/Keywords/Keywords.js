@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 });
 
-class KeywordsContainer extends Component {
+class Keywords extends Component {
   state = {
     selectedKeyword: null
   };
@@ -31,7 +31,12 @@ class KeywordsContainer extends Component {
   };
 
   render() {
-    const { keywords, documents, classes } = this.props;
+    const {
+      keywords,
+      documents,
+      classes,
+      contentSessionDocumentDialogOpened
+    } = this.props;
 
     const { selectedKeyword } = this.state;
 
@@ -54,6 +59,9 @@ class KeywordsContainer extends Component {
               <WordMapper
                 keyword={selectedKeyword}
                 documents={preprocessedDocuments}
+                contentSessionDocumentDialogOpened={
+                  contentSessionDocumentDialogOpened
+                }
               />
             </Grid>
           ) : null}
@@ -63,4 +71,4 @@ class KeywordsContainer extends Component {
   }
 }
 
-export default withStyles(styles)(KeywordsContainer);
+export default withStyles(styles)(Keywords);

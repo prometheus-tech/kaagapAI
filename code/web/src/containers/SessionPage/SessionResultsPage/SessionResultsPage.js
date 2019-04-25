@@ -50,7 +50,11 @@ const styles = theme => ({
 
 class SessionResultsPage extends Component {
   render() {
-    const { session_id, documents } = this.props;
+    const {
+      session_id,
+      documents,
+      contentSessionDocumentDialogOpened
+    } = this.props;
 
     return (
       <Query
@@ -75,6 +79,9 @@ class SessionResultsPage extends Component {
                     <Keywords
                       keywords={data.result.keywords}
                       documents={documents}
+                      contentSessionDocumentDialogOpened={
+                        contentSessionDocumentDialogOpened
+                      }
                     />
                   </Grid>
                 ) : null}
@@ -96,6 +103,9 @@ class SessionResultsPage extends Component {
                     <Entities
                       entities={data.result.entities}
                       documents={documents}
+                      contentSessionDocumentDialogOpened={
+                        contentSessionDocumentDialogOpened
+                      }
                     />
                   </Grid>
                 ) : null}

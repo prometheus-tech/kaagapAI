@@ -27,7 +27,13 @@ const styles = theme => ({
 });
 
 function TalkTurnMapItem(props) {
-  const { keyword, talkTurn, sd_id, file_name, type, classes } = props;
+  const {
+    keyword,
+    talkTurn,
+    document,
+    classes,
+    contentSessionDocumentDialogOpened
+  } = props;
 
   const regexString = '(^|[\\s\\W])(' + keyword + ')([\\s\\W]|$)';
   const matchRegex = new RegExp(regexString, 'gi');
@@ -39,7 +45,12 @@ function TalkTurnMapItem(props) {
         searchWords={[matchRegex]}
         textToHighlight={talkTurn}
       />
-      <IconButton className={classes.findInPageIconButton}>
+      <IconButton
+        className={classes.findInPageIconButton}
+        onClick={() => {
+          contentSessionDocumentDialogOpened(document);
+        }}
+      >
         <FindInPageIcon fontSize="small" />
       </IconButton>
     </div>

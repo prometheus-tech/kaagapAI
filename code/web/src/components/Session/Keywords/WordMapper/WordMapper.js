@@ -36,7 +36,12 @@ const styles = theme => ({
 });
 
 function WordMapper(props) {
-  const { classes, documents, keyword } = props;
+  const {
+    classes,
+    documents,
+    keyword,
+    contentSessionDocumentDialogOpened
+  } = props;
 
   const { text, relevance, count } = keyword;
 
@@ -66,7 +71,13 @@ function WordMapper(props) {
       {matchingDocuments.map(document => {
         return (
           <div className={classes.keywordMapperBody} key={document.sd_id}>
-            <DocumentMapItem keyword={text} document={document} />
+            <DocumentMapItem
+              keyword={text}
+              document={document}
+              contentSessionDocumentDialogOpened={
+                contentSessionDocumentDialogOpened
+              }
+            />
           </div>
         );
       })}

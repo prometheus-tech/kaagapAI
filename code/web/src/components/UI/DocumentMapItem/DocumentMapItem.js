@@ -4,9 +4,11 @@ import TalkTurnMapItem from './TalkTurnMapItem/TalkTurnMapItem';
 
 class DocumentMapItem extends Component {
   render() {
-    const { document, keyword } = this.props;
-
-    const { sd_id, file_name, type } = document;
+    const {
+      document,
+      keyword,
+      contentSessionDocumentDialogOpened
+    } = this.props;
 
     return (
       <div>
@@ -16,9 +18,10 @@ class DocumentMapItem extends Component {
               key={index}
               keyword={keyword}
               talkTurn={talkTurn}
-              sd_id={sd_id}
-              file_name={file_name}
-              type={type}
+              document={document}
+              contentSessionDocumentDialogOpened={
+                contentSessionDocumentDialogOpened
+              }
             />
           );
         })}
