@@ -28,6 +28,7 @@ matrix:
       - node_modules
     before_install:
     - cd code/api
+    - npm rebuild
     - npm install
     script: 'true'
     deploy:
