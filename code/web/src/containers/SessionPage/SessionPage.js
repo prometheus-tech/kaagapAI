@@ -123,7 +123,15 @@ const styles = theme => ({
 
 class SessionPage extends Component {
   state = {
-    tabValue: 0
+    tabValue: 0,
+    isNewSessionDocumentDialogOpened: false,
+    file: null,
+    selectedSessionDocument: null,
+    isMoreActionsOpened: false,
+    anchorEl: null,
+    isContentSessionDocumentDialogOpened: false,
+    isEditContentSessionDocument: false,
+    isRenameSessionDocumentDialogOpened: false
   };
 
   componentDidMount() {
@@ -139,12 +147,102 @@ class SessionPage extends Component {
     }
   };
 
+  openNewSessionDocumentDialogHandler = () => {
+    this.setState({
+      isNewSessionDocumentDialogOpened: true
+    });
+  };
+
+  closeNewSessionDocumentDialogHandler = () => {
+    this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
+  };
+
+  addFile = file => {
+    this.setState({
+      file
+    });
+  };
+
+  clearFile = () => {
+    this.setState({
+      file: null
+    });
+  };
+
+  openMoreActionsHandler = (event, sessionDocument) => {
+    const { currentTarget } = event;
+    this.setState({
+      isMoreActionsOpened: true,
+      anchorEl: currentTarget,
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  closeMoreActionsHandler = () => {
+    this.setState({ isMoreActionsOpened: false });
+  };
+
+  openContentSessionDocumentDialog = sessionDocument => {
+    if (sessionDocument) {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true,
+        selectedSessionDocument: sessionDocument
+      });
+    } else {
+      this.setState({
+        isContentSessionDocumentDialogOpened: true
+      });
+    }
+  };
+
+  closeContentSessionDocumentDialog = () => {
+    this.setState({
+      isContentSessionDocumentDialogOpened: false,
+      isEditContentSessionDocument: false,
+      selectedSessionDocument: null
+    });
+  };
+
+  editContentSessionDocumentHandler = () => {
+    this.setState({
+      isEditContentSessionDocument: true
+    });
+  };
+
+  updateSelectedSessionDocumentHandler = sessionDocument => {
+    this.setState({
+      selectedSessionDocument: sessionDocument
+    });
+  };
+
+  stopEditContentSessionDocumentHandler = () => {
+    this.setState({ isEditContentSessionDocument: false });
+  };
+
+  openRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: true });
+  };
+
+  closeRenameSessionDocumentHandler = () => {
+    this.setState({ isRenameSessionDocumentDialogOpened: false });
+  };
+
   render() {
     const { classes } = this.props;
 
     const { session_id } = this.props.match.params;
 
-    const { tabValue } = this.state;
+    const {
+      tabValue,
+      isNewSessionDocumentDialogOpened,
+      file,
+      isContentSessionDocumentDialogOpened,
+      isEditContentSessionDocument,
+      isMoreActionsOpened,
+      anchorEl,
+      selectedSessionDocument,
+      isRenameSessionDocumentDialogOpened
+    } = this.state;
 
     return (
       <Query query={SESSION} variables={{ session_id: session_id }}>
@@ -262,6 +360,51 @@ class SessionPage extends Component {
                         <SessionDocumentsPage
                           session_id={session_id}
                           documents={session.documents}
+                          isNewSessionDocumentDialogOpened={
+                            isNewSessionDocumentDialogOpened
+                          }
+                          file={file}
+                          isContentSessionDocumentDialogOpened={
+                            isContentSessionDocumentDialogOpened
+                          }
+                          isEditContentSessionDocument={
+                            isEditContentSessionDocument
+                          }
+                          isMoreActionsOpened={isMoreActionsOpened}
+                          anchorEl={anchorEl}
+                          selectedSessionDocument={selectedSessionDocument}
+                          isRenameSessionDocumentDialogOpened={
+                            isRenameSessionDocumentDialogOpened
+                          }
+                          newSessionDocumentDialogOpened={
+                            this.openNewSessionDocumentDialogHandler
+                          }
+                          contentSessionDocumentDialogOpened={
+                            this.openContentSessionDocumentDialog
+                          }
+                          moreActionsOpened={this.openMoreActionsHandler}
+                          newSessionDocumentDialogClosed={
+                            this.closeNewSessionDocumentDialogHandler
+                          }
+                          newUploadFileAdded={this.addFile}
+                          newUploadFileRemoved={this.clearFile}
+                          moreActionsClosed={this.closeMoreActionsHandler}
+                          contentEdited={this.editContentSessionDocumentHandler}
+                          sessionDocumentRenameDialogOpened={
+                            this.openRenameSessionDocumentHandler
+                          }
+                          contentSessionDocumentDialogClosed={
+                            this.closeContentSessionDocumentDialog
+                          }
+                          contentEditStopped={
+                            this.stopEditContentSessionDocumentHandler
+                          }
+                          selectedSessionDocumentUpdated={
+                            this.updateSelectedSessionDocumentHandler
+                          }
+                          sessionDocumentRenameDialogClosed={
+                            this.closeRenameSessionDocumentHandler
+                          }
                         />
                       )}
                       {tabValue === 1 && (

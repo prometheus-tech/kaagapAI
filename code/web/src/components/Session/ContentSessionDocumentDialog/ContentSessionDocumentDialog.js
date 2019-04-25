@@ -200,7 +200,6 @@ class ContentSessionDocumentDialog extends Component {
               <DialogTitle
                 onClose={closed}
                 editing={editing}
-                selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
                 contentEdited={contentEdited}
                 contentEditStopped={contentEditStopped}
                 editSessionDocument={editSessionDocument}

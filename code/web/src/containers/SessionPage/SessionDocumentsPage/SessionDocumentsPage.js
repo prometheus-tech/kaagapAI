@@ -53,101 +53,11 @@ const styles = theme => ({
 });
 
 class SessionDocumentsPage extends Component {
-  state = {
-    isNewSessionDocumentDialogOpened: false,
-    file: null,
-    selectedSessionDocument: null,
-    isMoreActionsOpened: false,
-    anchorEl: null,
-    isContentSessionDocumentDialogOpened: false,
-    isEditContentSessionDocument: false,
-    isRenameSessionDocumentDialogOpened: false
-  };
-
-  openNewSessionDocumentDialogHandler = () => {
-    this.setState({
-      isNewSessionDocumentDialogOpened: true
-    });
-  };
-
-  closeNewSessionDocumentDialogHandler = () => {
-    this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
-  };
-
-  addFile = file => {
-    this.setState({
-      file
-    });
-  };
-
-  clearFile = () => {
-    this.setState({
-      file: null
-    });
-  };
-
-  openMoreActionsHandler = (event, sessionDocument) => {
-    const { currentTarget } = event;
-    this.setState({
-      isMoreActionsOpened: true,
-      anchorEl: currentTarget,
-      selectedSessionDocument: sessionDocument
-    });
-  };
-
-  closeMoreActionsHandler = () => {
-    this.setState({ isMoreActionsOpened: false });
-  };
-
-  openContentSessionDocumentDialog = sessionDocument => {
-    if (sessionDocument) {
-      this.setState({
-        isContentSessionDocumentDialogOpened: true,
-        selectedSessionDocument: sessionDocument
-      });
-    } else {
-      this.setState({
-        isContentSessionDocumentDialogOpened: true
-      });
-    }
-  };
-
-  closeContentSessionDocumentDialog = () => {
-    this.setState({
-      isContentSessionDocumentDialogOpened: false,
-      isEditContentSessionDocument: false,
-      selectedSessionDocument: null
-    });
-  };
-
-  editContentSessionDocumentHandler = () => {
-    this.setState({
-      isEditContentSessionDocument: true
-    });
-  };
-
-  updateSelectedSessionDocumentHandler = sessionDocument => {
-    this.setState({
-      selectedSessionDocument: sessionDocument
-    });
-  };
-
-  stopEditContentSessionDocumentHandler = () => {
-    this.setState({ isEditContentSessionDocument: false });
-  };
-
-  openRenameSessionDocumentHandler = () => {
-    this.setState({ isRenameSessionDocumentDialogOpened: true });
-  };
-
-  closeRenameSessionDocumentHandler = () => {
-    this.setState({ isRenameSessionDocumentDialogOpened: false });
-  };
-
   render() {
-    const { classes, session_id, documents } = this.props;
-
     const {
+      classes,
+      session_id,
+      documents,
       isNewSessionDocumentDialogOpened,
       file,
       isContentSessionDocumentDialogOpened,
@@ -155,8 +65,21 @@ class SessionDocumentsPage extends Component {
       isMoreActionsOpened,
       anchorEl,
       selectedSessionDocument,
-      isRenameSessionDocumentDialogOpened
-    } = this.state;
+      isRenameSessionDocumentDialogOpened,
+      newSessionDocumentDialogOpened,
+      contentSessionDocumentDialogOpened,
+      moreActionsOpened,
+      newSessionDocumentDialogClosed,
+      newUploadFileAdded,
+      newUploadFileRemoved,
+      moreActionsClosed,
+      contentEdited,
+      sessionDocumentRenameDialogOpened,
+      contentSessionDocumentDialogClosed,
+      contentEditStopped,
+      selectedSessionDocumentUpdated,
+      sessionDocumentRenameDialogClosed
+    } = this.props;
 
     return (
       <Auxilliary>
@@ -167,7 +90,7 @@ class SessionDocumentsPage extends Component {
                 color="primary"
                 variant="extended"
                 className={classes.extendedButton}
-                onClick={this.openNewSessionDocumentDialogHandler}
+                onClick={newSessionDocumentDialogOpened}
               >
                 <Icon className={classes.extendedIcon}>cloud_upload</Icon>
                 Upload File
@@ -178,7 +101,7 @@ class SessionDocumentsPage extends Component {
                 size="large"
                 color="primary"
                 className={classes.floatingButton}
-                onClick={this.openNewSessionDialogHandler}
+                onClick={newSessionDocumentDialogOpened}
                 disableRipple={false}
                 disableFocusRipple={false}
               >
@@ -189,21 +112,21 @@ class SessionDocumentsPage extends Component {
         ) : null}
         {documents.length === 0 ? (
           <EmptyDocumentIllustration
-            newUploadDocuments={this.openNewSessionDocumentDialogHandler}
+            newUploadDocuments={newSessionDocumentDialogOpened}
           />
         ) : (
           <SessionDocumentCards
             sessionDocuments={documents}
-            sessionDocumentViewed={this.openContentSessionDocumentDialog}
-            moreActionsOpened={this.openMoreActionsHandler}
+            sessionDocumentViewed={contentSessionDocumentDialogOpened}
+            moreActionsOpened={moreActionsOpened}
           />
         )}
         <NewSessionDocumentDialog
           opened={isNewSessionDocumentDialogOpened}
-          closed={this.closeNewSessionDocumentDialogHandler}
+          closed={newSessionDocumentDialogClosed}
           file={file}
-          fileAdded={this.addFile}
-          fileRemoved={this.clearFile}
+          fileAdded={newUploadFileAdded}
+          fileRemoved={newUploadFileRemoved}
           sessionId={session_id}
         />
         {selectedSessionDocument ? (
@@ -254,10 +177,10 @@ class SessionDocumentsPage extends Component {
                 <SessionDocumentMoreActionsPopper
                   isMoreActionsOpened={isMoreActionsOpened}
                   anchorEl={anchorEl}
-                  moreActionsClosed={this.closeMoreActionsHandler}
-                  sessionDocumentViewed={this.openContentSessionDocumentDialog}
-                  contentEdited={this.editContentSessionDocumentHandler}
-                  sessionDocumentRenamed={this.openRenameSessionDocumentHandler}
+                  moreActionsClosed={moreActionsClosed}
+                  sessionDocumentViewed={contentSessionDocumentDialogOpened}
+                  contentEdited={contentEdited}
+                  sessionDocumentRenamed={sessionDocumentRenameDialogOpened}
                   sessionDocumentDeleted={() => {
                     deleteSessionDocument({
                       variables: {
@@ -270,23 +193,19 @@ class SessionDocumentsPage extends Component {
             </Mutation>
             <ContentSessionDocumentDialog
               opened={isContentSessionDocumentDialogOpened}
-              closed={this.closeContentSessionDocumentDialog}
+              closed={contentSessionDocumentDialogClosed}
               editing={isEditContentSessionDocument}
               sessionDocument={selectedSessionDocument}
-              contentEdited={this.editContentSessionDocumentHandler}
-              contentEditStopped={this.stopEditContentSessionDocumentHandler}
-              selectedSessionDocumentUpdated={
-                this.updateSelectedSessionDocumentHandler
-              }
+              contentEdited={contentEdited}
+              contentEditStopped={contentEditStopped}
+              selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
               session_id={session_id}
             />
             <RenameSessionDocumentDialog
               opened={isRenameSessionDocumentDialogOpened}
-              closed={this.closeRenameSessionDocumentHandler}
+              closed={sessionDocumentRenameDialogClosed}
               sessionDocument={selectedSessionDocument}
-              selectedSessionDocumentUpdated={
-                this.updateSelectedSessionDocumentHandler
-              }
+              selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
             />
           </Auxilliary>
         ) : null}
