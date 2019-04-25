@@ -2,8 +2,9 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import FaceIcon from '@material-ui/icons/Face';
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
 import HappyIcon from '../../../../assets/Happy.svg';
 import AngerIcon from '../../../../assets/Anger.svg';
 import DisgustIcon from '../../../../assets/Disgust.svg';
@@ -73,7 +74,11 @@ function EmotionItem(props) {
       <Typography className={classes.mainLabel} style={{ color: color }}>
         {label}
       </Typography>
-      <Typography className={classes.subLabel}>{'Score = ' + score}</Typography>
+      <Chip
+        variant="filled"
+        className={classes.chip}
+        label={'Score = ' + score}
+      />
     </div>
   );
 }

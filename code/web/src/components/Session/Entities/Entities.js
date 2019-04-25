@@ -40,6 +40,14 @@ const styles = theme => ({
     borderBottom: '1px solid #e8e8e8',
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 3
+  },
+  scoreGrid: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  rangeBarItem: {
+    paddingRight: theme.spacing.unit * 2
   }
 });
 
@@ -110,13 +118,26 @@ class Entities extends Component {
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <RangeBar value={entity.relevance} maxValue={1} />
-                            <Typography
-                              component="span"
-                              className={classes.subLabel}
-                            >
-                              {entity.relevance}
-                            </Typography>
+                            <Grid container className={classes.scoreGrid}>
+                              <Grid
+                                item
+                                xs={10}
+                                className={classes.rangeBarItem}
+                              >
+                                <RangeBar
+                                  value={entity.relevance}
+                                  maxValue={1}
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <Typography
+                                  component="span"
+                                  className={classes.subLabel}
+                                >
+                                  {entity.relevance}
+                                </Typography>
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
