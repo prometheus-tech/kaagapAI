@@ -36,7 +36,12 @@ const styles = theme => ({
 });
 
 function EntityMapper(props) {
-  const { classes, documents, entity } = props;
+  const {
+    classes,
+    documents,
+    entity,
+    contentSessionDocumentDialogOpened
+  } = props;
 
   const { text, relevance, type } = entity;
 
@@ -66,7 +71,13 @@ function EntityMapper(props) {
       {matchingDocuments.map(document => {
         return (
           <div className={classes.keywordMapperBody} key={document.sd_id}>
-            <DocumentMapItem keyword={text} document={document} />
+            <DocumentMapItem
+              keyword={text}
+              document={document}
+              contentSessionDocumentDialogOpened={
+                contentSessionDocumentDialogOpened
+              }
+            />
           </div>
         );
       })}
