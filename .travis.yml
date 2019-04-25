@@ -28,6 +28,7 @@ matrix:
       - node_modules
     before_install:
     - cd code/api
+    - npm install -g node-gyp
     - npm install
     script: 'true'
     deploy:
