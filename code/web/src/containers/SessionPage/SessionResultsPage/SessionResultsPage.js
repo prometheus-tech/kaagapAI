@@ -9,7 +9,7 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import purple from '@material-ui/core/colors/purple';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
-import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
+import KeywordsContainer from './Keywords/KeywordsContainer';
 import Categories from './Categories/Categories';
 import Emotions from './Emotions/Emotions';
 import Entities from './Entities/Entities';

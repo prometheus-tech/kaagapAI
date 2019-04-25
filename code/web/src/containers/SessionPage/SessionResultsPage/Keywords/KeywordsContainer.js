@@ -4,11 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import CustomWordCloud from './CustomWordCloud/CustomWordCloud';
-import KeywordMapper from './KeywordMapper/KeywordMapper';
+import WordMapper from './WordMapper/WordMapper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import { getDocumentSentences } from '../../../../util/helperFunctions';
+import { getDocumentTalkTurns } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   paper: {
@@ -35,7 +35,7 @@ class KeywordsContainer extends Component {
 
     const { selectedKeyword } = this.state;
 
-    const preprocessedDocuments = getDocumentSentences(documents);
+    const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
       <Paper className={classes.paper} elevation={1}>
@@ -51,7 +51,7 @@ class KeywordsContainer extends Component {
           </Grid>
           {selectedKeyword ? (
             <Grid item xs={12}>
-              <KeywordMapper
+              <WordMapper
                 keyword={selectedKeyword}
                 documents={preprocessedDocuments}
               />

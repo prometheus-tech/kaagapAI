@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import SentenceMapItem from './SentenceMapItem/SentenceMapItem';
+import TalkTurnMapItem from './TalkTurnMapItem/TalkTurnMapItem';
 
 class DocumentMapItem extends Component {
   render() {
@@ -10,12 +10,12 @@ class DocumentMapItem extends Component {
 
     return (
       <div>
-        {document.matchingSentences.map((sentence, index) => {
+        {document.matchingTalkTurns.map((talkTurn, index) => {
           return (
-            <SentenceMapItem
+            <TalkTurnMapItem
               key={index}
               keyword={keyword}
-              sentence={sentence}
+              talkTurn={talkTurn}
               sd_id={sd_id}
               file_name={file_name}
               type={type}

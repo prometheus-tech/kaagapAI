@@ -26,8 +26,8 @@ const styles = theme => ({
   }
 });
 
-function SentenceMapItem(props) {
-  const { keyword, sentence, sd_id, file_name, type, classes } = props;
+function TalkTurnMapItem(props) {
+  const { keyword, talkTurn, sd_id, file_name, type, classes } = props;
 
   const regexString = '(^|[\\s\\W])(' + keyword + ')([\\s\\W]|$)';
   const matchRegex = new RegExp(regexString, 'gi');
@@ -37,7 +37,7 @@ function SentenceMapItem(props) {
       <Highlighter
         className={classes.highlighter}
         searchWords={[matchRegex]}
-        textToHighlight={sentence}
+        textToHighlight={talkTurn}
       />
       <IconButton className={classes.findInPageIconButton}>
         <FindInPageIcon fontSize="small" />
@@ -46,4 +46,4 @@ function SentenceMapItem(props) {
   );
 }
 
-export default withStyles(styles)(SentenceMapItem);
+export default withStyles(styles)(TalkTurnMapItem);

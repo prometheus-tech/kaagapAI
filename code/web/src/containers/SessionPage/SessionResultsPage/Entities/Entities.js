@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
 import EntityMapper from './EntityMapper/EntityMapper';
 
-import { getDocumentSentences } from '../../../../util/helperFunctions';
+import { getDocumentTalkTurns } from '../../../../util/helperFunctions';
 import RangeBar from '../../../../components/UI/RangeBar/RangeBar';
 
 const styles = theme => ({
@@ -57,7 +57,7 @@ class Entities extends Component {
 
     const { selectedEntity } = this.state;
 
-    const preprocessedDocuments = getDocumentSentences(documents);
+    const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
       <Paper elevation={1}>
@@ -69,7 +69,7 @@ class Entities extends Component {
             <Grid container spacing={16}>
               <Grid item xs={7}>
                 <Grid container>
-                  <Grid item xs={12} spacing={16}>
+                  <Grid item xs={12}>
                     <Grid container alignItems="center">
                       <Grid item xs={4}>
                         <Typography className={classes.header}>Name</Typography>

@@ -5,9 +5,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import DocumentMapItem from '../../KeywordsContainer/KeywordMapper/DocumentMapItem/DocumentMapItem';
+import DocumentMapItem from '../../../../../components/UI/DocumentMapItem/DocumentMapItem';
 
-import { searchMatchingSentencesFromDocuments } from '../../../../../util/helperFunctions';
+import { searchMatchingTalkTurnsFromDocuments } from '../../../../../util/helperFunctions';
 
 const styles = theme => ({
   box: {
@@ -40,7 +40,7 @@ function EntityMapper(props) {
 
   const { text, relevance, type } = entity;
 
-  const matchingDocuments = searchMatchingSentencesFromDocuments(
+  const matchingDocuments = searchMatchingTalkTurnsFromDocuments(
     documents,
     text
   );

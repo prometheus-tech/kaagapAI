@@ -73,8 +73,8 @@ export function getSessionDocumentIcon(type) {
   };
 }
 
-export function getDocumentSentences(documents) {
-  let documentSentences = [];
+export function getDocumentTalkTurns(documents) {
+  let documentTalkTurns = [];
 
   for (let i = 0; i < documents.length; i++) {
     const documentWithoutConsecutiveSpaces = documents[i].content.replace(
@@ -82,18 +82,18 @@ export function getDocumentSentences(documents) {
       '\n'
     );
 
-    documentSentences.push({
+    documentTalkTurns.push({
       ...documents[i],
       formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)]
     });
   }
 
-  return documentSentences;
+  return documentTalkTurns;
 }
 
-export function searchMatchingSentencesFromDocuments(documents, keyword) {
+export function searchMatchingTalkTurnsFromDocuments(documents, keyword) {
   let matchingDocuments = [];
-  let matchingSentences = [];
+  let matchingTalkTurns = [];
 
   for (let i = 0; i < documents.length; i++) {
     for (let j = 0; j < documents[i].formattedContent.length; j++) {
@@ -103,15 +103,15 @@ export function searchMatchingSentencesFromDocuments(documents, keyword) {
       const matches = matchRegex.exec(documents[i].formattedContent[j]);
 
       if (matches != null) {
-        matchingSentences.push(documents[i].formattedContent[j].trim());
+        matchingTalkTurns.push(documents[i].formattedContent[j].trim());
       }
     }
 
-    if (matchingSentences.length > 0) {
-      matchingDocuments.push({ ...documents[i], matchingSentences });
+    if (matchingTalkTurns.length > 0) {
+      matchingDocuments.push({ ...documents[i], matchingTalkTurns });
     }
 
-    matchingSentences = [];
+    matchingTalkTurns = [];
   }
 
   return matchingDocuments;
