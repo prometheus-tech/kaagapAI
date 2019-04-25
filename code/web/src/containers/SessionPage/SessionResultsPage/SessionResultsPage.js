@@ -10,8 +10,8 @@ import purple from '@material-ui/core/colors/purple';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
 import Keywords from './Keywords/Keywords';
-import Categories from './Categories/Categories';
-import EmotionsSentiment from './EmotionsSentiment/EmotionsSentiment';
+import Categories from '../../../components/Session/Categories/Categories';
+import EmotionsSentiment from '../../../components/Session/EmotionsSentiment/EmotionsSentiment';
 import Entities from './Entities/Entities';
 
 const styles = theme => ({
