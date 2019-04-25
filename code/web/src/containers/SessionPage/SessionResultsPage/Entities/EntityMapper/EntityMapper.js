@@ -2,12 +2,12 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import { searchMatchingSentencesFromDocuments } from '../../../../../util/helperFunctions';
-
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import DocumentMapItem from './DocumentMapItem/DocumentMapItem';
+import DocumentMapItem from '../../KeywordsContainer/KeywordMapper/DocumentMapItem/DocumentMapItem';
+
+import { searchMatchingSentencesFromDocuments } from '../../../../../util/helperFunctions';
 
 const styles = theme => ({
   box: {
@@ -35,10 +35,10 @@ const styles = theme => ({
   }
 });
 
-function KeywordMapper(props) {
-  const { classes, documents, keyword } = props;
+function EntityMapper(props) {
+  const { classes, documents, entity } = props;
 
-  const { text, relevance, count } = keyword;
+  const { text, relevance, type } = entity;
 
   const matchingDocuments = searchMatchingSentencesFromDocuments(
     documents,
@@ -54,7 +54,7 @@ function KeywordMapper(props) {
         <Chip
           variant="outlined"
           className={classes.chip}
-          label={'Count: ' + count}
+          label={'Type: ' + type}
         />
         <Chip
           variant="outlined"
@@ -74,4 +74,4 @@ function KeywordMapper(props) {
   );
 }
 
-export default withStyles(styles)(KeywordMapper);
+export default withStyles(styles)(EntityMapper);

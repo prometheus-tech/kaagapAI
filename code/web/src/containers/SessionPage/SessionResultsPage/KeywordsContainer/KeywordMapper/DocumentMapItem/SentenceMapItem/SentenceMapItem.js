@@ -38,7 +38,7 @@ function SentenceMapItem(props) {
         textToHighlight={'"' + sentence + '..."'}
       />
       <IconButton className={classes.findInPageIconButton}>
-        <FindInPageIcon />
+        <FindInPageIcon fontSize="small" />
       </IconButton>
     </div>
   );
