@@ -9,6 +9,7 @@ import purple from '@material-ui/core/colors/purple';
 import EntityMapper from './EntityMapper/EntityMapper';
 
 import { getDocumentSentences } from '../../../../util/helperFunctions';
+import RangeBar from '../../../../components/UI/RangeBar/RangeBar';
 
 const styles = theme => ({
   entitiesContainer: {
@@ -109,7 +110,11 @@ class Entities extends Component {
                             </Typography>
                           </Grid>
                           <Grid item xs={4}>
-                            <Typography className={classes.subLabel}>
+                            <RangeBar value={entity.relevance} maxValue={1} />
+                            <Typography
+                              component="span"
+                              className={classes.subLabel}
+                            >
                               {entity.relevance}
                             </Typography>
                           </Grid>
