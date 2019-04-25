@@ -38,14 +38,13 @@ const styles = theme => ({
   },
   dropzone: {
     minWidth: '100%',
-    minHeight: '300px',
+    minHeight: '500px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
   },
   infoTextContainer: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit * -8
+    textAlign: 'center'
   },
   infoText: {
     color: theme.palette.grey[600],
@@ -69,8 +68,7 @@ const styles = theme => ({
     height: '25vh'
   },
   uploadDialog: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit * 2
+    textAlign: 'center'
   },
   selectFileButton: {
     borderRadius: '30px',
@@ -233,29 +231,31 @@ function NewSessionDocumentDialog(props) {
               New Session Document Upload
             </DialogTitle>
             <DialogContent className={classes.uploadDialog}>
-              <img
-                src={UploadIllustration}
-                className={classes.uploadIllustration}
-              />
               <section {...getRootProps({ style: dropzoneStyle })}>
                 {file ? null : (
                   <div className={classes.dropzone}>
                     <input {...getInputProps()} />
-
-                    <div className={classes.infoTextContainer}>
-                      <Typography variant="h5" className={classes.infoText}>
-                        Drag file here
-                      </Typography>
-                      <Typography variant="h6" className={classes.infoText}>
-                        - or -
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        onClick={open}
-                        className={classes.selectFileButton}
-                      >
-                        Select file from your device
-                      </Button>
+                    <div>
+                      <img
+                        src={UploadIllustration}
+                        className={classes.uploadIllustration}
+                        alt="Upload"
+                      />
+                      <div className={classes.infoTextContainer}>
+                        <Typography variant="h5" className={classes.infoText}>
+                          Drag file here
+                        </Typography>
+                        <Typography variant="h6" className={classes.infoText}>
+                          - or -
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          onClick={open}
+                          className={classes.selectFileButton}
+                        >
+                          Select file from your device
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -310,7 +310,7 @@ function NewSessionDocumentDialog(props) {
                     }
                   });
                 }}
-                disabled={loading}
+                disabled={loading || !file}
               >
                 {loading ? 'Uploading...' : 'Upload'}
               </Button>

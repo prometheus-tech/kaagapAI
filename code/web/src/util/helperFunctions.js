@@ -56,7 +56,7 @@ export function getSessionDocumentIcon(type) {
   } else if (type.includes('text') || type === 'txt') {
     avatarIconClass = 'fas fa-file-alt';
     iconColor = grey[600];
-  } else if (type.includes('word') || type === 'doc') {
+  } else if (type.includes('word') || type === 'doc' || type === 'docx') {
     avatarIconClass = 'fas fa-file-word';
     iconColor = blue[700];
   } else if (type.includes('audio') || type === 'wav') {
