@@ -19,7 +19,6 @@ import Add from '@material-ui/icons/Add';
 import SessionDocumentCards from '../../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
-import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 
@@ -60,8 +59,6 @@ class SessionDocumentsPage extends Component {
       documents,
       isNewSessionDocumentDialogOpened,
       file,
-      isContentSessionDocumentDialogOpened,
-      isEditContentSessionDocument,
       isMoreActionsOpened,
       anchorEl,
       selectedSessionDocument,
@@ -75,8 +72,6 @@ class SessionDocumentsPage extends Component {
       moreActionsClosed,
       contentEdited,
       sessionDocumentRenameDialogOpened,
-      contentSessionDocumentDialogClosed,
-      contentEditStopped,
       selectedSessionDocumentUpdated,
       sessionDocumentRenameDialogClosed
     } = this.props;

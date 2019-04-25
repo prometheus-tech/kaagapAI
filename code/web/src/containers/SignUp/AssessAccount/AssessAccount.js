@@ -48,7 +48,11 @@ class AssessAccount extends Component {
     return (
       <Grid container spacing={16} className={classes.assesContainer}>
         <Grid item xs={12} className={classes.messageContainer}>
-          <img src={AssesIllustration} className={classes.illustration} />
+          <img
+            src={AssesIllustration}
+            className={classes.illustration}
+            alt="Assess Account"
+          />
           <Typography variant="h5" gutterBottom className={classes.assesTitle}>
             Your account registration is now being assessed
           </Typography>
