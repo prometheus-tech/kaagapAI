@@ -29,13 +29,15 @@ const styles = theme => ({
 function SentenceMapItem(props) {
   const { keyword, sentence, sd_id, file_name, type, classes } = props;
 
+  const regexString = '(^|[\\s\\W])(' + keyword + ')([\\s\\W]|$)';
+  const matchRegex = new RegExp(regexString, 'gi');
+
   return (
     <div className={classes.sentenceMapItem}>
       <Highlighter
         className={classes.highlighter}
-        searchWords={[keyword]}
-        autoEscape={true}
-        textToHighlight={'"' + sentence + '..."'}
+        searchWords={[matchRegex]}
+        textToHighlight={sentence}
       />
       <IconButton className={classes.findInPageIconButton}>
         <FindInPageIcon fontSize="small" />

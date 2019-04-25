@@ -13,7 +13,6 @@ import KeywordsContainer from './KeywordsContainer/KeywordsContainer';
 import Categories from './Categories/Categories';
 import Emotions from './Emotions/Emotions';
 import Entities from './Entities/Entities';
-import Sentiment from './Sentiment/Sentiment';
 
 const styles = theme => ({
   extendedButton: {
@@ -70,33 +69,37 @@ class SessionResultsPage extends Component {
 
           return (
             <Auxilliary>
-              {data.result ? (
-                <Grid container spacing={16}>
+              <Grid container spacing={16}>
+                {data.result.keywords ? (
                   <Grid item xs={7}>
                     <KeywordsContainer
                       keywords={data.result.keywords}
                       documents={documents}
                     />
                   </Grid>
+                ) : null}
+                {data.result.categories ? (
                   <Grid item xs={5}>
                     <Categories categories={data.result.categories} />
                   </Grid>
+                ) : null}
+                {data.result.emotions && data.result.sentiment ? (
                   <Grid item xs={6}>
                     <Emotions
                       emotions={data.result.emotions}
                       sentiment={data.result.sentiment}
                     />
                   </Grid>
+                ) : null}
+                {data.result.entities ? (
                   <Grid item xs={12}>
                     <Entities
                       entities={data.result.entities}
                       documents={documents}
                     />
                   </Grid>
-                </Grid>
-              ) : (
-                <p>Put illustration here</p>
-              )}
+                ) : null}
+              </Grid>
             </Auxilliary>
           );
         }}

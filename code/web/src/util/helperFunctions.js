@@ -84,7 +84,7 @@ export function getDocumentSentences(documents) {
 
     documentSentences.push({
       ...documents[i],
-      formattedContent: [...documentWithoutConsecutiveSpaces.split(/[.?!]/)]
+      formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)]
     });
   }
 
@@ -97,11 +97,12 @@ export function searchMatchingSentencesFromDocuments(documents, keyword) {
 
   for (let i = 0; i < documents.length; i++) {
     for (let j = 0; j < documents[i].formattedContent.length; j++) {
-      if (
-        documents[i].formattedContent[j]
-          .toLowerCase()
-          .includes(keyword.toLowerCase())
-      ) {
+      const regexString = '(^|[\\s\\W])(' + keyword + ')([\\s\\W]|$)';
+      const matchRegex = new RegExp(regexString, 'gi');
+
+      const matches = matchRegex.exec(documents[i].formattedContent[j]);
+
+      if (matches != null) {
         matchingSentences.push(documents[i].formattedContent[j].trim());
       }
     }
