@@ -9,7 +9,7 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import purple from '@material-ui/core/colors/purple';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
-import KeywordsContainer from './Keywords/KeywordsContainer';
+import Keywords from './Keywords/Keywords';
 import Categories from './Categories/Categories';
 import EmotionsSentiment from './EmotionsSentiment/EmotionsSentiment';
 import Entities from './Entities/Entities';
@@ -72,7 +72,7 @@ class SessionResultsPage extends Component {
               <Grid container spacing={16}>
                 {data.result.keywords ? (
                   <Grid item xs={12}>
-                    <KeywordsContainer
+                    <Keywords
                       keywords={data.result.keywords}
                       documents={documents}
                     />

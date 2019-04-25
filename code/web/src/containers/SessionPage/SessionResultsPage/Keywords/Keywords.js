@@ -43,14 +43,14 @@ class KeywordsContainer extends Component {
           <Grid item xs={12} className={classes.paperHeader}>
             <Typography variant="h5">Keywords</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={7}>
             <CustomWordCloud
               keywords={keywords}
               keywordSelected={this.selectKeywordHandler}
             />
           </Grid>
           {selectedKeyword ? (
-            <Grid item xs={12}>
+            <Grid item xs={5}>
               <WordMapper
                 keyword={selectedKeyword}
                 documents={preprocessedDocuments}
