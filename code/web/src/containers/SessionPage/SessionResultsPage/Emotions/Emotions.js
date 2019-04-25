@@ -4,7 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { Doughnut } from 'react-chartjs-2';
+// import { Doughnut } from 'react-chartjs-2';
+import EmotionItem from './EmotionItem/EmotionItem';
+import purple from '@material-ui/core/colors/purple';
 
 const styles = theme => ({
   paper: {
@@ -14,45 +16,53 @@ const styles = theme => ({
   },
   paperHeader: {
     paddingBottom: theme.spacing.unit * 2
+  },
+  sentimentGridItem: {
+    marginTop: theme.spacing.unit * 2
+  },
+  overallSentimentLabel: {
+    color: theme.palette.grey[600],
+    fontSize: '16px',
+    fontWeight: 500
+  },
+  sentimentValueText: {
+    fontWeight: 400
   }
 });
 
 function Emotions(props) {
-  const { emotions, classes } = props;
+  const { emotions, sentiment, classes } = props;
 
-  const { joy, anger, disgust, sadness, fear } = emotions[0];
-
-  const data = {
-    labels: ['Joy', 'Anger', 'Disgust', 'Sadness', 'Fear'],
-    datasets: [
-      {
-        data: [joy, anger, disgust, sadness, fear],
-        backgroundColor: [
-          '#FFEB3B',
-          '#F44336',
-          '#8BC34A',
-          '#2196F3',
-          '#212121'
-        ],
-        hoverBackgroundColor: [
-          '#FFEB3B',
-          '#F44336',
-          '#8BC34A',
-          '#2196F3',
-          '#212121'
-        ]
-      }
-    ]
-  };
+  const labels = ['joy', 'anger', 'disgust', 'sadness', 'fear'];
 
   return (
     <Paper elevation={1} className={classes.paper}>
       <Grid container spacing={16}>
         <Grid item xs={12} className={classes.paperHeader}>
-          <Typography variant="h5">Emotions</Typography>
+          <Typography variant="h5">Emotions & Sentiment</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Doughnut data={data} />
+          <Grid container spacing={16}>
+            {labels.map((label, index) => {
+              if (emotions[0][label] > 0) {
+                return (
+                  <Grid key={index} item xs={4}>
+                    <EmotionItem label={label} score={emotions[0][label]} />
+                  </Grid>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </Grid>
+        </Grid>
+        <Grid item xs={12} className={classes.sentimentGridItem}>
+          <Typography className={classes.overallSentimentLabel}>
+            Overall Sentiment:{' '}
+            <span className={classes.sentimentValueText}>
+              {sentiment[0].label} ({sentiment[0].score})
+            </span>
+          </Typography>
         </Grid>
       </Grid>
     </Paper>

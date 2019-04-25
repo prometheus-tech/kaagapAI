@@ -82,10 +82,10 @@ class SessionResultsPage extends Component {
                     <Categories categories={data.result.categories} />
                   </Grid>
                   <Grid item xs={6}>
-                    <Emotions emotions={data.result.emotions} />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Sentiment sentiment={data.result.sentiment} />
+                    <Emotions
+                      emotions={data.result.emotions}
+                      sentiment={data.result.sentiment}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <Entities

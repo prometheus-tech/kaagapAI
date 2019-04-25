@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RangeBar from '../../../../components/UI/RangeBar/RangeBar';
-import purple from '@material-ui/core/colors/purple';
 
 const styles = theme => ({
   paper: {
@@ -33,7 +32,7 @@ function Sentiment(props) {
   const { label, score } = sentiment[0];
 
   return (
-    <Paper elevation={1} className={classes.paper}>
+    <Paper elevation={2} className={classes.paper}>
       <Grid container spacing={16}>
         <Grid item xs={12} className={classes.paperHeader}>
           <Typography variant="h5">Sentiment</Typography>
