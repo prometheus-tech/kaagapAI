@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
 import Paper from '@material-ui/core/Paper';
+import RangeBar from '../../UI/RangeBar/RangeBar';
 
 const styles = theme => ({
   categoryContainer: {
@@ -12,10 +13,8 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 2
   },
   categoryItemContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
     borderBottom: '1px solid #e8e8e8',
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 3
   },
   label: {
@@ -31,6 +30,19 @@ const styles = theme => ({
   paperHeader: {
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2
+  },
+  scoreGrid: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  rangeBarItem: {
+    paddingRight: theme.spacing.unit * 2
+  },
+  subLabel: {
+    fontWeight: 500,
+    fontSize: 16,
+    color: theme.palette.grey[800]
   }
 });
 
@@ -45,28 +57,39 @@ function Categories(props) {
         </Grid>
         <Grid item xs={12}>
           <Grid container alignItems="center">
-            <Grid item xs={12}>
-              <div
-                className={classes.categoryItemContent}
-                style={{ borderBottom: 'none' }}
-              >
-                <Typography className={classes.header}>Hierarchy</Typography>
-                <Typography className={classes.header}>Score</Typography>
-              </div>
+            <Grid item xs={8}>
+              <Typography className={classes.header}>Hierarchy</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography className={classes.header}>Score</Typography>
             </Grid>
           </Grid>
         </Grid>
         {categories.map(category => {
           return (
-            <Grid key={category.category_id} item xs={12}>
+            <Grid
+              key={category.category_id}
+              item
+              xs={12}
+              className={classes.categoryItemContent}
+            >
               <Grid container alignItems="center">
-                <Grid item xs={12}>
-                  <div className={classes.categoryItemContent}>
-                    <Typography className={classes.label}>
-                      {category.label}
-                    </Typography>
-                    <Typography>{category.score}</Typography>
-                  </div>
+                <Grid item xs={8}>
+                  <Typography className={classes.label}>
+                    {category.label}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Grid container className={classes.scoreGrid}>
+                    <Grid item xs={10} className={classes.rangeBarItem}>
+                      <RangeBar value={category.score} maxValue={1} />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Typography component="span" className={classes.subLabel}>
+                        {category.score}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
