@@ -11,7 +11,7 @@ import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingF
 import Grid from '@material-ui/core/Grid';
 import KeywordsContainer from './Keywords/KeywordsContainer';
 import Categories from './Categories/Categories';
-import Emotions from './Emotions/Emotions';
+import EmotionsSentiment from './EmotionsSentiment/EmotionsSentiment';
 import Entities from './Entities/Entities';
 
 const styles = theme => ({
@@ -71,7 +71,7 @@ class SessionResultsPage extends Component {
             <Auxilliary>
               <Grid container spacing={16}>
                 {data.result.keywords ? (
-                  <Grid item xs={7}>
+                  <Grid item xs={12}>
                     <KeywordsContainer
                       keywords={data.result.keywords}
                       documents={documents}
@@ -79,13 +79,13 @@ class SessionResultsPage extends Component {
                   </Grid>
                 ) : null}
                 {data.result.categories ? (
-                  <Grid item xs={5}>
+                  <Grid item xs={6}>
                     <Categories categories={data.result.categories} />
                   </Grid>
                 ) : null}
                 {data.result.emotions && data.result.sentiment ? (
                   <Grid item xs={6}>
-                    <Emotions
+                    <EmotionsSentiment
                       emotions={data.result.emotions}
                       sentiment={data.result.sentiment}
                     />

@@ -4,9 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-// import { Doughnut } from 'react-chartjs-2';
 import EmotionItem from './EmotionItem/EmotionItem';
-import purple from '@material-ui/core/colors/purple';
 
 const styles = theme => ({
   paper: {
@@ -30,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-function Emotions(props) {
+function EmotionsSentiment(props) {
   const { emotions, sentiment, classes } = props;
 
   const labels = ['joy', 'anger', 'disgust', 'sadness', 'fear'];
@@ -69,4 +67,4 @@ function Emotions(props) {
   );
 }
 
-export default withStyles(styles)(Emotions);
+export default withStyles(styles)(EmotionsSentiment);
