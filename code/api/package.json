@@ -11,13 +11,13 @@
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
     "start": "node build/app.js",
     "build": "babel src --out-dir build",
-    "heroku-postbuild": "npm i && npm run build",
+    "heroku-postbuild": "npm i --build-from-source && npm run build",
     "start:server": "node build/index.js",
     "dev:server": "nodemon src/app.js --exec babel-node",
     "preinstall": "node src/config/preinstall.js"
   },
   "engines": {
-    "node": ">=11.8.0",
+    "node": "10.x",
     "npm": "6.x"
   },
   "keywords": [],
