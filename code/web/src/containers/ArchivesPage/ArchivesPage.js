@@ -9,11 +9,11 @@ import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFull
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArchivedClientCards from '../../components/Archives/ArchivedClientCards/ArchivedClientCards';
+import ArchivedSessionCards from '../../components/Archives/ArchivedSessionCards/ArchivedSessionCards';
 
 const styles = theme => ({
   container: {
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 10,
     width: '100vw'
   },
   pageHeader: {
@@ -44,8 +44,9 @@ class ArchivesPage extends Component {
                     Archives
                   </Typography>
                 </Grid>
-                <ArchivedClientCards clients={data.archives.clients} />
               </Grid>
+              <ArchivedClientCards clients={data.archives.clients} />
+              <ArchivedSessionCards sessions={data.archives.sessions} />
             </div>
           );
         }}

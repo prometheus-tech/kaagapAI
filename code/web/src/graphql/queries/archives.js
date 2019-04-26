@@ -6,8 +6,9 @@ import SESSION_INFO from '../fragments/sessionInfo';
 import SESSION_DOCUMENT_BASIC_INFO from '../fragments/sessionDocumentBasicInfo';
 
 const ARCHIVES = gql`
-  query archives {
+  query Archives {
     archives {
+      archives_id
       clients {
         ...ClientBasicInfo
         ...ClientMetaData
