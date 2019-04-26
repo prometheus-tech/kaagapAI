@@ -47,9 +47,7 @@ export default {
 
         const clientsActive = await models.Client.findAll({
           raw: true,
-          where: { 
-            p_id: practitioner
-          }
+          where: { p_id: practitioner }
         }).then(async clients => {
           var clientActive = [];
           clients.forEach(client => {
@@ -91,7 +89,8 @@ export default {
           }
         });
 
-        return { 
+        return {
+          archives_id: uuid(),
           clients: clientArchives, 
           sessions: sessionArchives,
           session_documents: sessionDocumentsArchives

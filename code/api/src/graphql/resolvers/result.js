@@ -44,11 +44,7 @@ export default {
   },
 
   Query: {
-    result: async (
-      parent, {
-        session_id
-      }, { models, practitioner }
-    ) => {
+    result: async (parent, { session_id }, { models, practitioner }) => {
       if(!practitioner){
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -165,13 +161,6 @@ export default {
               return res;
             }
           }
-
-            // if(!getSessionDocumentContent){
-            //   console.log("this is happening");
-            //   return res;
-            // } else {
-            //   
-            // }
         })
       }
     }
