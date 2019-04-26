@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import DELETE_CLIENT from '../../../../graphql/mutations/deleteClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../../graphql/queries/clients';
-import ARCHIVES from '../../../../graphql/queries/archives';
 import { cloneDeep } from 'apollo-utilities';
 
 import { withSnackbar } from 'notistack';
@@ -107,32 +106,7 @@ function ClientListItem(props) {
           }
         });
 
-        const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
-
-        archives.clients.push(deleteClient);
-
-        cache.writeQuery({
-          query: ARCHIVES,
-          data: {
-            archives
-          }
-        });
-
         props.enqueueSnackbar(fname + ' ' + lname + ' successfully archived!');
-      }}
-      optimisticResponse={{
-        __typename: 'Mutation',
-        deleteClient: {
-          __typename: 'Client',
-          c_id,
-          fname,
-          lname,
-          gender,
-          birthdate,
-          no_of_sessions,
-          date_added,
-          last_opened
-        }
       }}
     >
       {deleteClient => (
