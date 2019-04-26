@@ -48,12 +48,18 @@ const styles = theme => ({
   cardTitle: {
     fontWeight: 500,
     fontSize: theme.spacing.unit * 2,
+    minWidth: 140,
     maxWidth: 140
   },
   cardSubTitle: {
     fontWeight: 400,
     fontSize: theme.spacing.unit * 1.75,
     color: theme.palette.grey[600]
+  },
+  restoreActionButton: {
+    position: 'relative',
+    bottom: theme.spacing.unit * -4,
+    right: theme.spacing.unit * -1
   }
 });
 
@@ -88,12 +94,12 @@ function ArchivedSessionDocumentCard({ sessionDocument, classes }) {
         </div>
         <div>
           <IconButton
-            className={classes.moreActionButton}
+            className={classes.restoreActionButton}
             onClick={e => {
               e.stopPropagation();
             }}
           >
-            <Icon>restore_from_trash</Icon>
+            <Icon fontSize="small">restore_from_trash</Icon>
           </IconButton>
         </div>
       </CardContent>
