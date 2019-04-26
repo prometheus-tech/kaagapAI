@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    sadness: DataTypes.INTEGER,
-    anger: DataTypes.INTEGER,
-    joy: DataTypes.INTEGER,
-    fear: DataTypes.INTEGER,
-    disgust: DataTypes.INTEGER
+    sadness: DataTypes.FLOAT,
+    anger: DataTypes.FLOAT,
+    joy: DataTypes.FLOAT,
+    fear: DataTypes.FLOAT,
+    disgust: DataTypes.FLOAT
   }, {});
 
   Emotion.associate = models => {

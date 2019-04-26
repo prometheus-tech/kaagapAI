@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       relevance: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       result_id: {
         type: Sequelize.UUID,

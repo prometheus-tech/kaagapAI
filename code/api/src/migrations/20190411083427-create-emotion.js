@@ -9,19 +9,19 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       sadness: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       anger: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       joy: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       fear: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       disgust: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       result_id: {
         type: Sequelize.UUID,

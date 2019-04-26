@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       relevance: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       count: {
         type: Sequelize.INTEGER
