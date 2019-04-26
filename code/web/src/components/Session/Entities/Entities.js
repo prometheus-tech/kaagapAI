@@ -6,12 +6,18 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
+import grey from '@material-ui/core/colors/grey';
 import EntityMapper from './EntityMapper/EntityMapper';
 
 import { getDocumentTalkTurns } from '../../../util/helperFunctions';
 import RangeBar from '../../UI/RangeBar/RangeBar';
 
 const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing.unit * 5,
+    border: '1px solid #f3f3f3',
+    boxShadow: 'none'
+  },
   entitiesContainer: {
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
@@ -48,6 +54,14 @@ const styles = theme => ({
   },
   rangeBarItem: {
     paddingRight: theme.spacing.unit * 2
+  },
+  entities: {
+    color: grey[500],
+    fontWeight: '400',
+    fontSize: theme.spacing.unit * 2,
+    textTransform: 'uppercase',
+    letterSpacing: '2px',
+    marginTop: theme.spacing.unit * 1
   }
 });
 
@@ -73,10 +87,12 @@ class Entities extends Component {
     const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
-      <Paper elevation={1}>
+      <Paper className={classes.paper}>
         <Grid container spacing={16} className={classes.entitiesContainer}>
           <Grid item xs={12} className={classes.paperHeader}>
-            <Typography variant="h5">Entities</Typography>
+            <Typography variant="h5" className={classes.entities}>
+              Entities
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={16}>

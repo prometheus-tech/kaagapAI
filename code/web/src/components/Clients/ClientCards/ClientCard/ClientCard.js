@@ -104,7 +104,16 @@ const styles = theme => ({
 
 function ClientCard(props) {
   const { classes, client, clientEdited } = props;
-  const { c_id, fname, lname, no_of_sessions, p_id } = client;
+  const {
+    c_id,
+    fname,
+    lname,
+    no_of_sessions,
+    gender,
+    birthdate,
+    date_added,
+    last_opened
+  } = client;
   const name = fname + ' ' + lname;
   const sessions =
     no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
@@ -114,17 +123,9 @@ function ClientCard(props) {
   return (
     <Mutation
       mutation={DELETE_CLIENT}
-      update={(
-        cache,
-        {
-          data: {
-            deleteClient: { c_id, fname, lname }
-          }
-        }
-      ) => {
+      update={(cache, { data: { deleteClient } }) => {
         const clientsQueryParams = {
-          query: CLIENTS,
-          variables: { p_id }
+          query: CLIENTS
         };
 
         const { clients } = cloneDeep(cache.readQuery(clientsQueryParams));
@@ -132,7 +133,7 @@ function ClientCard(props) {
         cache.writeQuery({
           ...clientsQueryParams,
           data: {
-            clients: clients.filter(c => c.c_id !== c_id)
+            clients: clients.filter(c => c.c_id !== deleteClient.c_id)
           }
         });
 
@@ -142,9 +143,14 @@ function ClientCard(props) {
         __typename: 'Mutation',
         deleteClient: {
           __typename: 'Client',
-          c_id: client.c_id,
-          fname: client.fname,
-          lname: client.lname
+          c_id,
+          fname,
+          lname,
+          gender,
+          birthdate,
+          no_of_sessions,
+          date_added,
+          last_opened
         }
       }}
     >

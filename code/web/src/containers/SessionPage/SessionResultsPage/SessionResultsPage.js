@@ -19,10 +19,11 @@ import KeywordsIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryIcon from '../../../assets/CategoryIcon.svg';
 import EmotionsSentimentIcon from '../../../assets/EmotionsSentimentIcon.svg';
 import EntitiesIcon from '../../../assets/EntitiesIcon.svg';
+import EmptyResults from '../../../components/UI/Placeholder/EmptyResults';
 
 const styles = theme => ({
   tabCon: {
-    marginTop: theme.spacing.unit * 5,
+    marginTop: theme.spacing.unit * 3,
     backgroundColor: 'rgb(248, 248, 248)',
     position: 'fixed',
     display: 'flex'
@@ -96,120 +97,124 @@ class SessionResultsPage extends Component {
 
           return (
             <Auxilliary>
-              <Grid container spacing={16}>
-                <Grid item xs={2}>
-                  <div className={classes.tabCon}>
-                    <VerticalTabs
-                      value={activeIndex}
-                      onChange={this.handleChange}
-                    >
-                      <MyTab
-                        label={
-                          <div>
-                            <img
-                              src={KeywordsIcon}
-                              alt="Keywords"
-                              className={classes.tabIcon}
+              {data.result ? (
+                <Grid container spacing={16}>
+                  <Grid item xs={2}>
+                    <div className={classes.tabCon}>
+                      <VerticalTabs
+                        value={activeIndex}
+                        onChange={this.handleChange}
+                      >
+                        <MyTab
+                          label={
+                            <div>
+                              <img
+                                src={KeywordsIcon}
+                                alt="Keywords"
+                                className={classes.tabIcon}
+                              />
+                              <Typography className={classes.textIcon}>
+                                Keywords
+                              </Typography>
+                            </div>
+                          }
+                        />
+                        <MyTab
+                          label={
+                            <div>
+                              <img
+                                src={CategoryIcon}
+                                alt="Category"
+                                className={classes.tabIcon}
+                              />
+                              <Typography className={classes.textIcon}>
+                                Categories
+                              </Typography>
+                            </div>
+                          }
+                        />
+                        <MyTab
+                          label={
+                            <div>
+                              <img
+                                src={EntitiesIcon}
+                                alt="Keywords"
+                                className={classes.tabIcon}
+                              />
+                              <Typography className={classes.textIcon}>
+                                Entities
+                              </Typography>
+                            </div>
+                          }
+                        />
+                        <MyTab
+                          label={
+                            <div>
+                              <img
+                                src={EmotionsSentimentIcon}
+                                alt="Keywords"
+                                className={classes.tabIcon}
+                              />
+                              <Typography className={classes.textIcon}>
+                                Emotions and Sentiments
+                              </Typography>
+                            </div>
+                          }
+                        />
+                      </VerticalTabs>
+                    </div>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Grid container spacing={16}>
+                      {activeIndex === 0 && (
+                        <TabContainer>
+                          <Grid item xs={12}>
+                            <Keywords
+                              keywords={data.result.keywords}
+                              documents={documents}
+                              contentSessionDocumentDialogOpened={
+                                contentSessionDocumentDialogOpened
+                              }
                             />
-                            <Typography className={classes.textIcon}>
-                              Keywords
-                            </Typography>
-                          </div>
-                        }
-                      />
-                      <MyTab
-                        label={
-                          <div>
-                            <img
-                              src={CategoryIcon}
-                              alt="Category"
-                              className={classes.tabIcon}
+                          </Grid>
+                        </TabContainer>
+                      )}
+                      {activeIndex === 1 && (
+                        <TabContainer>
+                          <Grid item xs={12}>
+                            <Categories categories={data.result.categories} />
+                          </Grid>
+                        </TabContainer>
+                      )}
+                      {activeIndex === 2 && (
+                        <TabContainer>
+                          <Grid item xs={12}>
+                            <Entities
+                              entities={data.result.entities}
+                              documents={documents}
+                              contentSessionDocumentDialogOpened={
+                                contentSessionDocumentDialogOpened
+                              }
                             />
-                            <Typography className={classes.textIcon}>
-                              Categories
-                            </Typography>
-                          </div>
-                        }
-                      />
-                      <MyTab
-                        label={
-                          <div>
-                            <img
-                              src={EntitiesIcon}
-                              alt="Keywords"
-                              className={classes.tabIcon}
+                          </Grid>
+                        </TabContainer>
+                      )}
+                      {activeIndex === 3 && (
+                        <TabContainer>
+                          <Grid item xs={12}>
+                            <EmotionsSentiment
+                              emotions={data.result.emotions}
+                              sentiment={data.result.sentiment}
                             />
-                            <Typography className={classes.textIcon}>
-                              Entities
-                            </Typography>
-                          </div>
-                        }
-                      />
-                      <MyTab
-                        label={
-                          <div>
-                            <img
-                              src={EmotionsSentimentIcon}
-                              alt="Keywords"
-                              className={classes.tabIcon}
-                            />
-                            <Typography className={classes.textIcon}>
-                              Emotions and Sentiments
-                            </Typography>
-                          </div>
-                        }
-                      />
-                    </VerticalTabs>
-                  </div>
-                </Grid>
-                <Grid xs={10}>
-                  <Grid container spacing={16}>
-                    {activeIndex === 0 && (
-                      <TabContainer>
-                        <Grid item xs={12}>
-                          <Keywords
-                            keywords={data.result.keywords}
-                            documents={documents}
-                            contentSessionDocumentDialogOpened={
-                              contentSessionDocumentDialogOpened
-                            }
-                          />
-                        </Grid>
-                      </TabContainer>
-                    )}
-                    {activeIndex === 1 && (
-                      <TabContainer>
-                        <Grid item xs={12}>
-                          <Categories categories={data.result.categories} />
-                        </Grid>
-                      </TabContainer>
-                    )}
-                    {activeIndex === 2 && (
-                      <TabContainer>
-                        <Grid item xs={12}>
-                          <Entities
-                            entities={data.result.entities}
-                            documents={documents}
-                            contentSessionDocumentDialogOpened={
-                              contentSessionDocumentDialogOpened
-                            }
-                          />
-                        </Grid>
-                      </TabContainer>
-                    )}
-                    {activeIndex === 3 && (
-                      <TabContainer>
-                        <Grid item xs={12}>
-                          <EmotionsSentiment
-                            emotions={data.result.emotions}
-                            sentiment={data.result.sentiment}
-                          />
-                        </Grid>
-                      </TabContainer>
-                    )}
+                          </Grid>
+                        </TabContainer>
+                      )}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              ) : (
+                <EmptyResults />
+              )}
             </Auxilliary>
           );
         }}

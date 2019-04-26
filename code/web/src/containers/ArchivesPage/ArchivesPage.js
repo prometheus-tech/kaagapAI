@@ -9,11 +9,13 @@ import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFull
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArchivedClientCards from '../../components/Archives/ArchivedClientCards/ArchivedClientCards';
+import ArchivedSessionCards from '../../components/Archives/ArchivedSessionCards/ArchivedSessionCards';
+import ArchivedSessionDocumentCards from '../../components/Archives/ArchivedSessionDocumentCards/ArchivedSessionDocumentCards';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 const styles = theme => ({
   container: {
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 10,
     width: '100vw'
   },
   pageHeader: {
@@ -22,11 +24,18 @@ const styles = theme => ({
 });
 
 class ArchivesPage extends Component {
+  componentDidMount() {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss')
+    );
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
-      <Query query={ARCHIVES}>
+      <Query query={ARCHIVES} fetchPolicy="network-only">
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
@@ -44,8 +53,18 @@ class ArchivesPage extends Component {
                     Archives
                   </Typography>
                 </Grid>
-                <ArchivedClientCards clients={data.archives.clients} />
               </Grid>
+              {data.archives.clients.length > 0 ? (
+                <ArchivedClientCards clients={data.archives.clients} />
+              ) : null}
+              {data.archives.sessions.length > 0 ? (
+                <ArchivedSessionCards sessions={data.archives.sessions} />
+              ) : null}
+              {data.archives.session_documents.length > 0 ? (
+                <ArchivedSessionDocumentCards
+                  sessionDocuments={data.archives.session_documents}
+                />
+              ) : null}
             </div>
           );
         }}

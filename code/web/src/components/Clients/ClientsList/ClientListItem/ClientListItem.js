@@ -77,11 +77,12 @@ function ClientListItem(props) {
   const { classes, client, clientEdited } = props;
 
   const {
-    p_id,
     c_id,
     fname,
     lname,
     no_of_sessions,
+    gender,
+    birthdate,
     date_added,
     last_opened
   } = client;
@@ -91,17 +92,9 @@ function ClientListItem(props) {
   return (
     <Mutation
       mutation={DELETE_CLIENT}
-      update={(
-        cache,
-        {
-          data: {
-            deleteClient: { c_id, fname, lname }
-          }
-        }
-      ) => {
+      update={(cache, { data: { deleteClient } }) => {
         const clientsQueryParams = {
-          query: CLIENTS,
-          variables: { p_id }
+          query: CLIENTS
         };
 
         const { clients } = cloneDeep(cache.readQuery(clientsQueryParams));
@@ -109,19 +102,24 @@ function ClientListItem(props) {
         cache.writeQuery({
           ...clientsQueryParams,
           data: {
-            clients: clients.filter(c => c.c_id !== c_id)
+            clients: clients.filter(c => c.c_id !== deleteClient.c_id)
           }
         });
 
-        props.enqueueSnackbar(fname + ' ' + lname + ' archived!');
+        props.enqueueSnackbar(fname + ' ' + lname + ' successfully archived!');
       }}
       optimisticResponse={{
         __typename: 'Mutation',
         deleteClient: {
           __typename: 'Client',
-          c_id: client.c_id,
-          fname: client.fname,
-          lname: client.lname
+          c_id,
+          fname,
+          lname,
+          gender,
+          birthdate,
+          no_of_sessions,
+          date_added,
+          last_opened
         }
       }}
     >

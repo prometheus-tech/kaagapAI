@@ -7,6 +7,7 @@ import CustomWordCloud from './CustomWordCloud/CustomWordCloud';
 import WordMapper from './WordMapper/WordMapper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey';
 
 import { getDocumentTalkTurns } from '../../../util/helperFunctions';
 
@@ -14,10 +15,20 @@ const styles = theme => ({
   paper: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 5,
+    border: '1px solid #f3f3f3',
+    boxShadow: 'none'
   },
   paperHeader: {
     marginBottom: theme.spacing.unit * 2
+  },
+  keyword: {
+    color: grey[500],
+    fontWeight: '400',
+    fontSize: theme.spacing.unit * 2,
+    textTransform: 'uppercase',
+    letterSpacing: '2px'
   }
 });
 
@@ -43,10 +54,12 @@ class Keywords extends Component {
     const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
-      <Paper className={classes.paper} elevation={1}>
+      <Paper className={classes.paper}>
         <Grid container spacing={16}>
           <Grid item xs={12} className={classes.paperHeader}>
-            <Typography variant="h5">Keywords</Typography>
+            <Typography variant="h5" className={classes.keyword}>
+              Keywords
+            </Typography>
           </Grid>
           <Grid item xs={7}>
             <CustomWordCloud

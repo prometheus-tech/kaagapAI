@@ -91,14 +91,7 @@ function SessionListItem(props) {
   return (
     <Mutation
       mutation={DELETE_SESSION}
-      update={(
-        cache,
-        {
-          data: {
-            deleteSession: { c_id, session_id, session_name }
-          }
-        }
-      ) => {
+      update={(cache, { data: { deleteSession } }) => {
         const clientQueryParams = {
           query: CLIENT,
           variables: { c_id }
@@ -107,7 +100,7 @@ function SessionListItem(props) {
         const { client } = cloneDeep(cache.readQuery(clientQueryParams));
 
         client.sessions = client.sessions.filter(
-          s => s.session_id !== session_id
+          s => s.session_id !== deleteSession.session_id
         );
 
         client.no_of_sessions = client.sessions.length;
@@ -118,8 +111,6 @@ function SessionListItem(props) {
             client
           }
         });
-
-        props.enqueueSnackbar(session_name + ' archived!');
       }}
       optimisticResponse={{
         __typename: 'Mutation',
@@ -127,7 +118,8 @@ function SessionListItem(props) {
           __typename: 'Session',
           c_id,
           session_id,
-          session_name
+          session_name,
+          date_of_session
         }
       }}
     >

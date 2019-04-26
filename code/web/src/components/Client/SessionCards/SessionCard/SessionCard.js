@@ -98,14 +98,7 @@ function SessionCard(props) {
   return (
     <Mutation
       mutation={DELETE_SESSION}
-      update={(
-        cache,
-        {
-          data: {
-            deleteSession: { c_id, session_id, session_name }
-          }
-        }
-      ) => {
+      update={(cache, { data: { deleteSession } }) => {
         const clientQueryParams = {
           query: CLIENT,
           variables: { c_id }
@@ -114,7 +107,7 @@ function SessionCard(props) {
         const { client } = cloneDeep(cache.readQuery(clientQueryParams));
 
         client.sessions = client.sessions.filter(
-          s => s.session_id !== session_id
+          s => s.session_id !== deleteSession.session_id
         );
 
         client.no_of_sessions = client.sessions.length;
@@ -134,7 +127,8 @@ function SessionCard(props) {
           __typename: 'Session',
           c_id,
           session_id,
-          session_name
+          session_name,
+          date_of_session
         }
       }}
     >

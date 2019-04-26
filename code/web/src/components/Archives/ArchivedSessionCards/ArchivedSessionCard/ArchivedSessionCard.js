@@ -1,27 +1,30 @@
 import React from 'react';
 
+import RESTORE_SESSION from '../../../../graphql/mutations/restoreSession';
 import { Mutation } from 'react-apollo';
-import RESTORE_CLIENT from '../../../../graphql/mutations/restoreClient';
-import CLIENTS from '../../../../graphql/queries/clients';
-import ARCHIVES from '../../../../graphql/queries/archives';
 import CLIENT from '../../../../graphql/queries/client';
-
-import { withStyles } from '@material-ui/core/styles';
-
-import Card from '@material-ui/core/Card';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import CardContent from '@material-ui/core/CardContent';
-import Avatar from '@material-ui/core/Avatar';
-import Icon from '@material-ui/core/Icon';
-import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
-import CardActions from '@material-ui/core/CardActions';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import { cloneDeep } from 'apollo-utilities';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import SESSION from '../../../../graphql/queries/session';
+import ARCHIVES from '../../../../graphql/queries/archives';
 
 import { withSnackbar } from 'notistack';
+
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import FolderIcon from '@material-ui/icons/Folder';
+import Moment from 'react-moment';
+import grey from '@material-ui/core/colors/grey';
+import orange from '@material-ui/core/colors/orange';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Tooltip from '@material-ui/core/Tooltip';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { cloneDeep } from 'apollo-utilities';
 
 const styles = theme => ({
   card: {
@@ -29,7 +32,7 @@ const styles = theme => ({
     marginTop: '1rem',
     background: '#fff',
     borderRadius: '6px',
-    width: '230px',
+    maxWidth: '230px',
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
@@ -38,9 +41,6 @@ const styles = theme => ({
       padding: '0px 0px 0px 0px'
     }
   },
-  buttonBase: {
-    display: 'block'
-  },
   avatarContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -48,55 +48,51 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2
   },
   avatar: {
-    backgroundColor: '#0091ea',
-    height: '70px',
     width: '70px',
-    [theme.breakpoints.down('sm')]: {
-      marginRight: theme.spacing.unit * 2,
-      height: '60px',
-      width: '60px'
-    }
+    height: '70px',
+    color: 'white',
+    backgroundColor: orange[800]
   },
-  nameClient: {
+  cardTitle: {
     width: '90%',
+    fontWeight: '500',
     color: grey[900],
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontWeight: '500'
+    textOverflow: 'ellipsis'
   },
-  session: {
+  cardSubheader: {
     fontWeight: '400',
     fontSize: '14px',
     marginBottom: 0,
     color: theme.palette.grey[600]
   },
+  iconAction: {
+    '&:hover': {
+      color: orange[800]
+    }
+  },
+  buttonBase: {
+    display: 'block'
+  },
   actions: {
     display: 'flex',
     justifyContent: 'flex-end'
-  },
-  iconHover: {
-    '&:hover': {
-      color: '#2196f3'
-    }
   }
 });
 
-function ArchivedClientCard(props) {
-  const { classes, client } = props;
+function ArchivedSessionCard(props) {
+  const { session, classes } = props;
 
-  const { c_id, fname, lname, no_of_sessions } = client;
-  const name = fname + ' ' + lname;
-  const sessions =
-    no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
+  const { c_id, session_id, session_name, date_of_session } = session;
 
   return (
     <Mutation
-      mutation={RESTORE_CLIENT}
-      update={(cache, { data: { restoreClient } }) => {
+      mutation={RESTORE_SESSION}
+      update={(cache, { data: { restoreSession } }) => {
         const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
 
-        archives.clients = archives.clients.filter(
-          c => c.c_id !== restoreClient.c_id
+        archives.sessions = archives.sessions.filter(
+          session => session.session_id !== restoreSession.session_id
         );
 
         cache.writeQuery({
@@ -106,19 +102,22 @@ function ArchivedClientCard(props) {
           }
         });
 
-        props.enqueueSnackbar(fname + ' ' + lname + ' successfully restored!');
+        props.enqueueSnackbar(session_name + ' successfully restored!');
       }}
       refetchQueries={() => {
-        return [{ query: CLIENTS }, { query: CLIENT, variables: { c_id } }];
+        return [
+          { query: CLIENT, variables: { c_id } },
+          { query: SESSION, variables: { session_id } }
+        ];
       }}
       awaitRefetchQueries={true}
     >
-      {(restoreClient, { loading }) => (
+      {(restoreSession, { loading }) => (
         <Card className={classes.card}>
           <ButtonBase
+            className={classes.buttonBase}
             disableRipple={true}
             disableTouchRipple={true}
-            className={classes.buttonBase}
             onClick={() => {
               alert('Please restore first');
             }}
@@ -127,19 +126,21 @@ function ArchivedClientCard(props) {
             <CardContent>
               <div className={classes.avatarContainer}>
                 <Avatar className={classes.avatar}>
-                  <Icon fontSize="large">person</Icon>
+                  <FolderIcon fontSize="large" />
                 </Avatar>
               </div>
               <Typography
                 noWrap
                 variant="h6"
+                className={classes.cardTitle}
                 align="center"
-                className={classes.nameClient}
               >
-                {name}
+                {session_name}
               </Typography>
-              <Typography className={classes.session} align="center">
-                {sessions}
+              <Typography className={classes.cardSubheader} align="center">
+                <Moment format="MMM D, YYYY" withTitle>
+                  {date_of_session}
+                </Moment>
               </Typography>
             </CardContent>
           </ButtonBase>
@@ -147,12 +148,11 @@ function ArchivedClientCard(props) {
             {!loading ? (
               <Tooltip title="Restore">
                 <IconButton
-                  className={classes.iconHover}
                   disableRipple={true}
                   aria-label="Restore"
-                  onClick={e => {
-                    e.preventDefault();
-                    restoreClient({ variables: { c_id } });
+                  className={classes.iconAction}
+                  onClick={() => {
+                    restoreSession({ variables: { session_id } });
                   }}
                 >
                   <Icon>restore_from_trash</Icon>
@@ -168,4 +168,4 @@ function ArchivedClientCard(props) {
   );
 }
 
-export default withStyles(styles)(withSnackbar(ArchivedClientCard));
+export default withStyles(styles)(withSnackbar(ArchivedSessionCard));

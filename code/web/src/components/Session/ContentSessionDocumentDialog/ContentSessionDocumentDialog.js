@@ -209,7 +209,7 @@ class ContentSessionDocumentDialog extends Component {
               <DialogContent>
                 <Textarea
                   value={content}
-                  rowsMax={Infinity}
+                  rowsmax={Infinity}
                   disabled={!editing}
                   className={classes.textField}
                   name="content"
