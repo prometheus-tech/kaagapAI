@@ -9,6 +9,7 @@ export default `
   }
 
   type Archives {
+    archives_id: UUID
     clients: [Client]
     sessions: [Session]
     session_documents: [SessionDocument]
