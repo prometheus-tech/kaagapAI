@@ -19,7 +19,9 @@ const styles = theme => ({
     borderBottomRightRadius: '20px',
     borderTopLeftRadius: '20px',
     borderBottomLeftRadius: '20px',
-    backgroundColor: purple[500],
+    background: '#4e54c8',
+    background: '-webkit-linear-gradient(to right, #8f94fb, #4e54c8)',
+    background: 'linear-gradient(to right, #8f94fb, #4e54c8)',
     position: 'relative',
     overflow: 'hidden'
   }

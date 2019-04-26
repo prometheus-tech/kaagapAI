@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Highlighter from 'react-highlight-words';
 import IconButton from '@material-ui/core/IconButton';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
-import purple from '@material-ui/core/colors/purple';
+import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
   sentenceMapItem: {
@@ -15,8 +15,11 @@ const styles = theme => ({
     marginBottom: 24
   },
   findInPageIconButton: {
-    backgroundColor: purple[500],
-    color: 'white'
+    backgroundColor: blue[500],
+    color: 'white',
+    '&:hover': {
+      backgroundColor: blue[700]
+    }
   },
   highlighter: {
     display: 'block',
