@@ -85,8 +85,6 @@ function ArchivedSessionCard(props) {
 
   const { c_id, session_id, session_name, date_of_session } = session;
 
-  console.log(session);
-
   return (
     <Mutation
       mutation={RESTORE_SESSION}
