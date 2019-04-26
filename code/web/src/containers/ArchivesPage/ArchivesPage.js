@@ -45,8 +45,12 @@ class ArchivesPage extends Component {
                   </Typography>
                 </Grid>
               </Grid>
-              <ArchivedClientCards clients={data.archives.clients} />
-              <ArchivedSessionCards sessions={data.archives.sessions} />
+              {data.archives.clients.length > 0 ? (
+                <ArchivedClientCards clients={data.archives.clients} />
+              ) : null}
+              {data.archives.sessions.length > 0 ? (
+                <ArchivedSessionCards sessions={data.archives.sessions} />
+              ) : null}
             </div>
           );
         }}
