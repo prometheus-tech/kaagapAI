@@ -195,7 +195,7 @@ class ClientPage extends Component {
     } = this.state;
 
     return (
-      <Query query={CLIENT} variables={{ c_id: c_id }}>
+      <Query query={CLIENT} variables={{ c_id: c_id }} pollInterval={5000}>
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
