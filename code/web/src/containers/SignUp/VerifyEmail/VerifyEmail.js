@@ -46,6 +46,9 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: blue[700]
     }
+  },
+  errorCodeVerification: {
+    color: 'red'
   }
 });
 
@@ -126,7 +129,14 @@ class VerifyEmail extends Component {
                 {error ? (
                   <Grid item xs={12}>
                     {error.graphQLErrors.map(({ message }) => {
-                      return <Typography key={message}>{message}</Typography>;
+                      return (
+                        <Typography
+                          key={message}
+                          className={classes.errorCodeVerification}
+                        >
+                          {message}
+                        </Typography>
+                      );
                     })}
                   </Grid>
                 ) : null}
