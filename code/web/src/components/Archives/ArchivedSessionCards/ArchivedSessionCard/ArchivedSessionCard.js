@@ -3,6 +3,7 @@ import React from 'react';
 import RESTORE_SESSION from '../../../../graphql/mutations/restoreSession';
 import { Mutation } from 'react-apollo';
 import CLIENT from '../../../../graphql/queries/client';
+import SESSION from '../../../../graphql/queries/session';
 import ARCHIVES from '../../../../graphql/queries/archives';
 
 import { withSnackbar } from 'notistack';
@@ -84,6 +85,8 @@ function ArchivedSessionCard(props) {
 
   const { c_id, session_id, session_name, date_of_session } = session;
 
+  console.log(session);
+
   return (
     <Mutation
       mutation={RESTORE_SESSION}
@@ -104,7 +107,10 @@ function ArchivedSessionCard(props) {
         props.enqueueSnackbar(session_name + ' successfully restored!');
       }}
       refetchQueries={() => {
-        return [{ query: CLIENT, variables: { c_id } }];
+        return [
+          { query: CLIENT, variables: { c_id } },
+          { query: SESSION, variables: { session_id } }
+        ];
       }}
       awaitRefetchQueries={true}
     >
