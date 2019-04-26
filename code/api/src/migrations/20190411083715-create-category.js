@@ -9,7 +9,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       score: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       label: {
         type: Sequelize.STRING
