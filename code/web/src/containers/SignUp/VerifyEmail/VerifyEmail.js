@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import VerifyIllustration from '../../../assets/Verification_Illustration.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
+import Icon from '@material-ui/core/Icon';
 
 const styles = theme => ({
   verifyEmailContainer: {
@@ -47,8 +48,22 @@ const styles = theme => ({
       backgroundColor: blue[700]
     }
   },
+  errorMessage: {
+    display: 'flex',
+    textAlign: 'center'
+  },
   errorCodeVerification: {
-    color: 'red'
+    color: 'red',
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 1
+  },
+  iconErr: {
+    color: 'red',
+    marginTop: theme.spacing.unit * 2.5
+  },
+  formatter: {
+    display: 'inline',
+    textAlign: 'center'
   }
 });
 
@@ -130,12 +145,20 @@ class VerifyEmail extends Component {
                   <Grid item xs={12}>
                     {error.graphQLErrors.map(({ message }) => {
                       return (
-                        <Typography
-                          key={message}
-                          className={classes.errorCodeVerification}
-                        >
-                          {message}
-                        </Typography>
+                        <Grid container>
+                          <Grid item xs={4} />
+                          <Grid item xs={6} className={classes.errorMessage}>
+                            <Icon className={classes.iconErr}>
+                              error_outline
+                            </Icon>
+                            <Typography
+                              key={message}
+                              className={classes.errorCodeVerification}
+                            >
+                              {message}
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       );
                     })}
                   </Grid>

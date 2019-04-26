@@ -16,7 +16,7 @@ import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
 import Fab from '@material-ui/core/Fab';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
+import Icon from '@material-ui/core/Icon';
 
 import { Link } from 'react-router-dom';
 
@@ -96,8 +96,17 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
     fontWeight: '300'
   },
+  errorMessage: {
+    display: 'flex'
+  },
   errorLogin: {
-    color: 'red'
+    color: 'red',
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 1
+  },
+  iconErr: {
+    color: 'red',
+    marginTop: theme.spacing.unit * 2.5
   }
 });
 class SignIn extends Component {
@@ -160,12 +169,17 @@ class SignIn extends Component {
                           <Grid item xs={12}>
                             {error.graphQLErrors.map(({ message }) => {
                               return (
-                                <Typography
-                                  key={message}
-                                  className={classes.errorLogin}
-                                >
-                                  {message}
-                                </Typography>
+                                <div className={classes.errorMessage}>
+                                  <Icon className={classes.iconErr}>
+                                    error_outline
+                                  </Icon>
+                                  <Typography
+                                    key={message}
+                                    className={classes.errorLogin}
+                                  >
+                                    {message}
+                                  </Typography>
+                                </div>
                               );
                             })}
                           </Grid>
