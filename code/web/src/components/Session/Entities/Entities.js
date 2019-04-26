@@ -14,9 +14,14 @@ import RangeBar from '../../UI/RangeBar/RangeBar';
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing.unit * 5,
-    border: '1px solid #f3f3f3',
-    boxShadow: 'none'
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
+    height: '475px',
+    overflowY: 'scroll',
+    width: '100%',
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
   },
   entitiesContainer: {
     paddingLeft: theme.spacing.unit * 2,
@@ -26,6 +31,16 @@ const styles = theme => ({
   paperHeader: {
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2
+  },
+  entityMapper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
+    boxShadow: 'none',
+    width: '100%',
+    height: '475px',
+    overflowY: 'scroll'
   },
   header: {
     fontWeight: 500,
@@ -87,32 +102,30 @@ class Entities extends Component {
     const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
-      <Paper className={classes.paper}>
-        <Grid container spacing={16} className={classes.entitiesContainer}>
-          <Grid item xs={12} className={classes.paperHeader}>
-            <Typography variant="h5" className={classes.entities}>
-              Entities
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={16}>
-              <Grid item xs={7}>
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center">
-                      <Grid item xs={4}>
-                        <Typography className={classes.header}>Name</Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.header}>Type</Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.header}>
-                          Score
-                        </Typography>
-                      </Grid>
+      <Grid container spacing={16}>
+        <Grid item xs={8}>
+          <Paper className={classes.paper}>
+            <Grid item xs={12} className={classes.paperHeader}>
+              <Typography variant="h5" className={classes.entities}>
+                Entities
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Grid container alignItems="center">
+                    <Grid item xs={4}>
+                      <Typography className={classes.header}>Name</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography className={classes.header}>Type</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography className={classes.header}>Score</Typography>
                     </Grid>
                   </Grid>
+                </Grid>
+                <Grid item xs={12}>
                   {entities.map(entity => {
                     return (
                       <Grid
@@ -166,21 +179,25 @@ class Entities extends Component {
                   })}
                 </Grid>
               </Grid>
-              {selectedEntity ? (
-                <Grid item xs={5}>
-                  <EntityMapper
-                    entity={selectedEntity}
-                    documents={preprocessedDocuments}
-                    contentSessionDocumentDialogOpened={
-                      contentSessionDocumentDialogOpened
-                    }
-                  />
-                </Grid>
-              ) : null}
             </Grid>
-          </Grid>
+          </Paper>
         </Grid>
-      </Paper>
+        <Grid item xs={4}>
+          <Paper className={classes.entityMapper}>
+            {selectedEntity ? (
+              <EntityMapper
+                entity={selectedEntity}
+                documents={preprocessedDocuments}
+                contentSessionDocumentDialogOpened={
+                  contentSessionDocumentDialogOpened
+                }
+              />
+            ) : (
+              <Typography>No Entity selected.</Typography>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }

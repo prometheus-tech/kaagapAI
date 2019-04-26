@@ -12,9 +12,7 @@ import { searchMatchingTalkTurnsFromDocuments } from '../../../../util/helperFun
 
 const styles = theme => ({
   box: {
-    border: '1px solid #f5f5f5',
-    borderRadius: '10px',
-    paddingBottom: 16,
+    padding: 0,
     backgroundColor: 'rgb(255, 255, 255)'
   },
   keywordMapperHeader: {
@@ -27,13 +25,14 @@ const styles = theme => ({
   },
   chip: {
     marginRight: theme.spacing.unit,
+    margin: theme.spacing.unit,
     border: '1px solid #74b9ff',
     fontSize: theme.spacing.unit * 2,
     fontWeight: 300,
     color: grey[600]
   },
   divider: {
-    backgroundColor: 'rgba(0, 0, 0, 0.23)'
+    backgroundColor: '#f8f8f8'
   },
   keywordMapperBody: {
     ...theme.mixins.gutters(),

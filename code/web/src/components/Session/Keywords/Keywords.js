@@ -7,6 +7,7 @@ import CustomWordCloud from './CustomWordCloud/CustomWordCloud';
 import WordMapper from './WordMapper/WordMapper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import grey from '@material-ui/core/colors/grey';
 
 import { getDocumentTalkTurns } from '../../../util/helperFunctions';
@@ -16,9 +17,20 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 5,
+    marginTop: theme.spacing.unit * 4,
+    width: '100%',
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
+  },
+  paperMapper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
     border: '1px solid #f3f3f3',
-    boxShadow: 'none'
+    width: '100%',
+    height: '475px',
+    overflowY: 'scroll',
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
   },
   paperHeader: {
     marginBottom: theme.spacing.unit * 2
@@ -54,21 +66,26 @@ class Keywords extends Component {
     const preprocessedDocuments = getDocumentTalkTurns(documents);
 
     return (
-      <Paper className={classes.paper}>
-        <Grid container spacing={16}>
-          <Grid item xs={12} className={classes.paperHeader}>
-            <Typography variant="h5" className={classes.keyword}>
-              Keywords
-            </Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <CustomWordCloud
-              keywords={keywords}
-              keywordSelected={this.selectKeywordHandler}
-            />
-          </Grid>
-          {selectedKeyword ? (
-            <Grid item xs={5}>
+      <Grid container spacing={16}>
+        <Grid item xs={8}>
+          <Paper className={classes.paper}>
+            <Grid item xs={12} className={classes.paperHeader}>
+              <Typography variant="h5" className={classes.keyword}>
+                Keywords
+              </Typography>
+            </Grid>
+            <Divider />
+            <Grid item xs={12}>
+              <CustomWordCloud
+                keywords={keywords}
+                keywordSelected={this.selectKeywordHandler}
+              />
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paperMapper}>
+            {selectedKeyword ? (
               <WordMapper
                 keyword={selectedKeyword}
                 documents={preprocessedDocuments}
@@ -76,10 +93,14 @@ class Keywords extends Component {
                   contentSessionDocumentDialogOpened
                 }
               />
-            </Grid>
-          ) : null}
+            ) : (
+              <Typography>
+                No Keyword selected.
+              </Typography>
+            )}
+          </Paper>
         </Grid>
-      </Paper>
+      </Grid>
     );
   }
 }

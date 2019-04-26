@@ -25,9 +25,8 @@ const styles = theme => ({
   tabCon: {
     marginTop: theme.spacing.unit * 3,
     backgroundColor: 'rgb(248, 248, 248)',
-    position: 'fixed',
+    position: 'absolute',
     display: 'flex'
-    // width: '50px'
   },
   tabIcon: {
     height: '5vh',
@@ -165,54 +164,45 @@ class SessionResultsPage extends Component {
                     </div>
                   </Grid>
                   <Grid xs={10}>
-                    <Grid container spacing={16}>
-                      {activeIndex === 0 && (
-                        <TabContainer>
-                          <Grid item xs={12}>
-                            <Keywords
-                              keywords={data.result.keywords}
-                              documents={documents}
-                              contentSessionDocumentDialogOpened={
-                                contentSessionDocumentDialogOpened
-                              }
-                            />
-                          </Grid>
-                        </TabContainer>
-                      )}
-                      {activeIndex === 1 && (
-                        <TabContainer>
-                          <Grid item xs={12}>
-                            <Categories categories={data.result.categories} />
-                          </Grid>
-                        </TabContainer>
-                      )}
-                      {activeIndex === 2 && (
-                        <TabContainer>
-                          <Grid item xs={12}>
-                            <Entities
-                              entities={data.result.entities}
-                              documents={documents}
-                              contentSessionDocumentDialogOpened={
-                                contentSessionDocumentDialogOpened
-                              }
-                            />
-                          </Grid>
-                        </TabContainer>
-                      )}
-                      {activeIndex === 3 && (
-                        <TabContainer>
-                          <Grid item xs={12}>
-                            <EmotionsSentiment
-                              emotions={data.result.emotions}
-                              sentiment={data.result.sentiment}
-                            />
-                          </Grid>
-                        </TabContainer>
-                      )}
-                    </Grid>
+                    {activeIndex === 0 && (
+                      <TabContainer>
+                        <Keywords
+                          keywords={data.result.keywords}
+                          documents={documents}
+                          contentSessionDocumentDialogOpened={
+                            contentSessionDocumentDialogOpened
+                          }
+                        />
+                      </TabContainer>
+                    )}
+                    {activeIndex === 1 && (
+                      <TabContainer>
+                          <Categories categories={data.result.categories} />
+                      </TabContainer>
+                    )}
+                    {activeIndex === 2 && (
+                      <TabContainer>
+                          <Entities
+                            entities={data.result.entities}
+                            documents={documents}
+                            contentSessionDocumentDialogOpened={
+                              contentSessionDocumentDialogOpened
+                            }
+                          />
+                      </TabContainer>
+                    )}
+                    {activeIndex === 3 && (
+                      <TabContainer>
+                          <EmotionsSentiment
+                            emotions={data.result.emotions}
+                            sentiment={data.result.sentiment}
+                          />
+                      </TabContainer>
+                    )}
                   </Grid>
                 </Grid>
               ) : (
+                // </Grid>
                 <EmptyResults />
               )}
             </Auxilliary>

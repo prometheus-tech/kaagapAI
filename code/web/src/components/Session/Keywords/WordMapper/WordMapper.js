@@ -12,9 +12,7 @@ import DocumentMapItem from '../../../UI/DocumentMapItem/DocumentMapItem';
 
 const styles = theme => ({
   box: {
-    border: '1px solid #f5f5f5',
-    borderRadius: '10px',
-    paddingBottom: 16,
+    padding: 0,
     backgroundColor: 'rgb(255, 255, 255)'
   },
   keywordMapperHeader: {
