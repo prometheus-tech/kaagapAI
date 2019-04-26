@@ -10,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArchivedClientCards from '../../components/Archives/ArchivedClientCards/ArchivedClientCards';
 import ArchivedSessionCards from '../../components/Archives/ArchivedSessionCards/ArchivedSessionCards';
+import ArchivedSessionDocumentCards from '../../components/Archives/ArchivedSessionDocumentCards/ArchivedSessionDocumentCards';
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
 const styles = theme => ({
   container: {
@@ -22,6 +24,13 @@ const styles = theme => ({
 });
 
 class ArchivesPage extends Component {
+  componentDidMount() {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss')
+    );
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -50,6 +59,11 @@ class ArchivesPage extends Component {
               ) : null}
               {data.archives.sessions.length > 0 ? (
                 <ArchivedSessionCards sessions={data.archives.sessions} />
+              ) : null}
+              {data.archives.session_documents.length > 0 ? (
+                <ArchivedSessionDocumentCards
+                  sessionDocuments={data.archives.session_documents}
+                />
               ) : null}
             </div>
           );
