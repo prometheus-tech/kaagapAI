@@ -4,6 +4,7 @@ import { Mutation } from 'react-apollo';
 import RESTORE_CLIENT from '../../../../graphql/mutations/restoreClient';
 import CLIENTS from '../../../../graphql/queries/clients';
 import ARCHIVES from '../../../../graphql/queries/archives';
+import CLIENT from '../../../../graphql/queries/client';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -108,7 +109,7 @@ function ArchivedClientCard(props) {
         props.enqueueSnackbar(fname + ' ' + lname + ' successfully restored!');
       }}
       refetchQueries={() => {
-        return [{ query: CLIENTS }];
+        return [{ query: CLIENTS }, { query: CLIENT, variables: { c_id } }];
       }}
       awaitRefetchQueries={true}
     >

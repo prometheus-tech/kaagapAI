@@ -246,7 +246,11 @@ class SessionPage extends Component {
     } = this.state;
 
     return (
-      <Query query={SESSION} variables={{ session_id: session_id }}>
+      <Query
+        query={SESSION}
+        variables={{ session_id: session_id }}
+        pollInterval={5000}
+      >
         {({
           loading: sessionLoading,
           error: sessionError,
@@ -261,7 +265,11 @@ class SessionPage extends Component {
           }
 
           return (
-            <Query query={CLIENT} variables={{ c_id: session.c_id }}>
+            <Query
+              query={CLIENT}
+              variables={{ c_id: session.c_id }}
+              pollInterval={5000}
+            >
               {({
                 loading: clientLoading,
                 error: clientError,

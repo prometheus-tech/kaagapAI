@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import DELETE_SESSION from '../../../../graphql/mutations/deleteSession';
 import { Mutation } from 'react-apollo';
 import CLIENT from '../../../../graphql/queries/client';
-import ARCHIVES from '../../../../graphql/queries/archives';
 
 import { withSnackbar } from 'notistack';
 
@@ -117,17 +116,6 @@ function SessionCard(props) {
           ...clientQueryParams,
           data: {
             client
-          }
-        });
-
-        const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
-
-        archives.sessions.push(deleteSession);
-
-        cache.writeQuery({
-          query: ARCHIVES,
-          data: {
-            archives
           }
         });
 

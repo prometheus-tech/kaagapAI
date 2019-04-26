@@ -14,7 +14,7 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     marginTop: theme.spacing.unit * 5,
     border: '1px solid #f3f3f3',
-    boxShadow: 'none',
+    boxShadow: 'none'
   },
   paperHeader: {
     paddingBottom: theme.spacing.unit * 2
@@ -58,7 +58,12 @@ function EmotionsSentiment(props) {
             {labels.map((label, index) => {
               if (emotions[0][label] > 0) {
                 return (
-                  <Grid key={index} item xs={4}>
+                  <Grid
+                    key={index}
+                    item
+                    xs={4}
+                    style={{ marginBottom: '24px' }}
+                  >
                     <EmotionItem label={label} score={emotions[0][label]} />
                   </Grid>
                 );
@@ -72,7 +77,8 @@ function EmotionsSentiment(props) {
           <Typography className={classes.overallSentimentLabel}>
             Overall Sentiment:{' '}
             <span className={classes.sentimentValueText}>
-              {sentiment[0].label} ({sentiment[0].score})
+              {sentiment[0].label} ({Math.round(sentiment[0].score * 100) / 100}
+              )
             </span>
           </Typography>
         </Grid>

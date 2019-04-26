@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    score: DataTypes.INTEGER,
+    score: DataTypes.FLOAT,
     label: DataTypes.STRING
   }, {});
 

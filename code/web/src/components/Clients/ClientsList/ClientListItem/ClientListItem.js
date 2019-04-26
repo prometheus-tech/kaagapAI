@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import DELETE_CLIENT from '../../../../graphql/mutations/deleteClient';
 import { Mutation } from 'react-apollo';
 import CLIENTS from '../../../../graphql/queries/clients';
-import ARCHIVES from '../../../../graphql/queries/archives';
 import { cloneDeep } from 'apollo-utilities';
 
 import { withSnackbar } from 'notistack';
@@ -104,17 +103,6 @@ function ClientListItem(props) {
           ...clientsQueryParams,
           data: {
             clients: clients.filter(c => c.c_id !== deleteClient.c_id)
-          }
-        });
-
-        const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
-
-        archives.clients.push(deleteClient);
-
-        cache.writeQuery({
-          query: ARCHIVES,
-          data: {
-            archives
           }
         });
 

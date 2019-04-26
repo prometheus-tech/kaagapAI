@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: DataTypes.STRING,
     text: DataTypes.STRING,
-    relevance: DataTypes.INTEGER
+    relevance: DataTypes.FLOAT
   }, {});
 
   Entity.associate = models => {

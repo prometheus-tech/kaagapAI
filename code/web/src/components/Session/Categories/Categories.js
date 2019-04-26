@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
 import grey from '@material-ui/core/colors/grey';
-import blue from '@material-ui/core/colors/blue';
 import Paper from '@material-ui/core/Paper';
 import RangeBar from '../../UI/RangeBar/RangeBar';
 
@@ -57,7 +56,7 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     textTransform: 'uppercase',
     letterSpacing: '2px'
-  },
+  }
 });
 
 function Categories(props) {
@@ -98,14 +97,11 @@ function Categories(props) {
                 <Grid item xs={4}>
                   <Grid container className={classes.scoreGrid}>
                     <Grid item xs={10} className={classes.rangeBarItem}>
-                      <RangeBar
-                        value={category.score}
-                        maxValue={1}
-                      />
+                      <RangeBar value={category.score} maxValue={1} />
                     </Grid>
                     <Grid item xs={2}>
                       <Typography component="span" className={classes.subLabel}>
-                        {category.score}
+                        {Math.round(category.score * 100) / 100}
                       </Typography>
                     </Grid>
                   </Grid>

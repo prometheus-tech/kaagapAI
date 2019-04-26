@@ -129,7 +129,7 @@ class ClientsPage extends Component {
     } = this.state;
 
     return (
-      <Query query={CLIENTS} errorPolicy="all">
+      <Query query={CLIENTS} errorPolicy="all" pollInterval={5000}>
         {({ client, loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
