@@ -19,6 +19,7 @@ import SignUp from './containers/SignUp/SignUp';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
+import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
 
 import { AUTH_TOKEN } from './util/constants';
 
@@ -43,6 +44,8 @@ const cache = new InMemoryCache({
         return 'entity:' + object.entity_id;
       case 'Emotion':
         return 'emotion:' + object.emotion_id;
+      case 'Archives':
+        return 'archives:' + object.archives_id;
       default:
         return defaultDataIdFromObject(object);
     }
@@ -101,6 +104,7 @@ class App extends Component {
               <Route path="/signup" component={SignUp} />
               <Layout>
                 <Route exact path="/" component={ClientsPage} />
+                <Route path="/archives" component={ArchivesPage} />
                 <Route path="/client/:c_id" component={ClientPage} />
                 <Route path="/session/:session_id" component={SessionPage} />
               </Layout>
