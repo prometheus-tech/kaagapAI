@@ -155,7 +155,7 @@ class Entities extends Component {
                                   component="span"
                                   className={classes.subLabel}
                                 >
-                                  {entity.relevance}
+                                  {Math.round(entity.relevance * 100) / 100}
                                 </Typography>
                               </Grid>
                             </Grid>

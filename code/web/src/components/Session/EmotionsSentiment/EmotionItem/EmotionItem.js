@@ -83,7 +83,7 @@ function EmotionItem(props) {
       <Chip
         variant="outlined"
         className={classes.chip}
-        label={'Score = ' + score}
+        label={'Score = ' + Math.round(score * 100) / 100}
       />
     </div>
   );

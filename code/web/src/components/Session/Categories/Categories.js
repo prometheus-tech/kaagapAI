@@ -101,7 +101,7 @@ function Categories(props) {
                     </Grid>
                     <Grid item xs={2}>
                       <Typography component="span" className={classes.subLabel}>
-                        {category.score}
+                        {Math.round(category.score * 100) / 100}
                       </Typography>
                     </Grid>
                   </Grid>

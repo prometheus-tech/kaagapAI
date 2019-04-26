@@ -70,7 +70,7 @@ function WordMapper(props) {
         <Chip
           variant="outlined"
           className={classes.chip}
-          label={'Relevance: ' + relevance}
+          label={'Relevance: ' + Math.round(relevance * 100) / 100}
         />
       </div>
       <Divider className={classes.divider} light />
