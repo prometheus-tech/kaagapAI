@@ -35,7 +35,7 @@ class ArchivesPage extends Component {
     const { classes } = this.props;
 
     return (
-      <Query query={ARCHIVES}>
+      <Query query={ARCHIVES} fetchPolicy="network-only">
         {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
