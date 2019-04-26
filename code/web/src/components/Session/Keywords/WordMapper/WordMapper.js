@@ -6,14 +6,16 @@ import { searchMatchingTalkTurnsFromDocuments } from '../../../../util/helperFun
 
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import grey from '@material-ui/core/colors/grey';
 import Divider from '@material-ui/core/Divider';
 import DocumentMapItem from '../../../UI/DocumentMapItem/DocumentMapItem';
 
 const styles = theme => ({
   box: {
-    border: '1px solid rgba(0, 0, 0, 0.23)',
+    border: '1px solid #f5f5f5',
     borderRadius: '10px',
-    paddingBottom: 16
+    paddingBottom: 16,
+    backgroundColor: 'rgb(255, 255, 255)'
   },
   keywordMapperHeader: {
     ...theme.mixins.gutters(),
@@ -24,10 +26,14 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   },
   chip: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
+    border: '1px solid #74b9ff',
+    fontSize: theme.spacing.unit * 2,
+    fontWeight: 300,
+    color: grey[600]
   },
   divider: {
-    backgroundColor: 'rgba(0, 0, 0, 0.23)'
+    backgroundColor: '#f8f8f8'
   },
   keywordMapperBody: {
     ...theme.mixins.gutters(),

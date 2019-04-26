@@ -30,6 +30,12 @@ const styles = theme => ({
   emoticon: {
     width: '96px',
     marginBottom: theme.spacing.unit * 2
+  },
+  chip: {
+    border: '1px solid #48b1bf',
+    fontWeight: 300,
+    padding: '10px 5px 10px 5px',
+    backgroundColor: 'transparent'
   }
 });
 

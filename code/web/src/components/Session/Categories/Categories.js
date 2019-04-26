@@ -4,10 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
+import grey from '@material-ui/core/colors/grey';
+import blue from '@material-ui/core/colors/blue';
 import Paper from '@material-ui/core/Paper';
 import RangeBar from '../../UI/RangeBar/RangeBar';
 
 const styles = theme => ({
+  paper: {
+    marginTop: theme.spacing.unit * 5,
+    border: '1px solid #f3f3f3',
+    boxShadow: 'none'
+  },
   categoryContainer: {
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2
@@ -37,23 +44,32 @@ const styles = theme => ({
     alignItems: 'center'
   },
   rangeBarItem: {
-    paddingRight: theme.spacing.unit * 2
+    paddingRight: theme.spacing.unit * 3
   },
   subLabel: {
     fontWeight: 500,
     fontSize: 16,
     color: theme.palette.grey[800]
-  }
+  },
+  category: {
+    color: grey[500],
+    fontWeight: '400',
+    fontSize: theme.spacing.unit * 2,
+    textTransform: 'uppercase',
+    letterSpacing: '2px'
+  },
 });
 
 function Categories(props) {
   const { categories, classes } = props;
 
   return (
-    <Paper elevation={1}>
+    <Paper className={classes.paper}>
       <Grid container className={classes.categoryContainer}>
         <Grid item xs={12} className={classes.paperHeader}>
-          <Typography variant="h5">Categories</Typography>
+          <Typography variant="h5" className={classes.category}>
+            Categories
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container alignItems="center">
@@ -82,7 +98,10 @@ function Categories(props) {
                 <Grid item xs={4}>
                   <Grid container className={classes.scoreGrid}>
                     <Grid item xs={10} className={classes.rangeBarItem}>
-                      <RangeBar value={category.score} maxValue={1} />
+                      <RangeBar
+                        value={category.score}
+                        maxValue={1}
+                      />
                     </Grid>
                     <Grid item xs={2}>
                       <Typography component="span" className={classes.subLabel}>

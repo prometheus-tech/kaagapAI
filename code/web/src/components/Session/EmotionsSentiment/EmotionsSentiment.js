@@ -5,18 +5,23 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import EmotionItem from './EmotionItem/EmotionItem';
+import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
   paper: {
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    ...theme.mixins.gutters()
+    ...theme.mixins.gutters(),
+    marginTop: theme.spacing.unit * 5,
+    border: '1px solid #f3f3f3',
+    boxShadow: 'none',
   },
   paperHeader: {
     paddingBottom: theme.spacing.unit * 2
   },
   sentimentGridItem: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
+    borderTop: '1px solid #f8f8f8'
   },
   overallSentimentLabel: {
     color: theme.palette.grey[600],
@@ -25,6 +30,13 @@ const styles = theme => ({
   },
   sentimentValueText: {
     fontWeight: 400
+  },
+  emotions_sentiments: {
+    color: grey[500],
+    fontWeight: '400',
+    fontSize: theme.spacing.unit * 2,
+    textTransform: 'uppercase',
+    letterSpacing: '2px'
   }
 });
 
@@ -37,7 +49,9 @@ function EmotionsSentiment(props) {
     <Paper elevation={1} className={classes.paper}>
       <Grid container spacing={16}>
         <Grid item xs={12} className={classes.paperHeader}>
-          <Typography variant="h5">Emotions & Sentiment</Typography>
+          <Typography variant="h5" className={classes.emotions_sentiments}>
+            Emotions & Sentiment
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16}>
