@@ -16,6 +16,7 @@ import Logo from '../../assets/kaagapai-logo.svg';
 import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
 import Fab from '@material-ui/core/Fab';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 import { Link } from 'react-router-dom';
 
@@ -95,8 +96,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
     fontWeight: '300'
   },
-  test: {
-    backgroundColor: 'green'
+  errorLogin: {
+    color: 'red'
   }
 });
 class SignIn extends Component {
@@ -138,13 +139,6 @@ class SignIn extends Component {
               instantValidate={false}
             >
               <Grid container className={classes.loginContainer} spacing={16}>
-                {error ? (
-                  <Grid item xs={12}>
-                    {error.graphQLErrors.map(({ message }) => {
-                      return <Typography key={message}>{message}</Typography>;
-                    })}
-                  </Grid>
-                ) : null}
                 <Grid item xs={5} className={classes.formContainer}>
                   <img src={Logo} className={classes.logo} alt="kaagapAI" />
                   <Grid container>
@@ -162,6 +156,20 @@ class SignIn extends Component {
                         className={classes.formItems}
                         alignContent="center"
                       >
+                        {error ? (
+                          <Grid item xs={12}>
+                            {error.graphQLErrors.map(({ message }) => {
+                              return (
+                                <Typography
+                                  key={message}
+                                  className={classes.errorLogin}
+                                >
+                                  {message}
+                                </Typography>
+                              );
+                            })}
+                          </Grid>
+                        ) : null}
                         <Grid item xs={10}>
                           <TextValidator
                             label="Email"
