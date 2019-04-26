@@ -1,5 +1,12 @@
 import React from 'react';
 
+import { Mutation } from 'react-apollo';
+import RESTORE_SESSION_DOCUMENT from '../../../../graphql/mutations/restoreSessionDocument';
+import ARCHIVES from '../../../../graphql/queries/archives';
+import SESSION from '../../../../graphql/queries/session';
+
+import { cloneDeep } from 'apollo-utilities';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import classNames from 'classnames';
@@ -10,8 +17,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
+
+import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
   card: {
@@ -60,51 +70,99 @@ const styles = theme => ({
     position: 'relative',
     bottom: theme.spacing.unit * -4,
     right: theme.spacing.unit * -1
+  },
+  progress: {
+    position: 'relative',
+    bottom: theme.spacing.unit * -4,
+    right: theme.spacing.unit * -1
   }
 });
 
-function ArchivedSessionDocumentCard({ sessionDocument, classes }) {
+function ArchivedSessionDocumentCard(props) {
+  const { sessionDocument, classes } = props;
+
   const { avatarIconClass, iconColor } = getSessionDocumentIcon(
     sessionDocument.type.toLowerCase()
   );
 
   return (
-    <Card
-      elevation={1}
-      onClick={() => {
-        alert('Please restore first!');
+    <Mutation
+      mutation={RESTORE_SESSION_DOCUMENT}
+      update={(cache, { data: { restoreSessionDocument } }) => {
+        const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
+
+        archives.session_documents = archives.session_documents.filter(
+          session_document =>
+            session_document.sd_id !== restoreSessionDocument.sd_id
+        );
+
+        cache.writeQuery({
+          query: ARCHIVES,
+          data: {
+            archives
+          }
+        });
+
+        props.enqueueSnackbar(
+          sessionDocument.file_name + ' successfully restored!'
+        );
       }}
-      className={classes.card}
+      refetchQueries={() => {
+        return [
+          {
+            query: SESSION,
+            variables: { session_id: sessionDocument.session_id }
+          }
+        ];
+      }}
+      awaitRefetchQueries={true}
     >
-      <CardContent className={classes.cardContent}>
-        <div className={classes.cardGeneralInfoContainer}>
-          <Avatar className={classes.avatar} style={{ color: iconColor }}>
-            <Icon className={classNames(avatarIconClass, classes.icon)} />
-          </Avatar>
-          <div className={classes.cardTextInfo}>
-            <Typography className={classes.cardTitle} noWrap>
-              {sessionDocument.file_name}
-            </Typography>
-            <Typography className={classes.cardSubTitle}>
-              <Moment format="MMM D, YYYY" withTitle>
-                {sessionDocument.date_added}
-              </Moment>
-            </Typography>
-          </div>
-        </div>
-        <div>
-          <IconButton
-            className={classes.restoreActionButton}
-            onClick={e => {
-              e.stopPropagation();
-            }}
-          >
-            <Icon fontSize="small">restore_from_trash</Icon>
-          </IconButton>
-        </div>
-      </CardContent>
-    </Card>
+      {(restoreSessionDocument, { loading }) => (
+        <Card
+          elevation={1}
+          onClick={() => {
+            alert('Please restore first!');
+          }}
+          className={classes.card}
+        >
+          <CardContent className={classes.cardContent}>
+            <div className={classes.cardGeneralInfoContainer}>
+              <Avatar className={classes.avatar} style={{ color: iconColor }}>
+                <Icon className={classNames(avatarIconClass, classes.icon)} />
+              </Avatar>
+              <div className={classes.cardTextInfo}>
+                <Typography className={classes.cardTitle} noWrap>
+                  {sessionDocument.file_name}
+                </Typography>
+                <Typography className={classes.cardSubTitle}>
+                  <Moment format="MMM D, YYYY" withTitle>
+                    {sessionDocument.date_added}
+                  </Moment>
+                </Typography>
+              </div>
+            </div>
+            <div>
+              {!loading ? (
+                <IconButton
+                  className={classes.restoreActionButton}
+                  onClick={e => {
+                    e.stopPropagation();
+                    restoreSessionDocument({
+                      variables: { sd_id: sessionDocument.sd_id }
+                    });
+                  }}
+                >
+                  <Icon fontSize="small">restore_from_trash</Icon>
+                </IconButton>
+              ) : (
+                <CircularProgress className={classes.progress} />
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </Mutation>
   );
 }
 
-export default withStyles(styles)(ArchivedSessionDocumentCard);
+export default withStyles(styles)(withSnackbar(ArchivedSessionDocumentCard));
