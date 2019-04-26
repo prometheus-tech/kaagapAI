@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import DELETE_SESSION from '../../../../graphql/mutations/deleteSession';
 import { Mutation } from 'react-apollo';
 import CLIENT from '../../../../graphql/queries/client';
+import ARCHIVES from '../../../../graphql/queries/archives';
 
 import { cloneDeep } from 'apollo-utilities';
 
@@ -91,14 +92,7 @@ function SessionListItem(props) {
   return (
     <Mutation
       mutation={DELETE_SESSION}
-      update={(
-        cache,
-        {
-          data: {
-            deleteSession: { c_id, session_id, session_name }
-          }
-        }
-      ) => {
+      update={(cache, { data: { deleteSession } }) => {
         const clientQueryParams = {
           query: CLIENT,
           variables: { c_id }
@@ -107,7 +101,7 @@ function SessionListItem(props) {
         const { client } = cloneDeep(cache.readQuery(clientQueryParams));
 
         client.sessions = client.sessions.filter(
-          s => s.session_id !== session_id
+          s => s.session_id !== deleteSession.session_id
         );
 
         client.no_of_sessions = client.sessions.length;
@@ -119,6 +113,17 @@ function SessionListItem(props) {
           }
         });
 
+        const { archives } = cloneDeep(cache.readQuery({ query: ARCHIVES }));
+
+        archives.sessions.push(deleteSession);
+
+        cache.writeQuery({
+          query: ARCHIVES,
+          data: {
+            archives
+          }
+        });
+
         props.enqueueSnackbar(session_name + ' archived!');
       }}
       optimisticResponse={{
@@ -127,7 +132,8 @@ function SessionListItem(props) {
           __typename: 'Session',
           c_id,
           session_id,
-          session_name
+          session_name,
+          date_of_session
         }
       }}
     >
