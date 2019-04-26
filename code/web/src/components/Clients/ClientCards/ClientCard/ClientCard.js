@@ -177,7 +177,7 @@ function ClientCard(props) {
                   </Typography>
                 </CardContent>
               </ButtonBase>
-              <CardActions className={classes.action}>
+              <CardActions>
                 <Tooltip title="Edit">
                   <IconButton
                     className={classes.iconHover}

@@ -61,7 +61,12 @@ class Entities extends Component {
   };
 
   render() {
-    const { entities, classes, documents } = this.props;
+    const {
+      entities,
+      classes,
+      documents,
+      contentSessionDocumentDialogOpened
+    } = this.props;
 
     const { selectedEntity } = this.state;
 
@@ -150,6 +155,9 @@ class Entities extends Component {
                   <EntityMapper
                     entity={selectedEntity}
                     documents={preprocessedDocuments}
+                    contentSessionDocumentDialogOpened={
+                      contentSessionDocumentDialogOpened
+                    }
                   />
                 </Grid>
               ) : null}

@@ -6,54 +6,77 @@ import { Query } from 'react-apollo';
 import RESULTS from '../../../graphql/queries/results';
 
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import purple from '@material-ui/core/colors/purple';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
 import Keywords from '../../../components/Session/Keywords/Keywords';
 import Categories from '../../../components/Session/Categories/Categories';
 import EmotionsSentiment from '../../../components/Session/EmotionsSentiment/EmotionsSentiment';
 import Entities from '../../../components/Session/Entities/Entities';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import KeywordsIcon from '../../../assets/KeywordsIcon.svg';
+import CategoryIcon from '../../../assets/CategoryIcon.svg';
+import EmotionsSentimentIcon from '../../../assets/EmotionsSentimentIcon.svg';
+import EntitiesIcon from '../../../assets/EntitiesIcon.svg';
 
 const styles = theme => ({
-  extendedButton: {
-    background: purple[500],
-    color: '#ffffff',
-    textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
-    '&:hover': {
-      backgroundColor: purple[700],
-      boxShadow: theme.shadows[10]
-    },
-    padding: '5px 25px 5px 25px',
-    marginBottom: theme.spacing.unit * 2
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
-  floatingButton: {
+  tabCon: {
+    marginTop: theme.spacing.unit * 5,
+    backgroundColor: 'rgb(248, 248, 248)',
     position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    boxShadow: theme.shadows[24],
-    color: '#ffffff',
-    '&:hover': {
-      boxShadow: theme.shadows[10]
-    }
+    display: 'flex'
+    // width: '50px'
   },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+  tabIcon: {
+    height: '5vh',
+    padding: '0'
+  },
+  textIcon: {
+    fontWeight: '300',
+    marginTop: theme.spacing.unit * 2
   }
 });
 
+const VerticalTabs = withStyles(theme => ({
+  flexContainer: {
+    flexDirection: 'column'
+  },
+  indicator: {
+    display: 'none'
+  }
+}))(Tabs);
+
+const MyTab = withStyles(theme => ({
+  root: {
+    padding: '0',
+    margin: '0',
+    width: '30px',
+    backgroundColor: 'rgb(255, 255, 255)'
+  },
+  selected: {
+    color: 'tomato',
+    borderRight: '2px solid tomato'
+  }
+}))(Tab);
+
+function TabContainer(props) {
+  return <div>{props.children}</div>;
+}
+
 class SessionResultsPage extends Component {
+  state = { activeIndex: 0 };
+
+  handleChange = (_, activeIndex) => this.setState({ activeIndex });
+
   render() {
+    const { activeIndex } = this.state;
+
     const {
       session_id,
       documents,
-      contentSessionDocumentDialogOpened
+      contentSessionDocumentDialogOpened,
+      classes
     } = this.props;
 
     return (
@@ -74,41 +97,118 @@ class SessionResultsPage extends Component {
           return (
             <Auxilliary>
               <Grid container spacing={16}>
-                {data.result.keywords ? (
-                  <Grid item xs={12}>
-                    <Keywords
-                      keywords={data.result.keywords}
-                      documents={documents}
-                      contentSessionDocumentDialogOpened={
-                        contentSessionDocumentDialogOpened
-                      }
-                    />
+                <Grid item xs={2}>
+                  <div className={classes.tabCon}>
+                    <VerticalTabs
+                      value={activeIndex}
+                      onChange={this.handleChange}
+                    >
+                      <MyTab
+                        label={
+                          <div>
+                            <img
+                              src={KeywordsIcon}
+                              alt="Keywords"
+                              className={classes.tabIcon}
+                            />
+                            <Typography className={classes.textIcon}>
+                              Keywords
+                            </Typography>
+                          </div>
+                        }
+                      />
+                      <MyTab
+                        label={
+                          <div>
+                            <img
+                              src={CategoryIcon}
+                              alt="Category"
+                              className={classes.tabIcon}
+                            />
+                            <Typography className={classes.textIcon}>
+                              Categories
+                            </Typography>
+                          </div>
+                        }
+                      />
+                      <MyTab
+                        label={
+                          <div>
+                            <img
+                              src={EntitiesIcon}
+                              alt="Keywords"
+                              className={classes.tabIcon}
+                            />
+                            <Typography className={classes.textIcon}>
+                              Entities
+                            </Typography>
+                          </div>
+                        }
+                      />
+                      <MyTab
+                        label={
+                          <div>
+                            <img
+                              src={EmotionsSentimentIcon}
+                              alt="Keywords"
+                              className={classes.tabIcon}
+                            />
+                            <Typography className={classes.textIcon}>
+                              Emotions and Sentiments
+                            </Typography>
+                          </div>
+                        }
+                      />
+                    </VerticalTabs>
+                  </div>
+                </Grid>
+                <Grid xs={10}>
+                  <Grid container spacing={16}>
+                    {activeIndex === 0 && (
+                      <TabContainer>
+                        <Grid item xs={12}>
+                          <Keywords
+                            keywords={data.result.keywords}
+                            documents={documents}
+                            contentSessionDocumentDialogOpened={
+                              contentSessionDocumentDialogOpened
+                            }
+                          />
+                        </Grid>
+                      </TabContainer>
+                    )}
+                    {activeIndex === 1 && (
+                      <TabContainer>
+                        <Grid item xs={12}>
+                          <Categories categories={data.result.categories} />
+                        </Grid>
+                      </TabContainer>
+                    )}
+                    {activeIndex === 2 && (
+                      <TabContainer>
+                        <Grid item xs={12}>
+                          <Entities
+                            entities={data.result.entities}
+                            documents={documents}
+                            contentSessionDocumentDialogOpened={
+                              contentSessionDocumentDialogOpened
+                            }
+                          />
+                        </Grid>
+                      </TabContainer>
+                    )}
+                    {activeIndex === 3 && (
+                      <TabContainer>
+                        <Grid item xs={12}>
+                          <EmotionsSentiment
+                            emotions={data.result.emotions}
+                            sentiment={data.result.sentiment}
+                          />
+                        </Grid>
+                      </TabContainer>
+                    )}
                   </Grid>
-                ) : null}
-                {data.result.categories ? (
-                  <Grid item xs={6}>
-                    <Categories categories={data.result.categories} />
-                  </Grid>
-                ) : null}
-                {data.result.emotions && data.result.sentiment ? (
-                  <Grid item xs={6}>
-                    <EmotionsSentiment
-                      emotions={data.result.emotions}
-                      sentiment={data.result.sentiment}
-                    />
-                  </Grid>
-                ) : null}
-                {data.result.entities ? (
-                  <Grid item xs={12}>
-                    <Entities
-                      entities={data.result.entities}
-                      documents={documents}
-                      contentSessionDocumentDialogOpened={
-                        contentSessionDocumentDialogOpened
-                      }
-                    />
-                  </Grid>
-                ) : null}
+                </Grid>
               </Grid>
             </Auxilliary>
           );

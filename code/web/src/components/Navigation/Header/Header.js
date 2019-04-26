@@ -7,16 +7,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import 'typeface-overpass';
+import Button from '@material-ui/core/Button';
 
 import Logo from '../../../assets/kaagapai-logo.svg';
 
 import { logout } from '../../../util/helperFunctions';
 
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import { ApolloConsumer } from 'react-apollo';
 
@@ -53,6 +55,16 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  logoAppNameButton: {
+    textTransform: 'initial',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  },
+  logoAppNameContainer: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -85,6 +97,8 @@ class Header extends Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    const ButtonLink = props => <RouterLink to="/" {...props} />;
+
     return (
       <ApolloConsumer>
         {client => (
@@ -96,12 +110,28 @@ class Header extends Component {
                   color="inherit"
                   aria-label="Open drawer"
                 />
-                <img src={Logo} className={classes.logo} alt="kaagapAI" />
-                <Typography variant="h6" className={classes.nameLogo} noWrap>
-                  kaagapAI
-                </Typography>
+                <Button
+                  component={ButtonLink}
+                  className={classes.logoAppNameButton}
+                  disableRipple={true}
+                  disableTouchRipple={true}
+                >
+                  <div className={classes.logoAppNameContainer}>
+                    <img src={Logo} className={classes.logo} alt="kaagapAI" />
+                    <Typography
+                      variant="h6"
+                      className={classes.nameLogo}
+                      noWrap
+                    >
+                      kaagapAI
+                    </Typography>
+                  </div>
+                </Button>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
+                  <IconButton component={RouterLink} to="/archives">
+                    <DeleteIcon />
+                  </IconButton>
                   <IconButton
                     aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                     aria-haspopup="true"
