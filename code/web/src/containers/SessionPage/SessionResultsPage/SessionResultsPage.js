@@ -164,7 +164,7 @@ class SessionResultsPage extends Component {
                       </VerticalTabs>
                     </div>
                   </Grid>
-                  <Grid xs={10}>
+                  <Grid item xs={10}>
                     <Grid container spacing={16}>
                       {activeIndex === 0 && (
                         <TabContainer>

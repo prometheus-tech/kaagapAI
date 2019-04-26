@@ -81,7 +81,7 @@ function EmotionItem(props) {
         {label}
       </Typography>
       <Chip
-        variant="filled"
+        variant="outlined"
         className={classes.chip}
         label={'Score = ' + score}
       />

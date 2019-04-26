@@ -2,8 +2,6 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import purple from '@material-ui/core/colors/purple';
-
 const styles = theme => ({
   meter: {
     height: '15px',
