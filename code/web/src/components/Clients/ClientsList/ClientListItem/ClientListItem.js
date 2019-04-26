@@ -108,6 +108,20 @@ function ClientListItem(props) {
 
         props.enqueueSnackbar(fname + ' ' + lname + ' successfully archived!');
       }}
+      optimisticResponse={{
+        __typename: 'Mutation',
+        deleteClient: {
+          __typename: 'Client',
+          c_id,
+          fname,
+          lname,
+          gender,
+          birthdate,
+          no_of_sessions,
+          date_added,
+          last_opened
+        }
+      }}
     >
       {deleteClient => (
         <ButtonBase
