@@ -30,7 +30,7 @@ const styles = theme => ({
   pageHeader: {
     marginBottom: theme.spacing.unit * 4,
     display: 'block',
-    padding: '10px',
+    padding: '10px'
   },
   archiveTitle: {
     fontWeight: 700,
@@ -69,7 +69,7 @@ class ArchivesPage extends Component {
                 switch (extensions.code) {
                   case 'UNAUTHENTICATED':
                     logout(client);
-                    return <Redirect to="/signin" />;
+                    return <Redirect to="/signin?authenticated=false" />;
                   default:
                     return <p>Error</p>;
                 }

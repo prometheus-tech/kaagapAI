@@ -129,6 +129,8 @@ class SignIn extends Component {
     const { classes } = this.props;
     const SignInButtonLink = props => <Link to={'/signup'} {...props} />;
 
+    console.log(this.props.location);
+
     return (
       <Mutation
         mutation={LOGIN}
@@ -138,7 +140,7 @@ class SignIn extends Component {
         }}
         errorPolicy="all"
         onError={error => {
-          console.log(error.graphQLErrors);
+          this.setState({ password: '' });
         }}
       >
         {(login, { loading, error }) => {
@@ -146,6 +148,7 @@ class SignIn extends Component {
             <ValidatorForm
               onSubmit={() => {
                 login({ variables: { email, password } });
+                this.props.history.push('/signin');
               }}
               instantValidate={false}
             >
@@ -171,19 +174,32 @@ class SignIn extends Component {
                           <Grid item xs={12}>
                             {error.graphQLErrors.map(({ message }) => {
                               return (
-                                <div className={classes.errorMessage}>
+                                <div
+                                  key={message}
+                                  className={classes.errorMessage}
+                                >
                                   <Icon className={classes.iconErr}>
                                     error_outline
                                   </Icon>
-                                  <Typography
-                                    key={message}
-                                    className={classes.errorLogin}
-                                  >
+                                  <Typography className={classes.errorLogin}>
                                     {message}
                                   </Typography>
                                 </div>
                               );
                             })}
+                          </Grid>
+                        ) : null}
+                        {this.props.location.search ===
+                        '?authenticated=false' ? (
+                          <Grid item xs={12}>
+                            <div className={classes.errorMessage}>
+                              <Icon className={classes.iconErr}>
+                                error_outline
+                              </Icon>
+                              <Typography className={classes.errorLogin}>
+                                You must be logged in
+                              </Typography>
+                            </div>
                           </Grid>
                         ) : null}
                         <Grid item xs={10}>

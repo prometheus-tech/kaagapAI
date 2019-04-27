@@ -272,7 +272,7 @@ class SessionPage extends Component {
                 switch (extensions.code) {
                   case 'UNAUTHENTICATED':
                     logout(client);
-                    return <Redirect to="/signin" />;
+                    return <Redirect to="/signin?authenticated=false" />;
                   default:
                     return <p>Error</p>;
                 }
@@ -303,7 +303,7 @@ class SessionPage extends Component {
                       switch (extensions.code) {
                         case 'UNAUTHENTICATED':
                           logout(client);
-                          return <Redirect to="/signin" />;
+                          return <Redirect to="/signin?authenticated=false" />;
                         default:
                           return <p>Error</p>;
                       }
