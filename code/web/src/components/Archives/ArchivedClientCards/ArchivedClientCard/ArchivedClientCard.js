@@ -112,6 +112,10 @@ function ArchivedClientCard(props) {
         return [{ query: CLIENTS }, { query: CLIENT, variables: { c_id } }];
       }}
       awaitRefetchQueries={true}
+      errorPolicy="all"
+      onError={(error) => {
+        // Ignore error
+      }}
     >
       {(restoreClient, { loading }) => (
         <Card className={classes.card}>

@@ -171,6 +171,10 @@ class SessionDocumentsPage extends Component {
                 return [{ query: RESULTS, variables: { session_id } }];
               }}
               awaitRefetchQueries={true}
+              errorPolicy="all"
+              onError={error => {
+                // Ignore error
+              }}
             >
               {deleteSessionDocument => (
                 <SessionDocumentMoreActionsPopper

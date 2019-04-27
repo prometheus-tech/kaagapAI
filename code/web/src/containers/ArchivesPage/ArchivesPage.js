@@ -17,6 +17,10 @@ import grey from '@material-ui/core/colors/grey';
 import Icon from '@material-ui/core/Icon';
 import { IconButton } from '@material-ui/core';
 
+import { Redirect } from 'react-router-dom';
+
+import { logout } from '../../util/helperFunctions';
+
 const styles = theme => ({
   container: {
     paddingTop: theme.spacing.unit * 2,
@@ -47,14 +51,29 @@ class ArchivesPage extends Component {
     const { classes } = this.props;
 
     return (
-      <Query query={ARCHIVES} pollInterval={5000} fetchPolicy="network-only">
-        {({ loading, error, data }) => {
+      <Query
+        query={ARCHIVES}
+        pollInterval={5000}
+        fetchPolicy="network-only"
+        errorPolicy="all"
+      >
+        {({ loading, client, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            return <p>Error</p>;
+            if (error.graphQLErrors) {
+              return error.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin?authenticated=false" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (

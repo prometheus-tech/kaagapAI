@@ -106,6 +106,10 @@ class DeleteClientDialog extends Component {
             lname: client.lname
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {deleteClient => (
           <Dialog

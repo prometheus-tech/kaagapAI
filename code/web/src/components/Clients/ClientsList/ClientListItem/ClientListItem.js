@@ -122,6 +122,10 @@ function ClientListItem(props) {
           last_opened
         }
       }}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
       {deleteClient => (
         <ButtonBase

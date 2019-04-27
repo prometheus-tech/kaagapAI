@@ -143,6 +143,7 @@ class AccountRegistrationInfo extends Component {
         onError={error => {
           this.partiallyResetFormHandler();
         }}
+        errorPolicy="all"
       >
         {(register, { loading, error }) => {
           return (

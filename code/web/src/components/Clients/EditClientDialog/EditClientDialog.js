@@ -130,6 +130,10 @@ class EditClientDialog extends Component {
             no_of_sessions: no_of_sessions
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {editClient => {
           return (

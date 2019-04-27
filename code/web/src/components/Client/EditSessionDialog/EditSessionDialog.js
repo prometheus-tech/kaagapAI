@@ -82,6 +82,10 @@ class EditSessionDialog extends Component {
             date_of_session
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {editSession => {
           return (

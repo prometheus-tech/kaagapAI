@@ -21,6 +21,9 @@ import EmotionsSentimentIcon from '../../../assets/EmotionsSentimentIcon.svg';
 import EntitiesIcon from '../../../assets/EntitiesIcon.svg';
 import EmptyResults from '../../../components/UI/Placeholder/EmptyResults';
 
+import { Redirect } from 'react-router-dom';
+import { logout } from '../../../util/helperFunctions';
+
 const styles = theme => ({
   tabCon: {
     marginTop: theme.spacing.unit * 3,
@@ -84,14 +87,25 @@ class SessionResultsPage extends Component {
         query={RESULTS}
         variables={{ session_id }}
         fetchPolicy="network-only"
+        errorPolicy="all"
       >
-        {({ loading, error, data }) => {
+        {({ loading, data, error, client }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            return <p>Error</p>;
+            if (error.graphQLErrors) {
+              return error.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin?authenticated=false" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (
@@ -177,26 +191,26 @@ class SessionResultsPage extends Component {
                     )}
                     {activeIndex === 1 && (
                       <TabContainer>
-                          <Categories categories={data.result.categories} />
+                        <Categories categories={data.result.categories} />
                       </TabContainer>
                     )}
                     {activeIndex === 2 && (
                       <TabContainer>
-                          <Entities
-                            entities={data.result.entities}
-                            documents={documents}
-                            contentSessionDocumentDialogOpened={
-                              contentSessionDocumentDialogOpened
-                            }
-                          />
+                        <Entities
+                          entities={data.result.entities}
+                          documents={documents}
+                          contentSessionDocumentDialogOpened={
+                            contentSessionDocumentDialogOpened
+                          }
+                        />
                       </TabContainer>
                     )}
                     {activeIndex === 3 && (
                       <TabContainer>
-                          <EmotionsSentiment
-                            emotions={data.result.emotions}
-                            sentiment={data.result.sentiment}
-                          />
+                        <EmotionsSentiment
+                          emotions={data.result.emotions}
+                          sentiment={data.result.sentiment}
+                        />
                       </TabContainer>
                     )}
                   </Grid>

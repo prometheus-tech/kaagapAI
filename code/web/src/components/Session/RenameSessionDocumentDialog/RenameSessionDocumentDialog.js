@@ -86,6 +86,10 @@ class RenameSessionDocumentDialog extends Component {
             ...updatedSessionDocument
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {editSessionDocument => {
           return (

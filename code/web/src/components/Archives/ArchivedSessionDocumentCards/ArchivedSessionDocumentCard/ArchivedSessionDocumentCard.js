@@ -116,6 +116,10 @@ function ArchivedSessionDocumentCard(props) {
         ];
       }}
       awaitRefetchQueries={true}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
       {(restoreSessionDocument, { loading }) => (
         <Card

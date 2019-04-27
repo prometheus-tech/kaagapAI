@@ -110,6 +110,10 @@ class NewClientDialog extends Component {
               fname + ' ' + lname + ' successfully added!'
             );
           }}
+          errorPolicy="all"
+          onError={error => {
+            // Ignore error
+          }}
         >
           {(addClient, { loading }) => {
             if (loading) {

@@ -106,16 +106,16 @@ export default {
         where: { email }
       })
         .then(practitioner => {
-          const errorMessage = auth.verifyPractitioner(practitioner);
+          const { errorMessage, errorCode} = auth.verifyPractitioner(practitioner);
           if (!errorMessage) {
             return practitioner;
           } else {
-            throw new AuthenticationError(errorMessage);
+            throw new ApolloError(errorMessage, errorCode);
           }
         })
         .then(practitioner => {
           if (!auth.validateEmail(practitioner)) {
-            throw new AuthenticationError('Email is not yet registered');
+            throw new ApolloError('Email is not yet registered', 'EMAIL_UNREGISTERED');
           } else {
             return practitioner;
           }
@@ -127,7 +127,7 @@ export default {
           });
 
           if (!validPassword) {
-            throw new AuthenticationError('Invalid password');
+            throw new ApolloError('Invalid password', 'INVALID_PASSWORD');
           } else {
             return practitioner;
           }
@@ -231,7 +231,7 @@ export default {
 
             return { email };
           } else {
-            throw new AuthenticationError('Invalid Verification Code');
+            throw new ApolloError('Invalid Verification Code', 'INVALID_VERIFICATION_CODE');
           }
         }),
 
@@ -304,7 +304,7 @@ export default {
       }).then(async res => {
         if(!res) {
           //throw error that email is not registered
-          throw new AuthenticationError('Email is not yet registered');
+          throw new ApolloError('Email is not yet registered', 'EMAIL_UNREGISTERED');
         } else {
           if (await registration.sendEmail(subject, body, email)) {
             await models.Practitioner.update({

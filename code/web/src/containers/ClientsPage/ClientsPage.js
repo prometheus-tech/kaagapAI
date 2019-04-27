@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
-import { logout } from '../../util/helperFunctions';
-
 import { Query } from 'react-apollo';
 import CLIENTS from '../../graphql/queries/clients';
-
-import { Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
@@ -22,6 +18,10 @@ import EditClientDialog from '../../components/Clients/EditClientDialog/EditClie
 import blue from '@material-ui/core/colors/blue';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
+
+import { logout } from '../../util/helperFunctions';
+
+import { Redirect } from 'react-router-dom';
 
 const styles = theme => ({
   container: {
@@ -130,14 +130,23 @@ class ClientsPage extends Component {
 
     return (
       <Query query={CLIENTS} errorPolicy="all" pollInterval={5000}>
-        {({ client, loading, error, data }) => {
+        {({ loading, client, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            logout(client);
-            return <Redirect to="/signin" />;
+            if (error.graphQLErrors) {
+              return error.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin?authenticated=false" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (

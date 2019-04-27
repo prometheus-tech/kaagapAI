@@ -101,6 +101,7 @@ class VerifyEmail extends Component {
         onError={error => {
           this.resetFormHandler();
         }}
+        errorPolicy="all"
       >
         {(verifyEmail, { loading, error }) => {
           return (
