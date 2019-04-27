@@ -59,5 +59,5 @@ models.sequelize
     });
   })
   .catch(err => {
-    console.log('There is an error on th server: ' + err);
+    console.log('Something wrong with the server: ' + err);
   });
