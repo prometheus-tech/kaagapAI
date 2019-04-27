@@ -35,6 +35,10 @@ import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
+import { logout } from '../../util/helperFunctions';
+
+import { Redirect } from 'react-router-dom';
+
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
@@ -252,9 +256,28 @@ class SessionPage extends Component {
         pollInterval={5000}
         errorPolicy="all"
       >
-        {({ loading: sessionLoading, data: { session } }) => {
+        {({
+          loading: sessionLoading,
+          error: sessionError,
+          client,
+          data: { session }
+        }) => {
           if (sessionLoading) {
             return <LoadingFullScreen />;
+          }
+
+          if (sessionError) {
+            if (sessionError.graphQLErrors) {
+              return sessionError.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (
@@ -264,9 +287,28 @@ class SessionPage extends Component {
               pollInterval={5000}
               errorPolicy="all"
             >
-              {({ loading: clientLoading, data: { client } }) => {
+              {({
+                loading: clientLoading,
+                error: clientError,
+                client,
+                data
+              }) => {
                 if (clientLoading) {
                   return <LoadingFullScreen />;
+                }
+
+                if (clientError) {
+                  if (clientError.graphQLErrors) {
+                    return clientError.graphQLErrors.map(({ extensions }) => {
+                      switch (extensions.code) {
+                        case 'UNAUTHENTICATED':
+                          logout(client);
+                          return <Redirect to="/signin" />;
+                        default:
+                          return <p>Error</p>;
+                      }
+                    });
+                  }
                 }
 
                 return (
@@ -297,11 +339,11 @@ class SessionPage extends Component {
                             <ButtonBase
                               component={RouterLink}
                               color="inherit"
-                              to={'/client/' + client.c_id}
+                              to={'/client/' + data.client.c_id}
                               className={classes.breadCrumbLink}
                             >
                               <PersonIcon className={classes.breadCrumbIcon} />{' '}
-                              {client.fname + ' ' + client.lname}
+                              {data.client.fname + ' ' + data.client.lname}
                             </ButtonBase>
                             <Typography
                               className={classes.breadCrumbLinkSession}

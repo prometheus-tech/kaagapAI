@@ -13,6 +13,10 @@ import ArchivedSessionCards from '../../components/Archives/ArchivedSessionCards
 import ArchivedSessionDocumentCards from '../../components/Archives/ArchivedSessionDocumentCards/ArchivedSessionDocumentCards';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 
+import { Redirect } from 'react-router-dom';
+
+import { logout } from '../../util/helperFunctions';
+
 const styles = theme => ({
   container: {
     paddingTop: theme.spacing.unit * 2,
@@ -41,13 +45,23 @@ class ArchivesPage extends Component {
         fetchPolicy="network-only"
         errorPolicy="all"
       >
-        {({ loading, error, data }) => {
+        {({ loading, client, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            return <p>Error</p>;
+            if (error.graphQLErrors) {
+              return error.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (

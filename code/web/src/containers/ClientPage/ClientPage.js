@@ -35,6 +35,10 @@ import EmptySession from '../../components/UI/Placeholder/EmptySession';
 import Tooltip from '@material-ui/core/Tooltip';
 import SearchField from '../../components/UI/SearchField/SearchField';
 
+import { logout } from '../../util/helperFunctions';
+
+import { Redirect } from 'react-router-dom';
+
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
@@ -201,13 +205,23 @@ class ClientPage extends Component {
         pollInterval={5000}
         errorPolicy="all"
       >
-        {({ loading, error, data }) => {
+        {({ loading, error, client, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
           }
 
           if (error) {
-            return <p>Error</p>;
+            if (error.graphQLErrors) {
+              return error.graphQLErrors.map(({ extensions }) => {
+                switch (extensions.code) {
+                  case 'UNAUTHENTICATED':
+                    logout(client);
+                    return <Redirect to="/signin" />;
+                  default:
+                    return <p>Error</p>;
+                }
+              });
+            }
           }
 
           return (

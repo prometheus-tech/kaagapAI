@@ -137,7 +137,7 @@ class SignIn extends Component {
         }}
         errorPolicy="all"
         onError={error => {
-          // Ignore error
+          console.log(error.graphQLErrors);
         }}
       >
         {(login, { loading, error }) => {
