@@ -68,7 +68,7 @@ class ArchivesPage extends Component {
                 switch (extensions.code) {
                   case 'UNAUTHENTICATED':
                     logout(client);
-                    return <Redirect to="/signin?authenticated=false" />;
+                    return <Redirect to="/signin" />;
                   default:
                     return <p>Error</p>;
                 }
