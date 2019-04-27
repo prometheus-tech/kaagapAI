@@ -135,6 +135,7 @@ class SignIn extends Component {
           localStorage.setItem(AUTH_TOKEN, data.login.session_token);
           this.props.history.push('/');
         }}
+        errorPolicy="all"
         onError={error => {
           // Ignore error
         }}

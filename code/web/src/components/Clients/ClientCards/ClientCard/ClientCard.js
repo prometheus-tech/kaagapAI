@@ -153,6 +153,10 @@ function ClientCard(props) {
           last_opened
         }
       }}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
       {deleteClient => (
         <div>

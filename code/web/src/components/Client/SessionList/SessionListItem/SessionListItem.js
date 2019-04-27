@@ -122,6 +122,10 @@ function SessionListItem(props) {
           date_of_session
         }
       }}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
       {deleteSession => (
         <ButtonBase

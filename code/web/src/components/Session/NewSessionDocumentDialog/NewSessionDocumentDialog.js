@@ -223,6 +223,10 @@ function NewSessionDocumentDialog(props) {
         return [{ query: RESULTS, variables: { session_id: sessionId } }];
       }}
       awaitRefetchQueries={true}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
       {(addSessionDocument, { loading }) => {
         return (

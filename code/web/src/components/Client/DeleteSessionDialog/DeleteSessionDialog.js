@@ -114,6 +114,10 @@ class DeleteSessionDialog extends Component {
             session_name: session_name
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {deleteSession => (
           <Dialog

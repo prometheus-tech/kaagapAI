@@ -89,6 +89,10 @@ class NewSessionDialog extends Component {
 
           this.props.enqueueSnackbar(session_name + ' successfully added!');
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {(addSession, { loading }) => {
           if (loading) {

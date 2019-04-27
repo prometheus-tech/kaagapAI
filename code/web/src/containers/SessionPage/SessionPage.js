@@ -250,18 +250,11 @@ class SessionPage extends Component {
         query={SESSION}
         variables={{ session_id: session_id }}
         pollInterval={5000}
+        errorPolicy="all"
       >
-        {({
-          loading: sessionLoading,
-          error: sessionError,
-          data: { session }
-        }) => {
+        {({ loading: sessionLoading, data: { session } }) => {
           if (sessionLoading) {
             return <LoadingFullScreen />;
-          }
-
-          if (sessionError) {
-            return <p>Error</p>;
           }
 
           return (
@@ -269,18 +262,11 @@ class SessionPage extends Component {
               query={CLIENT}
               variables={{ c_id: session.c_id }}
               pollInterval={5000}
+              errorPolicy="all"
             >
-              {({
-                loading: clientLoading,
-                error: clientError,
-                data: { client }
-              }) => {
+              {({ loading: clientLoading, data: { client } }) => {
                 if (clientLoading) {
                   return <LoadingFullScreen />;
-                }
-
-                if (clientError) {
-                  return <p>Error</p>;
                 }
 
                 return (

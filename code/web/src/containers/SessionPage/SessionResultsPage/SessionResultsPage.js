@@ -84,14 +84,11 @@ class SessionResultsPage extends Component {
         query={RESULTS}
         variables={{ session_id }}
         fetchPolicy="network-only"
+        errorPolicy="all"
       >
-        {({ loading, error, data }) => {
+        {({ loading, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
-          }
-
-          if (error) {
-            return <p>Error</p>;
           }
 
           return (
@@ -177,26 +174,26 @@ class SessionResultsPage extends Component {
                     )}
                     {activeIndex === 1 && (
                       <TabContainer>
-                          <Categories categories={data.result.categories} />
+                        <Categories categories={data.result.categories} />
                       </TabContainer>
                     )}
                     {activeIndex === 2 && (
                       <TabContainer>
-                          <Entities
-                            entities={data.result.entities}
-                            documents={documents}
-                            contentSessionDocumentDialogOpened={
-                              contentSessionDocumentDialogOpened
-                            }
-                          />
+                        <Entities
+                          entities={data.result.entities}
+                          documents={documents}
+                          contentSessionDocumentDialogOpened={
+                            contentSessionDocumentDialogOpened
+                          }
+                        />
                       </TabContainer>
                     )}
                     {activeIndex === 3 && (
                       <TabContainer>
-                          <EmotionsSentiment
-                            emotions={data.result.emotions}
-                            sentiment={data.result.sentiment}
-                          />
+                        <EmotionsSentiment
+                          emotions={data.result.emotions}
+                          sentiment={data.result.sentiment}
+                        />
                       </TabContainer>
                     )}
                   </Grid>

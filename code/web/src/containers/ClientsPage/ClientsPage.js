@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
-import { logout } from '../../util/helperFunctions';
-
 import { Query } from 'react-apollo';
 import CLIENTS from '../../graphql/queries/clients';
-
-import { Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
@@ -130,14 +126,9 @@ class ClientsPage extends Component {
 
     return (
       <Query query={CLIENTS} errorPolicy="all" pollInterval={5000}>
-        {({ client, loading, error, data }) => {
+        {({ loading, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
-          }
-
-          if (error) {
-            logout(client);
-            return <Redirect to="/signin" />;
           }
 
           return (
