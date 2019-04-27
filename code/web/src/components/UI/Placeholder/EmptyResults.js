@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import EmptyResult from '../../../assets/No_Result.svg';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const styles = theme => ({
   emptyContainer: {
@@ -24,11 +24,10 @@ const styles = theme => ({
   },
   sayingEmpty: {
     marginTop: theme.spacing.unit * 5,
-    fontSize: theme.spacing.unit * 3,
+    fontSize: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
-    letterSpacing: '2px',
-    fontWeight: '300',
-    color: grey[400]
+    color: blueGrey[700],
+    fontWeight: 800
   },
   extendedButton: {
     color: '#ffffff',
@@ -61,7 +60,7 @@ class EmptyResults extends Component {
         </div>
         <div className={classes.actionSaying}>
           <Typography variant="h4" className={classes.sayingEmpty}>
-            Upload documents to view results.
+            It seems there is no uploaded file to be analyzed
           </Typography>
         </div>
       </div>
