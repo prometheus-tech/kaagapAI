@@ -31,7 +31,7 @@ module.exports = {
       },
       last_opened: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: null
       },
       status: {
         type: Sequelize.ENUM('archived', 'active'),
