@@ -11,8 +11,7 @@ import RangeBar from '../../UI/RangeBar/RangeBar';
 const styles = theme => ({
   paper: {
     marginTop: theme.spacing.unit * 5,
-    border: '1px solid #f3f3f3',
-    boxShadow: 'none'
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
   },
   categoryContainer: {
     paddingLeft: theme.spacing.unit * 2,

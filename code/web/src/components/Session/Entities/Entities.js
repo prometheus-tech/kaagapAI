@@ -89,6 +89,9 @@ const styles = theme => ({
   actionCloud: {
     fontSize: theme.spacing.unit * 1.5,
     marginTop: theme.spacing.unit * 1.5
+  },
+  entityItem: {
+    cursor: 'pointer'
   }
 });
 
@@ -147,6 +150,7 @@ class Entities extends Component {
                         onClick={() => {
                           this.selectEntityHandler(entity);
                         }}
+                        className={classes.entityItem}
                       >
                         <Grid
                           container

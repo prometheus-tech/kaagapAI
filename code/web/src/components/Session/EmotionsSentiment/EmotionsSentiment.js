@@ -13,8 +13,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     ...theme.mixins.gutters(),
     marginTop: theme.spacing.unit * 5,
-    border: '1px solid #f3f3f3',
-    boxShadow: 'none'
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
   },
   paperHeader: {
     paddingBottom: theme.spacing.unit * 2
