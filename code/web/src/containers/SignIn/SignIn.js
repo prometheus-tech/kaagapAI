@@ -129,8 +129,6 @@ class SignIn extends Component {
     const { classes } = this.props;
     const SignInButtonLink = props => <Link to={'/signup'} {...props} />;
 
-    console.log(this.props.location);
-
     return (
       <Mutation
         mutation={LOGIN}

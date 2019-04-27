@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -53,7 +53,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
+  uri: 'http://kaagapai-dev.com:4000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -91,7 +91,7 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <BrowserRouter>
+        <HashRouter>
           <SnackbarProvider
             maxSnack={1}
             preventDuplicate
@@ -112,7 +112,7 @@ class App extends Component {
               </Layout>
             </Switch>
           </SnackbarProvider>
-        </BrowserRouter>
+        </HashRouter>
       </ApolloProvider>
     );
   }

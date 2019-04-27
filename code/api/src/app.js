@@ -10,6 +10,7 @@ import auth from './modules/auth';
 import cors from 'cors';
 import http from 'http';
 import jwt from 'jsonwebtoken';
+import path from 'path';
 
 const environment = 'development'; // change to prod on deploy
 const config = configurations[environment];
@@ -28,12 +29,18 @@ const apollo = new ApolloServer({
     SECRET,
     practitioner: auth.getPractitioner(req, SECRET)
   }),
-  playground: true, //change to 'false' on deploy
+  playground: false, //change to 'false' on deploy
   introspection: true
 });
 
 const app = express();
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 apollo.applyMiddleware({ app });
 
@@ -52,9 +59,7 @@ models.sequelize
     server.listen({ port: process.env.PORT || 4000 }, () => {
       console.log(
         '🚀  Server ready at',
-        `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${
-          apollo.graphqlPath
-        }`
+        `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}/`
       );
     });
   })

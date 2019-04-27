@@ -177,7 +177,7 @@ class SessionResultsPage extends Component {
                       </VerticalTabs>
                     </div>
                   </Grid>
-                  <Grid xs={10}>
+                  <Grid item xs={10}>
                     {activeIndex === 0 && (
                       <TabContainer>
                         <Keywords
