@@ -36,7 +36,8 @@ const styles = theme => ({
   },
   signUp: {
     fontSize: theme.spacing.unit * 4,
-    color: blue[600]
+    color: blue[600],
+    fontWeight: 800
   },
   signUpMessage: {
     fontSize: theme.spacing.unit * 1.8,
@@ -200,8 +201,7 @@ class AccountRegistrationInfo extends Component {
                               Sign Up.
                             </Typography>
                             <Typography className={classes.signUpMessage}>
-                              kaagapAI is built for your needs. Specific message
-                              here.
+                              Join the kaagapAI community.
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>

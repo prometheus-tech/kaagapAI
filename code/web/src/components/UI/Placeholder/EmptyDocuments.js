@@ -3,7 +3,7 @@ import EmptyDocuments from '../../../assets/Empty_Documents.svg';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import grey from '@material-ui/core/colors/grey';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 import blue from '@material-ui/core/colors/blue';
 import purple from '@material-ui/core/colors/purple';
 import Icon from '@material-ui/core/Icon';
@@ -27,11 +27,16 @@ const styles = theme => ({
   },
   sayingEmpty: {
     marginTop: theme.spacing.unit * 5,
-    fontSize: theme.spacing.unit * 3,
+    fontSize: theme.spacing.unit * 2.5,
     marginRight: theme.spacing.unit * 2,
-    letterSpacing: '2px',
-    fontWeight: '300',
-    color: grey[400]
+    color: blueGrey[700],
+    fontWeight: 900
+  },
+  sayingEmptyPlaceholder: {
+    fontSize: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit,
+    color: blueGrey[300],
+    fontSize: theme.spacing.unit * 2
   },
   extendedButton: {
     color: '#ffffff',
@@ -64,7 +69,10 @@ class EmptyIllustrationDocuments extends Component {
         </div>
         <div className={classes.actionSaying}>
           <Typography variant="h4" className={classes.sayingEmpty}>
-            Let's be productive and stay positive...
+            No files for your session
+          </Typography>
+          <Typography variant="h5" className={classes.sayingEmptyPlaceholder}>
+            Start uploading your files to get results
           </Typography>
           <Fab
             color="primary"

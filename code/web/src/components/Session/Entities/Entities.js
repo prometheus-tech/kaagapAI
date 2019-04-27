@@ -37,10 +37,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 4,
-    boxShadow: 'none',
     width: '100%',
     height: '475px',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
   },
   header: {
     fontWeight: 500,

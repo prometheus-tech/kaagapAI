@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import grey from '@material-ui/core/colors/grey';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const styles = theme => ({
   emptyContainer: {
@@ -26,11 +26,16 @@ const styles = theme => ({
   },
   sayingEmpty: {
     marginTop: theme.spacing.unit * 5,
-    fontSize: theme.spacing.unit * 3,
+    fontSize: theme.spacing.unit * 2.5,
     marginRight: theme.spacing.unit * 2,
-    letterSpacing: '2px',
-    fontWeight: '300',
-    color: grey[400]
+    color: blueGrey[700],
+    fontWeight: 900
+  },
+  sayingEmptyPlaceholder: {
+    fontSize: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit,
+    color: blueGrey[300],
+    fontSize: theme.spacing.unit * 2
   },
   extendedButton: {
     color: '#ffffff',
@@ -63,7 +68,10 @@ class EmptySession extends Component {
         </div>
         <div className={classes.actionSaying}>
           <Typography variant="h4" className={classes.sayingEmpty}>
-            Let's be productive and stay positive...
+            It's empty in here
+          </Typography>
+          <Typography variant="h5" className={classes.sayingEmptyPlaceholder}>
+            Create a folder for your session
           </Typography>
           <Fab
             color="primary"

@@ -35,12 +35,13 @@ const styles = theme => ({
   },
   signIn: {
     fontSize: theme.spacing.unit * 4,
-    color: blue[900]
+    color: blue[900],
+    fontWeight: 800
   },
   signInWelcome: {
     marginTop: theme.spacing.unit * 5,
     fontSize: theme.spacing.unit * 1.8,
-    fontWeight: '300',
+    fontWeight: 500,
     color: blue[400],
     lineHeight: '150%'
   },
@@ -155,10 +156,10 @@ class SignIn extends Component {
                     <Grid item xs={1} />
                     <Grid item xs={10}>
                       <Typography className={classes.signInWelcome}>
-                        Welcome to.
+                        Welcome to
                       </Typography>
                       <Typography className={classes.signIn}>
-                        kaagapAI.
+                        kaagapAI
                       </Typography>
                       <Grid
                         container
