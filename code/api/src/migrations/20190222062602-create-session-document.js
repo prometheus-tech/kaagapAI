@@ -21,7 +21,8 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       last_modified: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       type: {
         type: Sequelize.STRING

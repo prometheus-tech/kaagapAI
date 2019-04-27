@@ -10,7 +10,7 @@ module.exports = {
       gender: 'M',
       birthdate: '1985-08-08',
       date_added: new Date(),
-      last_opened: '2019-27-02 17:05:00',
+      last_opened: null,
       status: 'active',
       p_id: '67b8ba58-301e-45a3-ba01-ed6d0d229785'
     }, 
@@ -21,7 +21,7 @@ module.exports = {
       gender: 'F',
       birthdate: '1999-07-14',
       date_added: new Date(),
-      last_opened: '2019-25-02 17:45:00',
+      last_opened: null,
       status: 'active',
       p_id: 'd5654875-e8ce-4e9b-97d3-bfca9c743466'
     }, 
@@ -32,7 +32,7 @@ module.exports = {
       gender: 'F',
       birthdate: '1999-01-20',
       date_added: new Date(),
-      last_opened: '2019-28-02 18:50:00',
+      last_opened: null,
       status: 'active',
       p_id: '67b8ba58-301e-45a3-ba01-ed6d0d229785'
     }], {});

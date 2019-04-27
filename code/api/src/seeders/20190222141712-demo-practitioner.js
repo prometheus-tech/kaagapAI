@@ -14,7 +14,7 @@ module.exports = {
       profession: 'Psychologist',
       user_status: 'active',
       date_registered: new Date(),
-      date_deactivated: '',
+      date_deactivated: null,
       last_logged: '2019-02-27 23:20:00',
       verification_code: ''
     },
@@ -29,7 +29,7 @@ module.exports = {
       profession: 'Guidance Counselor',
       user_status: 'active',
       date_registered: new Date(),
-      date_deactivated: '',
+      date_deactivated: null,
       last_logged: new Date(),
       verification_code: 'ksjhdf8729845'
   }], {});

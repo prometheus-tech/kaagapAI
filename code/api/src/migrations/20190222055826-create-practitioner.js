@@ -47,11 +47,11 @@ module.exports = {
       },
       date_deactivated: {
         type: Sequelize.DATEONLY,
-        allowNull: true
+        allowNull: null
       },
       last_logged: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: null
       },
       verification_code: {
         type: Sequelize.STRING,
