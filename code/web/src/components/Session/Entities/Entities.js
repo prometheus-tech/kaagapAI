@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import purple from '@material-ui/core/colors/purple';
 import grey from '@material-ui/core/colors/grey';
 import EntityMapper from './EntityMapper/EntityMapper';
+import iconEmpty from '../../../assets/Entities_Gray.svg';
 
 import { getDocumentTalkTurns } from '../../../util/helperFunctions';
 import RangeBar from '../../UI/RangeBar/RangeBar';
@@ -77,6 +78,17 @@ const styles = theme => ({
     textTransform: 'uppercase',
     letterSpacing: '2px',
     marginTop: theme.spacing.unit * 1
+  },
+  emptyContainer: {
+    textAlign: 'center',
+    marginTop: '45%'
+  },
+  iconEmpty: {
+    height: '15vh'
+  },
+  actionCloud: {
+    fontSize: theme.spacing.unit * 1.5,
+    marginTop: theme.spacing.unit * 1.5
   }
 });
 
@@ -193,7 +205,16 @@ class Entities extends Component {
                 }
               />
             ) : (
-              <Typography>No Entity selected.</Typography>
+              <div className={classes.emptyContainer}>
+                <img
+                  src={iconEmpty}
+                  className={classes.iconEmpty}
+                  alt="No keyword"
+                />
+                <Typography className={classes.actionCloud}>
+                  Click the name to view details.
+                </Typography>
+              </div>
             )}
           </Paper>
         </Grid>

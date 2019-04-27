@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import EmptyArchivePlaceholder from '../../../assets/Archive_Illustration.svg';
-import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import blue from '@material-ui/core/colors/blue';
 
 const styles = theme => ({
   emptyContainer: {
@@ -34,13 +30,12 @@ const styles = theme => ({
   sayingEmptyPlaceholder: {
     fontSize: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit,
-    color: blueGrey[300],
-    fontSize: theme.spacing.unit * 2
-  },
+    color: blueGrey[300]
+  }
 });
 class EmptyArchive extends Component {
   render() {
-    const { classes, newClientsOpened } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.emptyContainer}>
         <div className={classes.imgEmpty}>
@@ -49,11 +44,6 @@ class EmptyArchive extends Component {
             className={classes.emptyImg}
             alt="Empty client"
           />
-        </div>
-        <div className={classes.actionSaying}>
-          <Typography variant="h5" className={classes.sayingEmpty}>
-            The archive is empty.
-          </Typography>
         </div>
       </div>
     );

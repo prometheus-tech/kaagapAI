@@ -15,7 +15,6 @@ import EmptyArchiveIllustration from '../../components/UI/Placeholder/EmptyArchi
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import grey from '@material-ui/core/colors/grey';
 import Icon from '@material-ui/core/Icon';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 
 const styles = theme => ({
@@ -26,7 +25,7 @@ const styles = theme => ({
   pageHeader: {
     marginBottom: theme.spacing.unit * 4,
     display: 'block',
-    padding: '10px',
+    padding: '10px'
   },
   archiveTitle: {
     fontWeight: 700,
