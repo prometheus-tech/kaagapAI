@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import grey from '@material-ui/core/colors/grey';
-
+import iconEmpty from '../../../assets/Keywords_Gray.svg';
 import { getDocumentTalkTurns } from '../../../util/helperFunctions';
 
 const styles = theme => ({
@@ -41,6 +41,17 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     textTransform: 'uppercase',
     letterSpacing: '2px'
+  },
+  emptyContainer: {
+    textAlign: 'center',
+    marginTop: '45%'
+  },
+  iconEmpty: {
+    height: '15vh'
+  },
+  actionCloud: {
+    fontSize: theme.spacing.unit * 1.5,
+    marginTop: theme.spacing.unit * 1.5
   }
 });
 
@@ -94,9 +105,16 @@ class Keywords extends Component {
                 }
               />
             ) : (
-              <Typography>
-                No Keyword selected.
-              </Typography>
+              <div className={classes.emptyContainer}>
+                <img
+                  src={iconEmpty}
+                  className={classes.iconEmpty}
+                  alt="No keyword"
+                />
+                <Typography className={classes.actionCloud}>
+                  Click the keyword on the wordcloud.
+                </Typography>
+              </div>
             )}
           </Paper>
         </Grid>

@@ -36,7 +36,6 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit,
     color: blueGrey[300],
-    fontSize: theme.spacing.unit * 2
   },
   extendedButton: {
     color: '#ffffff',

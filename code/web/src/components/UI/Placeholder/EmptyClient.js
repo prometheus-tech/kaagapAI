@@ -34,8 +34,7 @@ const styles = theme => ({
   sayingEmptyPlaceholder: {
     fontSize: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit,
-    color: blueGrey[300],
-    fontSize: theme.spacing.unit * 2
+    color: blueGrey[300]
   },
   extendedButton: {
     color: '#ffffff',
