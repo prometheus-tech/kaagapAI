@@ -22,7 +22,7 @@ module.exports = {
       },
       last_modified: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       type: {
         type: Sequelize.STRING
