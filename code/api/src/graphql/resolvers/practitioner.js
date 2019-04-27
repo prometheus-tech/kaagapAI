@@ -106,11 +106,11 @@ export default {
         where: { email }
       })
         .then(practitioner => {
-          const errorMessage = auth.verifyPractitioner(practitioner);
+          const { errorMessage, errorCode} = auth.verifyPractitioner(practitioner);
           if (!errorMessage) {
             return practitioner;
           } else {
-            throw new AuthenticationError(errorMessage);
+            throw new ApolloError(errorMessage, errorCode);
           }
         })
         .then(practitioner => {
