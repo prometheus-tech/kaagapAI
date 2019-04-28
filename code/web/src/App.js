@@ -23,6 +23,12 @@ import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
 
 import { AUTH_TOKEN } from './util/constants';
 
+import { logout } from './util/helperFunctions';
+
+import { createHashHistory } from 'history';
+
+const history = createHashHistory();
+
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
@@ -53,7 +59,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
+  uri: 'http://kaagapai-dev.com:4000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -68,13 +74,22 @@ const authLink = setContext((_, { headers }) => {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path, extensions }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, Code: ${
-          extensions.code
-        }`
-      )
-    );
+    graphQLErrors.map(({ message, locations, path, extensions }) => {
+      switch (extensions.code) {
+        case 'UNAUTHENTICATED':
+          logout(client);
+          history.push('/signin');
+          break;
+        default:
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, Code: ${
+              extensions.code
+            }`
+          );
+      }
+
+      return null;
+    });
   }
 
   if (networkError) {

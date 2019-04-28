@@ -120,7 +120,6 @@ class AccountRegistrationInfo extends Component {
   };
 
   render() {
-    const SignUpButtonLink = props => <Link to={'/signin'} {...props} />;
     const {
       fname,
       lname,
@@ -133,6 +132,8 @@ class AccountRegistrationInfo extends Component {
     } = this.state;
 
     const { steppedNext, classes } = this.props;
+
+    const SignInButtonLink = props => <Link to={'/signin'} {...props} />;
 
     return (
       <Mutation
@@ -326,7 +327,7 @@ class AccountRegistrationInfo extends Component {
                             </Typography>
                             <Typography
                               className={classes.signInlink}
-                              component={SignUpButtonLink}
+                              component={SignInButtonLink}
                             >
                               Sign in
                             </Typography>

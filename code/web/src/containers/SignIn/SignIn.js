@@ -239,16 +239,16 @@ class SignIn extends Component {
                         <Grid item xs={12} className={classes.alignMent}>
                           <Fab
                             variant="extended"
-                            aria-label="Delete"
                             className={classes.fab}
                             type="submit"
+                            disabled={loading}
                           >
                             {loading ? 'Logging in...' : 'Login'}
                           </Fab>
                         </Grid>
                         <Grid item className={classes.createAccount} xs={12}>
                           <Typography className={classes.createQuestion}>
-                            Don't have an account ?
+                            Don't have an account yet?
                           </Typography>
                           <Typography
                             className={classes.createAccountButton}

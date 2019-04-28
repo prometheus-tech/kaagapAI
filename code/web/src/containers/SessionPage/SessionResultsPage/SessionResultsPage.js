@@ -21,9 +21,6 @@ import EmotionsSentimentIcon from '../../../assets/EmotionsSentimentIcon.svg';
 import EntitiesIcon from '../../../assets/EntitiesIcon.svg';
 import EmptyResults from '../../../components/UI/Placeholder/EmptyResults';
 
-import { Redirect } from 'react-router-dom';
-import { logout } from '../../../util/helperFunctions';
-
 const styles = theme => ({
   tabCon: {
     marginTop: theme.spacing.unit * 3,
@@ -89,23 +86,9 @@ class SessionResultsPage extends Component {
         fetchPolicy="network-only"
         errorPolicy="all"
       >
-        {({ loading, data, error, client }) => {
+        {({ loading, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
-          }
-
-          if (error) {
-            if (error.graphQLErrors) {
-              return error.graphQLErrors.map(({ extensions }) => {
-                switch (extensions.code) {
-                  case 'UNAUTHENTICATED':
-                    logout(client);
-                    return <Redirect to="/signin" />;
-                  default:
-                    return <p>Error</p>;
-                }
-              });
-            }
           }
 
           return (

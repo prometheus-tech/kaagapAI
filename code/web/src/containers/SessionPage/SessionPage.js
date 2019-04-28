@@ -35,10 +35,6 @@ import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
 import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
-import { logout } from '../../util/helperFunctions';
-
-import { Redirect } from 'react-router-dom';
-
 const drawerWidth = '25';
 const styles = theme => ({
   root: {
@@ -253,62 +249,22 @@ class SessionPage extends Component {
       <Query
         query={SESSION}
         variables={{ session_id: session_id }}
-        pollInterval={5000}
         errorPolicy="all"
       >
-        {({
-          loading: sessionLoading,
-          error: sessionError,
-          client,
-          data: { session }
-        }) => {
+        {({ loading: sessionLoading, data: { session } }) => {
           if (sessionLoading) {
             return <LoadingFullScreen />;
-          }
-
-          if (sessionError) {
-            if (sessionError.graphQLErrors) {
-              return sessionError.graphQLErrors.map(({ extensions }) => {
-                switch (extensions.code) {
-                  case 'UNAUTHENTICATED':
-                    logout(client);
-                    return <Redirect to="/signin" />;
-                  default:
-                    return <p>Error</p>;
-                }
-              });
-            }
           }
 
           return (
             <Query
               query={CLIENT}
               variables={{ c_id: session.c_id }}
-              pollInterval={5000}
               errorPolicy="all"
             >
-              {({
-                loading: clientLoading,
-                error: clientError,
-                client,
-                data
-              }) => {
+              {({ loading: clientLoading, data }) => {
                 if (clientLoading) {
                   return <LoadingFullScreen />;
-                }
-
-                if (clientError) {
-                  if (clientError.graphQLErrors) {
-                    return clientError.graphQLErrors.map(({ extensions }) => {
-                      switch (extensions.code) {
-                        case 'UNAUTHENTICATED':
-                          logout(client);
-                          return <Redirect to="/signin?authenticated=false" />;
-                        default:
-                          return <p>Error</p>;
-                      }
-                    });
-                  }
                 }
 
                 return (

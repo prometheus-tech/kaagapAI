@@ -113,8 +113,8 @@ function ArchivedClientCard(props) {
       }}
       awaitRefetchQueries={true}
       errorPolicy="all"
-      onError={(error) => {
-        // Ignore error
+      onError={error => {
+        // Ignore
       }}
     >
       {(restoreClient, { loading }) => (

@@ -19,10 +19,6 @@ import blue from '@material-ui/core/colors/blue';
 import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 
-import { logout } from '../../util/helperFunctions';
-
-import { Redirect } from 'react-router-dom';
-
 const styles = theme => ({
   container: {
     paddingBottom: theme.spacing.unit * 10,
@@ -129,24 +125,10 @@ class ClientsPage extends Component {
     } = this.state;
 
     return (
-      <Query query={CLIENTS} errorPolicy="all" pollInterval={5000}>
-        {({ loading, client, error, data }) => {
+      <Query query={CLIENTS} errorPolicy="all">
+        {({ loading, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
-          }
-
-          if (error) {
-            if (error.graphQLErrors) {
-              return error.graphQLErrors.map(({ extensions }) => {
-                switch (extensions.code) {
-                  case 'UNAUTHENTICATED':
-                    logout(client);
-                    return <Redirect to="/signin" />;
-                  default:
-                    return <p>Error</p>;
-                }
-              });
-            }
           }
 
           return (
