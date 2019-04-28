@@ -59,7 +59,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'http://kaagapai-dev.com:4000/graphql'
+  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
