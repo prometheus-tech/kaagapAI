@@ -261,7 +261,7 @@ class SessionPage extends Component {
           }
 
           if (sessionError) {
-            return <p>Something went wrong!</p>;
+            return <div />;
           }
 
           return (
@@ -276,7 +276,7 @@ class SessionPage extends Component {
                 }
 
                 if (clientError) {
-                  return <p>Something went wrong!</p>;
+                  return <div />;
                 }
 
                 return (

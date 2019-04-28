@@ -132,7 +132,7 @@ class ClientsPage extends Component {
           }
 
           if (error) {
-            return <p>Something went wrong!</p>;
+            return <div />;
           }
 
           return (
