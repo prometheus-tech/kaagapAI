@@ -48,9 +48,13 @@ class ArchivesPage extends Component {
 
     return (
       <Query query={ARCHIVES} fetchPolicy="network-only" errorPolicy="all">
-        {({ loading, data }) => {
+        {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
+          }
+
+          if (error) {
+            return <p>Something went wrong!</p>;
           }
 
           return (

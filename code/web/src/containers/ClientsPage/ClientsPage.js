@@ -126,9 +126,13 @@ class ClientsPage extends Component {
 
     return (
       <Query query={CLIENTS} errorPolicy="all">
-        {({ loading, data }) => {
+        {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
+          }
+
+          if (error) {
+            return <p>Something went wrong!</p>;
           }
 
           return (

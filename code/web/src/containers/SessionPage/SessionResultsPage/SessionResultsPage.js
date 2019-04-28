@@ -86,9 +86,13 @@ class SessionResultsPage extends Component {
         fetchPolicy="network-only"
         errorPolicy="all"
       >
-        {({ loading, data }) => {
+        {({ loading, error, data }) => {
           if (loading) {
             return <LoadingFullScreen />;
+          }
+
+          if (error) {
+            return <p>Something went wrong!</p>;
           }
 
           return (

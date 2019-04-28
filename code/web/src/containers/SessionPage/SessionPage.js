@@ -251,9 +251,17 @@ class SessionPage extends Component {
         variables={{ session_id: session_id }}
         errorPolicy="all"
       >
-        {({ loading: sessionLoading, data: { session } }) => {
+        {({
+          loading: sessionLoading,
+          error: sessionError,
+          data: { session }
+        }) => {
           if (sessionLoading) {
             return <LoadingFullScreen />;
+          }
+
+          if (sessionError) {
+            return <p>Something went wrong!</p>;
           }
 
           return (
@@ -262,9 +270,13 @@ class SessionPage extends Component {
               variables={{ c_id: session.c_id }}
               errorPolicy="all"
             >
-              {({ loading: clientLoading, data }) => {
+              {({ loading: clientLoading, error: clientError, data }) => {
                 if (clientLoading) {
                   return <LoadingFullScreen />;
+                }
+
+                if (clientError) {
+                  return <p>Something went wrong!</p>;
                 }
 
                 return (
