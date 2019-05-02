@@ -4,7 +4,7 @@ import CLIENT_BASIC_INFO from '../fragments/clientBasicInfo';
 
 const EDIT_CLIENT = gql`
   mutation UpdateClient(
-    $c_id: Int!
+    $c_id: UUID!
     $fname: String!
     $lname: String!
     $birthdate: Date!
@@ -17,11 +17,7 @@ const EDIT_CLIENT = gql`
       birthdate: $birthdate
       gender: $gender
     ) {
-      __typename
       ...ClientBasicInfo
-      no_of_sessions
-      date_added
-      last_opened
     }
   }
   ${CLIENT_BASIC_INFO}

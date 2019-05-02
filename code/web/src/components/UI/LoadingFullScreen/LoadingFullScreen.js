@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import kaagapaiPreloader from '../../../assets/kaagapai_preloader.svg';
 
 function LoadingFullScreen() {
   return (
@@ -17,7 +17,11 @@ function LoadingFullScreen() {
       }}
     >
       <Grid item>
-        <CircularProgress />
+        <img
+          src={kaagapaiPreloader}
+          style={{ marginTop: '10vh', height: '20vh' }}
+          alt="Loading...."
+        />
       </Grid>
     </Grid>
   );

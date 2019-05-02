@@ -7,6 +7,7 @@ const CLIENT_BASIC_INFO = gql`
     lname
     gender
     birthdate
+    no_of_sessions
   }
 `;
 

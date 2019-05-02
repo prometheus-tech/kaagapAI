@@ -22,6 +22,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
+import { trimAll } from '../../../util/helperFunctions';
+
 const styles = theme => ({
   extendedButton: {
     backgroundColor: lightBlue[600],
@@ -60,7 +62,7 @@ class EditClientDialog extends Component {
     } = props.client;
 
     this.state = {
-      c_id: parseInt(c_id),
+      c_id: c_id,
       fname: fname,
       lname: lname,
       gender: gender,
@@ -75,7 +77,7 @@ class EditClientDialog extends Component {
     client: { c_id, fname, lname, gender, birthdate, no_of_sessions }
   }) {
     this.setState({
-      c_id: parseInt(c_id),
+      c_id: c_id,
       fname: fname,
       lname: lname,
       gender: gender,
@@ -88,13 +90,13 @@ class EditClientDialog extends Component {
    * Custom validators
    */
   componentWillMount() {
-    const letters = '^[A-Za-z\\s-]+$';
-    ValidatorForm.addValidationRule('isLetter', value => {
-      return value.match(letters);
-    });
     const date = '^([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))$';
     ValidatorForm.addValidationRule('isDate', value => {
       return value.match(date);
+    });
+
+    ValidatorForm.addValidationRule('isNotTooLong', value => {
+      return trimAll(value).length < 100;
     });
   }
 
@@ -103,7 +105,7 @@ class EditClientDialog extends Component {
   };
 
   render() {
-    const { classes, fullScreen, isOpened, closed } = this.props;
+    const { classes, fullScreen, opened, closed } = this.props;
     const {
       c_id,
       fname,
@@ -128,11 +130,15 @@ class EditClientDialog extends Component {
             no_of_sessions: no_of_sessions
           }
         }}
+        errorPolicy="all"
+        onError={error => {
+          // Ignore error
+        }}
       >
         {editClient => {
           return (
             <Dialog
-              open={isOpened}
+              open={opened}
               onClose={closed}
               fullWidth={true}
               fullScreen={fullScreen}
@@ -143,8 +149,8 @@ class EditClientDialog extends Component {
                   editClient({
                     variables: {
                       c_id: c_id,
-                      fname: fname,
-                      lname: lname,
+                      fname: trimAll(fname),
+                      lname: trimAll(lname),
                       gender: gender,
                       birthdate: birthdate
                     }
@@ -175,15 +181,13 @@ class EditClientDialog extends Component {
                             margin="dense"
                             validators={[
                               'required',
-                              'minStringLength: ' + 2,
-                              'maxStringLength:' + 20,
-                              'isLetter'
+                              'trim',
+                              'maxStringLength:' + 100
                             ]}
                             errorMessages={[
                               'This field is required',
-                              'First name might be too short',
-                              'First name must be less than 20 characters',
-                              'Please do not include numbers and/or special characters'
+                              'This field must contain at least one non-whitespace character',
+                              'First name must be less than 100 characters'
                             ]}
                           />
                         </Grid>
@@ -198,15 +202,13 @@ class EditClientDialog extends Component {
                             margin="dense"
                             validators={[
                               'required',
-                              'minStringLength: ' + 2,
-                              'maxStringLength:' + 20,
-                              'isLetter'
+                              'trim',
+                              'maxStringLength:' + 100
                             ]}
                             errorMessages={[
                               'This field is required',
-                              'Last name might be too short',
-                              'Last name must be less than 20 characters',
-                              'Please do not include numbers and/or special characters'
+                              'This field must contain at least one non-whitespace character',
+                              'Last name must be less than 100 characters'
                             ]}
                           />
                         </Grid>

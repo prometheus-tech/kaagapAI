@@ -8,13 +8,16 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   mainGrid: {
     padding: theme.spacing.unit * 6,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing.unit * 4
     },
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing.unit * 2
     }
-  }
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 function Layout(props) {
@@ -23,6 +26,7 @@ function Layout(props) {
   return (
     <Auxilliary>
       <Header />
+      <div className={classes.toolbar} />
       <Grid container className={classes.mainGrid}>
         {props.children}
       </Grid>

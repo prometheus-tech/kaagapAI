@@ -1,36 +1,78 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
-  paper: {
-    padding: '2px 8px',
-    display: 'flex',
-    alignItems: 'center'
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: 'auto'
+    }
   },
-  input: {
-    marginLeft: '8px'
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+    background: grey[200],
+    borderRadius: theme.spacing.unit
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 200
+    }
+  },
+  grow: {
+    flexGrow: 1
   }
 });
 
 function SearchField(props) {
-  const { classes, label } = props;
+  const { classes, placeholder } = props;
 
   return (
-    <Paper className={classes.paper} elevation={2}>
-      <IconButton disabled>
-        <SearchIcon />
-      </IconButton>
-      <InputBase
-        fullWidth={true}
-        className={classes.input}
-        placeholder={'Search ' + label}
-      />
-    </Paper>
+    <Auxilliary>
+      <div className={classes.grow} />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder={placeholder}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput
+          }}
+        />
+      </div>
+    </Auxilliary>
   );
 }
 

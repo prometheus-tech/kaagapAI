@@ -1,54 +1,133 @@
 import React, { Component } from 'react';
 
-import ApolloClient from 'apollo-boost';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+
+import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
+import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 
 import { SnackbarProvider } from 'notistack';
 
 import Button from '@material-ui/core/Button';
-import Layout from './hoc/Layout/Layout';
-import ClientsPage from './containers/ClientsPage/ClientsPage';
 
-import { USER_ID, AUTH_TOKEN } from './util/constants';
+import Layout from './hoc/Layout/Layout';
+import SignIn from './containers/SignIn/SignIn';
+import SignUp from './containers/SignUp/SignUp';
+import ClientsPage from './containers/ClientsPage/ClientsPage';
+import ClientPage from './containers/ClientPage/ClientPage';
+import SessionPage from './containers/SessionPage/SessionPage';
+import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
+
+import { AUTH_TOKEN } from './util/constants';
+
+import { logout } from './util/helperFunctions';
+
+import { createHashHistory } from 'history';
+
+const history = createHashHistory();
 
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
       case 'Client':
-        return object.c_id;
+        return 'client:' + object.c_id;
+      case 'Session':
+        return 'session:' + object.session_id;
+      case 'SessionDocument':
+        return 'sesssionDocument:' + object.sd_id;
+      case 'Result':
+        return 'result:' + object.result_id;
+      case 'Sentiment':
+        return 'sentiment:' + object.sentiment_id;
+      case 'Keyword':
+        return 'keyword:' + object.keyword_id;
+      case 'Category':
+        return 'category:' + object.category_id;
+      case 'Entity':
+        return 'entity:' + object.entity_id;
+      case 'Emotion':
+        return 'emotion:' + object.emotion_id;
+      case 'Archives':
+        return 'archives:' + object.archives_id;
       default:
         return defaultDataIdFromObject(object);
     }
   }
 });
 
-const client = new ApolloClient({
-  uri: 'https://kaagapai-staging.herokuapp.com/graphql',
-  cache
+const link = createUploadLink({
+  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
 });
 
-// Remove this upon implementing authentication functionality
-localStorage.setItem(USER_ID, parseInt(1));
-localStorage.setItem(AUTH_TOKEN, 'kaagapai');
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : ''
+    }
+  };
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path, extensions }) => {
+      switch (extensions.code) {
+        case 'UNAUTHENTICATED':
+          logout(client);
+          history.push('/signin');
+          break;
+        default:
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, Code: ${
+              extensions.code
+            }`
+          );
+      }
+
+      return null;
+    });
+  }
+
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`);
+  }
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(errorLink).concat(link),
+  cache
+});
 
 class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <SnackbarProvider
-          maxSnack={1}
-          preventDuplicate
-          action={[
-            <Button color="secondary" size="small">
-              {'Dismiss'}
-            </Button>
-          ]}
-        >
-          <Layout>
-            <ClientsPage />
-          </Layout>
-        </SnackbarProvider>
+        <HashRouter>
+          <SnackbarProvider
+            maxSnack={1}
+            preventDuplicate
+            action={[
+              <Button color="secondary" size="small">
+                {'Dismiss'}
+              </Button>
+            ]}
+          >
+            <Switch>
+              <Route path="/signin" component={SignIn} />
+              <Route path="/signup" component={SignUp} />
+              <Layout>
+                <Route exact path="/" component={ClientsPage} />
+                <Route path="/archives" component={ArchivesPage} />
+                <Route path="/client/:c_id" component={ClientPage} />
+                <Route path="/session/:session_id" component={SessionPage} />
+              </Layout>
+            </Switch>
+          </SnackbarProvider>
+        </HashRouter>
       </ApolloProvider>
     );
   }
