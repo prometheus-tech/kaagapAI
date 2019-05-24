@@ -21,6 +21,7 @@ import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 
 const styles = theme => ({
   container: {
+    // marginTop: '-5rem',
     paddingBottom: theme.spacing.unit * 10,
     width: '100vw'
   },
@@ -40,17 +41,20 @@ const styles = theme => ({
     zIndex: 2
   },
   extendedButton: {
-    background: '#0091ea',
+    background: '#4e54c8',
+    background: '-webkit-linear-gradient(to top, #8f94fb, #4e54c8)',  /* Chrome 10-25, Safari 5.1-6 */
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
-    borderRadius: '50px',
+    borderRadius: '10px',
     fontSize: 16,
     '&:hover': {
       backgroundColor: blue[900],
-      boxShadow: theme.shadows[10]
+      boxShadow: theme.shadows[2]
     },
     margin: theme.spacing.unit,
-    padding: '5px 25px 5px 25px'
+    padding: '5px 20px 5px 20px',
+    boxShadow: 'none'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
@@ -137,7 +141,7 @@ class ClientsPage extends Component {
 
           return (
             <div className={classes.container}>
-              <Grid container>
+              {/* <Grid container>
                 <Grid item xs={12} className={classes.controls}>
                   <Grid container alignItems="center">
                     <Grid item md={6}>
@@ -177,7 +181,7 @@ class ClientsPage extends Component {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid> */}
               {data.clients.length === 0 ? (
                 <EmptyClient
                   newClientsOpened={this.openNewClientDialogHandler}

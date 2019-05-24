@@ -9,7 +9,8 @@ export default `
     session_id: UUID!
   }
 
-  type OverallSentiment {
+  type CustomSentiment {
+    custom_sentiment_id: UUID
     score: Float!
     label: String!
   }
@@ -22,7 +23,8 @@ export default `
     result_id: UUID!
   }
 
-  type OverallKeyword {
+  type CustomKeyword {
+    custom_keyword_id: UUID
     text: String!
     relevance: Float!
     count: Int!
@@ -35,7 +37,8 @@ export default `
     result_id: UUID!
   }
 
-  type OverallCategory {
+  type CustomCategory {
+    custom_category_id: UUID
     score: Float!
     label: String!
   }
@@ -48,7 +51,8 @@ export default `
     result_id: UUID!
   }
 
-  type OverallEntity {
+  type CustomEntity {
+    custom_entity_id: UUID
     type: String!
     text: String!
     relevance: Float!
@@ -64,7 +68,8 @@ export default `
     result_id: UUID!
   }
 
-  type OverallEmotion {
+  type CustomEmotion {
+    custom_emotion_id: UUID
     sadness: Float!
     anger: Float!
     joy: Float!
@@ -84,23 +89,25 @@ export default `
   }
 
   type Trend {
+    trend_id: UUID
     sentiment: Sentiment
     emotion: Emotion
     session_id: UUID
   }
 
-  type OverallResult {
-    sentiment: OverallSentiment
-    keywords: [OverallKeyword]
-    categories: [OverallCategory]
-    entities: [OverallEntity]
-    emotion: OverallEmotion
+  type CustomResult {
+    custom_result_id: UUID
+    sentiment: CustomSentiment
+    keywords: [CustomKeyword]
+    categories: [CustomCategory]
+    entities: [CustomEntity]
+    emotion: CustomEmotion
     trend: [Trend]
   }
 
   type Query {
    result(session_id: UUID!): Result
 
-   overallResult(session_id: [UUID]!): OverallResult
+   customResult(session_id: [UUID]!): CustomResult
   }
 `;
