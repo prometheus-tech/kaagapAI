@@ -12,7 +12,7 @@ import EMOTION_INFO from '../fragments/emotionInfo';
 
 const CUSTOM_RESULT = gql`
   query CustomResult($session_id: [UUID]!) {
-    customResult(session_id: $session_id) {
+    customSessionResult(session_id: $session_id) {
       ...CustomResultInfo
       sentiment {
         ...CustomSentimentInfo
