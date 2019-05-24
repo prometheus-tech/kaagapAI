@@ -93,6 +93,7 @@ export default `
     sentiment: Sentiment
     emotion: Emotion
     session_id: UUID
+    session_name: String
   }
 
   type CustomResult {

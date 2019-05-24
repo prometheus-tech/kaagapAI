@@ -3,6 +3,7 @@ import nluModules from '../../modules/nlu';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
 import uuid from 'uuid/v4';
+import sort from 'fast-sort';
 
 export default {
   UUID: GraphQlUUID,
@@ -240,16 +241,19 @@ export default {
             session_id: {
               [Op.in]: args.session_id
             }
-          },
-          order: [
-            ['session_name', 'ASC']
-          ]
+          }
         });
 
         results.forEach((result) => {
           trends.push({
             trend_id: uuid(),
             session_id: result.session_id,
+            session_name: models.Session.findOne({
+              raw: true,
+              where: { session_id: result.session_id }
+            }).then(res=> {
+              return res.session_name;
+            }),
             sentiment: models.Sentiment.findOne({
               raw: true,
               where: { result_id: result.result_id }
@@ -260,6 +264,8 @@ export default {
             })
           });
         })
+
+        sort(trends).asc('session_name');
 
         return {
           custom_result_id: uuid(),
