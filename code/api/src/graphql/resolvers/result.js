@@ -162,7 +162,7 @@ export default {
       }
     },
 
-    customResult: async (parent, args, { models, practitioner }) => {
+    customSessionResult: async (parent, args, { models, practitioner }) => {
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -266,6 +266,87 @@ export default {
           entities: customEntity,
           emotion: customEmotion,
           trend: trends
+        };
+      }
+    },
+
+    customDocumentResult: async (parent, args, { models, practitioner }) => {
+      if (!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+
+        const sessionDocuments = await models.Session_Document.findAll({
+          raw: true,
+          where: {
+            sd_id: {
+              [Op.in]: args.sd_id
+            },
+            status: 'active'
+          }
+        });
+
+        var contents = [];
+        sessionDocuments.forEach(document => {
+          contents.push(document.content);
+        });
+
+        const result = await nluModules.analyzeContent(contents)
+
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
+          score: result.sentiment.document.score,
+          label: result.sentiment.document.label
+        }
+
+        var keywords = result.keywords;
+        var customKeyword = [];
+        keywords.forEach(async (keyword) => {
+          customKeyword.push({
+            custom_keyword_id: uuid(),
+            text: keyword.text,
+            relevance: keyword.relevance,
+            count: keyword.count
+          });
+        });
+
+        var categories = result.categories;
+        var customCategory = [];
+        categories.forEach(async (category) => {
+          customCategory.push({
+            custom_category_id: uuid(),
+            score: category.score,
+            label: category.label
+          });
+        });
+
+        var entities = result.entities;
+        var customEntity = [];
+        entities.forEach(async (entity) => {
+          customEntity.push({
+            custom_entity_id: uuid(),
+            type: entity.type,
+            text: entity.text,
+            relevance: entity.relevance
+          });
+        });
+
+        const customEmotion = {
+          custom_emotion_id: uuid(),
+          sadness: result.emotion.document.emotion.sadness,
+          anger: result.emotion.document.emotion.anger,
+          joy: result.emotion.document.emotion.joy,
+          fear: result.emotion.document.emotion.fear,
+          disgust: result.emotion.document.emotion.disgust
+        };
+
+        return {
+          custom_result_id: uuid(),
+          sentiment: customSentiment,
+          keywords: customKeyword,
+          categories: customCategory,
+          entities: customEntity,
+          emotion: customEmotion
         };
       }
     }

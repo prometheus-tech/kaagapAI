@@ -108,6 +108,8 @@ export default `
   type Query {
    result(session_id: UUID!): Result
 
-   customResult(session_id: [UUID]!): CustomResult
+   customSessionResult(session_id: [UUID]!): CustomResult
+
+   customDocumentResult(sd_id: [UUID]!): CustomResult
   }
 `;
