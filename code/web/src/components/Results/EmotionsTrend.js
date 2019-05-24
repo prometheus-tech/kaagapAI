@@ -2,12 +2,10 @@ import React from 'react';
 
 import Chart from 'react-google-charts';
 
-function EmotionsTrend({ trend, sessions }) {
+function EmotionsTrend({ trend }) {
   const emotionsTrendData = trend.map(t => {
     return [
-      sessions.find(session => {
-        return session.session_id === t.session_id;
-      }).session_name,
+      t.session_name,
       t.emotion.joy,
       t.emotion.anger,
       t.emotion.disgust,
@@ -33,14 +31,6 @@ function EmotionsTrend({ trend, sessions }) {
         },
         colors: ['#F5C54F', '#D1383A', '#52A253', '#5996C3', '#474747']
       }}
-      chartEvents={[
-        {
-          eventName: 'animationfinish',
-          callback: () => {
-            console.log('Animation Finished');
-          }
-        }
-      ]}
     />
   );
 }
