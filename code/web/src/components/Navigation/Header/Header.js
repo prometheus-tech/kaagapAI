@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import 'typeface-overpass';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import Add from '@material-ui/icons/Add';
+import blue from '@material-ui/core/colors/blue';
 
 import Logo from '../../../assets/kaagapai-logo.svg';
 
@@ -25,9 +28,28 @@ import { ApolloConsumer } from 'react-apollo';
 const styles = theme => ({
   root: {
     width: '100%',
+    height: '60px',
     background: '#ffffff',
-    boxShadow: '0 2px 3px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)',
-    zIndex: theme.zIndex.drawer + 1
+    boxShadow: '0 0px 5px rgba(0,0,0,0.11), 0 0px 0px rgba(0,0,0,0.10)',
+    zIndex: theme.zIndex.drawer + 1,
+    padding: '0px',
+    margin: '0px'
+  },
+  extendedButton: {
+    background: '#4e54c8',
+    background:
+      '-webkit-linear-gradient(to top, #8f94fb, #4e54c8)' /* Chrome 10-25, Safari 5.1-6 */,
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
+    color: '#ffffff',
+    textTransform: 'capitalize',
+    borderRadius: '10px',
+    fontSize: 15,
+    '&:hover': {
+      backgroundColor: blue[900]
+    },
+    margin: theme.spacing.unit,
+    padding: '3px 15px 3px 15px',
+    boxShadow: 'none'
   },
   grow: {
     flexGrow: 1
@@ -37,12 +59,12 @@ const styles = theme => ({
     marginRight: 20
   },
   nameLogo: {
-    color: blueGrey[600]
+    color: blueGrey[600],
+    marginLeft: 10
   },
   logo: {
-    margin: 10,
-    width: 40,
-    height: 40
+    width: 30,
+    height: 30
   },
   sectionDesktop: {
     display: 'none',
@@ -65,6 +87,11 @@ const styles = theme => ({
   logoAppNameContainer: {
     display: 'flex',
     alignItems: 'center'
+  },
+  divider: {
+    height: '40px',
+    // width: '1px',
+    border: '0px'
   }
 });
 
@@ -105,11 +132,6 @@ class Header extends Component {
           <div className={classes.root}>
             <AppBar position="fixed" className={classes.root}>
               <Toolbar>
-                <IconButton
-                  className={classes.menuButton}
-                  color="inherit"
-                  aria-label="Open drawer"
-                />
                 <Button
                   component={ButtonLink}
                   className={classes.logoAppNameButton}
@@ -128,6 +150,15 @@ class Header extends Component {
                   </div>
                 </Button>
                 <div className={classes.grow} />
+                <Fab
+                  color="primary"
+                  variant="extended"
+                  className={classes.extendedButton}
+                  onClick={this.openNewClientDialogHandler}
+                >
+                  <Add className={classes.extendedIcon} /> New Client
+                </Fab>
+                <hr className={classes.divider} />
                 <div className={classes.sectionDesktop}>
                   <IconButton component={RouterLink} to="/archives">
                     <DeleteIcon />

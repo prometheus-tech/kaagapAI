@@ -35,7 +35,7 @@ const styles = theme => ({
   inputRoot: {
     color: 'inherit',
     width: '100%',
-    background: grey[200],
+    background: '#ffffff',
     borderRadius: theme.spacing.unit
   },
   inputInput: {
