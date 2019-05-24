@@ -254,6 +254,12 @@ export default {
             }).then(res=> {
               return res.session_name;
             }),
+            session_date: models.Session.findOne({
+              raw: true,
+              where: { session_id: result.session_id }
+            }).then(res=> {
+              return res.date_of_session;
+            }),
             sentiment: models.Sentiment.findOne({
               raw: true,
               where: { result_id: result.result_id }
@@ -265,7 +271,10 @@ export default {
           });
         })
 
-        sort(trends).asc('session_name');
+        sort(trends).asc([
+          trend => trend.session_date,
+          trend => trend.session_name,
+        ]);
 
         return {
           custom_result_id: uuid(),

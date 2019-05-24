@@ -94,6 +94,7 @@ export default `
     emotion: Emotion
     session_id: UUID
     session_name: String
+    session_date: Date
   }
 
   type CustomResult {
