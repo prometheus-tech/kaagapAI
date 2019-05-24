@@ -53,17 +53,17 @@ const cache = new InMemoryCache({
       case 'Archives':
         return 'archives:' + object.archives_id;
       case 'CustomResult':
-        return 'CustomResult:' + object.custom_result_id;
+        return 'customResult:' + object.custom_result_id;
       case 'CustomSentiment':
-        return 'CustomSentiment:' + object.custom_sentiment_id;
+        return 'customSentiment:' + object.custom_sentiment_id;
       case 'CustomKeyword':
-        return 'CustomKeyword:' + object.custom_keyword_id;
+        return 'customKeyword:' + object.custom_keyword_id;
       case 'CustomCategory':
-        return 'CustomCategory:' + object.custom_category_id;
+        return 'customCategory:' + object.custom_category_id;
       case 'CustomEntities':
-        return 'CustomEntity:' + object.custom_entitiy_id;
+        return 'customEntity:' + object.custom_entitiy_id;
       case 'CustomEmotion':
-        return 'CustomEmotion:' + object.custom_emotion_id;
+        return 'customEmotion:' + object.custom_emotion_id;
       case 'Trend':
         return 'trend:' + object.trend_id;
       default:
