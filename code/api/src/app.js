@@ -29,7 +29,7 @@ const apollo = new ApolloServer({
     SECRET,
     practitioner: auth.getPractitioner(req, SECRET)
   }),
-  playground: false, //change to 'false' on deploy
+  playground: true, //change to 'false' on deploy
   introspection: true
 });
 
