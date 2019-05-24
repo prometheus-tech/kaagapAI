@@ -206,7 +206,7 @@ export default {
         var customCategory = [];
         categories.forEach(async (category) => {
           customCategory.push({
-            overall_category_id: uuid(),
+            custom_category_id: uuid(),
             score: category.score,
             label: category.label
           });
@@ -216,7 +216,7 @@ export default {
         var customEntity = [];
         entities.forEach(async (entity) => {
           customEntity.push({
-            overall_entity_id: uuid(),
+            custom_entity_id: uuid(),
             type: entity.type,
             text: entity.text,
             relevance: entity.relevance
@@ -259,6 +259,7 @@ export default {
         })
 
         return {
+          custom_result_id: uuid(),
           sentiment: customSentiment,
           keywords: customKeyword,
           categories: customCategory,
