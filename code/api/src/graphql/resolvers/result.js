@@ -2,6 +2,7 @@ import GraphQlUUID from 'graphql-type-uuid';
 import nluModules from '../../modules/nlu';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
+import uuid from 'uuid/v4';
 
 export default {
   UUID: GraphQlUUID,
