@@ -185,6 +185,7 @@ export default {
         const result = await nluModules.analyzeContent(contents)
 
         const overallSentiment = {
+          overall_sentiment_id: uuid(),
           score: result.sentiment.document.score,
           label: result.sentiment.document.label
         }
@@ -193,6 +194,7 @@ export default {
         var overallKeyword = [];
         keywords.forEach(async (keyword) => {
           overallKeyword.push({
+            overall_keyword_id: uuid(),
             text: keyword.text,
             relevance: keyword.relevance,
             count: keyword.count
@@ -203,6 +205,7 @@ export default {
         var overallCategory = [];
         categories.forEach(async (category) => {
           overallCategory.push({
+            overall_category_id: uuid(),
             score: category.score,
             label: category.label
           });
@@ -212,6 +215,7 @@ export default {
         var overallEntity = [];
         entities.forEach(async (entity) => {
           overallEntity.push({
+            overall_entity_id: uuid(),
             type: entity.type,
             text: entity.text,
             relevance: entity.relevance
@@ -219,6 +223,7 @@ export default {
         });
 
         const overallEmotion = {
+          overall_emotion_id: uuid(),
           sadness: result.emotion.document.emotion.sadness,
           anger: result.emotion.document.emotion.anger,
           joy: result.emotion.document.emotion.joy,
@@ -239,6 +244,7 @@ export default {
 
         results.forEach((result) => {
           trends.push({
+            trend_id: uuid(),
             session_id: result.session_id,
             sentiment: models.Sentiment.findOne({
               raw: true,

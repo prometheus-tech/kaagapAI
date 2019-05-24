@@ -10,6 +10,7 @@ export default `
   }
 
   type OverallSentiment {
+    overall_sentiment_id: UUID!
     score: Float!
     label: String!
   }
@@ -23,6 +24,7 @@ export default `
   }
 
   type OverallKeyword {
+    overall_keyword_id: UUID!
     text: String!
     relevance: Float!
     count: Int!
@@ -36,6 +38,7 @@ export default `
   }
 
   type OverallCategory {
+    overall_category_id: UUID!
     score: Float!
     label: String!
   }
@@ -49,6 +52,7 @@ export default `
   }
 
   type OverallEntity {
+    overall_entity_id: UUID!
     type: String!
     text: String!
     relevance: Float!
@@ -65,6 +69,7 @@ export default `
   }
 
   type OverallEmotion {
+    overall_emotion_id: UUID!
     sadness: Float!
     anger: Float!
     joy: Float!
@@ -84,12 +89,14 @@ export default `
   }
 
   type Trend {
+    trend_id: UUID!
     sentiment: Sentiment
     emotion: Emotion
     session_id: UUID
   }
 
   type OverallResult {
+    overall_result_id: UUID!
     sentiment: OverallSentiment
     keywords: [OverallKeyword]
     categories: [OverallCategory]
