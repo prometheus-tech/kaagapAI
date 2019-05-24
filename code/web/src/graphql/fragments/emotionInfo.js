@@ -2,7 +2,7 @@ import { gql } from 'apollo-boost';
 
 const EMOTION_INFO = gql`
   fragment EmotionInfo on Emotion {
-    emotion_id
+    overall_emotion_id
     sadness
     anger
     joy
