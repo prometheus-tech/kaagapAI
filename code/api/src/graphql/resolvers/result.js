@@ -161,7 +161,7 @@ export default {
       }
     },
 
-    overallResult: async (parent, args, { models, practitioner }) => {
+    customResult: async (parent, args, { models, practitioner }) => {
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -184,17 +184,17 @@ export default {
 
         const result = await nluModules.analyzeContent(contents)
 
-        const overallSentiment = {
-          overall_sentiment_id: uuid(),
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
           score: result.sentiment.document.score,
           label: result.sentiment.document.label
         }
 
         var keywords = result.keywords;
-        var overallKeyword = [];
+        var customKeyword = [];
         keywords.forEach(async (keyword) => {
-          overallKeyword.push({
-            overall_keyword_id: uuid(),
+          customKeyword.push({
+            custom_keyword_id: uuid(),
             text: keyword.text,
             relevance: keyword.relevance,
             count: keyword.count
@@ -202,9 +202,9 @@ export default {
         });
 
         var categories = result.categories;
-        var overallCategory = [];
+        var customCategory = [];
         categories.forEach(async (category) => {
-          overallCategory.push({
+          customCategory.push({
             overall_category_id: uuid(),
             score: category.score,
             label: category.label
@@ -212,9 +212,9 @@ export default {
         });
 
         var entities = result.entities;
-        var overallEntity = [];
+        var customEntity = [];
         entities.forEach(async (entity) => {
-          overallEntity.push({
+          customEntity.push({
             overall_entity_id: uuid(),
             type: entity.type,
             text: entity.text,
@@ -222,8 +222,8 @@ export default {
           });
         });
 
-        const overallEmotion = {
-          overall_emotion_id: uuid(),
+        const customEmotion = {
+          custom_emotion_id: uuid(),
           sadness: result.emotion.document.emotion.sadness,
           anger: result.emotion.document.emotion.anger,
           joy: result.emotion.document.emotion.joy,
@@ -258,11 +258,11 @@ export default {
         })
 
         return {
-          sentiment: overallSentiment,
-          keywords: overallKeyword,
-          categories: overallCategory,
-          entities: overallEntity,
-          emotion: overallEmotion,
+          sentiment: customSentiment,
+          keywords: customKeyword,
+          categories: customCategory,
+          entities: customEntity,
+          emotion: customEmotion,
           trend: trends
         };
       }
