@@ -240,7 +240,10 @@ export default {
             session_id: {
               [Op.in]: args.session_id
             }
-          }
+          },
+          order: [
+            ['session_name', 'ASC']
+          ]
         });
 
         results.forEach((result) => {
