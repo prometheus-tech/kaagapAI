@@ -34,6 +34,7 @@ import orange from '@material-ui/core/colors/orange';
 import EmptySession from '../../components/UI/Placeholder/EmptySession';
 import Tooltip from '@material-ui/core/Tooltip';
 import SearchField from '../../components/UI/SearchField/SearchField';
+import CustomSessionsResultPage from './CustomSessionsResultPage/CustomSessionsResultPage';
 
 const drawerWidth = '25';
 const styles = theme => ({
@@ -300,6 +301,8 @@ class ClientPage extends Component {
                     sessionEdited={this.openEditSessionDialogHandler}
                   />
                 )}
+
+                <CustomSessionsResultPage sessions={data.client.sessions} />
 
                 <NewSessionDialog
                   clientId={c_id}
