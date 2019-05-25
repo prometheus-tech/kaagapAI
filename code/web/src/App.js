@@ -60,8 +60,8 @@ const cache = new InMemoryCache({
         return 'customKeyword:' + object.custom_keyword_id;
       case 'CustomCategory':
         return 'customCategory:' + object.custom_category_id;
-      case 'CustomEntities':
-        return 'customEntity:' + object.custom_entitiy_id;
+      case 'CustomEntity':
+        return 'customEntity:' + object.custom_entity_id;
       case 'CustomEmotion':
         return 'customEmotion:' + object.custom_emotion_id;
       case 'Trend':

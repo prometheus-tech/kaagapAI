@@ -29,12 +29,7 @@ class CustomSessionsResultPage extends Component {
           const { customSessionResult } = data;
           const { trend } = customSessionResult;
 
-          return (
-            <div>
-              <h1>Custom Results</h1>
-              <EmotionsTrend trend={trend} sessions={sessions} />
-            </div>
-          );
+          return <EmotionsTrend trend={trend} />;
         }}
       </Query>
     );
