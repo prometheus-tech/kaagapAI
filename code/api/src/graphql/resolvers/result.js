@@ -3,7 +3,7 @@ import nluModules from '../../modules/nlu';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
 import uuid from 'uuid/v4';
-import sort from 'fast-sort';
+import arraySort from 'array-sort';
 
 export default {
   UUID: GraphQlUUID,
@@ -233,8 +233,6 @@ export default {
           disgust: result.emotion.document.emotion.disgust
         };
 
-        var trends = [];
-
         const results = await models.Result.findAll({
           raw: true,
           where: {
@@ -244,37 +242,42 @@ export default {
           }
         });
 
-        results.forEach((result) => {
-          trends.push({
-            trend_id: uuid(),
-            session_id: result.session_id,
-            session_name: models.Session.findOne({
-              raw: true,
-              where: { session_id: result.session_id }
-            }).then(res=> {
-              return res.session_name;
-            }),
-            session_date: models.Session.findOne({
-              raw: true,
-              where: { session_id: result.session_id }
-            }).then(res=> {
-              return res.date_of_session;
-            }),
-            sentiment: models.Sentiment.findOne({
-              raw: true,
-              where: { result_id: result.result_id }
-            }),
-            emotion: models.Emotion.findOne({
-              raw: true,
-              where: { result_id: result.result_id }
-            })
-          });
-        })
+        const trends = results.map( async (result) => {
+          return await models.Session.findOne({
+            raw: true,
+            where: { session_id: result.session_id }
+          }).then( res => {
+            var trend = {
+              trend_id: uuid(),
+              session_id: result.session_id,
+              session_name: res.session_name,
+              session_date: res.date_of_session
+            }
 
-        sort(trends).asc([
-          trend => trend.session_date,
-          trend => trend.session_name,
-        ]);
+            return trend;
+          }).then( async res => {
+            res.sentiment = await models.Sentiment.findOne({
+              raw: true,
+              where: { result_id: result.result_id }
+            }).then(res => {
+              return res;
+            });
+
+            return res;
+          }).then( async res => {
+            res.emotion = await models.Emotion.findOne({
+              raw: true,
+              where: { result_id: result.result_id }
+            }).then(res => {
+              return res;
+            });
+            
+            return res;
+          })
+        });
+
+        const trendsResult = await Promise.all(trends);
+        arraySort(trendsResult, 'session_date');
 
         return {
           custom_result_id: uuid(),
@@ -283,7 +286,7 @@ export default {
           categories: customCategory,
           entities: customEntity,
           emotion: customEmotion,
-          trend: trends
+          trend: trendsResult
         };
       }
     },
