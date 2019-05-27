@@ -174,6 +174,11 @@ const getFileFromGCS = async (filename, savePath, originalFilename) => {
   } 
 }
 
+function deleteFileFromGCS(filename) {
+  const file_name = filename.split('/')[3];
+  bucket.file(file_name).delete();
+}
+
 export default {
   renameFile,
   storeUpload,
@@ -182,5 +187,6 @@ export default {
   extractText,
   extractDocumentText,
   convert,
-  getFileFromGCS
+  getFileFromGCS,
+  deleteFileFromGCS
 };

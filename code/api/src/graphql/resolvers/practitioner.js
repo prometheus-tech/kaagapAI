@@ -22,16 +22,14 @@ export default {
         return await models.Practitioner.findOne({
           raw: true,
           where: { p_id: practitioner },
-          attributes: [
-            'email',
-            'fname',
-            'lname',
-            'phone_no',
-            'license',
-            'profession',
-            'date_registered',
-            'last_logged'
-          ]
+          attributes: { 
+            exclude: [
+              'date_deactivated',
+              'verification_code',
+              'user_status',
+              'p_id',
+            ]
+          }
         });
       }
     },
@@ -271,16 +269,14 @@ export default {
             return await models.Practitioner.findOne({
               raw: true,
               where: { p_id: practitioner },
-              attributes: [
-                'email',
-                'fname',
-                'lname',
-                'phone_no',
-                'license',
-                'profession',
-                'date_registered',
-                'last_logged'
-              ]
+              attributes: { 
+                exclude: [
+                  'date_deactivated',
+                  'verification_code',
+                  'user_status',
+                  'p_id',
+                ]
+              }
             })
           })
         }
