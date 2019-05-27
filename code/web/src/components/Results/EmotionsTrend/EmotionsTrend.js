@@ -27,7 +27,6 @@ function EmotionsTrend({ trend }) {
       options={{
         chart: {
           title: 'Emotions Trend',
-          subtitle: 'in score'
         },
         colors: ['#F5C54F', '#D1383A', '#52A253', '#5996C3', '#474747']
       }}

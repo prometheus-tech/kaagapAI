@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
-
 import { withSnackbar } from 'notistack';
 
 import { cloneDeep } from 'apollo-utilities';
@@ -10,51 +8,16 @@ import SESSION from '../../../graphql/queries/session';
 import RESULTS from '../../../graphql/queries/results';
 import { Mutation } from 'react-apollo';
 
-import purple from '@material-ui/core/colors/purple';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import Hidden from '@material-ui/core/Hidden';
-import Fab from '@material-ui/core/Fab';
-import Icon from '@material-ui/core/Icon';
-import Add from '@material-ui/icons/Add';
 import SessionDocumentCards from '../../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 
-const styles = theme => ({
-  extendedButton: {
-    background: purple[500],
-    color: '#ffffff',
-    textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
-    '&:hover': {
-      backgroundColor: purple[700],
-      boxShadow: theme.shadows[10]
-    },
-    padding: '5px 25px 5px 25px',
-    marginBottom: theme.spacing.unit * 2
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
-  floatingButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    boxShadow: theme.shadows[24],
-    color: '#ffffff',
-    '&:hover': {
-      boxShadow: theme.shadows[10]
-    }
-  }
-});
-
 class SessionDocumentsPage extends Component {
   render() {
     const {
-      classes,
       session_id,
       documents,
       isNewSessionDocumentDialogOpened,
@@ -78,33 +41,6 @@ class SessionDocumentsPage extends Component {
 
     return (
       <Auxilliary>
-        {documents.length > 0 ? (
-          <div>
-            <Hidden smDown>
-              <Fab
-                color="primary"
-                variant="extended"
-                className={classes.extendedButton}
-                onClick={newSessionDocumentDialogOpened}
-              >
-                <Icon className={classes.extendedIcon}>cloud_upload</Icon>
-                Upload File
-              </Fab>
-            </Hidden>
-            <Hidden mdUp>
-              <Fab
-                size="large"
-                color="primary"
-                className={classes.floatingButton}
-                onClick={newSessionDocumentDialogOpened}
-                disableRipple={false}
-                disableFocusRipple={false}
-              >
-                <Add />
-              </Fab>
-            </Hidden>
-          </div>
-        ) : null}
         {documents.length === 0 ? (
           <EmptyDocumentIllustration
             newUploadDocuments={newSessionDocumentDialogOpened}
@@ -207,4 +143,4 @@ class SessionDocumentsPage extends Component {
   }
 }
 
-export default withStyles(styles)(withSnackbar(SessionDocumentsPage));
+export default withSnackbar(SessionDocumentsPage);

@@ -13,7 +13,6 @@ import { SnackbarProvider } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 
-import Layout from './hoc/Layout/Layout';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
@@ -133,12 +132,10 @@ class App extends Component {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
-              <Layout>
-                <Route exact path="/" component={ClientsPage} />
-                <Route path="/archives" component={ArchivesPage} />
-                <Route path="/client/:c_id" component={ClientPage} />
-                <Route path="/session/:session_id" component={SessionPage} />
-              </Layout>
+              <Route exact path="/" component={ClientsPage} />
+              <Route path="/archives" component={ArchivesPage} />
+              <Route path="/client/:c_id" component={ClientPage} />
+              <Route path="/session/:session_id" component={SessionPage} />
             </Switch>
           </SnackbarProvider>
         </HashRouter>

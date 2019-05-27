@@ -36,9 +36,6 @@ const styles = theme => ({
     margin: '0px'
   },
   extendedButton: {
-    background: '#4e54c8',
-    background:
-      '-webkit-linear-gradient(to top, #8f94fb, #4e54c8)' /* Chrome 10-25, Safari 5.1-6 */,
     background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
     textTransform: 'capitalize',
@@ -152,7 +149,7 @@ class Header extends Component {
                 <div className={classes.grow} />
                 <Fab
                   color="primary"
-                  variant="extended"
+                  variant="outlined"
                   className={classes.extendedButton}
                   onClick={this.openNewClientDialogHandler}
                 >

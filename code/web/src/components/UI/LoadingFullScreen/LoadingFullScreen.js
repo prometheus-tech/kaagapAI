@@ -19,7 +19,7 @@ function LoadingFullScreen() {
       <Grid item>
         <img
           src={kaagapaiPreloader}
-          style={{ marginTop: '10vh', height: '20vh' }}
+          style={{ marginTop: '35vh', height: '20vh' }}
           alt="Loading...."
         />
       </Grid>

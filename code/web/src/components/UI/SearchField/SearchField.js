@@ -5,7 +5,6 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import grey from '@material-ui/core/colors/grey';
 
 const styles = theme => ({
   search: {
