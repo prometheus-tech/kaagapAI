@@ -107,11 +107,38 @@ export default `
     trend: [Trend]
   }
 
+  type TalkTurn {
+    talk_turn_id: UUID
+    talk_turn_text: String
+  }
+
+  type AppearanceDocument {
+    appearance_document_id: UUID
+    sd_id: UUID
+    file_name: String
+    talk_turns: [TalkTurn]
+  }
+
+  type TextAppearance {
+    appearance_id: UUID
+    session_id: UUID
+    session_name: String
+    appearance_documents: [AppearanceDocument]
+  }
+
+  type TextOccurence {
+    text_occurrence_id: UUID
+    text: String
+    text_appearances: [TextAppearance]
+  }
+
   type Query {
    result(session_id: UUID!): Result
 
    customSessionResult(session_id: [UUID]!): CustomResult
 
    customDocumentResult(sd_id: [UUID]!): CustomResult
+
+   findTextOccurences(text: String!, session_id: [UUID]!): TextOccurence
   }
 `;
