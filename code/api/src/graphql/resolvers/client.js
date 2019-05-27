@@ -267,9 +267,11 @@ export default {
             }
           });
 
-          client_documents.forEach((client_document) => {
-            documentModules.deleteFileFromGCS(client_document.file);
-          });
+          if(client_documents){
+            client_documents.forEach((client_document) => {
+              documentModules.deleteFileFromGCS(client_document.file);
+            });
+          }
 
           await models.Client.destroy({
             where: {
