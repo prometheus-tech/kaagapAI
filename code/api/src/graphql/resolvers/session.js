@@ -1,6 +1,7 @@
 import GraphQlUUID from 'graphql-type-uuid';
-import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import { AuthenticationError, ForbiddenError, ApolloError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
+import documentModules from '../../modules/document_modules';
 
 export default {
   UUID: GraphQlUUID,
@@ -132,6 +133,40 @@ export default {
             });
           }
         })
+      }
+    },
+
+    permanentlyDeleteSession : async (parent, { session_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const session =  await models.Session.findOne({
+          raw: true,
+          where: {
+            session_id,
+            status: 'archived'
+          }
+        });
+
+        if(session) {
+          const session_documents = await models.Session_Document.findAll({
+            raw: true,
+            where: {
+              session_id,
+              status: 'archived'
+            }
+          });
+  
+          if(session_documents) {
+            session_documents.forEach((session_document) => {
+              documentModules.deleteFileFromGCS(session_document.file);
+            });
+          }
+
+          await models.Session.destroy({ where: { session_id: session.session_id } });
+  
+          return session;
+        }
       }
     },
     

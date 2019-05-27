@@ -28,6 +28,8 @@ export default `
 
     restoreSession(session_id: UUID!): Session!
 
+    permanentlyDeleteSession(session_id: UUID!): Session
+
     updateSessionInformation(session_id: UUID!, session_name: String!, date_of_session: Date!): Session!
   }
 `;
