@@ -16,18 +16,15 @@ function EmotionsTrend({ trend }) {
 
   return (
     <Chart
-      width={'600px'}
+      width={'800px'}
       height={'400px'}
       chartType="Line"
-      loader={<div>Loading Chart...</div>}
+      loader={<div>Loading...</div>}
       data={[
         ['Session', 'Joy', 'Anger', 'Disgust', 'Sadness', 'Fear'],
         ...emotionsTrendData
       ]}
       options={{
-        chart: {
-          title: 'Emotions Trend',
-        },
         colors: ['#F5C54F', '#D1383A', '#52A253', '#5996C3', '#474747']
       }}
     />

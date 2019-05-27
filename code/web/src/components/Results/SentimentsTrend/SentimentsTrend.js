@@ -9,15 +9,12 @@ function SentimentsTrend({ trend }) {
 
   return (
     <Chart
-      width={'600px'}
+      width={'800px'}
       height={'400px'}
       chartType="Line"
-      loader={<div>Loading Chart...</div>}
+      loader={<div>Loading...</div>}
       data={[['Session', 'Sentiment'], ...sentimentsTrendData]}
       options={{
-        chart: {
-          title: 'Sentiments Trend'
-        },
         colors: ['#5996C3']
       }}
     />

@@ -76,6 +76,7 @@ export function getSessionDocumentIcon(type) {
 export function getDocumentTalkTurns(documents) {
   let documentTalkTurns = [];
 
+  // Remove consecutive newlines
   for (let i = 0; i < documents.length; i++) {
     const documentWithoutConsecutiveSpaces = documents[i].content.replace(
       /[\r\n]+/g,
@@ -84,7 +85,7 @@ export function getDocumentTalkTurns(documents) {
 
     documentTalkTurns.push({
       ...documents[i],
-      formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)]
+      formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)] // Array of talkturns (an element is a paragraph)
     });
   }
 
