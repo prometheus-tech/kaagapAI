@@ -57,6 +57,8 @@ export default `
 
     restoreClient(c_id: UUID!): Client!
 
+    permanentlyDeleteClient(c_id: UUID!): Client
+
     updateClientInformation(c_id: UUID!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
   }
 `;
