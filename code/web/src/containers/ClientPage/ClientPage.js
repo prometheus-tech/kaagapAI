@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+
 import { withRouter } from 'react-router-dom';
 
 import CLIENT from '../../graphql/queries/client';
@@ -26,6 +28,13 @@ class ClientPage extends Component {
     isNewSessionDialogOpened: false,
     isSelectSessionsDialogOpened: false
   };
+
+  componentDidMount() {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss')
+    );
+  }
 
   changeTabValueHandler = (e, value) => {
     if (this.state.tabValue !== value) {

@@ -37,7 +37,8 @@ const styles = theme => ({
 class CustomSessionsResultPage extends Component {
   state = {
     tabValue: 0,
-    selectedKeyword: null
+    selectedKeyword: null,
+    selectedEntity: null
   };
 
   changeTabValueHandler = (e, value) => {
@@ -47,8 +48,11 @@ class CustomSessionsResultPage extends Component {
   };
 
   selectKeywordHandler = keyword => {
-    alert(keyword);
     this.setState({ selectedKeyword: keyword });
+  };
+
+  selectEntityHandler = entity => {
+    this.setState({ selectedEntity: entity });
   };
 
   render() {
@@ -64,7 +68,7 @@ class CustomSessionsResultPage extends Component {
       analyzeSessions
     } = this.props;
 
-    const { tabValue, selectedKeyword } = this.state;
+    const { tabValue, selectedKeyword, selectedEntity } = this.state;
 
     const tabsData = [
       {
@@ -166,11 +170,28 @@ class CustomSessionsResultPage extends Component {
                           />
                         </ResultPaper>
                       </Grid>
-                      <Grid item xs={6}>
-                        <ResultPaper header="Text Mapper" headerGutter={true}>
-                          <TextMapper />
-                        </ResultPaper>
-                      </Grid>
+                      {selectedKeyword ? (
+                        <Grid item xs={4}>
+                          <ResultPaper>
+                            <TextMapper
+                              sessionIds={analyzedSessions}
+                              mainText={selectedKeyword.text}
+                              supportingInfo={[
+                                { label: 'Count = ' + selectedKeyword.count },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(
+                                      selectedKeyword.relevance * 100
+                                    ) /
+                                      100
+                                }
+                              ]}
+                              type="sessions"
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
                     </Auxilliary>
                   )}
                   {tabValue === 1 && (
@@ -184,14 +205,37 @@ class CustomSessionsResultPage extends Component {
                     </Grid>
                   )}
                   {tabValue === 2 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Entities" headerGutter={true}>
-                        <EntitiesTable
-                          resultType="Custom"
-                          entities={customSessionResult.entities}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper header="Entities" headerGutter={true}>
+                          <EntitiesTable
+                            resultType="Custom"
+                            entities={customSessionResult.entities}
+                            entitySelected={this.selectEntityHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      {selectedEntity ? (
+                        <Grid item xs={4}>
+                          <ResultPaper>
+                            <TextMapper
+                              sessionIds={analyzedSessions}
+                              mainText={selectedEntity.text}
+                              supportingInfo={[
+                                { label: 'Type = ' + selectedEntity.type },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(selectedEntity.relevance * 100) /
+                                      100
+                                }
+                              ]}
+                              type="sessions"
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
+                    </Auxilliary>
                   )}
                   {tabValue === 3 && (
                     <Grid item xs={10}>

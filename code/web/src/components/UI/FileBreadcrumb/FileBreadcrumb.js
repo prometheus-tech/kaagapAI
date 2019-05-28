@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import FolderIcon from '@material-ui/icons/Folder';
 import Icon from '@material-ui/core/Icon';
+import orange from '@material-ui/core/colors/orange';
 
 import { getSessionDocumentIcon } from '../../../util/helperFunctions';
 
@@ -20,7 +21,8 @@ const styles = theme => ({
   avatar: {
     background: 'none',
     marginRight: -16,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: orange[800]
   }
 });
 
@@ -36,7 +38,8 @@ const StyledBreadcrumb = withStyles(theme => ({
     '&:active': {
       boxShadow: theme.shadows[1],
       backgroundColor: emphasize(theme.palette.grey[300], 0.12)
-    }
+    },
+    cursor: 'pointer'
   }
 }))(Chip);
 
@@ -57,7 +60,7 @@ function FileBreadcrumb({
         <StyledBreadcrumb
           label={breadcrumbData[0].label}
           component={RouterLink}
-          to={breadcrumbData[1].to}
+          to={breadcrumbData[0].to}
           avatar={
             <Avatar className={classes.avatar}>
               <FolderIcon />
@@ -65,20 +68,36 @@ function FileBreadcrumb({
           }
         />
       ) : null}
-      <StyledBreadcrumb
-        label={breadcrumbData[1].label}
-        onClick={e => {
-          pageTabValueChanged(e, 0);
-        }}
-        avatar={
-          <Avatar className={classes.avatar}>
-            <Icon
-              className={avatarIconClass}
-              style={{ color: iconColor, fontSize: '16px' }}
-            />
-          </Avatar>
-        }
-      />
+      {type === 'session-level' ? (
+        <StyledBreadcrumb
+          label={breadcrumbData[1].label}
+          onClick={e => {
+            pageTabValueChanged(e, 0);
+          }}
+          avatar={
+            <Avatar className={classes.avatar}>
+              <Icon
+                className={avatarIconClass}
+                style={{ color: iconColor, fontSize: '16px' }}
+              />
+            </Avatar>
+          }
+        />
+      ) : (
+        <StyledBreadcrumb
+          label={breadcrumbData[1].label}
+          component={RouterLink}
+          to={breadcrumbData[0].to}
+          avatar={
+            <Avatar className={classes.avatar}>
+              <Icon
+                className={avatarIconClass}
+                style={{ color: iconColor, fontSize: '16px' }}
+              />
+            </Avatar>
+          }
+        />
+      )}
     </Breadcrumbs>
   );
 }
