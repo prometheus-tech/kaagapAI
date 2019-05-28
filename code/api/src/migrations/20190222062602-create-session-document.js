@@ -31,6 +31,10 @@ module.exports = {
         type: Sequelize.ENUM('archived', 'active'),
         allowNull: false
       },
+      should_analyze: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
       session_id: {
         type: Sequelize.UUID,
         onDelete:'CASCADE',

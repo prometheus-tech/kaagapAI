@@ -180,6 +180,37 @@ export default {
 
         return session_document;
       }
+    },
+
+    updateShouldAnalyze: async (parent, { sd_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {       
+        const sessionDocument =  await models.Session_Document.findOne({
+          raw: true,
+          where: { sd_id }
+        });
+
+        let shouldAnalyze = null;
+
+        if(sessionDocument.should_analyze) {
+          shouldAnalyze = false;
+        } else {
+          shouldAnalyze = true;
+        }
+
+        return await models.Session_Document.update({
+          should_analyze: shouldAnalyze
+        }, {
+          where: { sd_id }
+        }).then(async res => {
+          await models.Result.destroy({ where: { session_id: sessionDocument.session_id } });
+          return await models.Session_Document.findOne({
+            raw: true,
+            where: { sd_id }
+          });
+        });
+      }
     }
   }
 };
