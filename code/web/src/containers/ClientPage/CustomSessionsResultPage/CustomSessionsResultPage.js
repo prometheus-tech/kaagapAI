@@ -13,7 +13,6 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SelectSessionsDialog from '../../../components/Client/SelectSessionsDialog/SelectSessionsDialog';
 import EmptyCustomSessionsResult from '../../../components/UI/Placeholder/EmptyCustomSessionsResult';
 import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
-import Typography from '@material-ui/core/Typography';
 
 import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
@@ -24,26 +23,12 @@ import ResultPaper from '../../../components/UI/ResultPaper/ResultPaper';
 import Emotions from '../../../components/Results/Emotions/Emotions';
 import CustomWordCloud from '../../../components/Results/CustomWordCloud/CustomWordCloud';
 import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
+import Sentiment from '../../../components/Results/Sentiment/Sentiment';
 
 const styles = theme => ({
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
-  },
   tabIcon: {
     width: '32px',
     marginRight: theme.spacing.unit * 2
-  },
-  overallSentimentLabel: {
-    color: theme.palette.grey[600],
-    fontSize: '16px',
-    fontWeight: 500,
-    marginTop: theme.spacing.unit * 4
-  },
-  sentimentValueText: {
-    fontWeight: 400
   }
 });
 
@@ -183,6 +168,7 @@ class CustomSessionsResultPage extends Component {
                     <Grid item xs={10}>
                       <ResultPaper header="Categories" headerGutter={true}>
                         <Categories
+                          resultType="Custom"
                           categories={customSessionResult.categories}
                         />
                       </ResultPaper>
@@ -192,6 +178,7 @@ class CustomSessionsResultPage extends Component {
                     <Grid item xs={6}>
                       <ResultPaper header="Entities" headerGutter={true}>
                         <EntitiesTable
+                          resultType="Custom"
                           entities={customSessionResult.entities}
                         />
                       </ResultPaper>
@@ -229,16 +216,7 @@ class CustomSessionsResultPage extends Component {
                         contentPadding={true}
                       >
                         <SentimentsTrend trend={trend} />
-                        <Typography className={classes.overallSentimentLabel}>
-                          Overall Sentiment:{' '}
-                          <span className={classes.sentimentValueText}>
-                            {customSessionResult.sentiment.label} (
-                            {Math.round(
-                              customSessionResult.sentiment.score * 100
-                            ) / 100}
-                            )
-                          </span>
-                        </Typography>
+                        <Sentiment sentiment={customSessionResult.sentiment} />
                       </ResultPaper>
                     </Grid>
                   )}

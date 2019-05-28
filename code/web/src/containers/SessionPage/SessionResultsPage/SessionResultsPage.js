@@ -8,69 +8,47 @@ import RESULTS from '../../../graphql/queries/results';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
-import Keywords from '../../../components/Session/Keywords/Keywords';
-import Categories from '../../../components/Session/Categories/Categories';
-import EmotionsSentiment from '../../../components/Session/EmotionsSentiment/EmotionsSentiment';
-import Entities from '../../../components/Session/Entities/Entities';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import KeywordsIcon from '../../../assets/KeywordsIcon.svg';
-import CategoryIcon from '../../../assets/CategoryIcon.svg';
-import EmotionsSentimentIcon from '../../../assets/EmotionsSentimentIcon.svg';
-import EntitiesIcon from '../../../assets/EntitiesIcon.svg';
 import EmptyResults from '../../../components/UI/Placeholder/EmptyResults';
+import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
+import ResultPaper from '../../../components/UI/ResultPaper/ResultPaper';
+
+import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
+import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
+import EmotionsSentimentTabIcon from '../../../assets/EmotionsSentimentIcon.svg';
+import EntitiesTabIcon from '../../../assets/EntitiesIcon.svg';
+
+import CustomWordCloud from '../../../components/Session/Keywords/CustomWordCloud/CustomWordCloud';
+import Categories from '../../../components/Results/Categories/Categories';
+import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
+import Emotions from '../../../components/Results/Emotions/Emotions';
+import Sentiment from '../../../components/Results/Sentiment/Sentiment';
 
 const styles = theme => ({
-  tabCon: {
-    marginTop: theme.spacing.unit * 3,
-    backgroundColor: 'rgb(248, 248, 248)',
-    position: 'absolute',
-    display: 'flex'
-  },
   tabIcon: {
-    height: '5vh',
-    padding: '0'
-  },
-  textIcon: {
-    fontWeight: '300',
-    marginTop: theme.spacing.unit * 2
+    width: '32px',
+    marginRight: theme.spacing.unit * 2
   }
 });
 
-const VerticalTabs = withStyles(theme => ({
-  flexContainer: {
-    flexDirection: 'column'
-  },
-  indicator: {
-    display: 'none'
-  }
-}))(Tabs);
-
-const MyTab = withStyles(theme => ({
-  root: {
-    padding: '0',
-    margin: '0',
-    width: '30px',
-    backgroundColor: 'rgb(255, 255, 255)'
-  },
-  selected: {
-    color: 'tomato',
-    borderRight: '2px solid tomato'
-  }
-}))(Tab);
-
-function TabContainer(props) {
-  return <div>{props.children}</div>;
-}
-
 class SessionResultsPage extends Component {
-  state = { activeIndex: 0 };
+  state = {
+    tabValue: 0,
+    selectedKeyword: null
+  };
 
-  handleChange = (_, activeIndex) => this.setState({ activeIndex });
+  changeTabValueHandler = (e, value) => {
+    if (this.state.tabValue !== value) {
+      this.setState({ tabValue: value });
+    }
+  };
+
+  selectKeywordHandler = keyword => {
+    alert(keyword);
+    this.setState({ selectedKeyword: keyword });
+  };
 
   render() {
-    const { activeIndex } = this.state;
+    const { tabValue, selectedKeyword } = this.state;
 
     const {
       session_id,
@@ -78,6 +56,49 @@ class SessionResultsPage extends Component {
       contentSessionDocumentDialogOpened,
       classes
     } = this.props;
+
+    const tabsData = [
+      {
+        label: 'Keywords',
+        icon: (
+          <img
+            src={KeywordsTabIcon}
+            alt="Keywords"
+            className={classes.tabIcon}
+          />
+        )
+      },
+      {
+        label: 'Categories',
+        icon: (
+          <img
+            src={CategoryTabIcon}
+            alt="Categories"
+            className={classes.tabIcon}
+          />
+        )
+      },
+      {
+        label: 'Entities',
+        icon: (
+          <img
+            src={EntitiesTabIcon}
+            alt="Entities"
+            className={classes.tabIcon}
+          />
+        )
+      },
+      {
+        label: 'Emotions and Sentiment',
+        icon: (
+          <img
+            src={EmotionsSentimentTabIcon}
+            alt="Emotions"
+            className={classes.tabIcon}
+          />
+        )
+      }
+    ];
 
     return (
       <Query
@@ -98,110 +119,58 @@ class SessionResultsPage extends Component {
           return (
             <Auxilliary>
               {data.result ? (
-                <Grid container spacing={16}>
+                <Grid container spacing={24}>
                   <Grid item xs={2}>
-                    <div className={classes.tabCon}>
-                      <VerticalTabs
-                        value={activeIndex}
-                        onChange={this.handleChange}
-                      >
-                        <MyTab
-                          label={
-                            <div>
-                              <img
-                                src={KeywordsIcon}
-                                alt="Keywords"
-                                className={classes.tabIcon}
-                              />
-                              <Typography className={classes.textIcon}>
-                                Keywords
-                              </Typography>
-                            </div>
-                          }
-                        />
-                        <MyTab
-                          label={
-                            <div>
-                              <img
-                                src={CategoryIcon}
-                                alt="Category"
-                                className={classes.tabIcon}
-                              />
-                              <Typography className={classes.textIcon}>
-                                Categories
-                              </Typography>
-                            </div>
-                          }
-                        />
-                        <MyTab
-                          label={
-                            <div>
-                              <img
-                                src={EntitiesIcon}
-                                alt="Keywords"
-                                className={classes.tabIcon}
-                              />
-                              <Typography className={classes.textIcon}>
-                                Entities
-                              </Typography>
-                            </div>
-                          }
-                        />
-                        <MyTab
-                          label={
-                            <div>
-                              <img
-                                src={EmotionsSentimentIcon}
-                                alt="Keywords"
-                                className={classes.tabIcon}
-                              />
-                              <Typography className={classes.textIcon}>
-                                Emotions and Sentiments
-                              </Typography>
-                            </div>
-                          }
-                        />
-                      </VerticalTabs>
-                    </div>
+                    <ResultsVertTabs
+                      tabsData={tabsData}
+                      currentTabIndex={tabValue}
+                      tabValueChanged={this.changeTabValueHandler}
+                    />
                   </Grid>
-                  <Grid item xs={10}>
-                    {activeIndex === 0 && (
-                      <Keywords
-                        keywords={data.result.keywords}
-                        documents={documents}
-                        contentSessionDocumentDialogOpened={
-                          contentSessionDocumentDialogOpened
-                        }
-                      />
-                    )}
-                    {activeIndex === 1 && (
-                      <TabContainer>
-                        <Categories categories={data.result.categories} />
-                      </TabContainer>
-                    )}
-                    {activeIndex === 2 && (
-                      <TabContainer>
-                        <Entities
+                  {tabValue === 0 && (
+                    <Grid item xs={6}>
+                      <ResultPaper header="Keywords" headerGutter={true}>
+                        <CustomWordCloud
+                          keywords={data.result.keywords}
+                          keywordSelected={this.selectKeywordHandler}
+                        />
+                      </ResultPaper>
+                    </Grid>
+                  )}
+                  {tabValue === 1 && (
+                    <Grid item xs={10}>
+                      <ResultPaper header="Categories" headerGutter={true}>
+                        <Categories
+                          resultType="Session"
+                          categories={data.result.categories}
+                        />
+                      </ResultPaper>
+                    </Grid>
+                  )}
+                  {tabValue === 2 && (
+                    <Grid item xs={6}>
+                      <ResultPaper header="Entities" headerGutter={true}>
+                        <EntitiesTable
+                          resultType="Session"
                           entities={data.result.entities}
-                          documents={documents}
-                          contentSessionDocumentDialogOpened={
-                            contentSessionDocumentDialogOpened
-                          }
                         />
-                      </TabContainer>
-                    )}
-                    {activeIndex === 3 && (
-                      <TabContainer>
-                        <EmotionsSentiment
-                          emotions={data.result.emotions}
-                          sentiment={data.result.sentiment}
-                        />
-                      </TabContainer>
-                    )}
-                  </Grid>
+                      </ResultPaper>
+                    </Grid>
+                  )}
+                  {tabValue === 3 && (
+                    <Grid item xs={10}>
+                      <ResultPaper
+                        header="Emotions and Sentiment"
+                        headerGutter={true}
+                        contentPadding={true}
+                      >
+                        <Emotions emotions={data.result.emotions[0]} />
+                        <Sentiment sentiment={data.result.sentiment[0]} />
+                      </ResultPaper>
+                    </Grid>
+                  )}
                 </Grid>
               ) : (
-                // </Grid>
                 <EmptyResults />
               )}
             </Auxilliary>
