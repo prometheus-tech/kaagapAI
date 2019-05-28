@@ -294,10 +294,7 @@ class SessionPage extends Component {
                       {tabValue === 1 && (
                         <SessionResultsPage
                           session_id={session_id}
-                          documents={session.documents}
-                          contentSessionDocumentDialogOpened={
-                            this.openContentSessionDocumentDialog
-                          }
+                          pageTabValueChanged={this.changeTabValueHandler}
                         />
                       )}
                     </Main>

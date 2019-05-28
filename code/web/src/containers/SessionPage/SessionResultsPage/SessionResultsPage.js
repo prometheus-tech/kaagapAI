@@ -22,6 +22,7 @@ import Categories from '../../../components/Results/Categories/Categories';
 import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
 import Emotions from '../../../components/Results/Emotions/Emotions';
 import Sentiment from '../../../components/Results/Sentiment/Sentiment';
+import TextMapper from '../../../components/Results/TextMapper/TextMapper';
 
 const styles = theme => ({
   tabIcon: {
@@ -33,7 +34,8 @@ const styles = theme => ({
 class SessionResultsPage extends Component {
   state = {
     tabValue: 0,
-    selectedKeyword: null
+    selectedKeyword: null,
+    selectedEntity: null
   };
 
   changeTabValueHandler = (e, value) => {
@@ -43,19 +45,17 @@ class SessionResultsPage extends Component {
   };
 
   selectKeywordHandler = keyword => {
-    alert(keyword);
     this.setState({ selectedKeyword: keyword });
   };
 
-  render() {
-    const { tabValue, selectedKeyword } = this.state;
+  selectEntityHandler = entity => {
+    this.setState({ selectedEntity: entity });
+  };
 
-    const {
-      session_id,
-      documents,
-      contentSessionDocumentDialogOpened,
-      classes
-    } = this.props;
+  render() {
+    const { tabValue, selectedKeyword, selectedEntity } = this.state;
+
+    const { session_id, pageTabValueChanged, classes } = this.props;
 
     const tabsData = [
       {
@@ -128,14 +128,39 @@ class SessionResultsPage extends Component {
                     />
                   </Grid>
                   {tabValue === 0 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Keywords" headerGutter={true}>
-                        <CustomWordCloud
-                          keywords={data.result.keywords}
-                          keywordSelected={this.selectKeywordHandler}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper header="Keywords" headerGutter={true}>
+                          <CustomWordCloud
+                            keywords={data.result.keywords}
+                            keywordSelected={this.selectKeywordHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      {selectedKeyword ? (
+                        <Grid item xs={4}>
+                          <ResultPaper>
+                            <TextMapper
+                              sessionIds={[session_id]}
+                              mainText={selectedKeyword.text}
+                              supportingInfo={[
+                                { label: 'Count = ' + selectedKeyword.count },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(
+                                      selectedKeyword.relevance * 100
+                                    ) /
+                                      100
+                                }
+                              ]}
+                              type="session-level"
+                              pageTabValueChanged={pageTabValueChanged}
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
+                    </Auxilliary>
                   )}
                   {tabValue === 1 && (
                     <Grid item xs={10}>
@@ -148,14 +173,38 @@ class SessionResultsPage extends Component {
                     </Grid>
                   )}
                   {tabValue === 2 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Entities" headerGutter={true}>
-                        <EntitiesTable
-                          resultType="Session"
-                          entities={data.result.entities}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper header="Entities" headerGutter={true}>
+                          <EntitiesTable
+                            resultType="Session"
+                            entities={data.result.entities}
+                            entitySelected={this.selectEntityHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      {selectedEntity ? (
+                        <Grid item xs={4}>
+                          <ResultPaper>
+                            <TextMapper
+                              sessionIds={[session_id]}
+                              mainText={selectedEntity.text}
+                              supportingInfo={[
+                                { label: 'Type = ' + selectedEntity.type },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(selectedEntity.relevance * 100) /
+                                      100
+                                }
+                              ]}
+                              type="session-level"
+                              pageTabValueChanged={pageTabValueChanged}
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
+                    </Auxilliary>
                   )}
                   {tabValue === 3 && (
                     <Grid item xs={10}>

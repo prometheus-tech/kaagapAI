@@ -43,10 +43,9 @@ class CustomWordCloud extends Component {
           data={keywords}
           fontSizeMapper={fontSizeMapper}
           onWordClick={word => {
-            const { keyword_id, text, relevance, count } = word;
+            const { text, relevance, count } = word;
 
             keywordSelected({
-              keyword_id,
               text,
               relevance,
               count

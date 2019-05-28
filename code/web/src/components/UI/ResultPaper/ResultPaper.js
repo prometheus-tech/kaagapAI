@@ -36,14 +36,16 @@ function ResultPaper({
       className={classes.paper}
       style={{ marginBottom: marginBottom ? '24px' : '0px' }}
     >
-      <div
-        className={classes.paperHeader}
-        style={{ marginBottom: headerGutter ? '16px' : '0px' }}
-      >
-        <Typography variant="h5" className={classes.paperHeaderText}>
-          {header}
-        </Typography>
-      </div>
+      {header ? (
+        <div
+          className={classes.paperHeader}
+          style={{ marginBottom: headerGutter ? '16px' : '0px' }}
+        >
+          <Typography variant="h5" className={classes.paperHeaderText}>
+            {header}
+          </Typography>
+        </div>
+      ) : null}
       <div style={{ padding: contentPadding ? '16px 36px 16px 36px' : '0px' }}>
         {children}
       </div>

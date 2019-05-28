@@ -18,12 +18,14 @@ import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
 import EntitiesTabIcon from '../../../assets/EntitiesIcon.svg';
 import EmotionsTabIcon from '../../../assets/EmotionsSentimentIcon.svg';
+
 import Categories from '../../../components/Results/Categories/Categories';
 import ResultPaper from '../../../components/UI/ResultPaper/ResultPaper';
 import Emotions from '../../../components/Results/Emotions/Emotions';
 import CustomWordCloud from '../../../components/Results/CustomWordCloud/CustomWordCloud';
 import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
 import Sentiment from '../../../components/Results/Sentiment/Sentiment';
+import TextMapper from '../../../components/Results/TextMapper/TextMapper';
 
 const styles = theme => ({
   tabIcon: {
@@ -155,14 +157,21 @@ class CustomSessionsResultPage extends Component {
                     />
                   </Grid>
                   {tabValue === 0 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Keywords" headerGutter={true}>
-                        <CustomWordCloud
-                          keywords={customSessionResult.keywords}
-                          keywordSelected={this.selectKeywordHandler}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper header="Keywords" headerGutter={true}>
+                          <CustomWordCloud
+                            keywords={customSessionResult.keywords}
+                            keywordSelected={this.selectKeywordHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <ResultPaper header="Text Mapper" headerGutter={true}>
+                          <TextMapper />
+                        </ResultPaper>
+                      </Grid>
+                    </Auxilliary>
                   )}
                   {tabValue === 1 && (
                     <Grid item xs={10}>
