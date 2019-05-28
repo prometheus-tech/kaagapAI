@@ -29,12 +29,17 @@ function ResultPaper({
   header,
   headerGutter,
   marginBottom,
-  contentPadding
+  contentPadding,
+  maxHeight
 }) {
   return (
     <Paper
       className={classes.paper}
-      style={{ marginBottom: marginBottom ? '24px' : '0px' }}
+      style={{
+        marginBottom: marginBottom ? '24px' : '0px',
+        height: maxHeight ? maxHeight : '100%',
+        overflow: maxHeight ? 'auto' : 'hidden'
+      }}
     >
       {header ? (
         <div

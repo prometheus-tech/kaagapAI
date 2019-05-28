@@ -17,7 +17,7 @@ import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
 import EmotionsSentimentTabIcon from '../../../assets/EmotionsSentimentIcon.svg';
 import EntitiesTabIcon from '../../../assets/EntitiesIcon.svg';
 
-import CustomWordCloud from '../../../components/Session/Keywords/CustomWordCloud/CustomWordCloud';
+import CustomWordCloud from '../../../components/Results/CustomWordCloud/CustomWordCloud';
 import Categories from '../../../components/Results/Categories/Categories';
 import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
 import Emotions from '../../../components/Results/Emotions/Emotions';
@@ -130,7 +130,11 @@ class SessionResultsPage extends Component {
                   {tabValue === 0 && (
                     <Auxilliary>
                       <Grid item xs={6}>
-                        <ResultPaper header="Keywords" headerGutter={true}>
+                        <ResultPaper
+                          header="Keywords"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
                           <CustomWordCloud
                             keywords={data.result.keywords}
                             keywordSelected={this.selectKeywordHandler}
@@ -139,7 +143,7 @@ class SessionResultsPage extends Component {
                       </Grid>
                       {selectedKeyword ? (
                         <Grid item xs={4}>
-                          <ResultPaper>
+                          <ResultPaper maxHeight="70vh">
                             <TextMapper
                               sessionIds={[session_id]}
                               mainText={selectedKeyword.text}
@@ -175,7 +179,11 @@ class SessionResultsPage extends Component {
                   {tabValue === 2 && (
                     <Auxilliary>
                       <Grid item xs={6}>
-                        <ResultPaper header="Entities" headerGutter={true}>
+                        <ResultPaper
+                          header="Entities"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
                           <EntitiesTable
                             resultType="Session"
                             entities={data.result.entities}
@@ -185,7 +193,7 @@ class SessionResultsPage extends Component {
                       </Grid>
                       {selectedEntity ? (
                         <Grid item xs={4}>
-                          <ResultPaper>
+                          <ResultPaper maxHeight="70vh">
                             <TextMapper
                               sessionIds={[session_id]}
                               mainText={selectedEntity.text}

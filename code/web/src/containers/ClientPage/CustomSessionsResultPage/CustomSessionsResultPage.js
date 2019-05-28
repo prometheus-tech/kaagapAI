@@ -163,7 +163,11 @@ class CustomSessionsResultPage extends Component {
                   {tabValue === 0 && (
                     <Auxilliary>
                       <Grid item xs={6}>
-                        <ResultPaper header="Keywords" headerGutter={true}>
+                        <ResultPaper
+                          header="Keywords"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
                           <CustomWordCloud
                             keywords={customSessionResult.keywords}
                             keywordSelected={this.selectKeywordHandler}
@@ -172,7 +176,7 @@ class CustomSessionsResultPage extends Component {
                       </Grid>
                       {selectedKeyword ? (
                         <Grid item xs={4}>
-                          <ResultPaper>
+                          <ResultPaper maxHeight="70vh">
                             <TextMapper
                               sessionIds={analyzedSessions}
                               mainText={selectedKeyword.text}
@@ -207,7 +211,11 @@ class CustomSessionsResultPage extends Component {
                   {tabValue === 2 && (
                     <Auxilliary>
                       <Grid item xs={6}>
-                        <ResultPaper header="Entities" headerGutter={true}>
+                        <ResultPaper
+                          header="Entities"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
                           <EntitiesTable
                             resultType="Custom"
                             entities={customSessionResult.entities}
@@ -217,7 +225,7 @@ class CustomSessionsResultPage extends Component {
                       </Grid>
                       {selectedEntity ? (
                         <Grid item xs={4}>
-                          <ResultPaper>
+                          <ResultPaper maxHeight="70vh">
                             <TextMapper
                               sessionIds={analyzedSessions}
                               mainText={selectedEntity.text}
