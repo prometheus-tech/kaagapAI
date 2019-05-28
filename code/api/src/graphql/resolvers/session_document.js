@@ -23,7 +23,7 @@ export default {
       if(!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
-        models.Session_Document.findOne({
+        return models.Session_Document.findOne({
           raw: true,
           where: { sd_id }
         }).then(async res => {
