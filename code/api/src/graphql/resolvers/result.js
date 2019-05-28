@@ -1,5 +1,6 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import nluModules from '../../modules/nlu';
+import resultModules from '../../modules/results_module';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
 import uuid from 'uuid/v4';
@@ -369,6 +370,75 @@ export default {
           entities: customEntity,
           emotion: customEmotion
         };
+      }
+    },
+
+    findTextOccurences: async (parent, args, { models, practitioner }) => {
+      if (!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+
+        const sessions = await models.Session.findAll({
+          raw: true,
+          where:{
+            session_id: {
+              [Op.in]: args.session_id
+            }
+          }
+        });
+        
+        const textAppearances = sessions.map(async (session) => {
+          return await models.Session_Document.findAll({
+            raw: true,
+            where: {
+              session_id: session.session_id,
+              status: 'active'
+            }
+          }).then(async session_documents => {
+            const documents = await resultModules.getDocumentTalkTurns(session_documents);
+            const matching_documents = await resultModules.searchMatchingTalkTurnsFromDocuments(documents, args.text);
+            const appearanceDocuments = [];
+
+            matching_documents.forEach((document) => {
+              const talkTurns = [];
+  
+              document.matchingTalkTurns.forEach((talk_turn) => {
+                talkTurns.push({
+                  talk_turn_id: uuid(),
+                  talk_turn_text: talk_turn
+                });
+              });
+              
+              appearanceDocuments.push({
+                appearance_document_id: uuid(),
+                sd_id: document.sd_id,
+                file_name: document.file_name,
+                talk_turns: talkTurns
+              });
+            });
+
+            return appearanceDocuments;
+          }).then(appearanceDocuments => {
+              session.appearance_id = uuid();
+              session.appearance_documents = appearanceDocuments;
+              
+              delete session.c_id;
+              delete session.status;
+              delete session.date_of_session;
+
+              return session;
+          })
+        });
+
+        const text_appearances = await Promise.all(textAppearances);
+        const textOccurrence = {
+          text_occurrence_id: uuid(),
+          text: args.text,
+          text_appearances: text_appearances
+        }
+
+        return textOccurrence;
       }
     }
   }
