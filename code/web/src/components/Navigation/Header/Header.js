@@ -60,8 +60,8 @@ const styles = theme => ({
     marginLeft: 10
   },
   logo: {
-    width: 30,
-    height: 30
+    width: 40,
+    height: 40
   },
   sectionDesktop: {
     display: 'none',
@@ -186,7 +186,13 @@ class Header extends Component {
               open={isMenuOpen}
               onClose={this.handleMenuClose}
             >
-              <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+              <MenuItem
+                onClick={this.handleMenuClose}
+                component={RouterLink}
+                to="/account"
+              >
+                Profile
+              </MenuItem>
               <MenuItem
                 onClick={() => {
                   logout(client);

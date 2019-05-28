@@ -26,7 +26,6 @@ const styles = theme => ({
     minHeight: '100vh',
     padding: '0vh',
     margin: '0',
-    overflowX: 'hidden'
   },
   logo: {
     margin: 20,

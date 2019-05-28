@@ -15,10 +15,12 @@ import Button from '@material-ui/core/Button';
 
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
+import ForgotPassword from './containers/ForgotPassword/FindEmail/FindEmail';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
 import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
+import AccountSettingsPage from './containers/AccountSettingsPage/AccountSettingsPage';
 
 import { AUTH_TOKEN } from './util/constants';
 
@@ -51,6 +53,8 @@ const cache = new InMemoryCache({
         return 'emotion:' + object.emotion_id;
       case 'Archives':
         return 'archives:' + object.archives_id;
+      case 'AccountSettings':
+        return 'account:' + object.c_id;
       case 'CustomResult':
         return 'customResult:' + object.custom_result_id;
       case 'CustomSentiment':
@@ -72,7 +76,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'http://kaagapai-dev.com:4000/graphql'
+  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -132,8 +136,10 @@ class App extends Component {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/forgotpassword" component={ForgotPassword} />
               <Route exact path="/" component={ClientsPage} />
               <Route path="/archives" component={ArchivesPage} />
+              <Route path="/account" component={AccountSettingsPage} />
               <Route path="/client/:c_id" component={ClientPage} />
               <Route path="/session/:session_id" component={SessionPage} />
             </Switch>

@@ -53,7 +53,7 @@ const styles = theme => ({
   },
   customkInput: {
     borderRadius: 3,
-    backgroundColor: 'rgb(250, 250, 250)',
+    backgroundColor: 'rgb(252, 252, 252)',
     border: '2px solid #f2f2f2',
     color: '#33333',
     fontSize: '16',
