@@ -13,44 +13,32 @@ import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SelectSessionsDialog from '../../../components/Client/SelectSessionsDialog/SelectSessionsDialog';
 import EmptyCustomSessionsResult from '../../../components/UI/Placeholder/EmptyCustomSessionsResult';
 import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
-import Typography from '@material-ui/core/Typography';
 
 import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
 import EntitiesTabIcon from '../../../assets/EntitiesIcon.svg';
 import EmotionsTabIcon from '../../../assets/EmotionsSentimentIcon.svg';
+
 import Categories from '../../../components/Results/Categories/Categories';
 import ResultPaper from '../../../components/UI/ResultPaper/ResultPaper';
 import Emotions from '../../../components/Results/Emotions/Emotions';
 import CustomWordCloud from '../../../components/Results/CustomWordCloud/CustomWordCloud';
 import EntitiesTable from '../../../components/Results/Entities/EntitiesTable';
+import Sentiment from '../../../components/Results/Sentiment/Sentiment';
+import TextMapper from '../../../components/Results/TextMapper/TextMapper';
 
 const styles = theme => ({
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)'
-  },
   tabIcon: {
     width: '32px',
     marginRight: theme.spacing.unit * 2
-  },
-  overallSentimentLabel: {
-    color: theme.palette.grey[600],
-    fontSize: '16px',
-    fontWeight: 500,
-    marginTop: theme.spacing.unit * 4
-  },
-  sentimentValueText: {
-    fontWeight: 400
   }
 });
 
 class CustomSessionsResultPage extends Component {
   state = {
     tabValue: 0,
-    selectedKeyword: null
+    selectedKeyword: null,
+    selectedEntity: null
   };
 
   changeTabValueHandler = (e, value) => {
@@ -60,8 +48,11 @@ class CustomSessionsResultPage extends Component {
   };
 
   selectKeywordHandler = keyword => {
-    alert(keyword);
     this.setState({ selectedKeyword: keyword });
+  };
+
+  selectEntityHandler = entity => {
+    this.setState({ selectedEntity: entity });
   };
 
   render() {
@@ -77,7 +68,7 @@ class CustomSessionsResultPage extends Component {
       analyzeSessions
     } = this.props;
 
-    const { tabValue, selectedKeyword } = this.state;
+    const { tabValue, selectedKeyword, selectedEntity } = this.state;
 
     const tabsData = [
       {
@@ -170,32 +161,89 @@ class CustomSessionsResultPage extends Component {
                     />
                   </Grid>
                   {tabValue === 0 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Keywords" headerGutter={true}>
-                        <CustomWordCloud
-                          keywords={customSessionResult.keywords}
-                          keywordSelected={this.selectKeywordHandler}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper
+                          header="Keywords"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
+                          <CustomWordCloud
+                            keywords={customSessionResult.keywords}
+                            keywordSelected={this.selectKeywordHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      {selectedKeyword ? (
+                        <Grid item xs={4}>
+                          <ResultPaper maxHeight="70vh">
+                            <TextMapper
+                              sessionIds={analyzedSessions}
+                              mainText={selectedKeyword.text}
+                              supportingInfo={[
+                                { label: 'Count = ' + selectedKeyword.count },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(
+                                      selectedKeyword.relevance * 100
+                                    ) /
+                                      100
+                                }
+                              ]}
+                              type="sessions"
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
+                    </Auxilliary>
                   )}
                   {tabValue === 1 && (
                     <Grid item xs={10}>
                       <ResultPaper header="Categories" headerGutter={true}>
                         <Categories
+                          resultType="Custom"
                           categories={customSessionResult.categories}
                         />
                       </ResultPaper>
                     </Grid>
                   )}
                   {tabValue === 2 && (
-                    <Grid item xs={6}>
-                      <ResultPaper header="Entities" headerGutter={true}>
-                        <EntitiesTable
-                          entities={customSessionResult.entities}
-                        />
-                      </ResultPaper>
-                    </Grid>
+                    <Auxilliary>
+                      <Grid item xs={6}>
+                        <ResultPaper
+                          header="Entities"
+                          headerGutter={true}
+                          maxHeight="70vh"
+                        >
+                          <EntitiesTable
+                            resultType="Custom"
+                            entities={customSessionResult.entities}
+                            entitySelected={this.selectEntityHandler}
+                          />
+                        </ResultPaper>
+                      </Grid>
+                      {selectedEntity ? (
+                        <Grid item xs={4}>
+                          <ResultPaper maxHeight="70vh">
+                            <TextMapper
+                              sessionIds={analyzedSessions}
+                              mainText={selectedEntity.text}
+                              supportingInfo={[
+                                { label: 'Type = ' + selectedEntity.type },
+                                {
+                                  label:
+                                    'Relevance = ' +
+                                    Math.round(selectedEntity.relevance * 100) /
+                                      100
+                                }
+                              ]}
+                              type="sessions"
+                            />
+                          </ResultPaper>
+                        </Grid>
+                      ) : null}
+                    </Auxilliary>
                   )}
                   {tabValue === 3 && (
                     <Grid item xs={10}>
@@ -229,16 +277,7 @@ class CustomSessionsResultPage extends Component {
                         contentPadding={true}
                       >
                         <SentimentsTrend trend={trend} />
-                        <Typography className={classes.overallSentimentLabel}>
-                          Overall Sentiment:{' '}
-                          <span className={classes.sentimentValueText}>
-                            {customSessionResult.sentiment.label} (
-                            {Math.round(
-                              customSessionResult.sentiment.score * 100
-                            ) / 100}
-                            )
-                          </span>
-                        </Typography>
+                        <Sentiment sentiment={customSessionResult.sentiment} />
                       </ResultPaper>
                     </Grid>
                   )}

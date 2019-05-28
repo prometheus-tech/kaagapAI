@@ -40,6 +40,7 @@ function MyBreadcrumb({ classes, breadcrumbData }) {
         if (index < breadcrumbData.length - 1) {
           return (
             <ButtonBase
+              key={index}
               component={RouterLink}
               color="inherit"
               to={breadcrumbItem.path}
@@ -50,7 +51,7 @@ function MyBreadcrumb({ classes, breadcrumbData }) {
           );
         } else {
           return (
-            <Typography className={classes.currentBreadcrumbItem}>
+            <Typography key={index} className={classes.currentBreadcrumbItem}>
               {breadcrumbItem.icon} {breadcrumbItem.label}
             </Typography>
           );

@@ -42,7 +42,7 @@ const styles = theme => ({
 });
 
 function Categories(props) {
-  const { categories, classes } = props;
+  const { categories, resultType, classes } = props;
 
   return (
     <Grid container className={classes.categoryContainer}>
@@ -59,7 +59,11 @@ function Categories(props) {
       {categories.map(category => {
         return (
           <Grid
-            key={category.custom_category_id}
+            key={
+              resultType === 'Custom'
+                ? category.custom_category_id
+                : category.category_id
+            }
             item
             xs={12}
             className={classes.categoryItemContent}

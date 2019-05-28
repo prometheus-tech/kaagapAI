@@ -45,7 +45,7 @@ const styles = theme => ({
   }
 });
 
-function EntitiesTable({ classes, entities }) {
+function EntitiesTable({ classes, entities, resultType, entitySelected }) {
   return (
     <Grid container className={classes.entitiesTableContainer}>
       <Grid item xs={12}>
@@ -67,10 +67,17 @@ function EntitiesTable({ classes, entities }) {
             {entities.map(entity => {
               return (
                 <Grid
-                  key={entity.custom_entity_id}
+                  key={
+                    resultType === 'Custom'
+                      ? entity.custom_entity_id
+                      : entity.entity_id
+                  }
                   item
                   xs={12}
                   className={classes.entityItem}
+                  onClick={() => {
+                    entitySelected(entity);
+                  }}
                 >
                   <Grid
                     container

@@ -29,21 +29,28 @@ function ResultPaper({
   header,
   headerGutter,
   marginBottom,
-  contentPadding
+  contentPadding,
+  maxHeight
 }) {
   return (
     <Paper
       className={classes.paper}
-      style={{ marginBottom: marginBottom ? '24px' : '0px' }}
+      style={{
+        marginBottom: marginBottom ? '24px' : '0px',
+        height: maxHeight ? maxHeight : '100%',
+        overflow: maxHeight ? 'auto' : 'hidden'
+      }}
     >
-      <div
-        className={classes.paperHeader}
-        style={{ marginBottom: headerGutter ? '16px' : '0px' }}
-      >
-        <Typography variant="h5" className={classes.paperHeaderText}>
-          {header}
-        </Typography>
-      </div>
+      {header ? (
+        <div
+          className={classes.paperHeader}
+          style={{ marginBottom: headerGutter ? '16px' : '0px' }}
+        >
+          <Typography variant="h5" className={classes.paperHeaderText}>
+            {header}
+          </Typography>
+        </div>
+      ) : null}
       <div style={{ padding: contentPadding ? '16px 36px 16px 36px' : '0px' }}>
         {children}
       </div>

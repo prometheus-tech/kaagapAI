@@ -69,6 +69,14 @@ const cache = new InMemoryCache({
         return 'customEmotion:' + object.custom_emotion_id;
       case 'Trend':
         return 'trend:' + object.trend_id;
+      case 'TalkTurn':
+        return 'talkTurn:' + object.talk_turn_id;
+      case 'AppearanceDocument':
+        return 'appearanceDocument:' + object.appearance_document_id;
+      case 'TextAppearance':
+        return 'textAppearance:' + object.appearance_id;
+      case 'TextOccurence':
+        return 'textOccurrence:' + object.text_occurrence_id;
       default:
         return defaultDataIdFromObject(object);
     }

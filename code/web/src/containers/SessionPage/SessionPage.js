@@ -214,11 +214,30 @@ class SessionPage extends Component {
                       breadcrumbData={breadcrumbData}
                     />
 
-                    {session.documents.length > 0 ? <SessionSubHeader
-                      tabValue={tabValue}
-                      searchPlaceholder="Search documents..."
-                      tabValueChanged={this.changeTabValueHandler}
-                    /> : null}
+                    {session.documents.length > 0 ? (
+                      <SessionSubHeader
+                        tabValue={tabValue}
+                        searchPlaceholder="Search documents..."
+                        tabValueChanged={this.changeTabValueHandler}
+                      />
+                    ) : null}
+
+                    {selectedSessionDocument ? (
+                      <ContentSessionDocumentDialog
+                        opened={isContentSessionDocumentDialogOpened}
+                        closed={this.closeContentSessionDocumentDialog}
+                        editing={isEditContentSessionDocument}
+                        sessionDocument={selectedSessionDocument}
+                        contentEdited={this.editContentSessionDocumentHandler}
+                        contentEditStopped={
+                          this.stopEditContentSessionDocumentHandler
+                        }
+                        selectedSessionDocumentUpdated={
+                          this.updateSelectedSessionDocumentHandler
+                        }
+                        session_id={session_id}
+                      />
+                    ) : null}
 
                     <Main>
                       {tabValue === 0 && (
@@ -275,28 +294,9 @@ class SessionPage extends Component {
                       {tabValue === 1 && (
                         <SessionResultsPage
                           session_id={session_id}
-                          documents={session.documents}
-                          contentSessionDocumentDialogOpened={
-                            this.openContentSessionDocumentDialog
-                          }
+                          pageTabValueChanged={this.changeTabValueHandler}
                         />
                       )}
-                      {selectedSessionDocument ? (
-                        <ContentSessionDocumentDialog
-                          opened={isContentSessionDocumentDialogOpened}
-                          closed={this.closeContentSessionDocumentDialog}
-                          editing={isEditContentSessionDocument}
-                          sessionDocument={selectedSessionDocument}
-                          contentEdited={this.editContentSessionDocumentHandler}
-                          contentEditStopped={
-                            this.stopEditContentSessionDocumentHandler
-                          }
-                          selectedSessionDocumentUpdated={
-                            this.updateSelectedSessionDocumentHandler
-                          }
-                          session_id={session_id}
-                        />
-                      ) : null}
                     </Main>
                   </Auxilliary>
                 );
