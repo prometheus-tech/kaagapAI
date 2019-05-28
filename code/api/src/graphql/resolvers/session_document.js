@@ -155,5 +155,31 @@ export default {
         })
       }
     },
+
+    permanentlyDeleteSessionDocument: async (parent, { sd_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const session_document = await models.Session_Document.findOne({
+          raw: true,
+          where: {
+            sd_id,
+            status: 'archived'
+          }
+        });
+
+        if(session_document) {
+          documentModules.deleteFileFromGCS(session_document.file);
+        }
+
+        await models.Session_Document.destroy({
+          where: {
+            sd_id: session_document.sd_id
+          }
+        });
+
+        return session_document;
+      }
+    }
   }
 };

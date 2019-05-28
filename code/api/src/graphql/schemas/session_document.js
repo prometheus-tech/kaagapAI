@@ -33,5 +33,7 @@ export default `
     deleteSessionDocument(sd_id: UUID!): SessionDocument!
 
     restoreSessionDocument(sd_id: UUID!): SessionDocument!
+
+    permanentlyDeleteSessionDocument(sd_id: UUID!): SessionDocument
   }
 `;

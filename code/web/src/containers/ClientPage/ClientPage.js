@@ -21,6 +21,8 @@ class ClientPage extends Component {
   state = {
     tabValue: 0,
     view: 'card',
+    checkedSessions: [],
+    analyzedSessions: [],
     isNewSessionDialogOpened: false,
     isSelectSessionsDialogOpened: false
   };
@@ -62,6 +64,30 @@ class ClientPage extends Component {
     });
   };
 
+  toggleCheckedSessionHandler = sessionId => {
+    const currentIndex = this.state.checkedSessions.indexOf(sessionId);
+
+    const newCheckedSessions = [...this.state.checkedSessions];
+
+    if (currentIndex === -1) {
+      newCheckedSessions.push(sessionId);
+    } else {
+      newCheckedSessions.splice(currentIndex, 1);
+    }
+
+    this.setState({
+      checkedSessions: newCheckedSessions
+    });
+  };
+
+  changeAnalyzedSessions = () => {
+    const newAnalyzedSessions = [...this.state.checkedSessions];
+
+    this.setState({
+      analyzedSessions: newAnalyzedSessions
+    });
+  };
+
   render() {
     const { c_id } = this.props.match.params;
 
@@ -69,7 +95,9 @@ class ClientPage extends Component {
       tabValue,
       view,
       isNewSessionDialogOpened,
-      isSelectSessionsDialogOpened
+      isSelectSessionsDialogOpened,
+      checkedSessions,
+      analyzedSessions
     } = this.state;
 
     return (
@@ -146,6 +174,10 @@ class ClientPage extends Component {
                     isSelectSessionsDialogOpened={isSelectSessionsDialogOpened}
                     selectSessionsDialogOpened={this.openSelectSessionsHandler}
                     selectSessionsDialogClosed={this.closeSelectSessionsHandler}
+                    checkedSessions={checkedSessions}
+                    analyzedSessions={analyzedSessions}
+                    checkSessionsToggled={this.toggleCheckedSessionHandler}
+                    analyzeSessions={this.changeAnalyzedSessions}
                   />
                 )}
               </Main>

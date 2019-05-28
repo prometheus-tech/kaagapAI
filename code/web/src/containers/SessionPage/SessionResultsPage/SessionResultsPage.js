@@ -166,15 +166,13 @@ class SessionResultsPage extends Component {
                   </Grid>
                   <Grid item xs={10}>
                     {activeIndex === 0 && (
-                      <TabContainer>
-                        <Keywords
-                          keywords={data.result.keywords}
-                          documents={documents}
-                          contentSessionDocumentDialogOpened={
-                            contentSessionDocumentDialogOpened
-                          }
-                        />
-                      </TabContainer>
+                      <Keywords
+                        keywords={data.result.keywords}
+                        documents={documents}
+                        contentSessionDocumentDialogOpened={
+                          contentSessionDocumentDialogOpened
+                        }
+                      />
                     )}
                     {activeIndex === 1 && (
                       <TabContainer>

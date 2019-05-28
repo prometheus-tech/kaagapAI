@@ -1,6 +1,7 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
+import documentModules from '../../modules/document_modules';
 
 export default {
   UUID: GraphQlUUID,
@@ -227,6 +228,59 @@ export default {
           raw: true,
           where: { c_id }
         });
+      }
+    },
+
+    permanentlyDeleteClient: async(parent, { c_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const client =  await models.Client.findOne({
+          raw: true,
+          where: {
+            c_id,
+            status: 'archived'
+          }
+        });
+
+        if(client) {
+          const sessions = await models.Session.findAll({
+            attributes: ['session_id'],
+            raw: true,
+            where: {
+              c_id
+            }
+          })
+          var sessionIDs = [];
+          const Op = Sequelize.Op;
+
+          sessions.forEach((session) => {
+            sessionIDs.push(session.session_id);
+          });
+
+          const client_documents = await models.Session_Document.findAll({
+            raw: true,
+            where: {
+              session_id: {
+                [Op.in]: sessionIDs
+              }
+            }
+          });
+
+          if(client_documents){
+            client_documents.forEach((client_document) => {
+              documentModules.deleteFileFromGCS(client_document.file);
+            });
+          }
+
+          await models.Client.destroy({
+            where: {
+              c_id: client.c_id
+            }
+          });
+
+          return client;
+        }
       }
     },
     
