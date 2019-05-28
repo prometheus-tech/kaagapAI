@@ -11,6 +11,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/ButtonBase';
+import grey from '@material-ui/core/colors/grey';
 
 // import { Link as RouterLink, withRouter } from 'react-router-dom';
 
@@ -19,6 +20,10 @@ const styles = theme => ({
     color: '#2d3436',
     letterSpacing: '2px',
     fontWeight: '400'
+  },
+  accountSubTitle: {
+    color: grey[600],
+    fontWeight: 300
   },
   divItem1: {
     height: '2px',
@@ -79,13 +84,12 @@ const styles = theme => ({
     textAlign: 'right'
   },
   saveChangesButton: {
-    color: '#8f94fb',
-    textTransform: 'capitalize',
-    borderRadius: '10px',
-    border: '1px solid #8f94fb',
+    color: '#f37335',
+    borderRadius: 4,
+    border: '1px solid #f37335',
     fontSize: 15,
     '&:hover': {
-      background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
+      background: '#fdc830',
       border: '0px',
       color: '#ffffff'
     },
@@ -128,7 +132,10 @@ class AccountSettingsPage extends Component {
           <div>
             <div className={classes.divItem1} />
             <Typography variant="h6" className={classes.accountTitle}>
-              Account settings
+              General Information
+            </Typography>
+            <Typography variant="subtitle2" className={classes.accountSubTitle}>
+              Update your profile.
             </Typography>
           </div>
           <Grid container>
@@ -151,7 +158,7 @@ class AccountSettingsPage extends Component {
                         </InputLabel>
                         <InputBase
                           fullWidth
-                          defaultValue="Loraine"
+                          defaultValue="John"
                           classes={{
                             root: classes.customInputRoot,
                             input: classes.customkInput
@@ -167,7 +174,7 @@ class AccountSettingsPage extends Component {
                         </InputLabel>
                         <InputBase
                           fullWidth
-                          defaultValue="Cerezo"
+                          defaultValue="Doe"
                           classes={{
                             root: classes.customInputRoot,
                             input: classes.customkInput
@@ -199,7 +206,7 @@ class AccountSettingsPage extends Component {
                         </InputLabel>
                         <InputBase
                           fullWidth
-                          defaultValue="lorainecerezo@gmail.com"
+                          defaultValue="johndoe@gmail.com"
                           classes={{
                             root: classes.customInputRoot,
                             input: classes.customkInput
@@ -261,7 +268,11 @@ class AccountSettingsPage extends Component {
           <div>
             <div className={classes.divItem1} />
             <Typography variant="h6" className={classes.accountTitle}>
-              Password
+              Change password
+            </Typography>
+            <Typography variant="subtitle2" className={classes.accountSubTitle}>
+              Remember, your password should not be easy and common! were
+              concern and its for your safety.
             </Typography>
           </div>
           <Grid container>
@@ -347,7 +358,7 @@ class AccountSettingsPage extends Component {
                         color="primary"
                         className={classes.saveChangesButton}
                       >
-                        Save changes
+                        Change password
                       </Button>
                     </Grid>
                   </Grid>
