@@ -27,7 +27,7 @@ export default {
           raw: true,
           where: { sd_id }
         }).then(async res => {
-          const filename = res.file.split('gs://kaagapai-uploads/')[1];
+          const filename = res.file.split('gs://kaagapai-files/')[1];
           const originalFilename = res.file_name;
           const savePath = downloadsFolder() + '/';
   
