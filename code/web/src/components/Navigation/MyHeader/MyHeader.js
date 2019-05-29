@@ -33,6 +33,11 @@ const styles = theme => ({
     width: '30px',
     marginRight: theme.spacing.unit * 2
   },
+  logoButton: {
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
+  },
   logoContainer: {
     flexGrow: 1,
     display: 'flex',
@@ -81,6 +86,10 @@ class MyHeader extends Component {
 
     const isMenuOpened = Boolean(anchorEl);
 
+    const ButtonHomeLink = props => <RouterLink to="/" {...props} />;
+
+    const ButtonAccountLink = props => <RouterLink to="/account" {...props} />;
+
     return (
       <ApolloConsumer>
         {client => (
@@ -88,7 +97,14 @@ class MyHeader extends Component {
             <AppBar position="static" className={classes.appBar}>
               <Toolbar>
                 <div className={classes.logoContainer}>
-                  <img src={Logo} alt="kaagapAI" className={classes.logo} />
+                  <Button
+                    component={ButtonHomeLink}
+                    disableRipple={true}
+                    disableTouchRipple={true}
+                    className={classes.logoButton}
+                  >
+                    <img src={Logo} alt="kaagapAI" className={classes.logo} />
+                  </Button>
                   {breadcrumbData ? (
                     <MyBreadcrumb breadcrumbData={breadcrumbData} />
                   ) : null}
@@ -122,7 +138,7 @@ class MyHeader extends Component {
               open={isMenuOpened}
               onClose={this.closeMenuHandler}
             >
-              <MenuItem>Profile</MenuItem>
+              <MenuItem component={ButtonAccountLink}>Account</MenuItem>
               <MenuItem
                 onClick={() => {
                   logout(client);

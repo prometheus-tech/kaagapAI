@@ -65,7 +65,7 @@ function SessionSubHeader({
             }}
           >
             <Tab
-              label="Documents"
+              label="Files"
               classes={{
                 root: classes.tabRoot,
                 selected: classes.tabSelected

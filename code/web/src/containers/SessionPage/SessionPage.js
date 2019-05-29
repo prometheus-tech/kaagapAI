@@ -325,9 +325,6 @@ class SessionPage extends Component {
                       anchorEl={uploadFilePopperAnchorEl}
                       uploadFilePopperClosed={this.closeUploadFilePopperHandler}
                     />
-                    {/* {selectedSessionDocument ? (
-                      <MyFileViewer sessionDocument={selectedSessionDocument} />
-                    ) : null} */}
                   </Auxilliary>
                 );
               }}

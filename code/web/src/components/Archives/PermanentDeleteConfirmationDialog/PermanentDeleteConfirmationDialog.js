@@ -19,9 +19,8 @@ function PermanentDeleteConfirmationDialog({
       <DialogContent>
         <DialogContentText>
           This will permanently delete{' '}
-          <span style={{ fontWeight: 'bolder' }}>{permanentDeleteLabel}</span>{' '}
-          and all associated data. You cannot restore deleted information
-          anymore.
+          <span style={{ fontWeight: 700 }}>{permanentDeleteLabel}</span> and
+          all associated data. You cannot restore deleted information anymore.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
