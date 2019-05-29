@@ -97,6 +97,7 @@ const uploadAttachment = async(file, session_id) => {
   var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
   var filePath = 'gs://kaagapai-files/' + newFileName;
+  inputPath = './src/tmp/' + newFileName;
 
   await documentModules.uploadGCS(inputPath);
 
@@ -104,5 +105,6 @@ const uploadAttachment = async(file, session_id) => {
 }
 
 export default {
-  uploadFile
+  uploadFile,
+  uploadAttachment
 };

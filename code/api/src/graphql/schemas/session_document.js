@@ -11,7 +11,7 @@ export default `
     sd_id: UUID!
     file: String!
     file_name: String!
-    content: String!
+    content: String
     date_added: Date!
     last_modified: Date
     type: String!
