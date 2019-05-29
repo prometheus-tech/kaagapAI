@@ -35,6 +35,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
+      attachment: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
       session_id: {
         type: Sequelize.UUID,
         onDelete:'CASCADE',
