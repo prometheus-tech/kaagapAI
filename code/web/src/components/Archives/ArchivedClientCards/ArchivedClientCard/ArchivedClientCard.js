@@ -87,10 +87,12 @@ const styles = theme => ({
 function ArchivedClientCard(props) {
   const { classes, client, permanentDeleteConfirmationDialogOpened } = props;
 
-  const { c_id, fname, lname, no_of_sessions } = client;
+  const { c_id, fname, lname, no_of_archived_sessions } = client;
   const name = fname + ' ' + lname;
   const sessions =
-    no_of_sessions > 0 ? no_of_sessions + ' sessions' : 'No sessions yet';
+    no_of_archived_sessions > 0
+      ? no_of_archived_sessions + ' sessions'
+      : 'No sessions yet';
 
   return (
     <Mutation
