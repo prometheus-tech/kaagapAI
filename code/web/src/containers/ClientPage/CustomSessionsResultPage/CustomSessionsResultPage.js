@@ -137,6 +137,7 @@ class CustomSessionsResultPage extends Component {
           <Query
             query={CUSTOM_RESULT}
             variables={{ session_id: analyzedSessions }}
+            fetchPolicy="network-only"
             errorPolicy="all"
           >
             {({ loading, error, data }) => {
