@@ -14,6 +14,7 @@ import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocu
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
+import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -36,7 +37,11 @@ class SessionDocumentsPage extends Component {
       contentEdited,
       sessionDocumentRenameDialogOpened,
       selectedSessionDocumentUpdated,
-      sessionDocumentRenameDialogClosed
+      sessionDocumentRenameDialogClosed,
+      isContentSessionDocumentDialogOpened,
+      isEditContentSessionDocument,
+      contentSessionDocumentDialogClosed,
+      contentEditStopped
     } = this.props;
 
     return (
@@ -60,6 +65,20 @@ class SessionDocumentsPage extends Component {
           fileRemoved={newUploadFileRemoved}
           sessionId={session_id}
         />
+
+        {selectedSessionDocument ? (
+          <ContentSessionDocumentDialog
+            opened={isContentSessionDocumentDialogOpened}
+            closed={contentSessionDocumentDialogClosed}
+            editing={isEditContentSessionDocument}
+            sessionDocument={selectedSessionDocument}
+            contentEdited={contentEdited}
+            contentEditStopped={contentEditStopped}
+            selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
+            session_id={session_id}
+          />
+        ) : null}
+
         {selectedSessionDocument ? (
           <Auxilliary>
             <Mutation

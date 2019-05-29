@@ -18,25 +18,6 @@ export default {
         });
       }
     },
-
-    downloadSessionDocument: (parent, { sd_id }, { models, practitioner }) =>{
-      if(!practitioner) {
-        throw new AuthenticationError('You must be logged in');
-      } else {
-        return models.Session_Document.findOne({
-          raw: true,
-          where: { sd_id }
-        }).then(async res => {
-          const filename = res.file.split('gs://kaagapai-files/')[1];
-          const originalFilename = res.file_name;
-          const savePath = downloadsFolder() + '/';
-  
-          await documentModules.getFileFromGCS(filename, savePath, originalFilename);
-  
-          return res;
-        })
-      }
-    },
   },
 
   Mutation: {
@@ -210,6 +191,25 @@ export default {
             where: { sd_id }
           });
         });
+      }
+    },
+
+    downloadSessionDocument: (parent, { sd_id }, { models, practitioner }) =>{
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        return models.Session_Document.findOne({
+          raw: true,
+          where: { sd_id }
+        }).then(async res => {
+          const filename = res.file.split('gs://kaagapai-files/')[1];
+          const originalFilename = res.file_name;
+          const savePath = downloadsFolder() + '/';
+  
+          await documentModules.getFileFromGCS(filename, savePath, originalFilename);
+  
+          return res;
+        })
       }
     }
   }
