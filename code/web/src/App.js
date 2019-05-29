@@ -36,6 +36,8 @@ const history = createHashHistory();
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
+      case 'Practitioner':
+        return 'practitioner:' + object.email + '_' + object.license;
       case 'Client':
         return 'client:' + object.c_id;
       case 'Session':
@@ -150,6 +152,7 @@ class App extends Component {
               <Route path="/signup" component={SignUp} />
               <Route path="/forgotpassword" component={ForgotPassword} />
               <Route path="/updatepassword" component={UpdatePassword} />
+              <Route path="/account" component={AccountSettingsPage} />
               <Route exact path="/" component={ClientsPage} />
               <Route path="/archives" component={ArchivesPage} />
               <Route path="/account" component={AccountSettingsPage} />
