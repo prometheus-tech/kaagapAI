@@ -33,6 +33,15 @@ export default {
       });
     },
 
+    no_of_archived_sessions: ({ c_id }, args, { models }) => {
+      return models.Session.count({ 
+        where: { 
+          c_id ,
+          status: 'archived'
+        } 
+      });
+    },
+
     searchsession: async ({ c_id }, args, { models }) => {
       const Op = Sequelize.Op;
       return models.Session.findAll({
