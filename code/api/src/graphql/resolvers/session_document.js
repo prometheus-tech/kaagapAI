@@ -50,6 +50,35 @@ export default {
         })
       }
     },
+
+    uploadSessionAttachment: (parent, { file, session_id }, { models, practitioner }) => {
+      if (!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        return uploadModules
+        .uploadAttachment(file, session_id)
+        .then(async ({ session_id, fileName, filePath, translation, mimetype }) => {
+          const addFileRes = await models.Session_Document.create({
+            session_id,
+            file: filePath,
+            file_name: fileName,
+            content: null,
+            type: mimetype,
+            attachment: true,
+            should_analyze: false,
+            date_added: new Date()
+          });
+          const { sd_id } = addFileRes.dataValues;
+          return sd_id;
+        })
+        .then(async sd_id => {
+          return models.Session_Document.findOne({
+            raw: true,
+            where: { sd_id }
+          });
+        })
+      }
+    },
     
     editSessionDocument: async (
       parent,

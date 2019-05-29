@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     should_analyze: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
+    },
+    attachment: {
+      type: DataTypes.BOOLEAN,
     }
   });
 

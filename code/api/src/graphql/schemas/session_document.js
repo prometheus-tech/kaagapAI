@@ -24,9 +24,11 @@ export default `
   type Query { 
     sessionDocument(sd_id: UUID!): SessionDocument!
   }
-
+ 
   type Mutation {
-    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument
+    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
+
+    uploadSessionAttachment(file: Upload!, session_id: UUID!): SessionDocument!
 
     editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
 

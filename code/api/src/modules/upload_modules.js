@@ -74,7 +74,7 @@ const uploadFile = async(file, session_id) => {
     }
 
     await documentModules.uploadGCS(inputPath);
-    
+
     return { session_id, fileName, filePath, mimetype, translation };
   } else {
     inputPath = './src/tmp/' + newFileName;
@@ -84,6 +84,23 @@ const uploadFile = async(file, session_id) => {
 
     return { session_id, fileName, filePath, mimetype, translation };
   }
+}
+
+const uploadAttachment = async(file, session_id) => {
+  const { filename, mimetype, createReadStream } = await file;
+
+  var inputPath = './src/tmp/' + filename;
+  const stream = createReadStream();
+  var fileName = filename;
+
+  await documentModules.storeUpload({ stream, inputPath });
+  var newFileName = await documentModules.renameFile({ inputPath, session_id });
+
+  var filePath = 'gs://kaagapai-files/' + newFileName;
+
+  await documentModules.uploadGCS(inputPath);
+
+  return { session_id, fileName, filePath, mimetype };
 }
 
 export default {
