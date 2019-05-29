@@ -287,7 +287,7 @@ export default {
       const changePasswordUUID = uuid();
       //change body base on final url
       var body =
-        'To change your password please click on the link: http://kaagapai-dev.com:3000/change-password/'+changePasswordUUID;
+        'To change your password please click on the link: http://kaagapai-dev.com:3000/#/change-password/'+changePasswordUUID;
       const subject = 'Change Account Password';
 
       return models.Practitioner.findOne({
