@@ -2,7 +2,7 @@ import GraphQlUUID from 'graphql-type-uuid';
 import uploadModules from '../../modules/upload_modules';
 import downloadsFolder from 'downloads-folder';
 import documentModules from '../../modules/document_modules';
-import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import { AuthenticationError, ForbiddenError, ApolloError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
 
 export default {
@@ -17,27 +17,6 @@ export default {
           raw: true,
           where: { sd_id }
         });
-      }
-    },
-
-    getFile: async (parent, { sd_id }, { models, practitioner }) => {
-      if(!practitioner) {
-        throw new AuthenticationError('You must be logged in');
-      } else {
-        const Op = Sequelize.Op;
-        const file = await models.Session_Document.findOne({
-          raw: true,
-          where: { 
-            sd_id 
-          }
-        })
-
-        if(file) {
-          const filename = file.file.split('gs://kaagapai-files/')[1];
-          const url = documentModules.getImageUrl(filename);
-
-          return url;
-        }
       }
     }
   },
@@ -110,8 +89,20 @@ export default {
       if(!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
+        const session_document = await models.Session_Document.findOne({
+          raw: true,
+          where: { sd_id }
+        });
+
+        var document_content = null;
+        if(content && !session_document.attachment){
+          document_content = content;
+        } else if (!content && !session_document.attachment) {
+          return new ApolloError('Content should not be empty', 'NULL_CONTENT_ERROR');
+        }
+        
         await models.Session_Document.update({
-          content,
+          content: document_content,
           last_modified: new Date(),
           file_name
         }, {
@@ -262,6 +253,27 @@ export default {
   
           return res;
         })
+      }
+    },
+
+    getFile: async (parent, { sd_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+        const file = await models.Session_Document.findOne({
+          raw: true,
+          where: { 
+            sd_id 
+          }
+        })
+
+        if(file) {
+          const filename = file.file.split('gs://kaagapai-files/')[1];
+          const url = documentModules.getImageUrl(filename);
+
+          return url;
+        }
       }
     }
   }
