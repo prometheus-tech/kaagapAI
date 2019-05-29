@@ -47,6 +47,6 @@ export default `
 
     forgotPassword(email: String!): JSON
 
-    changePassword(email: String!, changePasswordToken: String!, password: String!): JSON
+    changePassword(changePasswordToken: String!, password: String!): JSON
   }
 `;
