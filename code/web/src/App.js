@@ -16,6 +16,7 @@ import Button from '@material-ui/core/Button';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
 import ForgotPassword from './containers/ForgotPassword/FindEmail/FindEmail';
+import UpdatePassword from './containers/ForgotPassword/UpdatePassword/UpdatePassword';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
@@ -148,6 +149,7 @@ class App extends Component {
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
               <Route path="/forgotpassword" component={ForgotPassword} />
+              <Route path="/updatepassword" component={UpdatePassword} />
               <Route exact path="/" component={ClientsPage} />
               <Route path="/archives" component={ArchivesPage} />
               <Route path="/account" component={AccountSettingsPage} />
