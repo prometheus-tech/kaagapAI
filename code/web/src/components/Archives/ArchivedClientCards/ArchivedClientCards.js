@@ -4,7 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import ArchivedClientCard from './ArchivedClientCard/ArchivedClientCard';
 import Typography from '@material-ui/core/Typography';
 
-function ClientCards({ clients }) {
+function ArchivedClientCards({
+  clients,
+  permanentDeleteConfirmationDialogOpened
+}) {
   return (
     <Grid container spacing={8} style={{ paddingBottom: '80px' }}>
       <Grid item xs={12}>
@@ -23,7 +26,12 @@ function ClientCards({ clients }) {
             md={4}
             lg={3}
           >
-            <ArchivedClientCard client={client} />
+            <ArchivedClientCard
+              client={client}
+              permanentDeleteConfirmationDialogOpened={
+                permanentDeleteConfirmationDialogOpened
+              }
+            />
           </Grid>
         );
       })}
@@ -31,4 +39,4 @@ function ClientCards({ clients }) {
   );
 }
 
-export default ClientCards;
+export default ArchivedClientCards;
