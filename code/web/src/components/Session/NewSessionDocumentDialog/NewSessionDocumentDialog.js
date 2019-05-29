@@ -44,11 +44,16 @@ const styles = theme => ({
     alignItems: 'center'
   },
   infoTextContainer: {
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: theme.spacing.unit * 4
   },
   infoText: {
     color: theme.palette.grey[600],
     marginBottom: theme.spacing.unit * 2
+  },
+  instructionText: {
+    color: theme.palette.grey[600],
+    marginBottom: theme.spacing.unit * 3
   },
   avatar: {
     width: 60,
@@ -132,11 +137,11 @@ const activeStyle = {
 };
 
 const acceptStyle = {
-  backgroundColor: '#f6f6f6'
+  backgroundColor: '#f1f8e9'
 };
 
 const rejectStyle = {
-  backgroundColor: '#F08080'
+  backgroundColor: '#ffebee'
 };
 
 function NewSessionDocumentDialog(props) {
@@ -162,7 +167,17 @@ function NewSessionDocumentDialog(props) {
     noKeyboard: true,
     onDropAccepted: ([file]) => {
       fileAdded(file);
-    }
+    },
+    multiple: false,
+    accept: [
+      'image/png',
+      'image/jpeg',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/pdf',
+      'text/plain',
+      'audio/*'
+    ],
+    maxFile: 10000000 // 10 MB in bytes
   });
 
   const dropzoneStyle = useMemo(
@@ -230,9 +245,9 @@ function NewSessionDocumentDialog(props) {
     >
       {(addSessionDocument, { loading }) => {
         return (
-          <Dialog open={opened} maxWidth="lg">
+          <Dialog open={opened} fullWidth maxWidth="sm">
             <DialogTitle onClose={closed} isLoading={loading}>
-              New Session Document Upload
+              New Document Upload
             </DialogTitle>
             <DialogContent className={classes.uploadDialog}>
               <section {...getRootProps({ style: dropzoneStyle })}>
@@ -246,6 +261,16 @@ function NewSessionDocumentDialog(props) {
                         alt="Upload"
                       />
                       <div className={classes.infoTextContainer}>
+                        <Typography
+                          variant="body1"
+                          className={classes.instructionText}
+                        >
+                          Upload documents that will be preprocessed (machine
+                          translation, text extraction, speech-to-text, and OCR)
+                          and analyzed by kaagapAI. These documents are limited
+                          to files with the formats: DOCX, PDF, TXT, JPEG, PNG,
+                          and M4A.
+                        </Typography>
                         <Typography variant="h5" className={classes.infoText}>
                           Drag file here
                         </Typography>

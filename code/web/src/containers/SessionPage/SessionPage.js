@@ -21,7 +21,6 @@ import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
 import Main from '../../hoc/Main/Main';
 import SessionSubHeader from '../../components/Session/SessionSubHeader/SessionSubHeader';
 import UploadFilePopper from '../../components/Session/UploadFilePopper/UploadFilePopper';
-import MyFileViewer from '../../components/Session/MyFIleViewer/MyFileViewer';
 
 class SessionPage extends Component {
   state = {
