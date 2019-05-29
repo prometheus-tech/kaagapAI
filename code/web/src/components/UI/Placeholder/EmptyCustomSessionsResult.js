@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import EmptyCustomSessionsResultImage from '../../../assets/empty_custom_result.svg';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
+import blue from '@material-ui/core/colors/blue';
 import Fab from '@material-ui/core/Fab';
 import TrendsIcon from '@material-ui/icons/Timeline';
 
@@ -34,17 +35,18 @@ const styles = theme => ({
     fontWeight: 800
   },
   extendedButton: {
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
-    background: '#ef6c00',
     textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
+    borderRadius: 3,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: '#e65100',
-      boxShadow: theme.shadows[10]
+      backgroundColor: blue[900]
     },
-    marginTop: theme.spacing.unit * 4,
-    padding: '5px 25px 5px 25px'
+    margin: theme.spacing.unit,
+    padding: '3px 20px 3px 20px',
+    width: '15vw',
+    boxShadow: 'none'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit

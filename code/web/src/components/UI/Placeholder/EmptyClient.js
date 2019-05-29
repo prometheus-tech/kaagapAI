@@ -37,17 +37,18 @@ const styles = theme => ({
     color: blueGrey[300]
   },
   extendedButton: {
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
-    background: '#0091ea',
     textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
+    borderRadius: 3,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: blue[900],
-      boxShadow: theme.shadows[10]
+      backgroundColor: blue[900]
     },
-    marginTop: theme.spacing.unit * 4,
-    padding: '5px 25px 5px 25px'
+    margin: theme.spacing.unit,
+    padding: '3px 15px 3px 15px',
+    width: '15vw',
+    boxShadow: 'none'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit

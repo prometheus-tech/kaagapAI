@@ -38,17 +38,18 @@ const styles = theme => ({
     color: blueGrey[300],
   },
   extendedButton: {
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
-    background: purple[500],
     textTransform: 'capitalize',
-    borderRadius: '50px',
-    fontSize: 16,
+    borderRadius: 3,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: blue[900],
-      boxShadow: theme.shadows[10]
+      backgroundColor: blue[900]
     },
-    marginTop: theme.spacing.unit * 4,
-    padding: '5px 25px 5px 25px'
+    margin: theme.spacing.unit,
+    padding: '3px 20px 3px 20px',
+    width: '15vw',
+    boxShadow: 'none'
   },
   extendedIcon: {
     marginRight: theme.spacing.unit
@@ -73,7 +74,7 @@ class EmptyIllustrationDocuments extends Component {
           <Typography variant="h5" className={classes.sayingEmptyPlaceholder}>
             Start uploading your files to get results
           </Typography>
-          <Fab
+          {/* <Fab
             color="primary"
             variant="extended"
             className={classes.extendedButton}
@@ -81,7 +82,7 @@ class EmptyIllustrationDocuments extends Component {
           >
             <Icon className={classes.extendedIcon}>cloud_upload</Icon> Upload
             File
-          </Fab>
+          </Fab> */}
         </div>
       </div>
     );
