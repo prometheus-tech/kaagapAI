@@ -161,6 +161,11 @@ function SessionDocumentCard({
                 <div className={classes.shouldAnalyzeContainer}>
                   <Chip
                     className={classes.shouldAnalyzeChip}
+                    style={{
+                      backgroundColor: sessionDocument.should_analyze
+                        ? '#f1f8e9'
+                        : ''
+                    }}
                     icon={
                       sessionDocument.should_analyze ? (
                         <CheckIcon />
