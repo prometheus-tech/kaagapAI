@@ -8,6 +8,7 @@ import UPDATE_SHOULD_ANALYZE from '../../../graphql/mutations/updateShouldAnalyz
 import DOWNLOAD_SESSION_DOCUMENT from '../../../graphql/mutations/downloadSessionDocument';
 import SESSION from '../../../graphql/queries/session';
 import RESULTS from '../../../graphql/queries/results';
+import GET_FILE from '../../../graphql/mutations/getFile';
 import { Mutation } from 'react-apollo';
 
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
@@ -179,50 +180,80 @@ class SessionDocumentsPage extends Component {
                       }}
                     >
                       {(downloadSessionDocument, { loading: downloading }) => (
-                        <Auxilliary>
-                          <SessionDocumentMoreActionsPopper
-                            isMoreActionsOpened={isMoreActionsOpened}
-                            anchorEl={anchorEl}
-                            moreActionsClosed={moreActionsClosed}
-                            sessionDocumentViewed={
-                              contentSessionDocumentDialogOpened
-                            }
-                            contentEdited={contentEdited}
-                            sessionDocumentRenamed={
-                              sessionDocumentRenameDialogOpened
-                            }
-                            sessionDocumentDeleted={() => {
-                              deleteSessionDocument({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                        <Mutation
+                          mutation={GET_FILE}
+                          onCompleted={({ getFile }) => {
+                            window.open(getFile, '_blank');
+                          }}
+                          errorPolicy="all"
+                          onError={error => {
+                            // Ignore error
+                          }}
+                        >
+                          {(getFile, { loading: gettingFileUrl }) => (
+                            <Auxilliary>
+                              <SessionDocumentMoreActionsPopper
+                                isMoreActionsOpened={isMoreActionsOpened}
+                                anchorEl={anchorEl}
+                                moreActionsClosed={moreActionsClosed}
+                                sessionDocumentViewed={
+                                  contentSessionDocumentDialogOpened
                                 }
-                              });
-                            }}
-                            shouldAnalyzeUpdated={() => {
-                              updateShouldAnalyze({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                                contentEdited={contentEdited}
+                                sessionDocumentRenamed={
+                                  sessionDocumentRenameDialogOpened
                                 }
-                              });
-                            }}
-                            selectedSessionDocument={selectedSessionDocument}
-                            sessionDocumentDownloaded={() => {
-                              downloadSessionDocument({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                                sessionDocumentDeleted={() => {
+                                  deleteSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                shouldAnalyzeUpdated={() => {
+                                  updateShouldAnalyze({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                selectedSessionDocument={
+                                  selectedSessionDocument
                                 }
-                              });
-                            }}
-                          />
-                          <SimpleSnackbar
-                            isOpened={downloading}
-                            message={
-                              'Downloading ' +
-                              selectedSessionDocument.file_name +
-                              '...'
-                            }
-                          />
-                        </Auxilliary>
+                                sessionDocumentDownloaded={() => {
+                                  downloadSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                originalFileOpened={() => {
+                                  getFile({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                              />
+                              <SimpleSnackbar
+                                isOpened={downloading}
+                                message={
+                                  'Downloading ' +
+                                  selectedSessionDocument.file_name +
+                                  '...'
+                                }
+                              />
+                              <SimpleSnackbar
+                                isOpened={gettingFileUrl}
+                                message={
+                                  'Fetching URL for ' +
+                                  selectedSessionDocument.file_name +
+                                  '...'
+                                }
+                              />
+                            </Auxilliary>
+                          )}
+                        </Mutation>
                       )}
                     </Mutation>
                   )}

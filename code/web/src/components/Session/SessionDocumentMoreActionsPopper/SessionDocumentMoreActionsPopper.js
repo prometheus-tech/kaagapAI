@@ -17,7 +17,8 @@ function SessionDocumentMoreActionsPopper({
   sessionDocumentDeleted,
   selectedSessionDocument,
   shouldAnalyzeUpdated,
-  sessionDocumentDownloaded
+  sessionDocumentDownloaded,
+  originalFileOpened
 }) {
   const { attachment } = selectedSessionDocument;
 
@@ -41,7 +42,8 @@ function SessionDocumentMoreActionsPopper({
               <MenuList>
                 <MenuItem
                   onClick={() => {
-                    alert('Not implemented');
+                    originalFileOpened();
+                    moreActionsClosed();
                   }}
                 >
                   View original file

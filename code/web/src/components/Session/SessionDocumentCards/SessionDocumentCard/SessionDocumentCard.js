@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Mutation } from 'react-apollo';
+import GET_FILE from '../../../../graphql/mutations/getFile';
+
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,8 +16,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Chip from '@material-ui/core/Chip';
 import CheckIcon from '@material-ui/icons/Check';
 import BlockIcon from '@material-ui/icons/Block';
+import Auxilliary from '../../../../hoc/Auxilliary/Auxilliary';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
+import SimpleSnackbar from '../../../UI/SimpleSnackbar/SimpleSnackbar';
 
 const styles = theme => ({
   card: {
@@ -89,61 +94,95 @@ function SessionDocumentCard({
   );
 
   return (
-    <Card
-      elevation={1}
-      onClick={() => {
-        sessionDocumentViewed(sessionDocument);
+    <Mutation
+      mutation={GET_FILE}
+      onCompleted={({ getFile }) => {
+        window.open(getFile, '_blank');
       }}
-      className={classes.card}
+      errorPolicy="all"
+      onError={error => {
+        // Ignore error
+      }}
     >
-      <CardContent
-        className={
-          !sessionDocument.attachment
-            ? classes.documentCardContent
-            : classes.attachmentCardContent
-        }
-      >
-        <div className={classes.cardDivContent}>
-          <div className={classes.cardGeneralInfoContainer}>
-            <Avatar className={classes.avatar} style={{ color: iconColor }}>
-              <Icon className={classNames(avatarIconClass, classes.icon)} />
-            </Avatar>
-            <div className={classes.cardTextInfo}>
-              <Typography className={classes.cardTitle} noWrap>
-                {sessionDocument.file_name}
-              </Typography>
-              <Typography className={classes.cardSubTitle}>
-                <Moment format="MMM D, YYYY" withTitle>
-                  {sessionDocument.date_added}
-                </Moment>
-              </Typography>
-            </div>
-          </div>
-          <div>
-            <IconButton
-              className={classes.moreActionButton}
-              onClick={e => {
-                e.stopPropagation();
-                moreActionsOpened(e, sessionDocument);
-              }}
-            >
-              <MoreVertIcon fontSize="small" />
-            </IconButton>
-          </div>
-        </div>
-        {!sessionDocument.attachment ? (
-          <div className={classes.shouldAnalyzeContainer}>
-            <Chip
-              className={classes.shouldAnalyzeChip}
-              icon={
-                sessionDocument.should_analyze ? <CheckIcon /> : <BlockIcon />
+      {(getFile, { loading: gettingFileUrl }) => (
+        <Auxilliary>
+          <Card
+            elevation={1}
+            onClick={() => {
+              if (!sessionDocument.attachment) {
+                sessionDocumentViewed(sessionDocument);
+              } else {
+                getFile({ variables: { sd_id: sessionDocument.sd_id } });
               }
-              label={sessionDocument.should_analyze ? 'Analyzed' : 'Ignored'}
-            />
-          </div>
-        ) : null}
-      </CardContent>
-    </Card>
+            }}
+            className={classes.card}
+          >
+            <CardContent
+              className={
+                !sessionDocument.attachment
+                  ? classes.documentCardContent
+                  : classes.attachmentCardContent
+              }
+            >
+              <div className={classes.cardDivContent}>
+                <div className={classes.cardGeneralInfoContainer}>
+                  <Avatar
+                    className={classes.avatar}
+                    style={{ color: iconColor }}
+                  >
+                    <Icon
+                      className={classNames(avatarIconClass, classes.icon)}
+                    />
+                  </Avatar>
+                  <div className={classes.cardTextInfo}>
+                    <Typography className={classes.cardTitle} noWrap>
+                      {sessionDocument.file_name}
+                    </Typography>
+                    <Typography className={classes.cardSubTitle}>
+                      <Moment format="MMM D, YYYY" withTitle>
+                        {sessionDocument.date_added}
+                      </Moment>
+                    </Typography>
+                  </div>
+                </div>
+                <div>
+                  <IconButton
+                    className={classes.moreActionButton}
+                    onClick={e => {
+                      e.stopPropagation();
+                      moreActionsOpened(e, sessionDocument);
+                    }}
+                  >
+                    <MoreVertIcon fontSize="small" />
+                  </IconButton>
+                </div>
+              </div>
+              {!sessionDocument.attachment ? (
+                <div className={classes.shouldAnalyzeContainer}>
+                  <Chip
+                    className={classes.shouldAnalyzeChip}
+                    icon={
+                      sessionDocument.should_analyze ? (
+                        <CheckIcon />
+                      ) : (
+                        <BlockIcon />
+                      )
+                    }
+                    label={
+                      sessionDocument.should_analyze ? 'Analyzed' : 'Ignored'
+                    }
+                  />
+                </div>
+              ) : null}
+            </CardContent>
+          </Card>
+          <SimpleSnackbar
+            isOpened={gettingFileUrl}
+            message={'Fetching URL for ' + sessionDocument.file_name + '...'}
+          />
+        </Auxilliary>
+      )}
+    </Mutation>
   );
 }
 
