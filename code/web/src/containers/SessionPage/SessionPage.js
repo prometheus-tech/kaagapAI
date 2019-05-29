@@ -20,6 +20,8 @@ import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
 import Main from '../../hoc/Main/Main';
 import SessionSubHeader from '../../components/Session/SessionSubHeader/SessionSubHeader';
+import UploadFilePopper from '../../components/Session/UploadFilePopper/UploadFilePopper';
+import MyFileViewer from '../../components/Session/MyFIleViewer/MyFileViewer';
 
 class SessionPage extends Component {
   state = {
@@ -31,7 +33,9 @@ class SessionPage extends Component {
     anchorEl: null,
     isContentSessionDocumentDialogOpened: false,
     isEditContentSessionDocument: false,
-    isRenameSessionDocumentDialogOpened: false
+    isRenameSessionDocumentDialogOpened: false,
+    isUploadFilePopperOpened: false,
+    uploadFilePopperAnchorEl: null
   };
 
   componentDidMount() {
@@ -127,6 +131,19 @@ class SessionPage extends Component {
     this.setState({ isRenameSessionDocumentDialogOpened: false });
   };
 
+  openUploadFilePopperHandler = event => {
+    this.setState({
+      isUploadFilePopperOpened: true,
+      uploadFilePopperAnchorEl: event.currentTarget
+    });
+  };
+
+  closeUploadFilePopperHandler = () => {
+    this.setState({
+      isUploadFilePopperOpened: false
+    });
+  };
+
   render() {
     const { session_id } = this.props.match.params;
 
@@ -139,7 +156,9 @@ class SessionPage extends Component {
       isMoreActionsOpened,
       anchorEl,
       selectedSessionDocument,
-      isRenameSessionDocumentDialogOpened
+      isRenameSessionDocumentDialogOpened,
+      isUploadFilePopperOpened,
+      uploadFilePopperAnchorEl
     } = this.state;
 
     return (
@@ -197,11 +216,9 @@ class SessionPage extends Component {
                   <Auxilliary>
                     <MyHeader
                       primaryButtonAction={
-                        tabValue === 0
-                          ? this.openNewSessionDocumentDialogHandler
-                          : null
+                        tabValue === 0 ? this.openUploadFilePopperHandler : null
                       }
-                      primaryButtonLabel={tabValue === 0 ? 'Upload File' : null}
+                      primaryButtonLabel={tabValue === 0 ? 'Upload' : null}
                       primaryButtonIcon={
                         tabValue === 0 ? (
                           <CloudUploadIcon
@@ -280,6 +297,17 @@ class SessionPage extends Component {
                         />
                       )}
                     </Main>
+                    <UploadFilePopper
+                      newSessionDocumentDialogOpened={
+                        this.openNewSessionDocumentDialogHandler
+                      }
+                      isUploadFilePopperOpened={isUploadFilePopperOpened}
+                      anchorEl={uploadFilePopperAnchorEl}
+                      uploadFilePopperClosed={this.closeUploadFilePopperHandler}
+                    />
+                    {/* {selectedSessionDocument ? (
+                      <MyFileViewer sessionDocument={selectedSessionDocument} />
+                    ) : null} */}
                   </Auxilliary>
                 );
               }}
