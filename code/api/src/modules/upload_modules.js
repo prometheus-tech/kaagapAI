@@ -63,6 +63,19 @@ const uploadFile = async(file, session_id) => {
     } catch (err) {
       console.log(err);
     }
+  } else if (mimetype.indexOf('image') + 1) {
+    inputPath = './src/tmp/' + newFileName;
+    const imageTranscript = await documentModules.extractImageText(inputPath);
+    
+    if(imageTranscript) {
+      translation = await documentModules.translateText(imageTranscript);
+    } else {
+      translation = null;
+    }
+
+    await documentModules.uploadGCS(inputPath);
+    
+    return { session_id, fileName, filePath, mimetype, translation };
   } else {
     inputPath = './src/tmp/' + newFileName;
     const transcript = await documentModules.extractDocumentText(inputPath);

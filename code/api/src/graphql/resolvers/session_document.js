@@ -34,6 +34,7 @@ export default {
             file_name: fileName,
             content: translation,
             type: mimetype,
+            attachment: false,
             date_added: new Date()
           });
           const { sd_id } = addFileRes.dataValues;

@@ -17,6 +17,7 @@ export default `
     type: String!
     status: ArchiveStatus!
     should_analyze: Boolean!
+    attachment: Boolean!
     session_id: UUID!
   }
 
@@ -25,7 +26,7 @@ export default `
   }
 
   type Mutation {
-    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument!
+    uploadSessionDocument(file: Upload!, session_id: UUID!): SessionDocument
 
     editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
 
