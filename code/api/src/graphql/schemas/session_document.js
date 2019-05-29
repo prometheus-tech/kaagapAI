@@ -22,8 +22,6 @@ export default `
 
   type Query { 
     sessionDocument(sd_id: UUID!): SessionDocument!
-
-    downloadSessionDocument(sd_id: UUID!): SessionDocument!
   }
 
   type Mutation {
@@ -38,5 +36,7 @@ export default `
     permanentlyDeleteSessionDocument(sd_id: UUID!): SessionDocument
 
     updateShouldAnalyze(sd_id: UUID!): SessionDocument!
+
+    downloadSessionDocument(sd_id: UUID!): SessionDocument!
   }
 `;
