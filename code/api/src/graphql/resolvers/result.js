@@ -380,6 +380,22 @@ export default {
 
         return customEmotion;
       }
+    },
+
+    targetTextSentiment: async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const sentimentResult = await nluModules.analyzeSentiment(args.text);
+
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
+          score: sentimentResult.sentiment.document.score,
+          label: sentimentResult.sentiment.document.label
+        }
+
+        return customSentiment;
+      }
     }
   }
 };

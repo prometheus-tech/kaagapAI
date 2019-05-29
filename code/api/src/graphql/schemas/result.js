@@ -140,5 +140,7 @@ export default `
    findTextOccurences(text: String!, session_id: [UUID]!): TextOccurence
 
    targetTextEmotion(text: String!): CustomEmotion
+
+   targetTextSentiment(text: String!): CustomSentiment
   }
 `;
