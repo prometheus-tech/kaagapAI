@@ -16,6 +16,7 @@ export default `
     last_modified: Date
     type: String!
     status: ArchiveStatus!
+    should_analyze: Boolean!
     session_id: UUID!
   }
 
@@ -35,5 +36,7 @@ export default `
     restoreSessionDocument(sd_id: UUID!): SessionDocument!
 
     permanentlyDeleteSessionDocument(sd_id: UUID!): SessionDocument
+
+    updateShouldAnalyze(sd_id: UUID!): SessionDocument!
   }
 `;

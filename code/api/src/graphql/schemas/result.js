@@ -137,8 +137,6 @@ export default `
 
    customSessionResult(session_id: [UUID]!): CustomResult
 
-   customDocumentResult(sd_id: [UUID]!): CustomResult
-
    findTextOccurences(text: String!, session_id: [UUID]!): TextOccurence
   }
 `;

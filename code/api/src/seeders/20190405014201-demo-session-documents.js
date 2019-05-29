@@ -13,6 +13,7 @@ module.exports = {
         last_modified: null,
         type: 'application/pdf',
         status: 'active',
+        should_analyze: true,
         session_id: '02e91df5-f35b-4cad-9d72-73c8bc2edd99'
       },
       {
@@ -24,6 +25,7 @@ module.exports = {
         last_modified: null,
         type: 'text/plain',
         status: 'active',
+        should_analyze: true,
         session_id: '16cce96d-f9a3-49b0-9108-3da67ccfa32c'
       },
       {
@@ -35,6 +37,7 @@ module.exports = {
         last_modified: null,
         type: 'audio/wave',
         status: 'active',
+        should_analyze: true,
         session_id: '16cce96d-f9a3-49b0-9108-3da67ccfa32c'
       },
       {
@@ -46,6 +49,7 @@ module.exports = {
         last_modified: null,
         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         status: 'active',
+        should_analyze: true,
         session_id: '02e91df5-f35b-4cad-9d72-73c8bc2edd99'
       },
       {
@@ -57,6 +61,7 @@ module.exports = {
         last_modified: null,
         type: 'audio/mp4',
         status: 'active',
+        should_analyze: true,
         session_id: '02e91df5-f35b-4cad-9d72-73c8bc2edd99'
       }
     ], {});

@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.ENUM('archived', 'active'),
       defaultValue: 'active'
+    },
+    should_analyze: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   });
 
