@@ -287,7 +287,7 @@ export default {
       const changePasswordUUID = uuid();
       //change body base on final url
       var body =
-        'To change your password please click on the link: kaagapai-dev.com/forgotpassword/'+changePasswordUUID;
+        'To change your password please click on the link: http://kaagapai-dev.com:3000/#/change-password/'+changePasswordUUID;
       const subject = 'Change Account Password';
 
       return models.Practitioner.findOne({
@@ -322,12 +322,12 @@ export default {
       })
     },
 
-    changePassword: async ( parent, { changePasswordToken, email, password }, { models } ) => {
+    changePassword: async ( parent, { changePasswordToken, password }, { models } ) => {
       return await models.Practitioner.findOne({
         raw: true,
-        where: { email }
+        where: { change_password_UUID: changePasswordToken }
       }).then(async res => {
-        if (res.change_password_UUID == changePasswordToken) {
+        if (res) {
           const hashPassword = await registration.hashPassword(password);
 
           //link to be changed
@@ -339,10 +339,10 @@ export default {
             password: hashPassword,
             change_password_UUID: null
           }, { 
-            where: { email } 
-          }).then(async res => await registration.sendEmail(subject, body, email));
+            where: { change_password_UUID: changePasswordToken } 
+          }).then(async res => await registration.sendEmail(subject, body, res.email));
 
-          return { email };
+          return res.email;
         } else {
           throw new ForbiddenError('Invalid change password token');
         }

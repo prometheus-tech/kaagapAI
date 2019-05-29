@@ -8,11 +8,13 @@ import UPDATE_SHOULD_ANALYZE from '../../../graphql/mutations/updateShouldAnalyz
 import DOWNLOAD_SESSION_DOCUMENT from '../../../graphql/mutations/downloadSessionDocument';
 import SESSION from '../../../graphql/queries/session';
 import RESULTS from '../../../graphql/queries/results';
+import GET_FILE from '../../../graphql/mutations/getFile';
 import { Mutation } from 'react-apollo';
 
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SessionDocumentCards from '../../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
+import NewSessionAttachmentDialog from '../../../components/Session/NewSessionAttachmentDialog/NewSessionAttachmentDialog';
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
@@ -25,6 +27,7 @@ class SessionDocumentsPage extends Component {
       session_id,
       documents,
       isNewSessionDocumentDialogOpened,
+      isNewSessionAttachmentDialogOpened,
       file,
       isMoreActionsOpened,
       anchorEl,
@@ -34,6 +37,7 @@ class SessionDocumentsPage extends Component {
       contentSessionDocumentDialogOpened,
       moreActionsOpened,
       newSessionDocumentDialogClosed,
+      newSessionAttachmentDialogClosed,
       newUploadFileAdded,
       newUploadFileRemoved,
       moreActionsClosed,
@@ -60,9 +64,19 @@ class SessionDocumentsPage extends Component {
             moreActionsOpened={moreActionsOpened}
           />
         )}
+
         <NewSessionDocumentDialog
           opened={isNewSessionDocumentDialogOpened}
           closed={newSessionDocumentDialogClosed}
+          file={file}
+          fileAdded={newUploadFileAdded}
+          fileRemoved={newUploadFileRemoved}
+          sessionId={session_id}
+        />
+
+        <NewSessionAttachmentDialog
+          opened={isNewSessionAttachmentDialogOpened}
+          closed={newSessionAttachmentDialogClosed}
           file={file}
           fileAdded={newUploadFileAdded}
           fileRemoved={newUploadFileRemoved}
@@ -166,50 +180,80 @@ class SessionDocumentsPage extends Component {
                       }}
                     >
                       {(downloadSessionDocument, { loading: downloading }) => (
-                        <Auxilliary>
-                          <SessionDocumentMoreActionsPopper
-                            isMoreActionsOpened={isMoreActionsOpened}
-                            anchorEl={anchorEl}
-                            moreActionsClosed={moreActionsClosed}
-                            sessionDocumentViewed={
-                              contentSessionDocumentDialogOpened
-                            }
-                            contentEdited={contentEdited}
-                            sessionDocumentRenamed={
-                              sessionDocumentRenameDialogOpened
-                            }
-                            sessionDocumentDeleted={() => {
-                              deleteSessionDocument({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                        <Mutation
+                          mutation={GET_FILE}
+                          onCompleted={({ getFile }) => {
+                            window.open(getFile, '_blank');
+                          }}
+                          errorPolicy="all"
+                          onError={error => {
+                            // Ignore error
+                          }}
+                        >
+                          {(getFile, { loading: gettingFileUrl }) => (
+                            <Auxilliary>
+                              <SessionDocumentMoreActionsPopper
+                                isMoreActionsOpened={isMoreActionsOpened}
+                                anchorEl={anchorEl}
+                                moreActionsClosed={moreActionsClosed}
+                                sessionDocumentViewed={
+                                  contentSessionDocumentDialogOpened
                                 }
-                              });
-                            }}
-                            shouldAnalyzeUpdated={() => {
-                              updateShouldAnalyze({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                                contentEdited={contentEdited}
+                                sessionDocumentRenamed={
+                                  sessionDocumentRenameDialogOpened
                                 }
-                              });
-                            }}
-                            selectedSessionDocument={selectedSessionDocument}
-                            sessionDocumentDownloaded={() => {
-                              downloadSessionDocument({
-                                variables: {
-                                  sd_id: selectedSessionDocument.sd_id
+                                sessionDocumentDeleted={() => {
+                                  deleteSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                shouldAnalyzeUpdated={() => {
+                                  updateShouldAnalyze({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                selectedSessionDocument={
+                                  selectedSessionDocument
                                 }
-                              });
-                            }}
-                          />
-                          <SimpleSnackbar
-                            isOpened={downloading}
-                            message={
-                              'Downloading ' +
-                              selectedSessionDocument.file_name +
-                              '...'
-                            }
-                          />
-                        </Auxilliary>
+                                sessionDocumentDownloaded={() => {
+                                  downloadSessionDocument({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                                originalFileOpened={() => {
+                                  getFile({
+                                    variables: {
+                                      sd_id: selectedSessionDocument.sd_id
+                                    }
+                                  });
+                                }}
+                              />
+                              <SimpleSnackbar
+                                isOpened={downloading}
+                                message={
+                                  'Downloading ' +
+                                  selectedSessionDocument.file_name +
+                                  '...'
+                                }
+                              />
+                              <SimpleSnackbar
+                                isOpened={gettingFileUrl}
+                                message={
+                                  'Fetching URL for ' +
+                                  selectedSessionDocument.file_name +
+                                  '...'
+                                }
+                              />
+                            </Auxilliary>
+                          )}
+                        </Mutation>
                       )}
                     </Mutation>
                   )}

@@ -2,6 +2,7 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import purple from '@material-ui/core/colors/purple';
 
 import { AUTH_TOKEN } from './constants';
 
@@ -62,6 +63,9 @@ export function getSessionDocumentIcon(type) {
   } else if (type.includes('audio') || type === 'wav') {
     avatarIconClass = 'fas fa-file-audio';
     iconColor = green[300];
+  } else if (type.includes('image') || type === 'png' || type === 'jpg') {
+    avatarIconClass = 'fas fa-file-image';
+    iconColor = purple[300];
   } else {
     avatarIconClass = 'fas fa-file-alt';
     iconColor = 'black';

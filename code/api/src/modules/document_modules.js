@@ -202,7 +202,6 @@ const getImageUrl = (filename) => {
 
   var date = new Date();
   date.setDate(date.getDate() + 1);
-  console.log(date);
 
   const options = {
     action: 'read',

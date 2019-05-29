@@ -60,7 +60,7 @@ class EmptyResults extends Component {
         </div>
         <div className={classes.actionSaying}>
           <Typography variant="h4" className={classes.sayingEmpty}>
-            It seems there is no uploaded file to be analyzed
+            It seems there are no documents to be analyzed
           </Typography>
         </div>
       </div>

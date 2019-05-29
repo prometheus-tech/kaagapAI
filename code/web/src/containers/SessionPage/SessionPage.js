@@ -26,6 +26,7 @@ class SessionPage extends Component {
   state = {
     tabValue: 0,
     isNewSessionDocumentDialogOpened: false,
+    isNewSessionAttachmentDialogOpened: false,
     file: null,
     selectedSessionDocument: null,
     isMoreActionsOpened: false,
@@ -58,6 +59,16 @@ class SessionPage extends Component {
 
   closeNewSessionDocumentDialogHandler = () => {
     this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
+  };
+
+  openNewSessionAttachmentDialogHandler = () => {
+    this.setState({
+      isNewSessionAttachmentDialogOpened: true
+    });
+  };
+
+  closeNewSessionAttachmentDialogHandler = () => {
+    this.setState({ isNewSessionAttachmentDialogOpened: false, file: null });
   };
 
   addFile = file => {
@@ -149,6 +160,7 @@ class SessionPage extends Component {
     const {
       tabValue,
       isNewSessionDocumentDialogOpened,
+      isNewSessionAttachmentDialogOpened,
       file,
       isContentSessionDocumentDialogOpened,
       isEditContentSessionDocument,
@@ -245,6 +257,9 @@ class SessionPage extends Component {
                           isNewSessionDocumentDialogOpened={
                             isNewSessionDocumentDialogOpened
                           }
+                          isNewSessionAttachmentDialogOpened={
+                            isNewSessionAttachmentDialogOpened
+                          }
                           file={file}
                           isContentSessionDocumentDialogOpened={
                             isContentSessionDocumentDialogOpened
@@ -270,6 +285,9 @@ class SessionPage extends Component {
                           moreActionsOpened={this.openMoreActionsHandler}
                           newSessionDocumentDialogClosed={
                             this.closeNewSessionDocumentDialogHandler
+                          }
+                          newSessionAttachmentDialogClosed={
+                            this.closeNewSessionAttachmentDialogHandler
                           }
                           newUploadFileAdded={this.addFile}
                           newUploadFileRemoved={this.clearFile}
@@ -300,13 +318,13 @@ class SessionPage extends Component {
                       newSessionDocumentDialogOpened={
                         this.openNewSessionDocumentDialogHandler
                       }
+                      newSessionAttachmentDialogOpened={
+                        this.openNewSessionAttachmentDialogHandler
+                      }
                       isUploadFilePopperOpened={isUploadFilePopperOpened}
                       anchorEl={uploadFilePopperAnchorEl}
                       uploadFilePopperClosed={this.closeUploadFilePopperHandler}
                     />
-                    {/* {selectedSessionDocument ? (
-                      <MyFileViewer sessionDocument={selectedSessionDocument} />
-                    ) : null} */}
                   </Auxilliary>
                 );
               }}

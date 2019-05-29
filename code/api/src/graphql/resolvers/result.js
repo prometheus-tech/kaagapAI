@@ -314,7 +314,9 @@ export default {
             raw: true,
             where: {
               session_id: session.session_id,
-              status: 'active'
+              status: 'active',
+              should_analyze: true,
+              attachment: false
             }
           }).then(async session_documents => {
             const documents = await resultModules.getDocumentTalkTurns(session_documents);

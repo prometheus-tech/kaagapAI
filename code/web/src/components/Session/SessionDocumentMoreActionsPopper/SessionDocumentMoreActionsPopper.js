@@ -17,8 +17,11 @@ function SessionDocumentMoreActionsPopper({
   sessionDocumentDeleted,
   selectedSessionDocument,
   shouldAnalyzeUpdated,
-  sessionDocumentDownloaded
+  sessionDocumentDownloaded,
+  originalFileOpened
 }) {
+  const { attachment } = selectedSessionDocument;
+
   return (
     <Popper
       open={isMoreActionsOpened}
@@ -38,22 +41,34 @@ function SessionDocumentMoreActionsPopper({
             <ClickAwayListener onClickAway={moreActionsClosed}>
               <MenuList>
                 <MenuItem
-                  onClick={e => {
-                    sessionDocumentViewed();
-                    moreActionsClosed();
-                  }}
-                >
-                  View content
-                </MenuItem>
-                <MenuItem
                   onClick={() => {
-                    sessionDocumentViewed();
-                    contentEdited();
+                    originalFileOpened();
                     moreActionsClosed();
                   }}
                 >
-                  Edit content
+                  View original file
                 </MenuItem>
+                {!attachment ? (
+                  <MenuItem
+                    onClick={e => {
+                      sessionDocumentViewed();
+                      moreActionsClosed();
+                    }}
+                  >
+                    View content
+                  </MenuItem>
+                ) : null}
+                {!attachment ? (
+                  <MenuItem
+                    onClick={() => {
+                      sessionDocumentViewed();
+                      contentEdited();
+                      moreActionsClosed();
+                    }}
+                  >
+                    Edit content
+                  </MenuItem>
+                ) : null}
                 <MenuItem
                   onClick={() => {
                     sessionDocumentRenamed();
@@ -62,23 +77,25 @@ function SessionDocumentMoreActionsPopper({
                 >
                   Rename
                 </MenuItem>
-                <MenuItem
-                  onClick={e => {
-                    shouldAnalyzeUpdated();
-                    moreActionsClosed();
-                  }}
-                >
-                  {selectedSessionDocument.should_analyze
-                    ? 'Ignore in analysis'
-                    : 'Include in analysis'}
-                </MenuItem>
+                {!attachment ? (
+                  <MenuItem
+                    onClick={e => {
+                      shouldAnalyzeUpdated();
+                      moreActionsClosed();
+                    }}
+                  >
+                    {selectedSessionDocument.should_analyze
+                      ? 'Ignore in analysis'
+                      : 'Include in analysis'}
+                  </MenuItem>
+                ) : null}
                 <MenuItem
                   onClick={e => {
                     sessionDocumentDownloaded();
                     moreActionsClosed();
                   }}
                 >
-                  Download
+                  Download original file
                 </MenuItem>
                 <MenuItem
                   onClick={e => {

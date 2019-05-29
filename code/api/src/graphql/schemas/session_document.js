@@ -23,8 +23,6 @@ export default `
 
   type Query { 
     sessionDocument(sd_id: UUID!): SessionDocument!
-
-    getFile(sd_id: UUID!): String
   }
  
   type Mutation {
@@ -32,7 +30,7 @@ export default `
 
     uploadSessionAttachment(file: Upload!, session_id: UUID!): SessionDocument!
 
-    editSessionDocument(sd_id: UUID!, content: String!, file_name: String!): SessionDocument!
+    editSessionDocument(sd_id: UUID!, content: String, file_name: String!): SessionDocument!
 
     deleteSessionDocument(sd_id: UUID!): SessionDocument!
 
@@ -43,5 +41,7 @@ export default `
     updateShouldAnalyze(sd_id: UUID!): SessionDocument!
 
     downloadSessionDocument(sd_id: UUID!): SessionDocument!
+
+    getFile(sd_id: UUID!): String
   }
 `;
