@@ -54,7 +54,8 @@ const styles = theme => ({
   },
   illustrationContainer: {
     display: 'inline',
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: '#f8f8f8'
   },
   sigInIllustration: {
     height: '90vh',
@@ -89,7 +90,7 @@ const styles = theme => ({
   },
   createQuestion: {
     fontWeight: '300',
-    color: grey[600],
+    color: grey[600]
   },
   createAccountButton: {
     color: blue[700],
@@ -108,7 +109,8 @@ const styles = theme => ({
     fontWeight: '300'
   },
   errorMessage: {
-    display: 'flex'
+    display: 'flex',
+    marginLeft: '2vw'
   },
   errorLogin: {
     color: 'red',

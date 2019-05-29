@@ -28,7 +28,8 @@ const styles = theme => ({
     height: 60
   },
   illustrationContainer: {
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: '#f8f8f8'
   },
   signUpIllustration: {
     height: '60vh',
@@ -56,13 +57,18 @@ const styles = theme => ({
     textAlign: 'left'
   },
   nextButton: {
-    borderRadius: '30px',
-    color: 'white',
-    backgroundColor: blue[600],
-    padding: '10px 40px 10px 40px',
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
+    color: '#ffffff',
+    textTransform: 'capitalize',
+    borderRadius: 3,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: blue[700]
-    }
+      backgroundColor: blue[900]
+    },
+    margin: theme.spacing.unit,
+    padding: '10px 35px 10px 35px',
+    width: '12vw',
+    boxShadow: 'none'
   },
   linkToSignIn: {
     display: 'flex'
@@ -199,7 +205,7 @@ class AccountRegistrationInfo extends Component {
                             className={classes.signUpMessageContainer}
                           >
                             <Typography className={classes.signUp}>
-                              Sign Up.
+                              Sign Up
                             </Typography>
                             <Typography className={classes.signUpMessage}>
                               Join the kaagapAI community.
