@@ -21,7 +21,8 @@ class RenameSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     } = props.sessionDocument;
 
     const fileNameDestructured = file_name.split('.');
@@ -33,14 +34,15 @@ class RenameSessionDocumentDialog extends Component {
       type,
       content,
       file_name_extension: fileNameDestructured[1],
-      should_analyze
+      should_analyze,
+      attachment
     };
 
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
   }
 
   componentWillReceiveProps({
-    sessionDocument: { sd_id, file_name, date_added, type, content }
+    sessionDocument: { sd_id, file_name, date_added, type, content, should_analyze, attachment }
   }) {
     const fileNameDestructured = file_name.split('.');
 
@@ -50,7 +52,9 @@ class RenameSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      file_name_extension: fileNameDestructured[1]
+      file_name_extension: fileNameDestructured[1],
+      should_analyze,
+      attachment
     });
   }
 
@@ -73,6 +77,7 @@ class RenameSessionDocumentDialog extends Component {
       type,
       content,
       should_analyze,
+      attachment,
       file_name_extension
     } = this.state;
 
@@ -82,7 +87,8 @@ class RenameSessionDocumentDialog extends Component {
       date_added: date_added,
       type: type,
       content: content,
-      should_analyze: should_analyze
+      should_analyze: should_analyze,
+      attachment: attachment
     };
 
     return (

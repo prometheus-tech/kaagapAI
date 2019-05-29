@@ -27,12 +27,13 @@ const styles = theme => ({
       cursor: 'pointer'
     }
   },
-  cardContent: {
+  documentCardContent: {
     paddingBottom: 0,
     '&:last-child': {
       paddingBottom: theme.spacing.unit
     }
   },
+  attachmentCardContent: {},
   cardDivContent: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -95,7 +96,13 @@ function SessionDocumentCard({
       }}
       className={classes.card}
     >
-      <CardContent className={classes.cardContent}>
+      <CardContent
+        className={
+          !sessionDocument.attachment
+            ? classes.documentCardContent
+            : classes.attachmentCardContent
+        }
+      >
         <div className={classes.cardDivContent}>
           <div className={classes.cardGeneralInfoContainer}>
             <Avatar className={classes.avatar} style={{ color: iconColor }}>
@@ -124,15 +131,17 @@ function SessionDocumentCard({
             </IconButton>
           </div>
         </div>
-        <div className={classes.shouldAnalyzeContainer}>
-          <Chip
-            className={classes.shouldAnalyzeChip}
-            icon={
-              sessionDocument.should_analyze ? <CheckIcon /> : <BlockIcon />
-            }
-            label={sessionDocument.should_analyze ? 'Analyzed' : 'Ignored'}
-          />
-        </div>
+        {!sessionDocument.attachment ? (
+          <div className={classes.shouldAnalyzeContainer}>
+            <Chip
+              className={classes.shouldAnalyzeChip}
+              icon={
+                sessionDocument.should_analyze ? <CheckIcon /> : <BlockIcon />
+              }
+              label={sessionDocument.should_analyze ? 'Analyzed' : 'Ignored'}
+            />
+          </div>
+        ) : null}
       </CardContent>
     </Card>
   );

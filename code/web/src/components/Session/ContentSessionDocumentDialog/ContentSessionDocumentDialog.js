@@ -106,7 +106,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     } = props.sessionDocument;
 
     this.state = {
@@ -115,7 +116,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     };
   }
 
@@ -126,7 +128,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     }
   }) {
     this.setState({
@@ -135,7 +138,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     });
   }
 
@@ -161,7 +165,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      should_analyze
+      should_analyze,
+      attachment
     } = this.state;
 
     const updatedSessionDocument = {
@@ -170,7 +175,8 @@ class ContentSessionDocumentDialog extends Component {
       date_added: date_added,
       type: type,
       content: content,
-      should_analyze: should_analyze
+      should_analyze: should_analyze,
+      attachment: attachment
     };
 
     return (

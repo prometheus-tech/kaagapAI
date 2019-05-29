@@ -9,6 +9,7 @@ const SESSION_DOCUMENT_BASIC_INFO = gql`
     type
     content
     should_analyze
+    attachment
   }
 `;
 
