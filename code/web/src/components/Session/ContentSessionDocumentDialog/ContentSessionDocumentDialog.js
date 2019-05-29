@@ -105,7 +105,8 @@ class ContentSessionDocumentDialog extends Component {
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze
     } = props.sessionDocument;
 
     this.state = {
@@ -113,19 +114,28 @@ class ContentSessionDocumentDialog extends Component {
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze
     };
   }
 
   componentWillReceiveProps({
-    sessionDocument: { sd_id, file_name, date_added, type, content }
+    sessionDocument: {
+      sd_id,
+      file_name,
+      date_added,
+      type,
+      content,
+      should_analyze
+    }
   }) {
     this.setState({
       sd_id,
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze
     });
   }
 
@@ -145,14 +155,22 @@ class ContentSessionDocumentDialog extends Component {
       session_id
     } = this.props;
 
-    const { sd_id, file_name, date_added, type, content } = this.state;
+    const {
+      sd_id,
+      file_name,
+      date_added,
+      type,
+      content,
+      should_analyze
+    } = this.state;
 
     const updatedSessionDocument = {
       sd_id: sd_id,
       file_name: file_name,
       date_added: date_added,
       type: type,
-      content: content
+      content: content,
+      should_analyze: should_analyze
     };
 
     return (
@@ -162,7 +180,8 @@ class ContentSessionDocumentDialog extends Component {
           __typename: 'Mutation',
           editSessionDocument: {
             __typename: 'SessionDocument',
-            ...updatedSessionDocument
+            ...updatedSessionDocument,
+            session_id: session_id
           }
         }}
         refetchQueries={() => {
