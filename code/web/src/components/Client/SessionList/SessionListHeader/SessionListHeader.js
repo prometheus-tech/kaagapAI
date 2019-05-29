@@ -13,7 +13,6 @@ const styles = theme => ({
   paper: {
     padding: '16px',
     backgroundColor: 'transparent',
-    marginTop: theme.spacing.unit * 3,
     boxShadow: 'none',
     marginBottom: '10px'
   },

@@ -361,6 +361,41 @@ export default {
 
         return textOccurrence;
       }
+    },
+    
+    targetTextEmotion: async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const emotionResult = await nluModules.analyzeEmotion(args.text);
+
+        const customEmotion = {
+          custom_emotion_id: uuid(),
+          sadness: emotionResult.emotion.document.emotion.sadness,
+          anger: emotionResult.emotion.document.emotion.anger,
+          joy: emotionResult.emotion.document.emotion.joy,
+          fear: emotionResult.emotion.document.emotion.fear,
+          disgust: emotionResult.emotion.document.emotion.disgust
+        };
+
+        return customEmotion;
+      }
+    },
+
+    targetTextSentiment: async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const sentimentResult = await nluModules.analyzeSentiment(args.text);
+
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
+          score: sentimentResult.sentiment.document.score,
+          label: sentimentResult.sentiment.document.label
+        }
+
+        return customSentiment;
+      }
     }
   }
 };

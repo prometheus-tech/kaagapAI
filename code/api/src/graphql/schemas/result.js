@@ -138,5 +138,9 @@ export default `
    customSessionResult(session_id: [UUID]!): CustomResult
 
    findTextOccurences(text: String!, session_id: [UUID]!): TextOccurence
+
+   targetTextEmotion(text: String!): CustomEmotion
+
+   targetTextSentiment(text: String!): CustomSentiment
   }
 `;

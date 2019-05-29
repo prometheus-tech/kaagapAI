@@ -16,7 +16,6 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
-import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
 import Main from '../../hoc/Main/Main';
@@ -222,23 +221,6 @@ class SessionPage extends Component {
                       />
                     ) : null}
 
-                    {selectedSessionDocument ? (
-                      <ContentSessionDocumentDialog
-                        opened={isContentSessionDocumentDialogOpened}
-                        closed={this.closeContentSessionDocumentDialog}
-                        editing={isEditContentSessionDocument}
-                        sessionDocument={selectedSessionDocument}
-                        contentEdited={this.editContentSessionDocumentHandler}
-                        contentEditStopped={
-                          this.stopEditContentSessionDocumentHandler
-                        }
-                        selectedSessionDocumentUpdated={
-                          this.updateSelectedSessionDocumentHandler
-                        }
-                        session_id={session_id}
-                      />
-                    ) : null}
-
                     <Main>
                       {tabValue === 0 && (
                         <SessionDocumentsPage
@@ -266,6 +248,9 @@ class SessionPage extends Component {
                           contentSessionDocumentDialogOpened={
                             this.openContentSessionDocumentDialog
                           }
+                          contentSessionDocumentDialogClosed={
+                            this.closeContentSessionDocumentDialog
+                          }
                           moreActionsOpened={this.openMoreActionsHandler}
                           newSessionDocumentDialogClosed={
                             this.closeNewSessionDocumentDialogHandler
@@ -276,9 +261,6 @@ class SessionPage extends Component {
                           contentEdited={this.editContentSessionDocumentHandler}
                           sessionDocumentRenameDialogOpened={
                             this.openRenameSessionDocumentHandler
-                          }
-                          contentSessionDocumentDialogClosed={
-                            this.closeContentSessionDocumentDialog
                           }
                           contentEditStopped={
                             this.stopEditContentSessionDocumentHandler

@@ -10,23 +10,30 @@ import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Chip from '@material-ui/core/Chip';
+import CheckIcon from '@material-ui/icons/Check';
+import BlockIcon from '@material-ui/icons/Block';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
 
 const styles = theme => ({
   card: {
-    marginTop: '1rem',
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
+    padding: '0px 0px 0px 0px',
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      transform: 'scale(1.05)',
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-      padding: '0px 0px 0px 0px',
       cursor: 'pointer'
     }
   },
   cardContent: {
+    paddingBottom: 0,
+    '&:last-child': {
+      paddingBottom: theme.spacing.unit
+    }
+  },
+  cardDivContent: {
     display: 'flex',
     justifyContent: 'space-between'
   },
@@ -59,6 +66,14 @@ const styles = theme => ({
     position: 'relative',
     top: -theme.spacing.unit * 1.5,
     right: -theme.spacing.unit * 1.5
+  },
+  shouldAnalyzeContainer: {
+    paddingBottom: 0,
+    marginBottom: 0,
+    textAlign: 'right'
+  },
+  shouldAnalyzeChip: {
+    cursor: 'pointer'
   }
 });
 
@@ -81,31 +96,42 @@ function SessionDocumentCard({
       className={classes.card}
     >
       <CardContent className={classes.cardContent}>
-        <div className={classes.cardGeneralInfoContainer}>
-          <Avatar className={classes.avatar} style={{ color: iconColor }}>
-            <Icon className={classNames(avatarIconClass, classes.icon)} />
-          </Avatar>
-          <div className={classes.cardTextInfo}>
-            <Typography className={classes.cardTitle} noWrap>
-              {sessionDocument.file_name}
-            </Typography>
-            <Typography className={classes.cardSubTitle}>
-              <Moment format="MMM D, YYYY" withTitle>
-                {sessionDocument.date_added}
-              </Moment>
-            </Typography>
+        <div className={classes.cardDivContent}>
+          <div className={classes.cardGeneralInfoContainer}>
+            <Avatar className={classes.avatar} style={{ color: iconColor }}>
+              <Icon className={classNames(avatarIconClass, classes.icon)} />
+            </Avatar>
+            <div className={classes.cardTextInfo}>
+              <Typography className={classes.cardTitle} noWrap>
+                {sessionDocument.file_name}
+              </Typography>
+              <Typography className={classes.cardSubTitle}>
+                <Moment format="MMM D, YYYY" withTitle>
+                  {sessionDocument.date_added}
+                </Moment>
+              </Typography>
+            </div>
+          </div>
+          <div>
+            <IconButton
+              className={classes.moreActionButton}
+              onClick={e => {
+                e.stopPropagation();
+                moreActionsOpened(e, sessionDocument);
+              }}
+            >
+              <MoreVertIcon fontSize="small" />
+            </IconButton>
           </div>
         </div>
-        <div>
-          <IconButton
-            className={classes.moreActionButton}
-            onClick={e => {
-              e.stopPropagation();
-              moreActionsOpened(e, sessionDocument);
-            }}
-          >
-            <MoreVertIcon fontSize="small" />
-          </IconButton>
+        <div className={classes.shouldAnalyzeContainer}>
+          <Chip
+            className={classes.shouldAnalyzeChip}
+            icon={
+              sessionDocument.should_analyze ? <CheckIcon /> : <BlockIcon />
+            }
+            label={sessionDocument.should_analyze ? 'Analyzed' : 'Ignored'}
+          />
         </div>
       </CardContent>
     </Card>

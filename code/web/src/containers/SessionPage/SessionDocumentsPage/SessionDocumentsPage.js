@@ -4,6 +4,7 @@ import { withSnackbar } from 'notistack';
 
 import { cloneDeep } from 'apollo-utilities';
 import DELETE_SESSION_DOCUMENT from '../../../graphql/mutations/deleteSessionDocument';
+import UPDATE_SHOULD_ANALYZE from '../../../graphql/mutations/updateShouldAnalyze';
 import SESSION from '../../../graphql/queries/session';
 import RESULTS from '../../../graphql/queries/results';
 import { Mutation } from 'react-apollo';
@@ -14,6 +15,7 @@ import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocu
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
+import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -36,7 +38,11 @@ class SessionDocumentsPage extends Component {
       contentEdited,
       sessionDocumentRenameDialogOpened,
       selectedSessionDocumentUpdated,
-      sessionDocumentRenameDialogClosed
+      sessionDocumentRenameDialogClosed,
+      isContentSessionDocumentDialogOpened,
+      isEditContentSessionDocument,
+      contentSessionDocumentDialogClosed,
+      contentEditStopped
     } = this.props;
 
     return (
@@ -60,6 +66,20 @@ class SessionDocumentsPage extends Component {
           fileRemoved={newUploadFileRemoved}
           sessionId={session_id}
         />
+
+        {selectedSessionDocument ? (
+          <ContentSessionDocumentDialog
+            opened={isContentSessionDocumentDialogOpened}
+            closed={contentSessionDocumentDialogClosed}
+            editing={isEditContentSessionDocument}
+            sessionDocument={selectedSessionDocument}
+            contentEdited={contentEdited}
+            contentEditStopped={contentEditStopped}
+            selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
+            session_id={session_id}
+          />
+        ) : null}
+
         {selectedSessionDocument ? (
           <Auxilliary>
             <Mutation
@@ -95,12 +115,7 @@ class SessionDocumentsPage extends Component {
                 __typename: 'Mutation',
                 deleteSessionDocument: {
                   __typename: 'SessionDocument',
-                  session_id: selectedSessionDocument.session_id,
-                  sd_id: selectedSessionDocument.sd_id,
-                  file_name: selectedSessionDocument.file_name,
-                  date_added: selectedSessionDocument.date_added,
-                  type: selectedSessionDocument.type,
-                  content: selectedSessionDocument.content
+                  ...selectedSessionDocument
                 }
               }}
               refetchQueries={() => {
@@ -113,21 +128,48 @@ class SessionDocumentsPage extends Component {
               }}
             >
               {deleteSessionDocument => (
-                <SessionDocumentMoreActionsPopper
-                  isMoreActionsOpened={isMoreActionsOpened}
-                  anchorEl={anchorEl}
-                  moreActionsClosed={moreActionsClosed}
-                  sessionDocumentViewed={contentSessionDocumentDialogOpened}
-                  contentEdited={contentEdited}
-                  sessionDocumentRenamed={sessionDocumentRenameDialogOpened}
-                  sessionDocumentDeleted={() => {
-                    deleteSessionDocument({
-                      variables: {
-                        sd_id: selectedSessionDocument.sd_id
-                      }
-                    });
+                <Mutation
+                  mutation={UPDATE_SHOULD_ANALYZE}
+                  optimisticResponse={{
+                    __typename: 'Mutation',
+                    updateShouldAnalyze: {
+                      __typename: 'SessionDocument',
+                      ...selectedSessionDocument,
+                      should_analyze:
+                        selectedSessionDocument.should_analyze === 1 ? 0 : 1
+                    }
                   }}
-                />
+                  refetchQueries={() => {
+                    return [{ query: RESULTS, variables: { session_id } }];
+                  }}
+                  awaitRefetchQueries={true}
+                >
+                  {updateShouldAnalyze => (
+                    <SessionDocumentMoreActionsPopper
+                      isMoreActionsOpened={isMoreActionsOpened}
+                      anchorEl={anchorEl}
+                      moreActionsClosed={moreActionsClosed}
+                      sessionDocumentViewed={contentSessionDocumentDialogOpened}
+                      contentEdited={contentEdited}
+                      sessionDocumentRenamed={sessionDocumentRenameDialogOpened}
+                      sessionDocumentDeleted={() => {
+                        deleteSessionDocument({
+                          variables: {
+                            sd_id: selectedSessionDocument.sd_id
+                          }
+                        });
+                      }}
+                      shouldAnalyzeUpdated={() => {
+                        updateShouldAnalyze({
+                          variables: {
+                            sd_id: selectedSessionDocument.sd_id
+                          }
+                        });
+                      }}
+                      selectedSessionDocument={selectedSessionDocument}
+                    />
+                  )}
+                </Mutation>
               )}
             </Mutation>
             <RenameSessionDocumentDialog
@@ -135,6 +177,7 @@ class SessionDocumentsPage extends Component {
               closed={sessionDocumentRenameDialogClosed}
               sessionDocument={selectedSessionDocument}
               selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
+              sessionId={session_id}
             />
           </Auxilliary>
         ) : null}

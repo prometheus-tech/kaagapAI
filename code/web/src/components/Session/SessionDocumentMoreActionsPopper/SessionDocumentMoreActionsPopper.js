@@ -14,7 +14,9 @@ function SessionDocumentMoreActionsPopper({
   sessionDocumentViewed,
   contentEdited,
   sessionDocumentRenamed,
-  sessionDocumentDeleted
+  sessionDocumentDeleted,
+  selectedSessionDocument,
+  shouldAnalyzeUpdated
 }) {
   return (
     <Popper
@@ -58,6 +60,16 @@ function SessionDocumentMoreActionsPopper({
                   }}
                 >
                   Rename
+                </MenuItem>
+                <MenuItem
+                  onClick={e => {
+                    shouldAnalyzeUpdated();
+                    moreActionsClosed();
+                  }}
+                >
+                  {selectedSessionDocument.should_analyze
+                    ? 'Ignore in analysis'
+                    : 'Include in analysis'}
                 </MenuItem>
                 <MenuItem
                   onClick={e => {
