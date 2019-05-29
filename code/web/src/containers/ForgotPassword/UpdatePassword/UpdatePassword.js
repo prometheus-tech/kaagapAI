@@ -23,7 +23,6 @@ const styles = theme => ({
     backgroundColor: 'rgb(254, 254, 254)',
     marginTop: theme.spacing.unit * 5,
     border: '1px solid #f3f3f3',
-    https://github.com/prometheus-tech/kaagapAI.git
     borderRadius: 5
   },
   customInputRoot: {

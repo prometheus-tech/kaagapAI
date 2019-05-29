@@ -2,7 +2,7 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import EmptyCustomSessionsResultImage from '../../../assets/No_Result.svg';
+import EmptyCustomSessionsResultImage from '../../../assets/empty_custom_result.svg';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import Fab from '@material-ui/core/Fab';
