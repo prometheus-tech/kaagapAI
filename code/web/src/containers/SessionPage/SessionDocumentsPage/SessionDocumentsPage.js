@@ -182,6 +182,7 @@ class SessionDocumentsPage extends Component {
               closed={sessionDocumentRenameDialogClosed}
               sessionDocument={selectedSessionDocument}
               selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
+              sessionId={session_id}
             />
           </Auxilliary>
         ) : null}
