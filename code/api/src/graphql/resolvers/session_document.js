@@ -18,27 +18,6 @@ export default {
           where: { sd_id }
         });
       }
-    },
-
-    getFile: async (parent, { sd_id }, { models, practitioner }) => {
-      if(!practitioner) {
-        throw new AuthenticationError('You must be logged in');
-      } else {
-        const Op = Sequelize.Op;
-        const file = await models.Session_Document.findOne({
-          raw: true,
-          where: { 
-            sd_id 
-          }
-        })
-
-        if(file) {
-          const filename = file.file.split('gs://kaagapai-files/')[1];
-          const url = documentModules.getImageUrl(filename);
-
-          return url;
-        }
-      }
     }
   },
 
@@ -262,6 +241,27 @@ export default {
   
           return res;
         })
+      }
+    },
+
+    getFile: async (parent, { sd_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+        const file = await models.Session_Document.findOne({
+          raw: true,
+          where: { 
+            sd_id 
+          }
+        })
+
+        if(file) {
+          const filename = file.file.split('gs://kaagapai-files/')[1];
+          const url = documentModules.getImageUrl(filename);
+
+          return url;
+        }
       }
     }
   }

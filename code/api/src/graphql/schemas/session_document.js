@@ -23,8 +23,6 @@ export default `
 
   type Query { 
     sessionDocument(sd_id: UUID!): SessionDocument!
-
-    getFile(sd_id: UUID!): String
   }
  
   type Mutation {
@@ -43,5 +41,7 @@ export default `
     updateShouldAnalyze(sd_id: UUID!): SessionDocument!
 
     downloadSessionDocument(sd_id: UUID!): SessionDocument!
+
+    getFile(sd_id: UUID!): String
   }
 `;
