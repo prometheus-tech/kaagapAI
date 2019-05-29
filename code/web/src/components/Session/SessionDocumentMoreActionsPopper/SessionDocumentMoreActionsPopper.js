@@ -16,7 +16,8 @@ function SessionDocumentMoreActionsPopper({
   sessionDocumentRenamed,
   sessionDocumentDeleted,
   selectedSessionDocument,
-  shouldAnalyzeUpdated
+  shouldAnalyzeUpdated,
+  sessionDocumentDownloaded
 }) {
   return (
     <Popper
@@ -73,7 +74,8 @@ function SessionDocumentMoreActionsPopper({
                 </MenuItem>
                 <MenuItem
                   onClick={e => {
-                    alert('Not yet implemented');
+                    sessionDocumentDownloaded();
+                    moreActionsClosed();
                   }}
                 >
                   Download

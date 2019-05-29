@@ -5,6 +5,7 @@ import { withSnackbar } from 'notistack';
 import { cloneDeep } from 'apollo-utilities';
 import DELETE_SESSION_DOCUMENT from '../../../graphql/mutations/deleteSessionDocument';
 import UPDATE_SHOULD_ANALYZE from '../../../graphql/mutations/updateShouldAnalyze';
+import DOWNLOAD_SESSION_DOCUMENT from '../../../graphql/mutations/downloadSessionDocument';
 import SESSION from '../../../graphql/queries/session';
 import RESULTS from '../../../graphql/queries/results';
 import { Mutation } from 'react-apollo';
@@ -16,6 +17,7 @@ import SessionDocumentMoreActionsPopper from '../../../components/Session/Sessio
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
+import SimpleSnackbar from '../../../components/UI/SimpleSnackbar/SimpleSnackbar';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -143,31 +145,73 @@ class SessionDocumentsPage extends Component {
                     return [{ query: RESULTS, variables: { session_id } }];
                   }}
                   awaitRefetchQueries={true}
+                  errorPolicy="all"
+                  onError={error => {
+                    // Ignore error
+                  }}
                 >
                   {updateShouldAnalyze => (
-                    <SessionDocumentMoreActionsPopper
-                      isMoreActionsOpened={isMoreActionsOpened}
-                      anchorEl={anchorEl}
-                      moreActionsClosed={moreActionsClosed}
-                      sessionDocumentViewed={contentSessionDocumentDialogOpened}
-                      contentEdited={contentEdited}
-                      sessionDocumentRenamed={sessionDocumentRenameDialogOpened}
-                      sessionDocumentDeleted={() => {
-                        deleteSessionDocument({
-                          variables: {
-                            sd_id: selectedSessionDocument.sd_id
-                          }
-                        });
+                    <Mutation
+                      mutation={DOWNLOAD_SESSION_DOCUMENT}
+                      onCompleted={({
+                        downloadSessionDocument: { file_name }
+                      }) => {
+                        this.props.enqueueSnackbar(
+                          file_name + ' downloaded to Downloads folder'
+                        );
                       }}
-                      shouldAnalyzeUpdated={() => {
-                        updateShouldAnalyze({
-                          variables: {
-                            sd_id: selectedSessionDocument.sd_id
-                          }
-                        });
+                      errorPolicy="all"
+                      onError={error => {
+                        // Ignore error
                       }}
-                      selectedSessionDocument={selectedSessionDocument}
-                    />
+                    >
+                      {(downloadSessionDocument, { loading: downloading }) => (
+                        <Auxilliary>
+                          <SessionDocumentMoreActionsPopper
+                            isMoreActionsOpened={isMoreActionsOpened}
+                            anchorEl={anchorEl}
+                            moreActionsClosed={moreActionsClosed}
+                            sessionDocumentViewed={
+                              contentSessionDocumentDialogOpened
+                            }
+                            contentEdited={contentEdited}
+                            sessionDocumentRenamed={
+                              sessionDocumentRenameDialogOpened
+                            }
+                            sessionDocumentDeleted={() => {
+                              deleteSessionDocument({
+                                variables: {
+                                  sd_id: selectedSessionDocument.sd_id
+                                }
+                              });
+                            }}
+                            shouldAnalyzeUpdated={() => {
+                              updateShouldAnalyze({
+                                variables: {
+                                  sd_id: selectedSessionDocument.sd_id
+                                }
+                              });
+                            }}
+                            selectedSessionDocument={selectedSessionDocument}
+                            sessionDocumentDownloaded={() => {
+                              downloadSessionDocument({
+                                variables: {
+                                  sd_id: selectedSessionDocument.sd_id
+                                }
+                              });
+                            }}
+                          />
+                          <SimpleSnackbar
+                            isOpened={downloading}
+                            message={
+                              'Downloading ' +
+                              selectedSessionDocument.file_name +
+                              '...'
+                            }
+                          />
+                        </Auxilliary>
+                      )}
+                    </Mutation>
                   )}
                 </Mutation>
               )}
