@@ -8,6 +8,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import shortid from 'shortid';
 import path from 'path';
 import textract from 'textract';
+import dateformat from 'dateformat';
 
 //Google Cloud APIs
 import vision from '@google-cloud/vision';
@@ -198,9 +199,14 @@ function deleteFileFromGCS(filename) {
 }
 
 const getImageUrl = (filename) => {
+
+  var date = new Date();
+  date.setDate(date.getDate() + 1);
+  console.log(date);
+
   const options = {
     action: 'read',
-    expires: '03-17-2025',
+    expires: dateformat(date, "mm-dd-yyyy"),
   };
   
   return new Promise(resolve => {
