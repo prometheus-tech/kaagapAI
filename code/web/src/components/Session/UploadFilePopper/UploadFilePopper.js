@@ -26,7 +26,8 @@ function UploadFilePopper({
   isUploadFilePopperOpened,
   anchorEl,
   uploadFilePopperClosed,
-  newSessionDocumentDialogOpened
+  newSessionDocumentDialogOpened,
+  newSessionAttachmentDialogOpened
 }) {
   return (
     <Popper
@@ -63,7 +64,12 @@ function UploadFilePopper({
                   title="Files that will not be analyzed"
                   placement="left"
                 >
-                  <MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      uploadFilePopperClosed();
+                      newSessionAttachmentDialogOpened();
+                    }}
+                  >
                     <ListItemIcon className={classes.listItemIcon}>
                       <AttachFileIcon />
                     </ListItemIcon>

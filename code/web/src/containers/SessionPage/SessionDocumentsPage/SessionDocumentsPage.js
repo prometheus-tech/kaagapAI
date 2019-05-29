@@ -13,6 +13,7 @@ import { Mutation } from 'react-apollo';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SessionDocumentCards from '../../../components/Session/SessionDocumentCards/SessionDocumentCards';
 import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocumentDialog/NewSessionDocumentDialog';
+import NewSessionAttachmentDialog from '../../../components/Session/NewSessionAttachmentDialog/NewSessionAttachmentDialog';
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
@@ -25,6 +26,7 @@ class SessionDocumentsPage extends Component {
       session_id,
       documents,
       isNewSessionDocumentDialogOpened,
+      isNewSessionAttachmentDialogOpened,
       file,
       isMoreActionsOpened,
       anchorEl,
@@ -34,6 +36,7 @@ class SessionDocumentsPage extends Component {
       contentSessionDocumentDialogOpened,
       moreActionsOpened,
       newSessionDocumentDialogClosed,
+      newSessionAttachmentDialogClosed,
       newUploadFileAdded,
       newUploadFileRemoved,
       moreActionsClosed,
@@ -60,9 +63,19 @@ class SessionDocumentsPage extends Component {
             moreActionsOpened={moreActionsOpened}
           />
         )}
+
         <NewSessionDocumentDialog
           opened={isNewSessionDocumentDialogOpened}
           closed={newSessionDocumentDialogClosed}
+          file={file}
+          fileAdded={newUploadFileAdded}
+          fileRemoved={newUploadFileRemoved}
+          sessionId={session_id}
+        />
+
+        <NewSessionAttachmentDialog
+          opened={isNewSessionAttachmentDialogOpened}
+          closed={newSessionAttachmentDialogClosed}
           file={file}
           fileAdded={newUploadFileAdded}
           fileRemoved={newUploadFileRemoved}
