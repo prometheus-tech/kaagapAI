@@ -3,6 +3,7 @@ import uploadModules from '../../modules/upload_modules';
 import downloadsFolder from 'downloads-folder';
 import documentModules from '../../modules/document_modules';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
+import Sequelize from 'sequelize';
 
 export default {
   UUID: GraphQlUUID,
@@ -18,6 +19,27 @@ export default {
         });
       }
     },
+
+    getFile: async (parent, { sd_id }, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+        const file = await models.Session_Document.findOne({
+          raw: true,
+          where: { 
+            sd_id 
+          }
+        })
+
+        if(file) {
+          const filename = file.file.split('gs://kaagapai-files/')[1];
+          const url = documentModules.getImageUrl(filename);
+
+          return url;
+        }
+      }
+    }
   },
 
   Mutation: {

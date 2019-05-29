@@ -23,6 +23,8 @@ export default `
 
   type Query { 
     sessionDocument(sd_id: UUID!): SessionDocument!
+
+    getFile(sd_id: UUID!): String
   }
  
   type Mutation {

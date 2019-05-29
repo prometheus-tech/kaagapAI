@@ -197,6 +197,25 @@ function deleteFileFromGCS(filename) {
   bucket.file(file_name).delete();
 }
 
+const getImageUrl = (filename) => {
+  const options = {
+    action: 'read',
+    expires: '03-17-2025',
+  };
+  
+  return new Promise(resolve => {
+    bucket
+    .file(filename)
+    .getSignedUrl(options)
+    .then(results => {
+      const url = results[0];
+      resolve(url);
+    })
+  }).catch(err => {
+    console.error('ERROR:', err);
+  });
+}
+
 export default {
   renameFile,
   storeUpload,
@@ -207,5 +226,6 @@ export default {
   extractImageText,
   convert,
   getFileFromGCS,
-  deleteFileFromGCS
+  deleteFileFromGCS,
+  getImageUrl
 };
