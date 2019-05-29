@@ -22,6 +22,8 @@ import SessionPage from './containers/SessionPage/SessionPage';
 import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
 import AccountSettingsPage from './containers/AccountSettingsPage/AccountSettingsPage';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import { AUTH_TOKEN } from './util/constants';
 
 import { logout } from './util/helperFunctions';
@@ -131,6 +133,7 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
+        <CssBaseline />
         <HashRouter>
           <SnackbarProvider
             maxSnack={1}
