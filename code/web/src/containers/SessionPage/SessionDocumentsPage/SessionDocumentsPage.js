@@ -115,12 +115,7 @@ class SessionDocumentsPage extends Component {
                 __typename: 'Mutation',
                 deleteSessionDocument: {
                   __typename: 'SessionDocument',
-                  session_id: selectedSessionDocument.session_id,
-                  sd_id: selectedSessionDocument.sd_id,
-                  file_name: selectedSessionDocument.file_name,
-                  date_added: selectedSessionDocument.date_added,
-                  type: selectedSessionDocument.type,
-                  content: selectedSessionDocument.content
+                  ...selectedSessionDocument
                 }
               }}
               refetchQueries={() => {
