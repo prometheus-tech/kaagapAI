@@ -13,7 +13,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 import forgot_password from '../../../assets/forgot_password.svg';
-import EmailIcon from '@material-ui/icons/Email';
+import Email_Illustration from '../../../assets/Verification_Illustration.svg';
 
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -86,9 +86,8 @@ const styles = theme => ({
     boxShadow: 'none',
     marginTop: theme.spacing.unit * 5
   },
-  emailIcon: {
-    color: grey[500],
-    fontSize: 96
+  checkEmail: {
+    height: '20vh'
   },
   title: {
     fontFamily: [
@@ -125,6 +124,23 @@ const styles = theme => ({
     color: grey[400],
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 8
+  },
+  subtitleCheck: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ],
+    fontWeight: 300,
+    fontSize: 13,
+    color: grey[400]
   },
   return: {
     textDecoration: 'underline',
@@ -249,16 +265,25 @@ class FindEmail extends Component {
                   ) : (
                     <Grid container>
                       <Grid item xs={12}>
-                        <EmailIcon className={classes.emailIcon} />
+                        <img
+                          src={Email_Illustration}
+                          alt="check your email"
+                          className={classes.checkEmail}
+                        />
                         <Typography variant="h6" className={classes.title}>
                           Check your email
                         </Typography>
                         <Typography
                           variant="subtitle1"
-                          className={classes.subtitle}
+                          className={classes.subtitleCheck}
                         >
-                          A reset password link was sent to your email. Use the
-                          link to reset your password.
+                          A reset password link was sent to your email,
+                        </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          className={classes.subtitleCheck}
+                        >
+                          Use the link to reset your password.
                         </Typography>
                       </Grid>
                     </Grid>
