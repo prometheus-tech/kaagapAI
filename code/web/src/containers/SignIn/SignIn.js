@@ -180,7 +180,11 @@ class SignIn extends Component {
   render() {
     const { email, password } = this.state;
     const { classes } = this.props;
+
     const SignInButtonLink = props => <Link to={'/signup'} {...props} />;
+    const ForgotPasswordButtonLink = props => (
+      <Link to={'/forgot-password'} {...props} />
+    );
 
     return (
       <Mutation
@@ -310,7 +314,10 @@ class SignIn extends Component {
                           </FormControl>
                         </Grid>
                         <Grid item xs={5}>
-                          <Typography className={classes.forgotPassword}>
+                          <Typography
+                            className={classes.forgotPassword}
+                            component={ForgotPasswordButtonLink}
+                          >
                             Forgot password?
                           </Typography>
                         </Grid>

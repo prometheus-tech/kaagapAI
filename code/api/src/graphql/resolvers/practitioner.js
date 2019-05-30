@@ -10,10 +10,6 @@ export default {
   UUID: GraphQlUUID,
   JSON: GraphQlJSON,
 
-  Archives: {
-
-  }, 
-
   Query: {
     profile: async (parent, args, { models, practitioner }) => {
       if (!practitioner) {
@@ -340,7 +336,7 @@ export default {
             change_password_UUID: null
           }, { 
             where: { change_password_UUID: changePasswordToken } 
-          }).then(async res => await registration.sendEmail(subject, body, res.email));
+          }).then(async result => await registration.sendEmail(subject, body, res.email));
 
           return res.email;
         } else {
