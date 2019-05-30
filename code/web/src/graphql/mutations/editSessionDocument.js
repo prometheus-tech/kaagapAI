@@ -5,7 +5,7 @@ import SESSION_DOCUMENT_BASIC_INFO from '../fragments/sessionDocumentBasicInfo';
 const EDIT_SESSION_DOCUMENT = gql`
   mutation EditSessionDocument(
     $sd_id: UUID!
-    $content: String!
+    $content: String
     $file_name: String!
   ) {
     editSessionDocument(

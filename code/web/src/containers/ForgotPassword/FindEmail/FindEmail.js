@@ -231,8 +231,9 @@ class FindEmail extends Component {
                           onClick={() => {
                             forgotPassword({ variables: { email: email } });
                           }}
+                          disabled={loading}
                         >
-                          Reset password
+                          {!loading ? 'Reset password' : 'Searching account...'}
                         </ButtonBase>
                       </Grid>
                       <Grid item xs={12}>

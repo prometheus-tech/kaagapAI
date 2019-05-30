@@ -150,14 +150,17 @@ class App extends Component {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
-              <Route path="/forgotpassword" component={ForgotPassword} />
-              <Route path="/updatepassword" component={UpdatePassword} />
+              <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/account" component={AccountSettingsPage} />
-              <Route exact path="/" component={ClientsPage} />
               <Route path="/archives" component={ArchivesPage} />
               <Route path="/account" component={AccountSettingsPage} />
               <Route path="/client/:c_id" component={ClientPage} />
               <Route path="/session/:session_id" component={SessionPage} />
+              <Route
+                path="/change-password/:password_token"
+                component={UpdatePassword}
+              />
+              <Route exact path="/" component={ClientsPage} />
             </Switch>
           </SnackbarProvider>
         </HashRouter>
