@@ -20,6 +20,7 @@ import RenameSessionDocumentDialog from '../../../components/Session/RenameSessi
 import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import SimpleSnackbar from '../../../components/UI/SimpleSnackbar/SimpleSnackbar';
+import RemoveAnnotationsConfirmationDialog from '../../../components/Session/RemoveAnnotationsConfirmationDialog/RemoveAnnotationsConfirmationDialog';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -48,7 +49,10 @@ class SessionDocumentsPage extends Component {
       isContentSessionDocumentDialogOpened,
       isEditContentSessionDocument,
       contentSessionDocumentDialogClosed,
-      contentEditStopped
+      contentEditStopped,
+      isRemoveAnnotationsConfirmationDialogOpened,
+      removeAnnotationsConfirmationDialogOpened,
+      removeAnnotationsConfirmationDialogClosed
     } = this.props;
 
     return (
@@ -93,6 +97,19 @@ class SessionDocumentsPage extends Component {
             contentEditStopped={contentEditStopped}
             selectedSessionDocumentUpdated={selectedSessionDocumentUpdated}
             session_id={session_id}
+          />
+        ) : null}
+
+        {/* @TODO: Change condition to "selectedSessionDocument && selectedSessionDocument.annottated" */}
+        {selectedSessionDocument ? (
+          <RemoveAnnotationsConfirmationDialog
+            isDialogOpened={isRemoveAnnotationsConfirmationDialogOpened}
+            dialogClosed={removeAnnotationsConfirmationDialogClosed}
+            continueAction={() => {
+              removeAnnotationsConfirmationDialogClosed();
+              contentSessionDocumentDialogOpened();
+              contentEdited();
+            }}
           />
         ) : null}
 
@@ -234,6 +251,9 @@ class SessionDocumentsPage extends Component {
                                     }
                                   });
                                 }}
+                                removeAnnotationsConfirmationDialogOpened={
+                                  removeAnnotationsConfirmationDialogOpened
+                                }
                               />
                               <SimpleSnackbar
                                 isOpened={downloading}

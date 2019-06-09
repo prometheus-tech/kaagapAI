@@ -18,7 +18,8 @@ function SessionDocumentMoreActionsPopper({
   selectedSessionDocument,
   shouldAnalyzeUpdated,
   sessionDocumentDownloaded,
-  originalFileOpened
+  originalFileOpened,
+  removeAnnotationsConfirmationDialogOpened
 }) {
   const { attachment } = selectedSessionDocument;
 
@@ -61,12 +62,24 @@ function SessionDocumentMoreActionsPopper({
                 {!attachment ? (
                   <MenuItem
                     onClick={() => {
-                      sessionDocumentViewed();
-                      contentEdited();
+                      removeAnnotationsConfirmationDialogOpened();
                       moreActionsClosed();
+                      // @TODO: Implement dynamic showing of annotations dialog upon implementation in backend
+                      // sessionDocumentViewed();
+                      // contentEdited();
+                      // moreActionsClosed();
                     }}
                   >
                     Edit content
+                  </MenuItem>
+                ) : null}
+                {!attachment ? (
+                  <MenuItem
+                    onClick={() => {
+                      alert('To be implemented');
+                    }}
+                  >
+                    Annotate content
                   </MenuItem>
                 ) : null}
                 <MenuItem

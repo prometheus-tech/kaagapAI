@@ -35,7 +35,8 @@ class SessionPage extends Component {
     isEditContentSessionDocument: false,
     isRenameSessionDocumentDialogOpened: false,
     isUploadFilePopperOpened: false,
-    uploadFilePopperAnchorEl: null
+    uploadFilePopperAnchorEl: null,
+    isRemoveAnnotationsConfirmationDialogOpened: false
   };
 
   componentDidMount() {
@@ -154,6 +155,18 @@ class SessionPage extends Component {
     });
   };
 
+  openRemoveAnnotationsConfirmationDialogHandler = () => {
+    this.setState({
+      isRemoveAnnotationsConfirmationDialogOpened: true
+    });
+  };
+
+  closeRemoveAnnotationsConfirmationDialogHandler = () => {
+    this.setState({
+      isRemoveAnnotationsConfirmationDialogOpened: false
+    });
+  };
+
   render() {
     const { session_id } = this.props.match.params;
 
@@ -169,7 +182,8 @@ class SessionPage extends Component {
       selectedSessionDocument,
       isRenameSessionDocumentDialogOpened,
       isUploadFilePopperOpened,
-      uploadFilePopperAnchorEl
+      uploadFilePopperAnchorEl,
+      isRemoveAnnotationsConfirmationDialogOpened
     } = this.state;
 
     return (
@@ -304,6 +318,15 @@ class SessionPage extends Component {
                           }
                           sessionDocumentRenameDialogClosed={
                             this.closeRenameSessionDocumentHandler
+                          }
+                          isRemoveAnnotationsConfirmationDialogOpened={
+                            isRemoveAnnotationsConfirmationDialogOpened
+                          }
+                          removeAnnotationsConfirmationDialogOpened={
+                            this.openRemoveAnnotationsConfirmationDialogHandler
+                          }
+                          removeAnnotationsConfirmationDialogClosed={
+                            this.closeRemoveAnnotationsConfirmationDialogHandler
                           }
                         />
                       )}
