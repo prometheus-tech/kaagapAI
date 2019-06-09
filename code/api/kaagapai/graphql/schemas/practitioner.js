@@ -1,6 +1,0 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = "\n  scalar Date \n  scalar JSON\n  \n  enum Status {\n    pending\n    deactivated\n    active\n  }\n\n  type Archives {\n    archives_id: UUID\n    clients: [Client]\n    sessions: [Session]\n    session_documents: [SessionDocument]\n  }\n\n  type Practitioner {\n    p_id: UUID!\n    email: String!\n    phone_no: String!\n    fname: String!\n    lname: String!\n    license: String!\n    profession: String!\n    user_status: Status!\n    date_registered: Date!\n    date_deactivated: Date\n    last_logged: Date\n    verification_code: String!\n  }\n\n  type Query {\n    profile: JSON!\n\n    archives: Archives\n  }\n\n  type Mutation {\n    login(email: String!, password: String!): JSON!\n\n    register(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!, license: String!, profession: String!): JSON\n\n    verifyRegistration(email: String!,input_code:String!):JSON\n\n    updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!\n\n    forgotPassword(email: String!): JSON\n\n    changePassword(email: String!, changePasswordToken: String!, password: String!): JSON\n  }\n";

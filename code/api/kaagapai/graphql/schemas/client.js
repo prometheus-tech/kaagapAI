@@ -1,6 +1,0 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = "\n  scalar Date\n  scalar UUID\n\n  enum Gender {\n    M\n    F\n  }\n\n  enum ArchiveStatus {\n    archived\n    active\n  }\n\n  enum OrderByInput {\n    DESC\n    ASC\n  }\n\n  enum OrderByColumn {\n    lname\n    date_added\n    last_opened\n    session_name\n    date_of_session\n    file_name\n    last_modified\n  } \n\n  type Client {\n    c_id: UUID!\n    fname: String!\n    lname: String!\n    gender: Gender!\n    birthdate: Date!\n    date_added: Date!\n    last_opened: Date\n    status: ArchiveStatus!\n    p_id: UUID!\n    no_of_sessions: Int\n    sessions(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Session]\n    searchsession(filter: String): [Session]\n  }\n\n  type Query { \n    clients(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Client!]\n    \n    client(c_id: UUID!): Client\n\n    searchclients(name: String!): [Client!]\n  }\n\n  type Mutation {\n    addClient(fname: String!, lname: String!, gender:[Gender!]!, birthdate: Date!): Client!\n\n    deleteClient(c_id: UUID!): Client!\n\n    restoreClient(c_id: UUID!): Client!\n\n    updateClientInformation(c_id: UUID!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!\n  }\n";
