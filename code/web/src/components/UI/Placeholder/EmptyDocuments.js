@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import EmptyDocuments from '../../../assets/Empty_Documents.svg';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import blue from '@material-ui/core/colors/blue';
-import purple from '@material-ui/core/colors/purple';
-import Icon from '@material-ui/core/Icon';
 
 const styles = theme => ({
   emptyContainer: {
@@ -35,7 +32,7 @@ const styles = theme => ({
   sayingEmptyPlaceholder: {
     fontSize: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit,
-    color: blueGrey[300],
+    color: blueGrey[300]
   },
   extendedButton: {
     background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
@@ -57,7 +54,7 @@ const styles = theme => ({
 });
 class EmptyIllustrationDocuments extends Component {
   render() {
-    const { classes, newUploadDocuments } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.emptyContainer}>
         <div className={classes.imgEmpty}>
@@ -74,15 +71,6 @@ class EmptyIllustrationDocuments extends Component {
           <Typography variant="h5" className={classes.sayingEmptyPlaceholder}>
             Start uploading your files to get results
           </Typography>
-          {/* <Fab
-            color="primary"
-            variant="extended"
-            className={classes.extendedButton}
-            onClick={newUploadDocuments}
-          >
-            <Icon className={classes.extendedIcon}>cloud_upload</Icon> Upload
-            File
-          </Fab> */}
         </div>
       </div>
     );
