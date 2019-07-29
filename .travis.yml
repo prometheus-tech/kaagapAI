@@ -1,17 +1,52 @@
 sudo: required
-services:
-  - docker
-
-before_install:
-  - cd code/web/
-  - docker build -t jessietabilisma/kaagapai-test -f Dockerfile.dev .
-
-script:
-  - docker run jessietabilisma/kaagapai-test npm run test -- --coverage
-
-deploy:
-  provider: firebase
-  on:
-    branch: master
-  token:
-    secure: "$Firebase_token"
+matrix:
+  include:
+  - language: node_js
+    node_js: lts/*
+    cache:
+      directories:
+      - node_modules
+    before_install:
+    - npm install -g firebase-tools
+    - cd code/web/
+    - npm install
+    script:
+    - npm test
+    after_success:
+    - travis_wait 40 npm run build
+    - firebase use default --token $FIREBASE_TOKEN
+    - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+    on:
+      branch:
+      - dev
+      project: kaagapai-dev
+  - language: node_js
+    node_js: lts/*
+    services: mysql
+    cache:
+      directories:
+      - node_modules
+    before_install:
+    - cd code/api
+    - npm install
+    script: 'true'
+    deploy:
+      provider: heroku
+      api_key:
+        secure: NX3DOSURcnPzZnmveJRKqrS89KeawWSGeEEGYIY7dS0dRenVFqaT4eqrBvFor4G/dqhC/cteH1SxkKWdX5HpYOE3hQaS7R5Z9tZQ1O1WNQfGQqhzLWkxvX7w6lWrDsAekMRpPolD9M/wXECCckYw/H2ro9Bt5236Nq8M5SMFk2VCbi4EI6GfNr+n4Wgla5zEdL9sDEcu2EUvXKKKR8XBhF6YmVpQVJAaIqDHe0adnU9o7ZlP2nAVk4XeyyKAfdHu8TD4jerlRgfmiCUeyYmiwCqjCl+6dgI5z6YCavnodeXx+y9wxW8YwrePcglwA8LCACBg2F+gXCSBRDzueTfVv86wiV6YkgR/DorV0Pv3algC8ppz0Jvdf96QO0bOWVNtu4L204YNURlNoNq/mfNqopa3TgnjDutA2HycftOvm4v26Y4eT/Kt0bvyBnAsPQZjG/HWqdflWxr8jOTZV3Ci2c3kYdLYSYsesFulQOwij+otP43lDP/NwaB9qQl+K+JpF03nNe36Z4IS/o9YKpbSyg6DGwL0mGc6TWtFVa6WVCT9jcAspVWsXYjRlz95W4XyClArX35kBwjKafIFjemv7AVCZe1IzdTPKshinn40bz6z1+Pl603ilyoNRSrJLueT0iaeoHB3Pj3EkUmRwmNr7GZaNHJkcConKqM75wBClZo=
+      app:
+        dev: kaagapai-dev
+      on:
+        repo: prometheus-tech/kaagapAI
+        branches:
+          only:
+          - dev
+notifications:
+  email:
+  - 2164149@slu.edu.ph
+  - 2161495@slu.edu.ph
+  - 2160809@slu.edu.ph
+  - 2160120@slu.edu.ph
+  - 2161745@slu.edu.ph
+  - 2161436@slu.edu.ph
+  - 2161794@slu.edu.ph
