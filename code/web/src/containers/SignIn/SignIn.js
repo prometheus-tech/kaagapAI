@@ -8,7 +8,7 @@ import LOGIN from '../../graphql/mutations/login';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 
 import Typography from '@material-ui/core/Typography';
 import LoginAnimation from '../../assets/Landing_Animation.svg';
@@ -17,6 +17,9 @@ import blue from '@material-ui/core/colors/blue';
 import grey from '@material-ui/core/colors/grey';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputBase from '@material-ui/core/InputBase';
 
 import { Link } from 'react-router-dom';
 
@@ -25,8 +28,7 @@ const styles = theme => ({
     width: '100vw',
     minHeight: '100vh',
     padding: '0vh',
-    margin: '0',
-    overflowX: 'hidden'
+    margin: '0'
   },
   logo: {
     margin: 20,
@@ -36,22 +38,24 @@ const styles = theme => ({
   signIn: {
     fontSize: theme.spacing.unit * 4,
     color: blue[900],
-    fontWeight: 800
+    fontWeight: 800,
+    marginLeft: '2vw'
   },
   signInWelcome: {
     marginTop: theme.spacing.unit * 5,
     fontSize: theme.spacing.unit * 1.8,
     fontWeight: 500,
     color: blue[400],
-    lineHeight: '150%'
+    lineHeight: '150%',
+    marginLeft: '2vw'
   },
   formContainer: {
     backgroundColor: 'rgb(252, 252, 252)'
   },
-  formItems: {},
   illustrationContainer: {
     display: 'inline',
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: '#f8f8f8'
   },
   sigInIllustration: {
     height: '90vh',
@@ -62,21 +66,27 @@ const styles = theme => ({
     fontWeight: '300'
   },
   fab: {
-    borderRadius: '50px',
-    padding: '10px 45px 10px 45px',
-    backgroundColor: blue[600],
+    background: 'linear-gradient(to top, #8f94fb, #4e54c8)',
     color: '#ffffff',
+    textTransform: 'capitalize',
+    borderRadius: 3,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: blue[700]
-    }
+      backgroundColor: blue[900]
+    },
+    margin: theme.spacing.unit,
+    padding: '3px 35px 3px 35px',
+    width: '12vw',
+    boxShadow: 'none'
   },
   alignMent: {
-    textAlign: 'right',
-    marginTop: theme.spacing.unit * 5
+    textAlign: 'center',
+    marginTop: theme.spacing.unit * 2
   },
   createAccount: {
     display: 'flex',
-    marginTop: '15vh'
+    position: 'fixed',
+    bottom: '5vh'
   },
   createQuestion: {
     fontWeight: '300',
@@ -94,11 +104,13 @@ const styles = theme => ({
     textDecoration: 'underline',
     color: blue[900],
     letterSpacing: '1px',
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 5,
+    marginLeft: '3vw',
     fontWeight: '300'
   },
   errorMessage: {
-    display: 'flex'
+    display: 'flex',
+    marginLeft: '2vw'
   },
   errorLogin: {
     color: 'red',
@@ -108,6 +120,47 @@ const styles = theme => ({
   iconErr: {
     color: 'red',
     marginTop: theme.spacing.unit * 2.5
+  },
+  customInputRoot: {
+    'label + &': {
+      marginTop: theme.spacing.unit * 3
+    },
+    width: '28vw',
+    marginTop: theme.spacing.unit * 10
+  },
+  customkInput: {
+    borderRadius: 3,
+    backgroundColor: 'rgb(252, 252, 252)',
+    border: '2px solid #f2f2f2',
+    color: '#33333',
+    fontSize: '16',
+    padding: '10px 12px',
+    height: '4vh',
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(','),
+    '&:focus': {
+      borderColor: '#80bdff'
+    },
+    bootstrapFormLabel: {
+      fontSize: 18
+    }
+  },
+  forms: {
+    marginTop: theme.spacing.unit
+  },
+  inputContainer: {
+    marginTop: theme.spacing.unit,
+    marginLeft: '2vw'
   }
 });
 class SignIn extends Component {
@@ -127,7 +180,11 @@ class SignIn extends Component {
   render() {
     const { email, password } = this.state;
     const { classes } = this.props;
+
     const SignInButtonLink = props => <Link to={'/signup'} {...props} />;
+    const ForgotPasswordButtonLink = props => (
+      <Link to={'/forgot-password'} {...props} />
+    );
 
     return (
       <Mutation
@@ -200,43 +257,71 @@ class SignIn extends Component {
                             </div>
                           </Grid>
                         ) : null}
-                        <Grid item xs={10}>
-                          <TextValidator
-                            label="Email"
-                            margin="dense"
-                            autoComplete="email"
-                            fullWidth
-                            name="email"
-                            value={email}
-                            validators={['required', 'isEmail']}
-                            errorMessages={['Enter an email', 'Invalid email']}
-                            disabled={loading}
-                            onChange={this.inputChangeHandler}
-                            className={classes.inputActionField}
-                          />
-                          <TextValidator
-                            label="Password"
-                            margin="dense"
-                            type="password"
-                            fullWidth
-                            name="password"
-                            value={password}
-                            validators={['required']}
-                            errorMessages={[
-                              'Enter a password',
-                              'Incorrect password'
-                            ]}
-                            disabled={loading}
-                            onChange={this.inputChangeHandler}
-                            className={classes.inputActionField}
-                          />
+                        <Grid item xs={10} className={classes.inputContainer}>
+                          <FormControl className={classes.forms}>
+                            <InputLabel
+                              shrink
+                              className={classes.bootstrapFormLabel}
+                            >
+                              Email
+                            </InputLabel>
+                            <InputBase
+                              fullWidth
+                              label="Email"
+                              margin="dense"
+                              autoComplete="email"
+                              name="email"
+                              value={email}
+                              validators={['required', 'isEmail']}
+                              errorMessages={[
+                                'Enter an email',
+                                'Invalid email'
+                              ]}
+                              disabled={loading}
+                              onChange={this.inputChangeHandler}
+                              classes={{
+                                root: classes.customInputRoot,
+                                input: classes.customkInput
+                              }}
+                            />
+                          </FormControl>
+                          <FormControl className={classes.forms}>
+                            <InputLabel
+                              shrink
+                              className={classes.bootstrapFormLabel}
+                            >
+                              Password
+                            </InputLabel>
+                            <InputBase
+                              label="Password"
+                              margin="dense"
+                              type="password"
+                              fullWidth
+                              name="password"
+                              value={password}
+                              validators={['required']}
+                              errorMessages={[
+                                'Enter a password',
+                                'Incorrect password'
+                              ]}
+                              disabled={loading}
+                              onChange={this.inputChangeHandler}
+                              classes={{
+                                root: classes.customInputRoot,
+                                input: classes.customkInput
+                              }}
+                            />
+                          </FormControl>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Typography className={classes.forgotPassword}>
+                        <Grid item xs={5}>
+                          <Typography
+                            className={classes.forgotPassword}
+                            component={ForgotPasswordButtonLink}
+                          >
                             Forgot password?
                           </Typography>
                         </Grid>
-                        <Grid item xs={12} className={classes.alignMent}>
+                        <Grid item xs={7} className={classes.alignMent}>
                           <Fab
                             variant="extended"
                             className={classes.fab}

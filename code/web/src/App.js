@@ -13,13 +13,17 @@ import { SnackbarProvider } from 'notistack';
 
 import Button from '@material-ui/core/Button';
 
-import Layout from './hoc/Layout/Layout';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
+import ForgotPassword from './containers/ForgotPassword/FindEmail/FindEmail';
+import UpdatePassword from './containers/ForgotPassword/UpdatePassword/UpdatePassword';
 import ClientsPage from './containers/ClientsPage/ClientsPage';
 import ClientPage from './containers/ClientPage/ClientPage';
 import SessionPage from './containers/SessionPage/SessionPage';
 import ArchivesPage from './containers/ArchivesPage/ArchivesPage';
+import AccountSettingsPage from './containers/AccountSettingsPage/AccountSettingsPage';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { AUTH_TOKEN } from './util/constants';
 
@@ -32,6 +36,8 @@ const history = createHashHistory();
 const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
+      case 'Practitioner':
+        return 'practitioner:' + object.email + '_' + object.license;
       case 'Client':
         return 'client:' + object.c_id;
       case 'Session':
@@ -52,6 +58,30 @@ const cache = new InMemoryCache({
         return 'emotion:' + object.emotion_id;
       case 'Archives':
         return 'archives:' + object.archives_id;
+      case 'AccountSettings':
+        return 'account:' + object.c_id;
+      case 'CustomResult':
+        return 'customResult:' + object.custom_result_id;
+      case 'CustomSentiment':
+        return 'customSentiment:' + object.custom_sentiment_id;
+      case 'CustomKeyword':
+        return 'customKeyword:' + object.custom_keyword_id;
+      case 'CustomCategory':
+        return 'customCategory:' + object.custom_category_id;
+      case 'CustomEntity':
+        return 'customEntity:' + object.custom_entity_id;
+      case 'CustomEmotion':
+        return 'customEmotion:' + object.custom_emotion_id;
+      case 'Trend':
+        return 'trend:' + object.trend_id;
+      case 'TalkTurn':
+        return 'talkTurn:' + object.talk_turn_id;
+      case 'AppearanceDocument':
+        return 'appearanceDocument:' + object.appearance_document_id;
+      case 'TextAppearance':
+        return 'textAppearance:' + object.appearance_id;
+      case 'TextOccurence':
+        return 'textOccurrence:' + object.text_occurrence_id;
       default:
         return defaultDataIdFromObject(object);
     }
@@ -106,6 +136,7 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
+        <CssBaseline />
         <HashRouter>
           <SnackbarProvider
             maxSnack={1}
@@ -119,12 +150,17 @@ class App extends Component {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
-              <Layout>
-                <Route exact path="/" component={ClientsPage} />
-                <Route path="/archives" component={ArchivesPage} />
-                <Route path="/client/:c_id" component={ClientPage} />
-                <Route path="/session/:session_id" component={SessionPage} />
-              </Layout>
+              <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/account" component={AccountSettingsPage} />
+              <Route path="/archives" component={ArchivesPage} />
+              <Route path="/account" component={AccountSettingsPage} />
+              <Route path="/client/:c_id" component={ClientPage} />
+              <Route path="/session/:session_id" component={SessionPage} />
+              <Route
+                path="/change-password/:password_token"
+                component={UpdatePassword}
+              />
+              <Route exact path="/" component={ClientsPage} />
             </Switch>
           </SnackbarProvider>
         </HashRouter>

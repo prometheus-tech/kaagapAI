@@ -63,6 +63,19 @@ const uploadFile = async(file, session_id) => {
     } catch (err) {
       console.log(err);
     }
+  } else if (mimetype.indexOf('image') + 1) {
+    inputPath = './src/tmp/' + newFileName;
+    const imageTranscript = await documentModules.extractImageText(inputPath);
+    
+    if(imageTranscript) {
+      translation = await documentModules.translateText(imageTranscript);
+    } else {
+      translation = null;
+    }
+
+    await documentModules.uploadGCS(inputPath);
+
+    return { session_id, fileName, filePath, mimetype, translation };
   } else {
     inputPath = './src/tmp/' + newFileName;
     const transcript = await documentModules.extractDocumentText(inputPath);
@@ -73,6 +86,25 @@ const uploadFile = async(file, session_id) => {
   }
 }
 
+const uploadAttachment = async(file, session_id) => {
+  const { filename, mimetype, createReadStream } = await file;
+
+  var inputPath = './src/tmp/' + filename;
+  const stream = createReadStream();
+  var fileName = filename;
+
+  await documentModules.storeUpload({ stream, inputPath });
+  var newFileName = await documentModules.renameFile({ inputPath, session_id });
+
+  var filePath = 'gs://kaagapai-files/' + newFileName;
+  inputPath = './src/tmp/' + newFileName;
+
+  await documentModules.uploadGCS(inputPath);
+
+  return { session_id, fileName, filePath, mimetype };
+}
+
 export default {
-  uploadFile
+  uploadFile,
+  uploadAttachment
 };

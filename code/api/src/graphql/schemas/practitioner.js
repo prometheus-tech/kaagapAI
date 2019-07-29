@@ -31,7 +31,7 @@ export default `
   }
 
   type Query {
-    profile: JSON!
+    profile: Practitioner!
 
     archives: Archives
   }
@@ -43,10 +43,10 @@ export default `
 
     verifyRegistration(email: String!,input_code:String!):JSON
 
-    updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): JSON!
+    updateProfile(email: String!, password: String!, phone_no: String!, fname: String!, lname: String!): Practitioner!
 
     forgotPassword(email: String!): JSON
 
-    changePassword(email: String!, changePasswordToken: String!, password: String!): JSON
+    changePassword(changePasswordToken: String!, password: String!): JSON
   }
 `;

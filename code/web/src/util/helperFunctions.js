@@ -2,6 +2,7 @@ import grey from '@material-ui/core/colors/grey';
 import green from '@material-ui/core/colors/green';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
+import purple from '@material-ui/core/colors/purple';
 
 import { AUTH_TOKEN } from './constants';
 
@@ -62,6 +63,9 @@ export function getSessionDocumentIcon(type) {
   } else if (type.includes('audio') || type === 'wav') {
     avatarIconClass = 'fas fa-file-audio';
     iconColor = green[300];
+  } else if (type.includes('image') || type === 'png' || type === 'jpg') {
+    avatarIconClass = 'fas fa-file-image';
+    iconColor = purple[300];
   } else {
     avatarIconClass = 'fas fa-file-alt';
     iconColor = 'black';
@@ -76,6 +80,7 @@ export function getSessionDocumentIcon(type) {
 export function getDocumentTalkTurns(documents) {
   let documentTalkTurns = [];
 
+  // Remove consecutive newlines
   for (let i = 0; i < documents.length; i++) {
     const documentWithoutConsecutiveSpaces = documents[i].content.replace(
       /[\r\n]+/g,
@@ -84,7 +89,7 @@ export function getDocumentTalkTurns(documents) {
 
     documentTalkTurns.push({
       ...documents[i],
-      formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)]
+      formattedContent: [...documentWithoutConsecutiveSpaces.split(/\n/)] // Array of talkturns (an element is a paragraph)
     });
   }
 

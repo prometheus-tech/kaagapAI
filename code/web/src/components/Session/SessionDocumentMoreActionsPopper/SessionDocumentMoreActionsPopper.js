@@ -14,8 +14,15 @@ function SessionDocumentMoreActionsPopper({
   sessionDocumentViewed,
   contentEdited,
   sessionDocumentRenamed,
-  sessionDocumentDeleted
+  sessionDocumentDeleted,
+  selectedSessionDocument,
+  shouldAnalyzeUpdated,
+  sessionDocumentDownloaded,
+  originalFileOpened,
+  removeAnnotationsConfirmationDialogOpened
 }) {
+  const { attachment } = selectedSessionDocument;
+
   return (
     <Popper
       open={isMoreActionsOpened}
@@ -35,22 +42,46 @@ function SessionDocumentMoreActionsPopper({
             <ClickAwayListener onClickAway={moreActionsClosed}>
               <MenuList>
                 <MenuItem
-                  onClick={e => {
-                    sessionDocumentViewed();
-                    moreActionsClosed();
-                  }}
-                >
-                  View content
-                </MenuItem>
-                <MenuItem
                   onClick={() => {
-                    sessionDocumentViewed();
-                    contentEdited();
+                    originalFileOpened();
                     moreActionsClosed();
                   }}
                 >
-                  Edit content
+                  View original file
                 </MenuItem>
+                {!attachment ? (
+                  <MenuItem
+                    onClick={e => {
+                      sessionDocumentViewed();
+                      moreActionsClosed();
+                    }}
+                  >
+                    View content
+                  </MenuItem>
+                ) : null}
+                {!attachment ? (
+                  <MenuItem
+                    onClick={() => {
+                      removeAnnotationsConfirmationDialogOpened();
+                      moreActionsClosed();
+                      // @TODO: Implement dynamic showing of annotations dialog upon implementation in backend
+                      // sessionDocumentViewed();
+                      // contentEdited();
+                      // moreActionsClosed();
+                    }}
+                  >
+                    Edit content
+                  </MenuItem>
+                ) : null}
+                {!attachment ? (
+                  <MenuItem
+                    onClick={() => {
+                      alert('To be implemented');
+                    }}
+                  >
+                    Annotate content
+                  </MenuItem>
+                ) : null}
                 <MenuItem
                   onClick={() => {
                     sessionDocumentRenamed();
@@ -59,12 +90,25 @@ function SessionDocumentMoreActionsPopper({
                 >
                   Rename
                 </MenuItem>
+                {!attachment ? (
+                  <MenuItem
+                    onClick={e => {
+                      shouldAnalyzeUpdated();
+                      moreActionsClosed();
+                    }}
+                  >
+                    {selectedSessionDocument.should_analyze
+                      ? 'Ignore in analysis'
+                      : 'Include in analysis'}
+                  </MenuItem>
+                ) : null}
                 <MenuItem
                   onClick={e => {
-                    alert('Not yet implemented');
+                    sessionDocumentDownloaded();
+                    moreActionsClosed();
                   }}
                 >
-                  Download
+                  Download original file
                 </MenuItem>
                 <MenuItem
                   onClick={e => {

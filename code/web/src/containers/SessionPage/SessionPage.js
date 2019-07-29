@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import CLIENT from '../../graphql/queries/client';
 import SESSION from '../../graphql/queries/session';
@@ -8,131 +8,35 @@ import { Query } from 'react-apollo';
 
 import { withSnackbar } from 'notistack';
 
-import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import classNames from 'classnames';
-import Grid from '@material-ui/core/Grid';
-import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import PeopleIcon from '@material-ui/icons/People';
-import Typography from '@material-ui/core/Typography';
 import PersonIcon from '@material-ui/icons/Person';
 import FolderIcon from '@material-ui/icons/Folder';
-import Divider from '@material-ui/core/Divider';
-import orange from '@material-ui/core/colors/orange';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/InfoOutlined';
-import grey from '@material-ui/core/colors/grey';
-import purple from '@material-ui/core/colors/purple';
-import SearchField from '../../components/UI/SearchField/SearchField';
-import Tooltip from '@material-ui/core/Tooltip';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
-import ContentSessionDocumentDialog from '../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
-
-const drawerWidth = '25';
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    width: '100vw'
-  },
-  content: {
-    flexGrow: 1,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    marginRight: 0
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginRight: +drawerWidth + '%'
-  },
-  breadCrumbIcon: {
-    marginRight: theme.spacing.unit
-  },
-  breadCrumbLink: {
-    fontSize: theme.spacing.unit * 2,
-    display: 'flex',
-    alignItems: 'center',
-    fontWeight: '500',
-    padding: '5px 15px 5px 15px',
-    borderRadius: '50px',
-    '&:hover': {
-      backgroundColor: grey[300]
-    }
-  },
-  breadCrumbLinkSession: {
-    fontSize: theme.spacing.unit * 2,
-    display: 'flex',
-    alignItems: 'center',
-    fontWeight: '500',
-    borderRadius: '50px',
-    padding: '5px 15px 5px 15px',
-    color: orange[800]
-  },
-  divider: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
-  },
-  actionButton: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  iconInfo: {
-    marginLeft: theme.spacing.unit,
-    borderRadius: '100%',
-    '&:hover, &:focus': {
-      color: orange[800],
-      backgroundColor: grey[300]
-    }
-  },
-  tabsRoot: {
-    marginBottom: theme.spacing.unit * 4
-  },
-  tabsIndicator: {
-    backgroundColor: purple[500]
-  },
-  tabRoot: {
-    textTransform: 'initial',
-    minWidth: 120,
-    fontWeight: 400,
-    fontSize: 16,
-    marginRight: theme.spacing.unit * 2,
-    '&:hover': {
-      color: purple[500],
-      opacity: 1
-    },
-    '&$tabSelected': {
-      color: purple[500],
-      fontWeight: 500
-    },
-    '&:focus': {
-      color: purple[500]
-    }
-  },
-  tabSelected: {}
-});
+import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
+import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import Main from '../../hoc/Main/Main';
+import SessionSubHeader from '../../components/Session/SessionSubHeader/SessionSubHeader';
+import UploadFilePopper from '../../components/Session/UploadFilePopper/UploadFilePopper';
 
 class SessionPage extends Component {
   state = {
     tabValue: 0,
     isNewSessionDocumentDialogOpened: false,
+    isNewSessionAttachmentDialogOpened: false,
     file: null,
     selectedSessionDocument: null,
     isMoreActionsOpened: false,
     anchorEl: null,
     isContentSessionDocumentDialogOpened: false,
     isEditContentSessionDocument: false,
-    isRenameSessionDocumentDialogOpened: false
+    isRenameSessionDocumentDialogOpened: false,
+    isUploadFilePopperOpened: false,
+    uploadFilePopperAnchorEl: null,
+    isRemoveAnnotationsConfirmationDialogOpened: false
   };
 
   componentDidMount() {
@@ -156,6 +60,16 @@ class SessionPage extends Component {
 
   closeNewSessionDocumentDialogHandler = () => {
     this.setState({ isNewSessionDocumentDialogOpened: false, file: null });
+  };
+
+  openNewSessionAttachmentDialogHandler = () => {
+    this.setState({
+      isNewSessionAttachmentDialogOpened: true
+    });
+  };
+
+  closeNewSessionAttachmentDialogHandler = () => {
+    this.setState({ isNewSessionAttachmentDialogOpened: false, file: null });
   };
 
   addFile = file => {
@@ -228,21 +142,48 @@ class SessionPage extends Component {
     this.setState({ isRenameSessionDocumentDialogOpened: false });
   };
 
-  render() {
-    const { classes } = this.props;
+  openUploadFilePopperHandler = event => {
+    this.setState({
+      isUploadFilePopperOpened: true,
+      uploadFilePopperAnchorEl: event.currentTarget
+    });
+  };
 
+  closeUploadFilePopperHandler = () => {
+    this.setState({
+      isUploadFilePopperOpened: false
+    });
+  };
+
+  openRemoveAnnotationsConfirmationDialogHandler = () => {
+    this.setState({
+      isRemoveAnnotationsConfirmationDialogOpened: true
+    });
+  };
+
+  closeRemoveAnnotationsConfirmationDialogHandler = () => {
+    this.setState({
+      isRemoveAnnotationsConfirmationDialogOpened: false
+    });
+  };
+
+  render() {
     const { session_id } = this.props.match.params;
 
     const {
       tabValue,
       isNewSessionDocumentDialogOpened,
+      isNewSessionAttachmentDialogOpened,
       file,
       isContentSessionDocumentDialogOpened,
       isEditContentSessionDocument,
       isMoreActionsOpened,
       anchorEl,
       selectedSessionDocument,
-      isRenameSessionDocumentDialogOpened
+      isRenameSessionDocumentDialogOpened,
+      isUploadFilePopperOpened,
+      uploadFilePopperAnchorEl,
+      isRemoveAnnotationsConfirmationDialogOpened
     } = this.state;
 
     return (
@@ -279,94 +220,59 @@ class SessionPage extends Component {
                   return <div />;
                 }
 
+                const breadcrumbData = [
+                  {
+                    label: 'Clients',
+                    path: '/',
+                    icon: <PeopleIcon style={{ marginRight: '8px' }} />
+                  },
+                  {
+                    label: data.client.fname + ' ' + data.client.lname,
+                    path: '/client/' + data.client.c_id,
+                    icon: <PersonIcon style={{ marginRight: '8px' }} />
+                  },
+                  {
+                    label: session.session_name,
+                    icon: <FolderIcon style={{ marginRight: '8px' }} />
+                  }
+                ];
+
                 return (
-                  <div className={classes.root}>
-                    <CssBaseline />
-                    <main
-                      className={classNames(classes.content, {
-                        [classes.contentShift]: false
-                      })}
-                    >
-                      <Grid
-                        container
-                        spacing={16}
-                        justify="space-between"
-                        alignItems="center"
-                      >
-                        <Grid item xs={6}>
-                          <Breadcrumbs separator={<NavigateNextIcon />}>
-                            <ButtonBase
-                              component={RouterLink}
-                              color="inherit"
-                              to="/"
-                              className={classes.breadCrumbLink}
-                            >
-                              <PeopleIcon className={classes.breadCrumbIcon} />
-                              Clients
-                            </ButtonBase>
-                            <ButtonBase
-                              component={RouterLink}
-                              color="inherit"
-                              to={'/client/' + data.client.c_id}
-                              className={classes.breadCrumbLink}
-                            >
-                              <PersonIcon className={classes.breadCrumbIcon} />{' '}
-                              {data.client.fname + ' ' + data.client.lname}
-                            </ButtonBase>
-                            <Typography
-                              className={classes.breadCrumbLinkSession}
-                            >
-                              <FolderIcon className={classes.breadCrumbIcon} />
-                              {session.session_name}
-                            </Typography>
-                          </Breadcrumbs>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <div className={classes.actionButton}>
-                            <SearchField placeholder="Search document..." />
-                            <Tooltip title="View session information">
-                              <IconButton
-                                component="span"
-                                className={classes.iconInfo}
-                              >
-                                <InfoIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          </div>
-                        </Grid>
-                      </Grid>
-                      <Divider light className={classes.divider} />
-                      <Tabs
-                        value={tabValue}
-                        onChange={this.changeTabValueHandler}
-                        classes={{
-                          root: classes.tabsRoot,
-                          indicator: classes.tabsIndicator
-                        }}
-                      >
-                        <Tab
-                          label="Documents"
-                          classes={{
-                            root: classes.tabRoot,
-                            selected: classes.tabSelected
-                          }}
-                          disableRipple
-                        />
-                        <Tab
-                          label="Results"
-                          classes={{
-                            root: classes.tabRoot,
-                            selected: classes.tabSelected
-                          }}
-                          disableRipple
-                        />
-                      </Tabs>
+                  <Auxilliary>
+                    <MyHeader
+                      primaryButtonAction={
+                        tabValue === 0 ? this.openUploadFilePopperHandler : null
+                      }
+                      primaryButtonLabel={tabValue === 0 ? 'Upload' : null}
+                      primaryButtonIcon={
+                        tabValue === 0 ? (
+                          <CloudUploadIcon
+                            fontSize="small"
+                            style={{ marginRight: '8px' }}
+                          />
+                        ) : null
+                      }
+                      breadcrumbData={breadcrumbData}
+                    />
+
+                    {session.documents.length > 0 ? (
+                      <SessionSubHeader
+                        tabValue={tabValue}
+                        searchPlaceholder="Search documents..."
+                        tabValueChanged={this.changeTabValueHandler}
+                      />
+                    ) : null}
+
+                    <Main>
                       {tabValue === 0 && (
                         <SessionDocumentsPage
                           session_id={session_id}
                           documents={session.documents}
                           isNewSessionDocumentDialogOpened={
                             isNewSessionDocumentDialogOpened
+                          }
+                          isNewSessionAttachmentDialogOpened={
+                            isNewSessionAttachmentDialogOpened
                           }
                           file={file}
                           isContentSessionDocumentDialogOpened={
@@ -387,9 +293,15 @@ class SessionPage extends Component {
                           contentSessionDocumentDialogOpened={
                             this.openContentSessionDocumentDialog
                           }
+                          contentSessionDocumentDialogClosed={
+                            this.closeContentSessionDocumentDialog
+                          }
                           moreActionsOpened={this.openMoreActionsHandler}
                           newSessionDocumentDialogClosed={
                             this.closeNewSessionDocumentDialogHandler
+                          }
+                          newSessionAttachmentDialogClosed={
+                            this.closeNewSessionAttachmentDialogHandler
                           }
                           newUploadFileAdded={this.addFile}
                           newUploadFileRemoved={this.clearFile}
@@ -397,9 +309,6 @@ class SessionPage extends Component {
                           contentEdited={this.editContentSessionDocumentHandler}
                           sessionDocumentRenameDialogOpened={
                             this.openRenameSessionDocumentHandler
-                          }
-                          contentSessionDocumentDialogClosed={
-                            this.closeContentSessionDocumentDialog
                           }
                           contentEditStopped={
                             this.stopEditContentSessionDocumentHandler
@@ -410,35 +319,36 @@ class SessionPage extends Component {
                           sessionDocumentRenameDialogClosed={
                             this.closeRenameSessionDocumentHandler
                           }
+                          isRemoveAnnotationsConfirmationDialogOpened={
+                            isRemoveAnnotationsConfirmationDialogOpened
+                          }
+                          removeAnnotationsConfirmationDialogOpened={
+                            this.openRemoveAnnotationsConfirmationDialogHandler
+                          }
+                          removeAnnotationsConfirmationDialogClosed={
+                            this.closeRemoveAnnotationsConfirmationDialogHandler
+                          }
                         />
                       )}
                       {tabValue === 1 && (
                         <SessionResultsPage
                           session_id={session_id}
-                          documents={session.documents}
-                          contentSessionDocumentDialogOpened={
-                            this.openContentSessionDocumentDialog
-                          }
+                          pageTabValueChanged={this.changeTabValueHandler}
                         />
                       )}
-                      {selectedSessionDocument ? (
-                        <ContentSessionDocumentDialog
-                          opened={isContentSessionDocumentDialogOpened}
-                          closed={this.closeContentSessionDocumentDialog}
-                          editing={isEditContentSessionDocument}
-                          sessionDocument={selectedSessionDocument}
-                          contentEdited={this.editContentSessionDocumentHandler}
-                          contentEditStopped={
-                            this.stopEditContentSessionDocumentHandler
-                          }
-                          selectedSessionDocumentUpdated={
-                            this.updateSelectedSessionDocumentHandler
-                          }
-                          session_id={session_id}
-                        />
-                      ) : null}
-                    </main>
-                  </div>
+                    </Main>
+                    <UploadFilePopper
+                      newSessionDocumentDialogOpened={
+                        this.openNewSessionDocumentDialogHandler
+                      }
+                      newSessionAttachmentDialogOpened={
+                        this.openNewSessionAttachmentDialogHandler
+                      }
+                      isUploadFilePopperOpened={isUploadFilePopperOpened}
+                      anchorEl={uploadFilePopperAnchorEl}
+                      uploadFilePopperClosed={this.closeUploadFilePopperHandler}
+                    />
+                  </Auxilliary>
                 );
               }}
             </Query>
@@ -449,4 +359,4 @@ class SessionPage extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(withSnackbar(SessionPage)));
+export default withRouter(withSnackbar(SessionPage));

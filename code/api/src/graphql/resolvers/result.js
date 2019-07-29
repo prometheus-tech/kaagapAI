@@ -1,7 +1,10 @@
 import GraphQlUUID from 'graphql-type-uuid';
 import nluModules from '../../modules/nlu';
+import resultModules from '../../modules/results_module';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import Sequelize from 'sequelize';
+import uuid from 'uuid/v4';
+import arraySort from 'array-sort';
 
 export default {
   UUID: GraphQlUUID,
@@ -56,7 +59,8 @@ export default {
               attributes: ['content'],
               where: {
                 session_id,
-                status: 'active'
+                status: 'active',
+                should_analyze: true
               }
             }).then(async sessionDocuments => {
               if (sessionDocuments.length == 0) {
@@ -161,7 +165,7 @@ export default {
       }
     },
 
-    overallResult: async (parent, args, { models, practitioner }) => {
+    customSessionResult: async (parent, args, { models, practitioner }) => {
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
@@ -173,7 +177,8 @@ export default {
             session_id: {
               [Op.in]: args.session_id
             },
-            status: 'active'
+            status: 'active',
+            should_analyze: true
           }
         });
 
@@ -184,15 +189,17 @@ export default {
 
         const result = await nluModules.analyzeContent(contents)
 
-        const overallSentiment = {
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
           score: result.sentiment.document.score,
           label: result.sentiment.document.label
         }
 
         var keywords = result.keywords;
-        var overallKeyword = [];
+        var customKeyword = [];
         keywords.forEach(async (keyword) => {
-          overallKeyword.push({
+          customKeyword.push({
+            custom_keyword_id: uuid(),
             text: keyword.text,
             relevance: keyword.relevance,
             count: keyword.count
@@ -200,33 +207,34 @@ export default {
         });
 
         var categories = result.categories;
-        var overallCategory = [];
+        var customCategory = [];
         categories.forEach(async (category) => {
-          overallCategory.push({
+          customCategory.push({
+            custom_category_id: uuid(),
             score: category.score,
             label: category.label
           });
         });
 
         var entities = result.entities;
-        var overallEntity = [];
+        var customEntity = [];
         entities.forEach(async (entity) => {
-          overallEntity.push({
+          customEntity.push({
+            custom_entity_id: uuid(),
             type: entity.type,
             text: entity.text,
             relevance: entity.relevance
           });
         });
 
-        const overallEmotion = {
+        const customEmotion = {
+          custom_emotion_id: uuid(),
           sadness: result.emotion.document.emotion.sadness,
           anger: result.emotion.document.emotion.anger,
           joy: result.emotion.document.emotion.joy,
           fear: result.emotion.document.emotion.fear,
           disgust: result.emotion.document.emotion.disgust
         };
-
-        var trends = [];
 
         const results = await models.Result.findAll({
           raw: true,
@@ -237,28 +245,158 @@ export default {
           }
         });
 
-        results.forEach((result) => {
-          trends.push({
-            session_id: result.session_id,
-            sentiment: models.Sentiment.findOne({
+        const trends = results.map( async (result) => {
+          return await models.Session.findOne({
+            raw: true,
+            where: { session_id: result.session_id }
+          }).then( res => {
+            var trend = {
+              trend_id: uuid(),
+              session_id: result.session_id,
+              session_name: res.session_name,
+              session_date: res.date_of_session
+            }
+
+            return trend;
+          }).then( async res => {
+            res.sentiment = await models.Sentiment.findOne({
               raw: true,
               where: { result_id: result.result_id }
-            }),
-            emotion: models.Emotion.findOne({
+            }).then(res => {
+              return res;
+            });
+
+            return res;
+          }).then( async res => {
+            res.emotion = await models.Emotion.findOne({
               raw: true,
               where: { result_id: result.result_id }
-            })
-          });
-        })
+            }).then(res => {
+              return res;
+            });
+            
+            return res;
+          })
+        });
+
+        const trendsResult = await Promise.all(trends);
+        arraySort(trendsResult, 'session_date');
 
         return {
-          sentiment: overallSentiment,
-          keywords: overallKeyword,
-          categories: overallCategory,
-          entities: overallEntity,
-          emotion: overallEmotion,
-          trend: trends
+          custom_result_id: uuid(),
+          sentiment: customSentiment,
+          keywords: customKeyword,
+          categories: customCategory,
+          entities: customEntity,
+          emotion: customEmotion,
+          trend: trendsResult
         };
+      }
+    },
+
+    findTextOccurences: async (parent, args, { models, practitioner }) => {
+      if (!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const Op = Sequelize.Op;
+
+        const sessions = await models.Session.findAll({
+          raw: true,
+          where:{
+            session_id: {
+              [Op.in]: args.session_id
+            }
+          }
+        });
+        
+        const textAppearances = sessions.map(async (session) => {
+          return await models.Session_Document.findAll({
+            raw: true,
+            where: {
+              session_id: session.session_id,
+              status: 'active',
+              should_analyze: true,
+              attachment: false
+            }
+          }).then(async session_documents => {
+            const documents = await resultModules.getDocumentTalkTurns(session_documents);
+            const matching_documents = await resultModules.searchMatchingTalkTurnsFromDocuments(documents, args.text);
+            const appearanceDocuments = [];
+
+            matching_documents.forEach((document) => {
+              const talkTurns = [];
+  
+              document.matchingTalkTurns.forEach((talk_turn) => {
+                talkTurns.push({
+                  talk_turn_id: uuid(),
+                  talk_turn_text: talk_turn
+                });
+              });
+              
+              appearanceDocuments.push({
+                appearance_document_id: uuid(),
+                sd_id: document.sd_id,
+                file_name: document.file_name,
+                talk_turns: talkTurns
+              });
+            });
+
+            return appearanceDocuments;
+          }).then(appearanceDocuments => {
+              session.appearance_id = uuid();
+              session.appearance_documents = appearanceDocuments;
+              
+              delete session.c_id;
+              delete session.status;
+              delete session.date_of_session;
+
+              return session;
+          })
+        });
+
+        const text_appearances = await Promise.all(textAppearances);
+        const textOccurrence = {
+          text_occurrence_id: uuid(),
+          text: args.text,
+          text_appearances: text_appearances
+        }
+
+        return textOccurrence;
+      }
+    },
+    
+    targetTextEmotion: async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const emotionResult = await nluModules.analyzeEmotion(args.text);
+
+        const customEmotion = {
+          custom_emotion_id: uuid(),
+          sadness: emotionResult.emotion.document.emotion.sadness,
+          anger: emotionResult.emotion.document.emotion.anger,
+          joy: emotionResult.emotion.document.emotion.joy,
+          fear: emotionResult.emotion.document.emotion.fear,
+          disgust: emotionResult.emotion.document.emotion.disgust
+        };
+
+        return customEmotion;
+      }
+    },
+
+    targetTextSentiment: async (parent, args, { models, practitioner }) => {
+      if(!practitioner) {
+        throw new AuthenticationError('You must be logged in');
+      } else {
+        const sentimentResult = await nluModules.analyzeSentiment(args.text);
+
+        const customSentiment = {
+          custom_sentiment_id: uuid(),
+          score: sentimentResult.sentiment.document.score,
+          label: sentimentResult.sentiment.document.label
+        }
+
+        return customSentiment;
       }
     }
   }

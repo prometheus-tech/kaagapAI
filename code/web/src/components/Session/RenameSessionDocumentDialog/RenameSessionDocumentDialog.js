@@ -20,7 +20,9 @@ class RenameSessionDocumentDialog extends Component {
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze,
+      attachment
     } = props.sessionDocument;
 
     const fileNameDestructured = file_name.split('.');
@@ -31,14 +33,16 @@ class RenameSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      file_name_extension: fileNameDestructured[1]
+      file_name_extension: fileNameDestructured[1],
+      should_analyze,
+      attachment
     };
 
     this.inputChangeHandler = this.inputChangeHandler.bind(this);
   }
 
   componentWillReceiveProps({
-    sessionDocument: { sd_id, file_name, date_added, type, content }
+    sessionDocument: { sd_id, file_name, date_added, type, content, should_analyze, attachment }
   }) {
     const fileNameDestructured = file_name.split('.');
 
@@ -48,7 +52,9 @@ class RenameSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
-      file_name_extension: fileNameDestructured[1]
+      file_name_extension: fileNameDestructured[1],
+      should_analyze,
+      attachment
     });
   }
 
@@ -57,7 +63,12 @@ class RenameSessionDocumentDialog extends Component {
   };
 
   render() {
-    const { opened, closed, selectedSessionDocumentUpdated } = this.props;
+    const {
+      opened,
+      closed,
+      selectedSessionDocumentUpdated,
+      sessionId
+    } = this.props;
 
     const {
       sd_id,
@@ -65,6 +76,8 @@ class RenameSessionDocumentDialog extends Component {
       date_added,
       type,
       content,
+      should_analyze,
+      attachment,
       file_name_extension
     } = this.state;
 
@@ -73,7 +86,9 @@ class RenameSessionDocumentDialog extends Component {
       file_name: file_name.trim() + '.' + file_name_extension.trim(),
       date_added: date_added,
       type: type,
-      content: content
+      content: content,
+      should_analyze: should_analyze,
+      attachment: attachment
     };
 
     return (
@@ -83,7 +98,8 @@ class RenameSessionDocumentDialog extends Component {
           __typename: 'Mutation',
           editSessionDocument: {
             __typename: 'SessionDocument',
-            ...updatedSessionDocument
+            ...updatedSessionDocument,
+            session_id: sessionId
           }
         }}
         errorPolicy="all"

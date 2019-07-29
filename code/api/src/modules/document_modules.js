@@ -8,8 +8,10 @@ import ffmpeg from 'fluent-ffmpeg';
 import shortid from 'shortid';
 import path from 'path';
 import textract from 'textract';
+import dateformat from 'dateformat';
 
 //Google Cloud APIs
+import vision from '@google-cloud/vision';
 import { Storage } from '@google-cloud/storage';
 import { Translate } from  '@google-cloud/translate';
 const speech = require('@google-cloud/speech').v1p1beta1;
@@ -143,6 +145,23 @@ const extractText = async(gcsUri) => {
   return await transcription;
 }
 
+//Extract text from image
+const extractImageText = async(inputPath) => {
+  var transcription = null;
+  
+  try {
+    const client = new vision.ImageAnnotatorClient();
+
+    const [result] = await client.textDetection(inputPath);
+    const detections = result.textAnnotations;
+    transcription = detections[0].description;
+  } catch (err) {
+    transcription = null;
+  }
+
+  return await transcription;
+}
+
 const extractDocumentText = async(inputPath) => {
   return new Promise((resolve, reject) => {
     textract.fromFileWithPath(inputPath, 
@@ -174,6 +193,34 @@ const getFileFromGCS = async (filename, savePath, originalFilename) => {
   } 
 }
 
+function deleteFileFromGCS(filename) {
+  const file_name = filename.split('/')[3];
+  bucket.file(file_name).delete();
+}
+
+const getImageUrl = (filename) => {
+
+  var date = new Date();
+  date.setDate(date.getDate() + 1);
+
+  const options = {
+    action: 'read',
+    expires: dateformat(date, "mm-dd-yyyy"),
+  };
+  
+  return new Promise(resolve => {
+    bucket
+    .file(filename)
+    .getSignedUrl(options)
+    .then(results => {
+      const url = results[0];
+      resolve(url);
+    })
+  }).catch(err => {
+    console.error('ERROR:', err);
+  });
+}
+
 export default {
   renameFile,
   storeUpload,
@@ -181,6 +228,9 @@ export default {
   uploadGCS,
   extractText,
   extractDocumentText,
+  extractImageText,
   convert,
-  getFileFromGCS
+  getFileFromGCS,
+  deleteFileFromGCS,
+  getImageUrl
 };

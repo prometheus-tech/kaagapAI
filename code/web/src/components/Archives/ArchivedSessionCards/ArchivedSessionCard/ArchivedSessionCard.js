@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RESTORE_SESSION from '../../../../graphql/mutations/restoreSession';
+import PERMANENTLY_DELETE_SESSION from '../../../../graphql/mutations/permanentlyDeleteSession';
 import { Mutation } from 'react-apollo';
 import CLIENT from '../../../../graphql/queries/client';
 import SESSION from '../../../../graphql/queries/session';
@@ -19,7 +20,8 @@ import Moment from 'react-moment';
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Tooltip from '@material-ui/core/Tooltip';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -36,7 +38,6 @@ const styles = theme => ({
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      transform: 'scale(1.05)',
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
       padding: '0px 0px 0px 0px'
     }
@@ -76,12 +77,13 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   }
 });
 
 function ArchivedSessionCard(props) {
-  const { session, classes } = props;
+  const { session, permanentDeleteConfirmationDialogOpened, classes } = props;
 
   const { c_id, session_id, session_name, date_of_session } = session;
 
@@ -116,57 +118,105 @@ function ArchivedSessionCard(props) {
         // Ignore error
       }}
     >
-      {(restoreSession, { loading }) => (
-        <Card className={classes.card}>
-          <ButtonBase
-            className={classes.buttonBase}
-            disableRipple={true}
-            disableTouchRipple={true}
-            onClick={() => {
-              alert('Please restore first');
-            }}
-            component="div"
-          >
-            <CardContent>
-              <div className={classes.avatarContainer}>
-                <Avatar className={classes.avatar}>
-                  <FolderIcon fontSize="large" />
-                </Avatar>
-              </div>
-              <Typography
-                noWrap
-                variant="h6"
-                className={classes.cardTitle}
-                align="center"
+      {(restoreSession, { loading: restoreSessionLoading }) => (
+        <Mutation
+          mutation={PERMANENTLY_DELETE_SESSION}
+          update={(cache, { data: { permanentlyDeleteSession } }) => {
+            const { archives } = cloneDeep(
+              cache.readQuery({ query: ARCHIVES })
+            );
+
+            archives.sessions = archives.sessions.filter(
+              session =>
+                session.session_id !== permanentlyDeleteSession.session_id
+            );
+
+            cache.writeQuery({
+              query: ARCHIVES,
+              data: {
+                archives
+              }
+            });
+
+            props.enqueueSnackbar(session_name + ' permanently deleted!');
+          }}
+        >
+          {(
+            permanentlyDeleteSession,
+            { loading: permanentlyDeleteSessionLoading }
+          ) => (
+            <Card className={classes.card}>
+              <ButtonBase
+                className={classes.buttonBase}
+                disableRipple={true}
+                disableTouchRipple={true}
+                onClick={() => {
+                  alert('Please restore first');
+                }}
+                component="div"
               >
-                {session_name}
-              </Typography>
-              <Typography className={classes.cardSubheader} align="center">
-                <Moment format="MMM D, YYYY" withTitle>
-                  {date_of_session}
-                </Moment>
-              </Typography>
-            </CardContent>
-          </ButtonBase>
-          <CardActions className={classes.actions}>
-            {!loading ? (
-              <Tooltip title="Restore">
-                <IconButton
-                  disableRipple={true}
-                  aria-label="Restore"
-                  className={classes.iconAction}
-                  onClick={() => {
-                    restoreSession({ variables: { session_id } });
-                  }}
-                >
-                  <Icon>restore_from_trash</Icon>
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <CircularProgress className={classes.progress} />
-            )}
-          </CardActions>
-        </Card>
+                <CardContent>
+                  <div className={classes.avatarContainer}>
+                    <Avatar className={classes.avatar}>
+                      <FolderIcon fontSize="large" />
+                    </Avatar>
+                  </div>
+                  <Typography
+                    noWrap
+                    variant="h6"
+                    className={classes.cardTitle}
+                    align="center"
+                  >
+                    {session_name}
+                  </Typography>
+                  <Typography className={classes.cardSubheader} align="center">
+                    <Moment format="MMM D, YYYY" withTitle>
+                      {date_of_session}
+                    </Moment>
+                  </Typography>
+                </CardContent>
+              </ButtonBase>
+              <CardActions className={classes.actions}>
+                {!restoreSessionLoading ? (
+                  <Tooltip title="Restore">
+                    <IconButton
+                      disableRipple={true}
+                      className={classes.iconAction}
+                      onClick={e => {
+                        e.preventDefault();
+                        restoreSession({ variables: { session_id } });
+                      }}
+                    >
+                      <RestoreFromTrashIcon />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <CircularProgress className={classes.progress} />
+                )}
+                <Tooltip title="Delete permanently">
+                  <IconButton
+                    disableRipple={true}
+                    className={classes.iconAction}
+                    onClick={e => {
+                      e.preventDefault();
+                      permanentDeleteConfirmationDialogOpened(
+                        session_name,
+                        permanentlyDeleteSessionLoading,
+                        () => {
+                          permanentlyDeleteSession({
+                            variables: { session_id }
+                          });
+                        }
+                      );
+                    }}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </Tooltip>
+              </CardActions>
+            </Card>
+          )}
+        </Mutation>
       )}
     </Mutation>
   );

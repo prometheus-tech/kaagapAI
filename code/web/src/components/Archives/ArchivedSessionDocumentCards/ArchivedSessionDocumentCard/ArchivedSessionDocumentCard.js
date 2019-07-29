@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Mutation } from 'react-apollo';
 import RESTORE_SESSION_DOCUMENT from '../../../../graphql/mutations/restoreSessionDocument';
+import PERMANENTLY_DELETE_SESSION_DOCUMENT from '../../../../graphql/mutations/permanentlyDeleteSessionDocument';
 import ARCHIVES from '../../../../graphql/queries/archives';
 import SESSION from '../../../../graphql/queries/session';
 
@@ -17,6 +18,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Tooltip from '@material-ui/core/Tooltip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { getSessionDocumentIcon } from '../../../../util/helperFunctions';
@@ -30,13 +34,17 @@ const styles = theme => ({
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      transform: 'scale(1.05)',
       boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-      padding: '0px 0px 0px 0px',
       cursor: 'pointer'
     }
   },
   cardContent: {
+    paddingBottom: 0,
+    '&:last-child': {
+      paddingBottom: theme.spacing.unit
+    }
+  },
+  cardDivContent: {
     display: 'flex',
     justifyContent: 'space-between'
   },
@@ -66,20 +74,22 @@ const styles = theme => ({
     fontSize: theme.spacing.unit * 1.75,
     color: theme.palette.grey[600]
   },
-  restoreActionButton: {
-    position: 'relative',
-    bottom: theme.spacing.unit * -4,
-    right: theme.spacing.unit * -1
+  iconAction: {
+    marginRight: theme.spacing.unit
   },
-  progress: {
-    position: 'relative',
-    bottom: theme.spacing.unit * -4,
-    right: theme.spacing.unit * -1
+  cardActions: {
+    paddingBottom: 0,
+    marginBottom: 0,
+    textAlign: 'right'
   }
 });
 
 function ArchivedSessionDocumentCard(props) {
-  const { sessionDocument, classes } = props;
+  const {
+    sessionDocument,
+    permanentDeleteConfirmationDialogOpened,
+    classes
+  } = props;
 
   const { avatarIconClass, iconColor } = getSessionDocumentIcon(
     sessionDocument.type.toLowerCase()
@@ -121,49 +131,107 @@ function ArchivedSessionDocumentCard(props) {
         // Ignore error
       }}
     >
-      {(restoreSessionDocument, { loading }) => (
-        <Card
-          elevation={1}
-          onClick={() => {
-            alert('Please restore first!');
+      {(restoreSessionDocument, { loading: restoreSessionDocumentLoading }) => (
+        <Mutation
+          mutation={PERMANENTLY_DELETE_SESSION_DOCUMENT}
+          update={(cache, { data: { permanentlyDeleteSessionDocument } }) => {
+            const { archives } = cloneDeep(
+              cache.readQuery({ query: ARCHIVES })
+            );
+
+            archives.session_documents = archives.session_documents.filter(
+              session_document =>
+                session_document.sd_id !==
+                permanentlyDeleteSessionDocument.sd_id
+            );
+
+            cache.writeQuery({
+              query: ARCHIVES,
+              data: {
+                archives
+              }
+            });
+
+            props.enqueueSnackbar(
+              sessionDocument.file_name + ' permanently deleted!'
+            );
           }}
-          className={classes.card}
         >
-          <CardContent className={classes.cardContent}>
-            <div className={classes.cardGeneralInfoContainer}>
-              <Avatar className={classes.avatar} style={{ color: iconColor }}>
-                <Icon className={classNames(avatarIconClass, classes.icon)} />
-              </Avatar>
-              <div className={classes.cardTextInfo}>
-                <Typography className={classes.cardTitle} noWrap>
-                  {sessionDocument.file_name}
-                </Typography>
-                <Typography className={classes.cardSubTitle}>
-                  <Moment format="MMM D, YYYY" withTitle>
-                    {sessionDocument.date_added}
-                  </Moment>
-                </Typography>
-              </div>
-            </div>
-            <div>
-              {!loading ? (
-                <IconButton
-                  className={classes.restoreActionButton}
-                  onClick={e => {
-                    e.stopPropagation();
-                    restoreSessionDocument({
-                      variables: { sd_id: sessionDocument.sd_id }
-                    });
-                  }}
-                >
-                  <Icon fontSize="small">restore_from_trash</Icon>
-                </IconButton>
-              ) : (
-                <CircularProgress className={classes.progress} />
-              )}
-            </div>
-          </CardContent>
-        </Card>
+          {(
+            permanentlyDeleteSessionDocument,
+            { loading: permanentlyDeleteSessionDocumentLoading }
+          ) => (
+            <Card
+              elevation={1}
+              onClick={() => {
+                alert('Please restore first!');
+              }}
+              className={classes.card}
+            >
+              <CardContent className={classes.cardContent}>
+                <div className={classes.cardDivContent}>
+                  <div className={classes.cardGeneralInfoContainer}>
+                    <Avatar
+                      className={classes.avatar}
+                      style={{ color: iconColor }}
+                    >
+                      <Icon
+                        className={classNames(avatarIconClass, classes.icon)}
+                      />
+                    </Avatar>
+                    <div className={classes.cardTextInfo}>
+                      <Typography className={classes.cardTitle} noWrap>
+                        {sessionDocument.file_name}
+                      </Typography>
+                      <Typography className={classes.cardSubTitle}>
+                        <Moment format="MMM D, YYYY" withTitle>
+                          {sessionDocument.date_added}
+                        </Moment>
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.cardActions}>
+                  {!restoreSessionDocumentLoading ? (
+                    <Tooltip title="Restore">
+                      <IconButton
+                        className={classes.iconAction}
+                        onClick={e => {
+                          e.stopPropagation();
+                          restoreSessionDocument({
+                            variables: { sd_id: sessionDocument.sd_id }
+                          });
+                        }}
+                      >
+                        <RestoreFromTrashIcon />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <CircularProgress className={classes.progress} />
+                  )}
+                  <Tooltip title="Delete permanently">
+                    <IconButton
+                      onClick={e => {
+                        e.stopPropagation();
+                        permanentDeleteConfirmationDialogOpened(
+                          sessionDocument.file_name,
+                          permanentlyDeleteSessionDocumentLoading,
+                          () => {
+                            permanentlyDeleteSessionDocument({
+                              variables: { sd_id: sessionDocument.sd_id }
+                            });
+                          }
+                        );
+                      }}
+                    >
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </Mutation>
       )}
     </Mutation>
   );

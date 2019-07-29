@@ -22,7 +22,6 @@ const styles = theme => ({
     width: '100%',
     resize: 'none',
     minHeight: '70vh',
-    overflow: 'hidden',
     fontSize: theme.spacing.unit * 2,
     lineHeight: '150%',
     textAlign: 'justify',
@@ -30,25 +29,8 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 4,
     paddingLeft: theme.spacing.unit * 4,
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
-  },
-  popperPaper: {
-    padding: theme.spacing.unit,
-    minWidth: '200px'
-  },
-  messageContainer: {
-    padding: theme.spacing.unit * 2
-  },
-  subMessage: {
-    color: theme.palette.grey[600],
-    fontSize: 14,
-    fontWeight: 500,
-    marginBottom: theme.spacing.unit * 2
-  },
-  popperActions: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
+    paddingBottom: theme.spacing.unit * 4,
+    overflow: 'hidden'
   }
 });
 
@@ -123,7 +105,9 @@ class ContentSessionDocumentDialog extends Component {
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze,
+      attachment
     } = props.sessionDocument;
 
     this.state = {
@@ -131,19 +115,31 @@ class ContentSessionDocumentDialog extends Component {
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze,
+      attachment
     };
   }
 
   componentWillReceiveProps({
-    sessionDocument: { sd_id, file_name, date_added, type, content }
+    sessionDocument: {
+      sd_id,
+      file_name,
+      date_added,
+      type,
+      content,
+      should_analyze,
+      attachment
+    }
   }) {
     this.setState({
       sd_id,
       file_name,
       date_added,
       type,
-      content
+      content,
+      should_analyze,
+      attachment
     });
   }
 
@@ -163,14 +159,24 @@ class ContentSessionDocumentDialog extends Component {
       session_id
     } = this.props;
 
-    const { sd_id, file_name, date_added, type, content } = this.state;
+    const {
+      sd_id,
+      file_name,
+      date_added,
+      type,
+      content,
+      should_analyze,
+      attachment
+    } = this.state;
 
     const updatedSessionDocument = {
       sd_id: sd_id,
       file_name: file_name,
       date_added: date_added,
       type: type,
-      content: content
+      content: content,
+      should_analyze: should_analyze,
+      attachment: attachment
     };
 
     return (
@@ -180,7 +186,8 @@ class ContentSessionDocumentDialog extends Component {
           __typename: 'Mutation',
           editSessionDocument: {
             __typename: 'SessionDocument',
-            ...updatedSessionDocument
+            ...updatedSessionDocument,
+            session_id: session_id
           }
         }}
         refetchQueries={() => {
@@ -194,13 +201,7 @@ class ContentSessionDocumentDialog extends Component {
       >
         {editSessionDocument => {
           return (
-            <Dialog
-              open={opened}
-              fullWidth
-              maxWidth="md"
-              scroll="paper"
-              className={classes.dialog}
-            >
+            <Dialog open={opened} fullWidth maxWidth="md" scroll="paper">
               <DialogTitle
                 onClose={closed}
                 editing={editing}

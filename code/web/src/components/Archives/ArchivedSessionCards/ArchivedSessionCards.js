@@ -4,7 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ArchivedSessionCard from './ArchivedSessionCard/ArchivedSessionCard';
 
-function ArchivedSessionCards({ sessions }) {
+function ArchivedSessionCards({
+  sessions,
+  permanentDeleteConfirmationDialogOpened
+}) {
   return (
     <Grid container spacing={8} style={{ paddingBottom: '80px' }}>
       <Grid item xs={12}>
@@ -23,7 +26,12 @@ function ArchivedSessionCards({ sessions }) {
             md={4}
             lg={3}
           >
-            <ArchivedSessionCard session={session} />
+            <ArchivedSessionCard
+              session={session}
+              permanentDeleteConfirmationDialogOpened={
+                permanentDeleteConfirmationDialogOpened
+              }
+            />
           </Grid>
         );
       })}

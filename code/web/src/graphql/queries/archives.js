@@ -10,6 +10,7 @@ const ARCHIVES = gql`
     archives {
       archives_id
       clients {
+        no_of_archived_sessions
         ...ClientBasicInfo
         ...ClientMetaData
       }

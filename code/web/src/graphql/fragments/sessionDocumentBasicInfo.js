@@ -8,6 +8,8 @@ const SESSION_DOCUMENT_BASIC_INFO = gql`
     date_added
     type
     content
+    should_analyze
+    attachment
   }
 `;
 

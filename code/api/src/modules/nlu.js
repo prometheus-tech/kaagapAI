@@ -33,6 +33,50 @@ const analyzeContent = async(contents) => {
   })
 }
 
+const analyzeEmotion = async(text) => {
+  var parameters = {
+    "text" : text,
+    "features" : {
+      "emotion" : {}
+    } 
+  }
+  
+  return new Promise((resolve, reject) => {
+    nlu.analyze(parameters, (err, response) => { 
+      if(err) {
+        reject();
+      } else {
+        resolve(response);
+      }
+    });
+  }).catch((err) => {
+
+  })
+}
+
+const analyzeSentiment = async(text) => {
+  var parameters = {
+    "text" : text,
+    "features" : {
+      "sentiment" : {}
+    } 
+  }
+  
+  return new Promise((resolve, reject) => {
+    nlu.analyze(parameters, (err, response) => { 
+      if(err) {
+        reject();
+      } else {
+        resolve(response);
+      }
+    });
+  }).catch((err) => {
+
+  })
+}
+
 export default {
-  analyzeContent
+  analyzeContent,
+  analyzeEmotion,
+  analyzeSentiment
 }

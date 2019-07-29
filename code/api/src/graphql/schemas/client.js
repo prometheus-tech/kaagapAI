@@ -38,6 +38,7 @@ export default `
     status: ArchiveStatus!
     p_id: UUID!
     no_of_sessions: Int
+    no_of_archived_sessions: Int
     sessions(orderByInput: OrderByInput, orderByColumn: OrderByColumn): [Session]
     searchsession(filter: String): [Session]
   }
@@ -56,6 +57,8 @@ export default `
     deleteClient(c_id: UUID!): Client!
 
     restoreClient(c_id: UUID!): Client!
+
+    permanentlyDeleteClient(c_id: UUID!): Client
 
     updateClientInformation(c_id: UUID!, fname: String!, lname: String!, birthdate: Date!, gender:[Gender!]!): Client!
   }
