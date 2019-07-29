@@ -12,7 +12,7 @@ import http from 'http';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 
-const environment = 'test'; // change to prod on deploy
+const environment = 'prod'; // change to prod on deploy
 const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
