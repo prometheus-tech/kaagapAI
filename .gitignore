@@ -1,4 +1,6 @@
+node_modules/
+build/
+public/images/uploads/*
+!public/images/uploads/.gitkeep
 .DS_Store
 .env
-code/api/package-lock.json
-code/web/package-lock.json
