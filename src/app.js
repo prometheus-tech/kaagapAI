@@ -11,7 +11,8 @@ import cors from 'cors';
 import http from 'http';
 import path from 'path';
 
-const environment = 'prod'; // change to prod on deploy
+// Change to production on deploy
+const environment = process.env.NODE_ENV || 'development';
 const config = configurations[environment];
 
 const SECRET = process.env.JWT_SECRET;
