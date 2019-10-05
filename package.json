@@ -9,11 +9,11 @@
     "setup:db": "npm run db:migrate && npm run db:seed",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
-    "start": "node kaagapai/app.js",
+    "start": "node app.js",
     "build": "babel src --out-dir kaagapai",
     "heroku-postbuild": "npm i --build-from-source && npm run build",
     "start:server": "node build/index.js",
-    "dev:server": "nodemon src/app.js --exec babel-node",
+    "dev:server": "nodemon app.js --exec babel-node",
     "preinstall": "node src/config/preinstall.js"
   },
   "engines": {

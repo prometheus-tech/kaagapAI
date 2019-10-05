@@ -9,7 +9,6 @@ import configurations from './config/appconfig';
 import auth from './modules/auth';
 import cors from 'cors';
 import http from 'http';
-import jwt from 'jsonwebtoken';
 import path from 'path';
 
 const environment = 'prod'; // change to prod on deploy
@@ -36,11 +35,13 @@ const apollo = new ApolloServer({
 const app = express();
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'build')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 apollo.applyMiddleware({ app });
 

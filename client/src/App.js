@@ -89,7 +89,7 @@ const cache = new InMemoryCache({
 });
 
 const link = createUploadLink({
-  uri: 'https://kaagapai-deployed.herokuapp.com/graphql'
+  uri: `${window.location.protocol}//${window.location.host}/graphql`
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -112,9 +112,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
           break;
         default:
           console.log(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, Code: ${
-              extensions.code
-            }`
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}, Code: ${extensions.code}`
           );
       }
 
