@@ -5,3 +5,4 @@ public/images/uploads/*
 .DS_Store
 .env
 dist
+src/config

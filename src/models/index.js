@@ -1,49 +1,22 @@
-const dotenv = require('dotenv').config();
+require('dotenv').config({ path: './.env' });
 import Sequelize from 'sequelize';
 
-const environment = process.env.NODE_ENV || 'development';
-
-let dbName;
-let dbUsername;
-let dbPassword;
-let host;
-let port;
-
-switch (environment) {
-  case 'production':
-    dbName = process.env.DB_NAME_DEV;
-    dbUsername = process.env.DB_USERNAME_DEV;
-    dbPassword = process.env.DB_PASSWORD;
-    host = process.env.DB_HOST_DEV;
-    port = process.env.DB_PORT;
-    break;
-  case 'test':
-    dbName = process.env.DB_NAME_TEST;
-    dbUsername = process.env.DB_USERNAME_TEST;
-    dbPassword = process.env.DB_PASSWORD;
-    host = process.env.DB_HOST_TEST;
-    port = process.env.DB_PORT;
-    break;
-  default:
-    dbName = process.env.DB_NAME_DEV;
-    dbUsername = process.env.DB_USERNAME_DEV;
-    dbPassword = process.env.DB_PASSWORD;
-    host = process.env.HOST_DEV;
-    port = process.env.DB_PORT;
-    break;
-}
-
-const sequelize = new Sequelize(dbName, dbUsername, dbPassword, {
-  dialect: 'mysql',
-  host: host,
-  port: port,
-  operatorsAliases: false,
-  logging: false,
-  define: {
-    underscored: true,
-    timestamps: false
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    dialect: 'mysql',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    operatorsAliases: false,
+    logging: false,
+    define: {
+      underscored: true,
+      timestamps: false
+    }
   }
-});
+);
 
 const models = {
   Practitioner: sequelize.import('./practitioner'),
