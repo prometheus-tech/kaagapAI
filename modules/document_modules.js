@@ -1,15 +1,20 @@
 require('dotenv').config({ path: './.env' });
-import { createReadStream, createWriteStream, unlinkSync, rename } from 'fs';
-import ffmpeg from 'fluent-ffmpeg';
-import shortid from 'shortid';
-import path from 'path';
-import textract from 'textract';
-import dateformat from 'dateformat';
+const {
+  createReadStream,
+  createWriteStream,
+  unlinkSync,
+  rename
+} = require('fs');
+const ffmpeg = require('fluent-ffmpeg');
+const shortid = require('shortid');
+const path = require('path');
+const textract = require('textract');
+const dateformat = require('dateformat');
 
-//Google Cloud APIs
-import vision from '@google-cloud/vision';
-import { Storage } from '@google-cloud/storage';
-import { Translate } from '@google-cloud/translate';
+// Google Cloud APIs
+const vision = require('@google-cloud/vision');
+const { Storage } = require('@google-cloud/storage');
+const { Translate } = require('@google-cloud/translate');
 const speech = require('@google-cloud/speech').v1p1beta1;
 
 const storage = new Storage({
@@ -23,7 +28,7 @@ const bucket = storage.bucket('kaagapai2019');
 const renameFile = ({ inputPath, session_id }) => {
   const newFileName =
     session_id + '-' + shortid.generate() + path.parse(inputPath).ext;
-  const newPath = './src/tmp/' + newFileName;
+  const newPath = './tmp/' + newFileName;
 
   return new Promise((resolve, reject) => {
     rename(inputPath, newPath, function(err) {
@@ -228,7 +233,7 @@ const getImageUrl = filename => {
   });
 };
 
-export default {
+module.exports = {
   renameFile,
   storeUpload,
   translateText,

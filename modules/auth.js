@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const validateEmail = practitioner => {
   if (!practitioner) {
@@ -68,7 +68,7 @@ const verifyPractitioner = practitioner => {
   return { errorMessage, errorCode };
 };
 
-export default {
+module.exports = {
   validateEmail,
   validatePassword,
   generateToken,

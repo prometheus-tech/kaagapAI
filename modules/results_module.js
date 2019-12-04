@@ -1,4 +1,4 @@
-const getDocumentTalkTurns = (documents) => {
+const getDocumentTalkTurns = documents => {
   let documentTalkTurns = [];
 
   // Remove consecutive newlines
@@ -15,7 +15,7 @@ const getDocumentTalkTurns = (documents) => {
   }
 
   return documentTalkTurns;
-}
+};
 
 const searchMatchingTalkTurnsFromDocuments = (documents, keyword) => {
   let matchingDocuments = [];
@@ -41,10 +41,9 @@ const searchMatchingTalkTurnsFromDocuments = (documents, keyword) => {
   }
 
   return matchingDocuments;
-}
+};
 
-
-export default {
+module.exports = {
   getDocumentTalkTurns,
   searchMatchingTalkTurnsFromDocuments
 };

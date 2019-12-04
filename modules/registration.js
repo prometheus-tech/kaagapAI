@@ -1,9 +1,9 @@
-import nodemailer from 'nodemailer';
-import bcrypt from 'bcrypt';
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-  auth : {
+  auth: {
     user: 'prometheustechofficial@gmail.com',
     pass: 'promtech2018'
   },
@@ -12,18 +12,18 @@ const transporter = nodemailer.createTransport({
 
 const generateCode = () => {
   return Math.floor(100000 + Math.random() * 900000);
-}
+};
 
 const sendEmail = (subject, body, email) => {
-  var sent = "";
+  var sent = '';
 
   const mailOptions = {
     from: 'kaagapAI <prometheustechofficial@gmail.com>',
     to: email,
     subject: subject,
-    text: 'Hello '+email+'! \n'+body
+    text: 'Hello ' + email + '! \n' + body
     //html: html body
-  }
+  };
 
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, function(err, info) {
@@ -34,8 +34,8 @@ const sendEmail = (subject, body, email) => {
         resolve(sent);
       }
     });
-  })
-}
+  });
+};
 
 const verifyCode = (input_code, verificationCode) => {
   if (input_code == verificationCode) {
@@ -43,23 +43,23 @@ const verifyCode = (input_code, verificationCode) => {
   } else {
     return false;
   }
-}
+};
 
-const hashPassword = (password) => {
-  return new Promise((resolve, reject)  => {
+const hashPassword = password => {
+  return new Promise((resolve, reject) => {
     bcrypt.hash(password, 12, function(err, hash) {
-      if(err) {
+      if (err) {
         reject(err);
       } else {
         resolve(hash);
       }
     });
   });
-}
+};
 
-export default {
+module.exports = {
   generateCode,
   sendEmail,
   verifyCode,
   hashPassword
-}
+};
