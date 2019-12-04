@@ -1,0 +1,1 @@
+This folder will contain the Google credentials file

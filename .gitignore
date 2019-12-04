@@ -5,4 +5,4 @@ public/images/uploads/*
 .DS_Store
 .env
 dist
-config
+config/google-credentials.json
