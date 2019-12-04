@@ -1,14 +1,13 @@
 require('dotenv').config({ path: './.env' });
-import '@babel/polyfill';
-import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
-import typeDefs from './graphql/schemas/schema';
-import resolvers from './graphql/resolvers/resolvers';
-import models from './models';
-import auth from './modules/auth';
-import cors from 'cors';
-import http from 'http';
-import path from 'path';
+const express = require('express');
+const { ApolloServer, gql } = require('apollo-server-express');
+const typeDefs = require('./graphql/schemas/schema');
+const resolvers = require('./graphql/resolvers/resolvers');
+const models = require('./models');
+const auth = require('./modules/auth');
+const cors = require('cors');
+const http = require('http');
+const path = require('path');
 
 // Change to production on deploy
 const environment = process.env.NODE_ENV || 'development';

@@ -1,12 +1,16 @@
-import GraphQlUUID from 'graphql-type-uuid';
-import GraphQlJSON from 'graphql-type-json';
-import Sequelize from 'sequelize';
-import auth from '../../modules/auth';
-import registration from '../../modules/registration';
-import { AuthenticationError, ApolloError, ForbiddenError } from 'apollo-server-express';
-import uuid from 'uuid/v4';
+const GraphQlUUID = require('graphql-type-uuid');
+const GraphQlJSON = require('graphql-type-json');
+const Sequelize = require('sequelize');
+const auth = require('../../modules/auth');
+const registration = require('../../modules/registration');
+const {
+  AuthenticationError,
+  ApolloError,
+  ForbiddenError
+} = require('apollo-server-express');
+const uuid = require('uuid/v4');
 
-export default {
+module.exports = {
   UUID: GraphQlUUID,
   JSON: GraphQlJSON,
 
@@ -18,12 +22,12 @@ export default {
         return await models.Practitioner.findOne({
           raw: true,
           where: { p_id: practitioner },
-          attributes: { 
+          attributes: {
             exclude: [
               'date_deactivated',
               'verification_code',
               'user_status',
-              'p_id',
+              'p_id'
             ]
           }
         });
@@ -45,7 +49,7 @@ export default {
         }).then(async clients => {
           var clientActive = [];
           clients.forEach(client => {
-            if(client.status == 'archived'){
+            if (client.status == 'archived') {
               clientArchives.push(client);
             } else {
               clientActive.push(client.c_id);
@@ -64,7 +68,7 @@ export default {
         }).then(async sessions => {
           var sessionActive = [];
           sessions.forEach(session => {
-            if(session.status == 'archived'){
+            if (session.status == 'archived') {
               sessionArchives.push(session);
             } else {
               sessionActive.push(session.session_id);
@@ -72,12 +76,12 @@ export default {
           });
           return sessionActive;
         });
-        
+
         const sessionDocumentsArchives = await models.Session_Document.findAll({
           raw: true,
           where: {
             session_id: {
-              [Op.in]: sessionsActive,
+              [Op.in]: sessionsActive
             },
             status: 'archived'
           }
@@ -85,7 +89,7 @@ export default {
 
         return {
           archives_id: uuid(),
-          clients: clientArchives, 
+          clients: clientArchives,
           sessions: sessionArchives,
           session_documents: sessionDocumentsArchives
         };
@@ -100,7 +104,9 @@ export default {
         where: { email }
       })
         .then(practitioner => {
-          const { errorMessage, errorCode} = auth.verifyPractitioner(practitioner);
+          const { errorMessage, errorCode } = auth.verifyPractitioner(
+            practitioner
+          );
           if (!errorMessage) {
             return practitioner;
           } else {
@@ -109,7 +115,10 @@ export default {
         })
         .then(practitioner => {
           if (!auth.validateEmail(practitioner)) {
-            throw new ApolloError('Email is not yet registered', 'EMAIL_UNREGISTERED');
+            throw new ApolloError(
+              'Email is not yet registered',
+              'EMAIL_UNREGISTERED'
+            );
           } else {
             return practitioner;
           }
@@ -127,11 +136,14 @@ export default {
           }
         });
 
-      await models.Practitioner.update({
+      await models.Practitioner.update(
+        {
           last_logged: new Date()
-        }, {
+        },
+        {
           where: { p_id: practitioner.p_id }
-        });
+        }
+      );
 
       const session_token = auth.generateToken(practitioner, SECRET);
 
@@ -182,7 +194,8 @@ export default {
         hashPassword = await registration.hashPassword(password);
 
         if (await registration.sendEmail(subject, body, email)) {
-          await models.Practitioner.update({
+          await models.Practitioner.update(
+            {
               phone_no,
               password: hashPassword,
               fname,
@@ -190,9 +203,11 @@ export default {
               license,
               profession,
               verification_code: verificationCode
-            }, { 
-              where: { email } 
-            });
+            },
+            {
+              where: { email }
+            }
+          );
 
           return { email };
         }
@@ -211,21 +226,27 @@ export default {
         })
         .then(async res => {
           if (res) {
-            await models.Practitioner.update({ 
-              verification_code: 'verified',
-              user_status: 'active'
-            }, {
+            await models.Practitioner.update(
+              {
+                verification_code: 'verified',
+                user_status: 'active'
+              },
+              {
                 where: { email }
-            });
+              }
+            );
 
             const body =
-              "Your account has been successfully verified! Please log in to continue";
+              'Your account has been successfully verified! Please log in to continue';
             const subject = 'Account Verified';
             await registration.sendEmail(subject, body, email);
 
             return { email };
           } else {
-            throw new ApolloError('Invalid Verification Code', 'INVALID_VERIFICATION_CODE');
+            throw new ApolloError(
+              'Invalid Verification Code',
+              'INVALID_VERIFICATION_CODE'
+            );
           }
         }),
 
@@ -236,45 +257,51 @@ export default {
     ) => {
       const Op = Sequelize.Op;
 
-      const existingPractitioner = await models.Practitioner.findOne({ 
-        where: { 
+      const existingPractitioner = await models.Practitioner.findOne({
+        where: {
           email,
           p_id: {
-            [ Op.ne ]: practitioner
+            [Op.ne]: practitioner
           }
-        } 
+        }
       });
 
       if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
         if (existingPractitioner) {
-          throw new ApolloError('Email is already in use', 'USER_ALREADY_EXISTS');
+          throw new ApolloError(
+            'Email is already in use',
+            'USER_ALREADY_EXISTS'
+          );
         } else {
           const hashPassword = await registration.hashPassword(password);
 
-          return models.Practitioner.update({
-            email,
-            password: hashPassword,
-            phone_no,
-            fname,
-            lname
-          }, { 
-            where: { p_id: practitioner } 
-          }).then(async res => {
+          return models.Practitioner.update(
+            {
+              email,
+              password: hashPassword,
+              phone_no,
+              fname,
+              lname
+            },
+            {
+              where: { p_id: practitioner }
+            }
+          ).then(async res => {
             return await models.Practitioner.findOne({
               raw: true,
               where: { p_id: practitioner },
-              attributes: { 
+              attributes: {
                 exclude: [
                   'date_deactivated',
                   'verification_code',
                   'user_status',
-                  'p_id',
+                  'p_id'
                 ]
               }
-            })
-          })
+            });
+          });
         }
       }
     },
@@ -283,42 +310,53 @@ export default {
       const changePasswordUUID = uuid();
       //change body base on final url
       var body =
-        'To change your password please click on the link: http://kaagapai-dev.com:3000/#/change-password/'+changePasswordUUID;
+        'To change your password please click on the link: http://kaagapai-dev.com:3000/#/change-password/' +
+        changePasswordUUID;
       const subject = 'Change Account Password';
 
       return models.Practitioner.findOne({
         raw: true,
-        where: { 
+        where: {
           email,
           user_status: 'active'
         },
-        attributes: [ 'email' ]
+        attributes: ['email']
       }).then(async res => {
-        if(!res) {
+        if (!res) {
           //throw error that email is not registered
-          throw new ApolloError('Email is not yet registered', 'EMAIL_UNREGISTERED');
+          throw new ApolloError(
+            'Email is not yet registered',
+            'EMAIL_UNREGISTERED'
+          );
         } else {
           if (await registration.sendEmail(subject, body, email)) {
-            await models.Practitioner.update({
-              change_password_UUID: changePasswordUUID
-            }, {
-              where: { email }
-            });
-  
+            await models.Practitioner.update(
+              {
+                change_password_UUID: changePasswordUUID
+              },
+              {
+                where: { email }
+              }
+            );
+
             return await models.Practitioner.findOne({
               raw: true,
-              where: { 
+              where: {
                 email,
                 user_status: 'active'
               },
-              attributes: [ 'email' ]
+              attributes: ['email']
             });
           }
         }
-      })
+      });
     },
 
-    changePassword: async ( parent, { changePasswordToken, password }, { models } ) => {
+    changePassword: async (
+      parent,
+      { changePasswordToken, password },
+      { models }
+    ) => {
       return await models.Practitioner.findOne({
         raw: true,
         where: { change_password_UUID: changePasswordToken }
@@ -331,18 +369,24 @@ export default {
             'Your account password has been successfully changed. Please click the link to login: kaagapai-dev.com/login';
           const subject = 'Password Successfully Changed';
 
-          await models.Practitioner.update({
-            password: hashPassword,
-            change_password_UUID: null
-          }, { 
-            where: { change_password_UUID: changePasswordToken } 
-          }).then(async result => await registration.sendEmail(subject, body, res.email));
+          await models.Practitioner.update(
+            {
+              password: hashPassword,
+              change_password_UUID: null
+            },
+            {
+              where: { change_password_UUID: changePasswordToken }
+            }
+          ).then(
+            async result =>
+              await registration.sendEmail(subject, body, res.email)
+          );
 
           return res.email;
         } else {
           throw new ForbiddenError('Invalid change password token');
         }
-      })
+      });
     }
   }
 };

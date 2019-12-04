@@ -1,15 +1,15 @@
-import GraphQlUUID from 'graphql-type-uuid';
-import uploadModules from '../../modules/upload_modules';
-import downloadsFolder from 'downloads-folder';
-import documentModules from '../../modules/document_modules';
-import {
+const GraphQlUUID = require('graphql-type-uuid');
+const uploadModules = require('../../modules/upload_modules');
+const downloadsFolder = require('downloads-folder');
+const documentModules = require('../../modules/document_modules');
+const {
   AuthenticationError,
   ForbiddenError,
   ApolloError
-} from 'apollo-server-express';
-import Sequelize from 'sequelize';
+} = require('apollo-server-express');
+const Sequelize = require('sequelize');
 
-export default {
+module.exports = {
   UUID: GraphQlUUID,
 
   Query: {

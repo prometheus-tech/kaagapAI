@@ -1,4 +1,4 @@
-export default `
+module.exports = `
   scalar Date 
   scalar UUID
 

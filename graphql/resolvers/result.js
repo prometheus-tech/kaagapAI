@@ -1,12 +1,15 @@
-import GraphQlUUID from 'graphql-type-uuid';
-import nluModules from '../../modules/nlu';
-import resultModules from '../../modules/results_module';
-import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
-import Sequelize from 'sequelize';
-import uuid from 'uuid/v4';
-import arraySort from 'array-sort';
+const GraphQlUUID = require('graphql-type-uuid');
+const nluModules = require('../../modules/nlu');
+const resultModules = require('../../modules/results_module');
+const {
+  AuthenticationError,
+  ForbiddenError
+} = require('apollo-server-express');
+const Sequelize = require('sequelize');
+const uuid = require('uuid/v4');
+const arraySort = require('array-sort');
 
-export default {
+module.exports = {
   UUID: GraphQlUUID,
 
   Result: {
@@ -39,7 +42,10 @@ export default {
     keywords: ({ result_id }, args, { models }) => {
       return models.Keyword.findAll({
         where: { result_id },
-        order: [['count', 'DESC'], ['relevance', 'DESC']]
+        order: [
+          ['count', 'DESC'],
+          ['relevance', 'DESC']
+        ]
       });
     }
   },
@@ -187,17 +193,17 @@ export default {
           contents.push(document.content);
         });
 
-        const result = await nluModules.analyzeContent(contents)
+        const result = await nluModules.analyzeContent(contents);
 
         const customSentiment = {
           custom_sentiment_id: uuid(),
           score: result.sentiment.document.score,
           label: result.sentiment.document.label
-        }
+        };
 
         var keywords = result.keywords;
         var customKeyword = [];
-        keywords.forEach(async (keyword) => {
+        keywords.forEach(async keyword => {
           customKeyword.push({
             custom_keyword_id: uuid(),
             text: keyword.text,
@@ -208,7 +214,7 @@ export default {
 
         var categories = result.categories;
         var customCategory = [];
-        categories.forEach(async (category) => {
+        categories.forEach(async category => {
           customCategory.push({
             custom_category_id: uuid(),
             score: category.score,
@@ -218,7 +224,7 @@ export default {
 
         var entities = result.entities;
         var customEntity = [];
-        entities.forEach(async (entity) => {
+        entities.forEach(async entity => {
           customEntity.push({
             custom_entity_id: uuid(),
             type: entity.type,
@@ -245,38 +251,41 @@ export default {
           }
         });
 
-        const trends = results.map( async (result) => {
+        const trends = results.map(async result => {
           return await models.Session.findOne({
             raw: true,
             where: { session_id: result.session_id }
-          }).then( res => {
-            var trend = {
-              trend_id: uuid(),
-              session_id: result.session_id,
-              session_name: res.session_name,
-              session_date: res.date_of_session
-            }
-
-            return trend;
-          }).then( async res => {
-            res.sentiment = await models.Sentiment.findOne({
-              raw: true,
-              where: { result_id: result.result_id }
-            }).then(res => {
-              return res;
-            });
-
-            return res;
-          }).then( async res => {
-            res.emotion = await models.Emotion.findOne({
-              raw: true,
-              where: { result_id: result.result_id }
-            }).then(res => {
-              return res;
-            });
-            
-            return res;
           })
+            .then(res => {
+              var trend = {
+                trend_id: uuid(),
+                session_id: result.session_id,
+                session_name: res.session_name,
+                session_date: res.date_of_session
+              };
+
+              return trend;
+            })
+            .then(async res => {
+              res.sentiment = await models.Sentiment.findOne({
+                raw: true,
+                where: { result_id: result.result_id }
+              }).then(res => {
+                return res;
+              });
+
+              return res;
+            })
+            .then(async res => {
+              res.emotion = await models.Emotion.findOne({
+                raw: true,
+                where: { result_id: result.result_id }
+              }).then(res => {
+                return res;
+              });
+
+              return res;
+            });
         });
 
         const trendsResult = await Promise.all(trends);
@@ -302,14 +311,14 @@ export default {
 
         const sessions = await models.Session.findAll({
           raw: true,
-          where:{
+          where: {
             session_id: {
               [Op.in]: args.session_id
             }
           }
         });
-        
-        const textAppearances = sessions.map(async (session) => {
+
+        const textAppearances = sessions.map(async session => {
           return await models.Session_Document.findAll({
             raw: true,
             where: {
@@ -318,40 +327,47 @@ export default {
               should_analyze: true,
               attachment: false
             }
-          }).then(async session_documents => {
-            const documents = await resultModules.getDocumentTalkTurns(session_documents);
-            const matching_documents = await resultModules.searchMatchingTalkTurnsFromDocuments(documents, args.text);
-            const appearanceDocuments = [];
+          })
+            .then(async session_documents => {
+              const documents = await resultModules.getDocumentTalkTurns(
+                session_documents
+              );
+              const matching_documents = await resultModules.searchMatchingTalkTurnsFromDocuments(
+                documents,
+                args.text
+              );
+              const appearanceDocuments = [];
 
-            matching_documents.forEach((document) => {
-              const talkTurns = [];
-  
-              document.matchingTalkTurns.forEach((talk_turn) => {
-                talkTurns.push({
-                  talk_turn_id: uuid(),
-                  talk_turn_text: talk_turn
+              matching_documents.forEach(document => {
+                const talkTurns = [];
+
+                document.matchingTalkTurns.forEach(talk_turn => {
+                  talkTurns.push({
+                    talk_turn_id: uuid(),
+                    talk_turn_text: talk_turn
+                  });
+                });
+
+                appearanceDocuments.push({
+                  appearance_document_id: uuid(),
+                  sd_id: document.sd_id,
+                  file_name: document.file_name,
+                  talk_turns: talkTurns
                 });
               });
-              
-              appearanceDocuments.push({
-                appearance_document_id: uuid(),
-                sd_id: document.sd_id,
-                file_name: document.file_name,
-                talk_turns: talkTurns
-              });
-            });
 
-            return appearanceDocuments;
-          }).then(appearanceDocuments => {
+              return appearanceDocuments;
+            })
+            .then(appearanceDocuments => {
               session.appearance_id = uuid();
               session.appearance_documents = appearanceDocuments;
-              
+
               delete session.c_id;
               delete session.status;
               delete session.date_of_session;
 
               return session;
-          })
+            });
         });
 
         const text_appearances = await Promise.all(textAppearances);
@@ -359,14 +375,14 @@ export default {
           text_occurrence_id: uuid(),
           text: args.text,
           text_appearances: text_appearances
-        }
+        };
 
         return textOccurrence;
       }
     },
-    
+
     targetTextEmotion: async (parent, args, { models, practitioner }) => {
-      if(!practitioner) {
+      if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
         const emotionResult = await nluModules.analyzeEmotion(args.text);
@@ -385,7 +401,7 @@ export default {
     },
 
     targetTextSentiment: async (parent, args, { models, practitioner }) => {
-      if(!practitioner) {
+      if (!practitioner) {
         throw new AuthenticationError('You must be logged in');
       } else {
         const sentimentResult = await nluModules.analyzeSentiment(args.text);
@@ -394,7 +410,7 @@ export default {
           custom_sentiment_id: uuid(),
           score: sentimentResult.sentiment.document.score,
           label: sentimentResult.sentiment.document.label
-        }
+        };
 
         return customSentiment;
       }

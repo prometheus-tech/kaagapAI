@@ -10,11 +10,9 @@
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
     "preinstall": "node preinstall.js",
-    "serve": "npm preinstall && npm install && npm run build && mkdir dist/client && npm run build-client && npm run move-client-to-server && node dist/app.js",
-    "build-client": "cd client && npm install && npm run build",
-    "move-client-to-server": "mv client/build dist/client/build",
-    "build": "rm -rf dist && babel src -d dist",
-    "start": "npm run preinstall && npm run build && node dist/app.js"
+    "dev": "nodemon app",
+    "start": "node app",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
     "node": "10.x",
@@ -24,18 +22,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-transform-runtime": "7.2.0",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/runtime": "7.3.1",
     "nodemon": "^1.18.10",
-    "sequelize-cli": "^5.4.0",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "sequelize-cli": "^5.4.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
     "@google-cloud/speech": "^2.3.1",
     "@google-cloud/storage": "^2.5.0",
     "@google-cloud/translate": "^3.0.0",
