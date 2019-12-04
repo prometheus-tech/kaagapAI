@@ -6,3 +6,4 @@ public/images/uploads/*
 .env
 dist
 src/config
+src/tmp
