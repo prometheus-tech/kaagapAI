@@ -316,7 +316,7 @@ export default {
           raw: true,
           where: { sd_id }
         }).then(async res => {
-          const filename = res.file.split('gs://kaagapai-files/')[1];
+          const filename = res.file.split('gs://kaagapai2019/')[1];
           const originalFilename = res.file_name;
           const savePath = downloadsFolder() + '/';
 
@@ -344,7 +344,7 @@ export default {
         });
 
         if (file) {
-          const filename = file.file.split('gs://kaagapai-files/')[1];
+          const filename = file.file.split('gs://kaagapai2019/')[1];
           const url = documentModules.getImageUrl(filename);
 
           return url;

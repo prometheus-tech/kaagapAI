@@ -17,7 +17,7 @@ const storage = new Storage({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH
 });
 
-const bucket = storage.bucket('kaagapai-files');
+const bucket = storage.bucket('kaagapai2019');
 
 //renaming filename of files
 const renameFile = ({ inputPath, session_id }) => {
@@ -52,7 +52,8 @@ const storeUpload = ({ stream, inputPath }) =>
 //translating
 const translateText = text => {
   const translate = new Translate({
-    projectId: process.env.projectId
+    projectId: process.env.GOOGLE_PROJECT_ID,
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH
   });
 
   const options = {
@@ -115,7 +116,10 @@ const convert = (inputPath, outputPath) => {
 
 //extract text from audio file
 const extractText = async gcsUri => {
-  const client = new speech.SpeechClient();
+  const client = new speech.SpeechClient({
+    projectId: process.env.GOOGLE_PROJECT_ID,
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH
+  });
 
   // The audio file's encoding, sample rate in hertz, and BCP-47 language code
   const config = {
@@ -147,7 +151,10 @@ const extractImageText = async inputPath => {
   var transcription = null;
 
   try {
-    const client = new vision.ImageAnnotatorClient();
+    const client = new vision.ImageAnnotatorClient({
+      projectId: process.env.GOOGLE_PROJECT_ID,
+      keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH
+    });
 
     const [result] = await client.textDetection(inputPath);
     const detections = result.textAnnotations;

@@ -1,7 +1,7 @@
 import documentModules from './document_modules';
 import path from 'path';
 
-const uploadFile = async(file, session_id) => {
+const uploadFile = async (file, session_id) => {
   const { filename, mimetype, createReadStream } = await file;
 
   var inputPath = './src/tmp/' + filename;
@@ -9,14 +9,17 @@ const uploadFile = async(file, session_id) => {
   var translation = null;
   var fileName = filename;
 
+  console.log('Uploading...');
   await documentModules.storeUpload({ stream, inputPath });
+  console.log('Uploaded');
+
   var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
-  var filePath = 'gs://kaagapai-files/' + newFileName;
+  var filePath = 'gs://kaagapai2019/' + newFileName;
 
   if (mimetype.indexOf('wave') + 1) {
     inputPath = './src/tmp/' + newFileName;
-    filePath = 'gs://kaagapai-files/' + newFileName;
+    filePath = 'gs://kaagapai2019/' + newFileName;
 
     await documentModules.uploadGCS(inputPath);
 
@@ -35,7 +38,7 @@ const uploadFile = async(file, session_id) => {
     try {
       inputPath = './src/tmp/' + newFileName;
       newFileName = path.parse(newFileName).name + '.wav';
-      filePath = 'gs://kaagapai-files/' + newFileName;
+      filePath = 'gs://kaagapai2019/' + newFileName;
       const params = {
         inputPath: inputPath,
         outputPath: './src/tmp/' + newFileName
@@ -48,9 +51,10 @@ const uploadFile = async(file, session_id) => {
             .then(wavFile => {
               (async () => {
                 const transcription = await documentModules.extractText(
-                  'gs://kaagapai-files/' + wavFile.name
+                  'gs://kaagapai2019/' + wavFile.name
                 );
-                translation = await documentModules.translateText(transcription
+                translation = await documentModules.translateText(
+                  transcription
                 );
                 resolve(translation);
               })();
@@ -66,8 +70,8 @@ const uploadFile = async(file, session_id) => {
   } else if (mimetype.indexOf('image') + 1) {
     inputPath = './src/tmp/' + newFileName;
     const imageTranscript = await documentModules.extractImageText(inputPath);
-    
-    if(imageTranscript) {
+
+    if (imageTranscript) {
       translation = await documentModules.translateText(imageTranscript);
     } else {
       translation = null;
@@ -84,9 +88,9 @@ const uploadFile = async(file, session_id) => {
 
     return { session_id, fileName, filePath, mimetype, translation };
   }
-}
+};
 
-const uploadAttachment = async(file, session_id) => {
+const uploadAttachment = async (file, session_id) => {
   const { filename, mimetype, createReadStream } = await file;
 
   var inputPath = './src/tmp/' + filename;
@@ -96,13 +100,13 @@ const uploadAttachment = async(file, session_id) => {
   await documentModules.storeUpload({ stream, inputPath });
   var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
-  var filePath = 'gs://kaagapai-files/' + newFileName;
+  var filePath = 'gs://kaagapai2019/' + newFileName;
   inputPath = './src/tmp/' + newFileName;
 
   await documentModules.uploadGCS(inputPath);
 
   return { session_id, fileName, filePath, mimetype };
-}
+};
 
 export default {
   uploadFile,
