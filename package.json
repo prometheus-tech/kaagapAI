@@ -12,7 +12,8 @@
     "preinstall": "node preinstall.js",
     "dev": "nodemon app",
     "start": "node app",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "heroku-prebuild": "node preinstall.js"
   },
   "engines": {
     "node": "10.x",
