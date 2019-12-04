@@ -9,11 +9,12 @@
     "setup:db": "npm run db:migrate && npm run db:seed",
     "db:migrate": "./node_modules/.bin/sequelize db:migrate",
     "db:seed": "./node_modules/.bin/sequelize db:seed:all",
-    "serve": "npm install && npm run build && mkdir dist/client && npm run build-client && npm run move-client-to-server && node dist/app.js",
+    "preinstall": "node preinstall.js",
+    "serve": "npm preinstall && npm install && npm run build && mkdir dist/client && npm run build-client && npm run move-client-to-server && node dist/app.js",
     "build-client": "cd client && npm install && npm run build",
     "move-client-to-server": "mv client/build dist/client/build",
     "build": "rm -rf dist && babel src -d dist",
-    "start": "npm run build && node dist/app.js"
+    "start": "npm run preinstall && npm run build && node dist/app.js"
   },
   "engines": {
     "node": "10.x",
