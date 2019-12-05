@@ -1,21 +1,18 @@
 require('dotenv').config({ path: './.env' });
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const xoauth2 = require('xoauth2');
 
 var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: '465',
   secure: 'true',
   auth: {
-    xoauth2: xoauth2.createXOAuth2Generator({
-      type: 'OAuth2',
-      user: process.env.GMAIL_USER,
-      clientId: process.env.GMAIL_CLIENT_ID,
-      clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-      acessToken: process.env.GMAIL_ACCESS_TOKEN
-    })
+    type: 'OAuth2',
+    user: process.env.GMAIL_USER,
+    clientId: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+    acessToken: process.env.GMAIL_ACCESS_TOKEN
   }
 });
 
