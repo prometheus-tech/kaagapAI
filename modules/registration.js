@@ -1,13 +1,22 @@
-const nodemailer = require('nodemailer');
+require('dotenv').config({ path: './.env' });
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+const xoauth2 = require('xoauth2');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
+var transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: '465',
+  secure: 'true',
   auth: {
-    user: 'prometheustechofficial@gmail.com',
-    pass: 'promtech2018'
-  },
-  tls: { rejectUnauthorized: false }
+    xoauth2: xoauth2.createXOAuth2Generator({
+      type: 'OAuth2',
+      user: process.env.GMAIL_USER,
+      clientId: process.env.GMAIL_CLIENT_ID,
+      clientSecret: process.env.GMAIL_CLIENT_SECRET,
+      refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+      acessToken: process.env.GMAIL_ACCESS_TOKEN
+    })
+  }
 });
 
 const generateCode = () => {
@@ -18,16 +27,16 @@ const sendEmail = (subject, body, email) => {
   var sent = '';
 
   const mailOptions = {
-    from: 'kaagapAI <prometheustechofficial@gmail.com>',
+    from: `kaagapAI <${process.env.GMAIL_USER}>`,
     to: email,
     subject: subject,
     text: 'Hello ' + email + '! \n' + body
-    //html: html body
   };
 
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, function(err, info) {
       if (err) {
+        console.log('Hello', err);
         reject(err);
       } else {
         sent = true;
