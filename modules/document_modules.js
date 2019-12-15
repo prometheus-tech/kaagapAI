@@ -61,13 +61,8 @@ const translateText = text => {
     keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS_PATH
   });
 
-  const options = {
-    from: 'tl',
-    to: 'en'
-  };
-
   return new Promise(resolve => {
-    translate.translate(text, options).then(results => {
+    translate.translate(text, 'en').then(results => {
       const translation = results[0];
       resolve(translation);
     });
