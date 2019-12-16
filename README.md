@@ -72,6 +72,6 @@ Cloud Speech-to-Text API is used to transcribe audio recordings.
 After extracting text from uploaded files, the text is translated to English using the Cloud Translation API.
 
 ### Client, Session, and Document Management
-![Client, Session, and Document Management Demo](screenshots/entityManagement.gif)
-
 kaagapAI organizes its data based on the common data organization of mental health practitioners. A client can have multiple sessions, and a session can hold multiple documents. kaagapAI provides CRUD operations in order to manage these entities (i.e., clients, sessions, and documents). kaagapAI also provides ways to manage the analysis of documents. Extracted text from documents can be edited in order to correct anomalies such as lost in translation, mispelled words, and incorrect transcription. Files can be uploaded either as documents or attachments. Documents are files that are included in the analysis by default, while attachments are supporting files that are not excluded in the analysis. Documents can be set to _ignored_ to exclude them from the analysis.
+
+![Client, Session, and Document Management Demo](screenshots/entityManagement.gif)
