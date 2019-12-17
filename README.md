@@ -1,5 +1,5 @@
 # **kaagapAI**
-**kaagapAI** is an automated text analysis tool that aims to assist mental health practitioners in summarizing, analyzing, and managing information from a therapy session documents.
+**kaagapAI** is an automated text analysis tool that aims to assist mental health practitioners in summarizing, analyzing, and managing therapy session documents.
 
 ![Overview](screenshots/result.png)
 
