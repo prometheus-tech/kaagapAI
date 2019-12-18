@@ -42,18 +42,23 @@ IBM Watson Knowledge Studio enables the training of custom models in order to ex
 
 #### Word Cloud (Keywords)
 The word cloud consists of the keywords that occurred multiple times in the document. Clicking on a specific word in the word cloud displays the word count and relevance and finds all search apperances of the word across analyzed documents.
+![Word Cloud](screenshots/wordCloud.png)
 
 #### Categories
 *Categories* shows the hierarchy of themes that were detected in the analyzed documents. These themes were derived from the words that were found in the documents. 
+![Categories](screenshots/categories.png)
 
 #### Entities
 *Entities* classifies words that belong to pre-defined categories. Clicking on a specific entity shows the entity type, relevance, and appearances across analyzed documents.
+![Entities](screenshots/entities.png)
 
 #### Emotions
 *Emotions* rates the detected emotions of analyzed documents according to six basic emotions: joy, anger, disgust, sadness, and fear. In the analysis of multiple sessions, a line graph is used to show the trend of emotions across selected sessions.
+![Emotions](screenshots/emotions.png)
 
 #### Sentiment
 *Sentiment* scores the overall feel of the session which could be positive, negative, or neutral. Analysis of multiple sessions also shows the trend of sentiments across selected sessions.
+![Sentiment](screenshots/sentiment.png)
 
 ### Document Preprocessing
 kaagapAI preprocesses uploaded documents in order to extract text from different file formats (i.e., txt, pdf, docx, png, jpg, m4a). 
