@@ -1,8 +1,6 @@
 # **kaagapAI**
 **kaagapAI** is an automated text analysis tool that aims to assist mental health practitioners in summarizing, analyzing, and managing therapy session documents.
 
-![Overview](screenshots/result.png)
-
 ---
 
 ## Technologies & Frameworks
@@ -34,7 +32,7 @@
 
 ## Features
 ### Document Analysis
-![Document Analysis Demo](screenshots/documentAnalysisOverview.gif)
+![Document Analysis Demo](screenshots/documentAnalysis.gif)
 
 kaagapAI uses IBM Watson Natural Language Understanding in order to perform text analysis on session documents (e.g., transcripts and notes). Through text analysis, kaagapAI extracts relevant insights which include keywords, themes or categories, entities, sentiments, and emotional tone. Text analysis can be conducted on a specific session or multiple sessions. Analysis on multiple sessions include data visualizations on sentiment and emotion trends.
 
@@ -42,7 +40,7 @@ IBM Watson Knowledge Studio enables the training of custom models in order to ex
 
 #### Word Cloud (Keywords)
 The word cloud consists of the keywords that occurred multiple times in the document. Clicking on a specific word in the word cloud displays the word count and relevance and finds all search apperances of the word across analyzed documents.
-![Word Cloud](screenshots/wordCloud.png)
+![Word Cloud](screenshots/keywords.png)
 
 #### Categories
 *Categories* shows the hierarchy of themes that were detected in the analyzed documents. These themes were derived from the words that were found in the documents. 
@@ -61,17 +59,9 @@ The word cloud consists of the keywords that occurred multiple times in the docu
 ![Sentiment](screenshots/sentiment.png)
 
 ### Document Preprocessing
-kaagapAI preprocesses uploaded documents in order to extract text from different file formats (i.e., txt, pdf, docx, png, jpg, m4a). 
-
-Cloud Vision API is used to extract text from images, thus making it possible to upload handwritten notes.
-![Uploading Images Demo](screenshots/visionAPI.gif)
-
-Cloud Speech-to-Text API is used to transcribe audio recordings.
-![Uploading Audio Demo](screenshots/speechToTextAPI.gif)
-
-After extracting text from uploaded files, the text is translated to English using the Cloud Translation API.
+kaagapAI preprocesses uploaded documents in order to extract text from different file formats (i.e., txt, pdf, docx, png, jpg, m4a). Cloud Vision API is used to extract text from images, thus making it possible to upload handwritten notes. Cloud Speech-to-Text API is used to transcribe audio recordings. After extracting text from uploaded files, the text is translated to English using the Cloud Translation API.
+![Document Preprocessing Demo](screenshots/documentPreprocessing.gif)
 
 ### Client, Session, and Document Management
 kaagapAI organizes its data based on the common data organization of mental health practitioners. A client can have multiple sessions, and a session can hold multiple documents. kaagapAI provides CRUD operations in order to manage these entities (i.e., clients, sessions, and documents). kaagapAI also provides ways to manage the analysis of documents. Extracted text from documents can be edited in order to correct anomalies such as lost in translation, mispelled words, and incorrect transcription. Files can be uploaded either as documents or attachments. Documents are files that are included in the analysis by default, while attachments are supporting files that are not excluded in the analysis. Documents can be set to _ignored_ to exclude them from the analysis.
-
 ![Client, Session, and Document Management Demo](screenshots/entityManagement.gif)
