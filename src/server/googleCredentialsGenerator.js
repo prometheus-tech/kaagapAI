@@ -5,7 +5,7 @@ const path = require('path');
 
 console.log('Generating Google credentials file...');
 
-fs.writeFile(
+fs.writeFileSync(
   path.join(__dirname, 'config', 'google-credentials.json'),
   process.env.GOOGLE_CONFIG,
   err => {
@@ -15,6 +15,8 @@ fs.writeFile(
         err
       );
     }
+
+    console.log(process.env.GOOGLE_CONFIG);
 
     console.log('Google credentials generated');
   }
