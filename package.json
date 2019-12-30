@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app",
-    "start": "node googleCredentialsGenerator.js && node app",
+    "generate-google-credentials": "node googleCredentialsGenerator.js",
+    "dev": "npm run generate-google-credentials && nodemon app",
+    "start": "npm run generate-google-credentials && node app",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
