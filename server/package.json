@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "generate-google-credentials": "node server/googleCredentialsGenerator.js",
-    "dev": "npm run generate-google-credentials && nodemon server/app",
-    "start": "npm run generate-google-credentials && node server/app",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "generate-google-credentials": "node googleCredentialsGenerator.js",
+    "dev": "npm run generate-google-credentials && nodemon app",
+    "start": "npm run generate-google-credentials && node app",
+    "heroku-postbuild": "cd ../client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",

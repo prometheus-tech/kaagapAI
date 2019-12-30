@@ -4,7 +4,7 @@ const path = require('path');
 const uploadFile = async (file, session_id) => {
   const { filename, mimetype, createReadStream } = await file;
 
-  var inputPath = './tmp/' + filename;
+  var inputPath = path.join(__dirname, '..', 'tmp', filename);
   const stream = createReadStream();
   var translation = null;
   var fileName = filename;
@@ -18,7 +18,7 @@ const uploadFile = async (file, session_id) => {
   var filePath = 'gs://kaagapai2019/' + newFileName;
 
   if (mimetype.indexOf('wave') + 1) {
-    inputPath = './tmp/' + newFileName;
+    inputPath = path.join(__dirname, '..', 'tmp', newFileName);
     filePath = 'gs://kaagapai2019/' + newFileName;
 
     await documentModules.uploadGCS(inputPath);
@@ -36,12 +36,12 @@ const uploadFile = async (file, session_id) => {
     return { session_id, fileName, filePath, mimetype, translation };
   } else if (mimetype.indexOf('audio') + 1) {
     try {
-      inputPath = './tmp/' + newFileName;
+      inputPath = path.join(__dirname, '..', 'tmp', newFileName);
       newFileName = path.parse(newFileName).name + '.wav';
       filePath = 'gs://kaagapai2019/' + newFileName;
       const params = {
         inputPath: inputPath,
-        outputPath: './tmp/' + newFileName
+        outputPath: path.join(__dirname, '..', 'tmp', newFileName)
       };
 
       let getAudioTranslation = async params => {
@@ -68,7 +68,7 @@ const uploadFile = async (file, session_id) => {
       console.log(err);
     }
   } else if (mimetype.indexOf('image') + 1) {
-    inputPath = './tmp/' + newFileName;
+    inputPath = path.join(__dirname, '..', 'tmp', newFileName);
     const imageTranscript = await documentModules.extractImageText(inputPath);
 
     if (imageTranscript) {
@@ -81,7 +81,7 @@ const uploadFile = async (file, session_id) => {
 
     return { session_id, fileName, filePath, mimetype, translation };
   } else {
-    inputPath = './tmp/' + newFileName;
+    inputPath = path.join(__dirname, '..', 'tmp', newFileName);
     const transcript = await documentModules.extractDocumentText(inputPath);
     translation = await documentModules.translateText(transcript);
     await documentModules.uploadGCS(inputPath);
@@ -93,7 +93,7 @@ const uploadFile = async (file, session_id) => {
 const uploadAttachment = async (file, session_id) => {
   const { filename, mimetype, createReadStream } = await file;
 
-  var inputPath = './tmp/' + filename;
+  var inputPath = path.join(__dirname, '..', 'tmp', filename);
   const stream = createReadStream();
   var fileName = filename;
 
@@ -101,7 +101,7 @@ const uploadAttachment = async (file, session_id) => {
   var newFileName = await documentModules.renameFile({ inputPath, session_id });
 
   var filePath = 'gs://kaagapai2019/' + newFileName;
-  inputPath = './tmp/' + newFileName;
+  inputPath = path.join(__dirname, '..', 'tmp', newFileName);
 
   await documentModules.uploadGCS(inputPath);
 

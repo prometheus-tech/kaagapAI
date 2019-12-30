@@ -29,7 +29,7 @@ const bucket = storage.bucket('kaagapai2019');
 const renameFile = ({ inputPath, session_id }) => {
   const newFileName =
     session_id + '-' + shortid.generate() + path.parse(inputPath).ext;
-  const newPath = './tmp/' + newFileName;
+  const newPath = path.join(__dirname, '..', 'tmp', newFileName);
 
   return new Promise((resolve, reject) => {
     rename(inputPath, newPath, function(err) {

@@ -4,5 +4,5 @@ public/images/uploads/*
 !public/images/uploads/.gitkeep
 .DS_Store
 .env
-server/dist
-server/config/google-credentials.json
+config/google-credentials.json
+tmp
