@@ -1,11 +1,12 @@
 require('dotenv').config();
 
 const fs = require('fs');
+const path = require('path');
 
-console.log('Generating Google credentials file');
+console.log('Generating Google credentials file...');
 
 fs.writeFile(
-  'config/google-credentials.json',
+  path.join(__dirname, 'config', 'google-credentials.json'),
   process.env.GOOGLE_CONFIG,
   err => {
     if (err) {
