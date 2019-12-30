@@ -90,13 +90,13 @@ module.exports = {
                   .then(async response => {
                     //store sentiment to db
                     await models.Sentiment.create({
-                      score: response.sentiment.document.score,
-                      label: response.sentiment.document.label,
+                      score: response.result.sentiment.document.score,
+                      label: response.result.sentiment.document.label,
                       result_id
                     });
 
                     //store keywords to db
-                    var keywordsRes = response.keywords;
+                    var keywordsRes = response.result.keywords;
 
                     keywordsRes.forEach(async keywordRes => {
                       await models.Keyword.create({
@@ -108,7 +108,7 @@ module.exports = {
                     });
 
                     //store categories to db
-                    var categoriesRes = response.categories;
+                    var categoriesRes = response.result.categories;
 
                     categoriesRes.forEach(async categoryRes => {
                       await models.Category.create({
@@ -119,7 +119,7 @@ module.exports = {
                     });
 
                     //store entities to db
-                    var entitiesRes = response.entities;
+                    var entitiesRes = response.result.entities;
 
                     entitiesRes.forEach(async entityRes => {
                       await models.Entity.create({
@@ -132,11 +132,11 @@ module.exports = {
 
                     //store emotions to db
                     await models.Emotion.create({
-                      sadness: response.emotion.document.emotion.sadness,
-                      anger: response.emotion.document.emotion.anger,
-                      joy: response.emotion.document.emotion.joy,
-                      fear: response.emotion.document.emotion.fear,
-                      disgust: response.emotion.document.emotion.disgust,
+                      sadness: response.result.emotion.document.emotion.sadness,
+                      anger: response.result.emotion.document.emotion.anger,
+                      joy: response.result.emotion.document.emotion.joy,
+                      fear: response.result.emotion.document.emotion.fear,
+                      disgust: response.result.emotion.document.emotion.disgust,
                       result_id
                     });
 
@@ -193,7 +193,7 @@ module.exports = {
           contents.push(document.content);
         });
 
-        const result = await nluModules.analyzeContent(contents);
+        const { result } = await nluModules.analyzeContent(contents);
 
         const customSentiment = {
           custom_sentiment_id: uuid(),

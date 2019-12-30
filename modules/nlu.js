@@ -1,10 +1,12 @@
-var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+require('dotenv').config();
+
+const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 var nlu = new NaturalLanguageUnderstandingV1({
-  version: '2018-11-16',
-  iam_apikey: 'hJxegcYhRcW8uh4uFV-k96tLJh_e8tEefRuOjbcNGD5C',
-  url:
-    'https://gateway-tok.watsonplatform.net/natural-language-understanding/api'
+  authenticator: new IamAuthenticator({ apikey: process.env.NLU_API_KEY }),
+  version: '2018-04-05',
+  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 
 const analyzeContent = async contents => {
@@ -45,6 +47,7 @@ const analyzeEmotion = async text => {
       if (err) {
         reject();
       } else {
+        console.log(response);
         resolve(response);
       }
     });
