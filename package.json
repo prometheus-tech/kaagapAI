@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app",
     "start": "node googleCredentialsGenerator.js && node app",
-    "heroku-postbuild": "cd client && yarn install && yarn run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
