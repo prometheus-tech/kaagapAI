@@ -1,1 +1,0 @@
-Folder contains temporary uploaded files
