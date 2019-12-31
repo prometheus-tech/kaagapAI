@@ -5,4 +5,5 @@ public/images/uploads/*
 .DS_Store
 .env
 src/server/config/google-credentials.json
-src/server/tmp
+src/server/tmp/*
+!src/server/tmp/readme.txt
