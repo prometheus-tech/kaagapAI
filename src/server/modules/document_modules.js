@@ -52,7 +52,10 @@ const storeUpload = ({ stream, inputPath }) =>
       .on('finish', () => {
         resolve();
       })
-      .on('error', reject)
+      .on('error', err => {
+        console.log('Uploading error', err);
+        return reject;
+      })
   );
 
 //translating
