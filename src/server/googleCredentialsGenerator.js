@@ -16,8 +16,6 @@ fs.writeFile(
       );
     }
 
-    console.log(process.env.GOOGLE_CONFIG);
-
     console.log('Google credentials generated');
   }
 );
