@@ -1,17 +1,15 @@
 require('dotenv').config();
 
-const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
-const typeDefs = require('./graphql/schemas/schema');
-const resolvers = require('./graphql/resolvers/resolvers');
-const models = require('./models');
-const auth = require('./modules/auth');
 const cors = require('cors');
+const express = require('express');
 const http = require('http');
-const path = require('path');
 
-// Change to production on deploy
-const environment = process.env.NODE_ENV || 'development';
+const auth = require('./modules/auth');
+const models = require('./models');
+const path = require('path');
+const resolvers = require('./graphql/resolvers/resolvers');
+const typeDefs = require('./graphql/schemas/schema');
 
 const SECRET = process.env.JWT_SECRET;
 
@@ -34,7 +32,7 @@ const apollo = new ApolloServer({
 const app = express();
 app.use(cors());
 
-if (environment !== 'development') {
+if (process.env.NODE_ENV !== 'development') {
   app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
   app.get('/', (req, res) => {
@@ -48,11 +46,11 @@ const server = http.createServer(app);
 
 models.sequelize
   .sync()
-  .then(res => {
+  .then(() => {
     server.listen({ port: process.env.PORT || 4000 }, () => {
       console.log('🚀 Server ready');
     });
   })
   .catch(err => {
-    console.log('Something wrong with the server: ' + err);
+    console.log('Database connection error', err);
   });
