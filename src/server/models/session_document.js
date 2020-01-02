@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Session_Document = sequelize.define('Session_Document', {
     sd_id: {
@@ -21,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: true
     },
     attachment: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN
     }
   });
 

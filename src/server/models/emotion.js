@@ -1,17 +1,20 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Emotion = sequelize.define('Emotion', {
-    emotion_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+  const Emotion = sequelize.define(
+    'Emotion',
+    {
+      emotion_id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+      },
+      sadness: DataTypes.FLOAT,
+      anger: DataTypes.FLOAT,
+      joy: DataTypes.FLOAT,
+      fear: DataTypes.FLOAT,
+      disgust: DataTypes.FLOAT
     },
-    sadness: DataTypes.FLOAT,
-    anger: DataTypes.FLOAT,
-    joy: DataTypes.FLOAT,
-    fear: DataTypes.FLOAT,
-    disgust: DataTypes.FLOAT
-  }, {});
+    {}
+  );
 
   Emotion.associate = models => {
     Emotion.belongsTo(models.Result, {
@@ -21,6 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
-  
+
   return Emotion;
 };

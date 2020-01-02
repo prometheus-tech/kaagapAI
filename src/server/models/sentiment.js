@@ -1,14 +1,17 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Sentiment = sequelize.define('Sentiment', {
-    sentiment_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+  const Sentiment = sequelize.define(
+    'Sentiment',
+    {
+      sentiment_id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+      },
+      score: DataTypes.FLOAT,
+      label: DataTypes.STRING
     },
-    score: DataTypes.FLOAT,
-    label: DataTypes.STRING
-  }, {});
+    {}
+  );
 
   Sentiment.associate = models => {
     Sentiment.belongsTo(models.Result, {
@@ -18,6 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
-  
+
   return Sentiment;
 };

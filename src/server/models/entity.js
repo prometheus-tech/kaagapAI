@@ -1,15 +1,18 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Entity = sequelize.define('Entity', {
-    entity_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+  const Entity = sequelize.define(
+    'Entity',
+    {
+      entity_id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+      },
+      type: DataTypes.STRING,
+      text: DataTypes.STRING,
+      relevance: DataTypes.FLOAT
     },
-    type: DataTypes.STRING,
-    text: DataTypes.STRING,
-    relevance: DataTypes.FLOAT
-  }, {});
+    {}
+  );
 
   Entity.associate = models => {
     Entity.belongsTo(models.Result, {
@@ -19,6 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE'
     });
   };
-  
+
   return Entity;
 };

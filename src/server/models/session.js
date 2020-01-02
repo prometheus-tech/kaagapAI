@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Session = sequelize.define('Session', {
     session_id: {
@@ -30,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     Session.hasOne(models.Result, {
       foreignKey: 'session_id',
       sourceKey: 'session_id'
-    })
+    });
   };
 
   return Session;

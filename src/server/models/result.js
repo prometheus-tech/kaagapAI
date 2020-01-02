@@ -1,13 +1,16 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Result = sequelize.define('Result', {
-    result_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4
+  const Result = sequelize.define(
+    'Result',
+    {
+      result_id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4
+      },
+      date_generated: DataTypes.DATEONLY
     },
-    date_generated: DataTypes.DATEONLY
-  }, {});
+    {}
+  );
 
   Result.associate = models => {
     Result.belongsTo(models.Session, {

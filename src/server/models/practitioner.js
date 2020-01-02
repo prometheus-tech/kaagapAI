@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Practitioner = sequelize.define('Practitioner', {
     p_id: {
@@ -27,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Practitioner.removeAttribute('id');
 
   Practitioner.associate = models => {
-    Practitioner.hasMany( models.Client, {
+    Practitioner.hasMany(models.Client, {
       foreignKey: 'p_id',
       sourceKey: 'p_id'
     });
