@@ -16,9 +16,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import grey from '@material-ui/core/colors/grey';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Hidden from '@material-ui/core/Hidden';
-import CardHeader from '@material-ui/core/CardHeader';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { cloneDeep } from 'apollo-utilities';
@@ -26,70 +23,65 @@ import { cloneDeep } from 'apollo-utilities';
 import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
-  avatarContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '10px auto',
-    marginBottom: theme.spacing.unit * 2
-  },
-  avatar: {
-    backgroundColor: '#0091ea',
-    height: '70px',
-    width: '70px',
-    [theme.breakpoints.down('sm')]: {
-      marginRight: theme.spacing.unit * 2,
-      height: '60px',
-      width: '60px'
-    }
-  },
   card: {
     boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
-    marginTop: '1rem',
+    marginTop: '2rem',
     background: '#fff',
     borderRadius: '6px',
     width: '230px',
     transition:
       '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)',
     '&:hover': {
-      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)',
-      padding: '0px 0px 0px 0px'
+      boxShadow: '0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      padding: `${theme.spacing.unit * 1}px`
     }
   },
-  mobileCard: {
-    boxShadow: '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)',
-    marginTop: '1rem',
-    backgroundColor: '#fff',
-    borderRadius: '6px',
-    transition:
-      '.3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12)'
+  cardContent: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex'
+    }
   },
-  nameClient: {
-    width: '90%',
+  avatarContainer: {
+    display: 'inline-flex',
+    justifyContent: 'center',
+    margin: '10px auto',
+    marginBottom: theme.spacing.unit * 2,
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+      margin: '0',
+      textAlign: 'left'
+    }
+  },
+  avatar: {
+    backgroundColor: '#0091ea',
+    height: '70px',
+    width: '70px',
+    [theme.breakpoints.down('xs')]: {
+      width: '50px',
+      height: '50px',
+      marginRight: theme.spacing.unit * 2
+    }
+  },
+  cardTextContainer: {
+    [theme.breakpoints.down('xs')]: {
+      flexGrow: 1,
+      textAlign: 'left'
+    }
+  },
+  clientName: {
     color: grey[900],
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontWeight: '500'
   },
-  nameClientMobile: {
-    width: '200px',
-    color: grey[900],
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    fontWeight: '600',
-    marginBottom: theme.spacing.unit
-  },
-  session: {
+  sessionCount: {
     fontWeight: '400',
     fontSize: '14px',
     marginBottom: 0,
     color: theme.palette.grey[600]
-  },
-  sessionMobile: {
-    fontWeight: '300',
-    fontSize: '14px',
-    marginTop: '15px',
-    color: theme.palette.grey[600],
-    marginBottom: theme.spacing.unit
   },
   iconHover: {
     '&:hover': {
@@ -158,102 +150,58 @@ function ClientCard(props) {
       }}
     >
       {deleteClient => (
-        <div>
-          <Hidden smDown>
-            <Card className={classes.card}>
-              <ButtonBase
+        <Card className={classes.card}>
+          <ButtonBase
+            disableRipple={true}
+            disableTouchRipple={true}
+            component={CardLink}
+            className={classes.buttonBase}
+          >
+            <CardContent className={classes.cardContent}>
+              <div className={classes.avatarContainer}>
+                <Avatar className={classes.avatar}>
+                  <Icon fontSize="large">person</Icon>
+                </Avatar>
+              </div>
+              <div className={classes.cardTextContainer}>
+                <Typography noWrap variant="h6" className={classes.clientName}>
+                  {name}
+                </Typography>
+                <Typography className={classes.sessionCount}>
+                  {sessions}
+                </Typography>
+              </div>
+            </CardContent>
+          </ButtonBase>
+          <CardActions className={classes.cardActions}>
+            <Tooltip title="Edit">
+              <IconButton
+                className={classes.iconHover}
                 disableRipple={true}
-                disableTouchRipple={true}
-                component={CardLink}
-                className={classes.buttonBase}
+                aria-label="Edit"
+                onClick={e => {
+                  e.preventDefault();
+                  clientEdited(client);
+                }}
               >
-                <CardContent>
-                  <div className={classes.avatarContainer}>
-                    <Avatar className={classes.avatar}>
-                      <Icon fontSize="large">person</Icon>
-                    </Avatar>
-                  </div>
-                  <Typography
-                    noWrap
-                    variant="h6"
-                    align="center"
-                    className={classes.nameClient}
-                  >
-                    {name}
-                  </Typography>
-                  <Typography className={classes.session} align="center">
-                    {sessions}
-                  </Typography>
-                </CardContent>
-              </ButtonBase>
-              <CardActions>
-                <Tooltip title="Edit">
-                  <IconButton
-                    className={classes.iconHover}
-                    disableRipple={true}
-                    aria-label="Edit"
-                    onClick={e => {
-                      e.preventDefault();
-                      clientEdited(client);
-                    }}
-                  >
-                    <Icon>edit</Icon>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Archive">
-                  <IconButton
-                    className={classes.iconHover}
-                    disableRipple={true}
-                    aria-label="Archive"
-                    onClick={e => {
-                      e.preventDefault();
-                      deleteClient({ variables: { c_id } });
-                    }}
-                  >
-                    <Icon>archive</Icon>
-                  </IconButton>
-                </Tooltip>
-              </CardActions>
-            </Card>
-          </Hidden>
-          <Hidden mdUp>
-            <ButtonBase
-              className={classes.buttonBase}
-              disableRipple={true}
-              disableTouchRipple={true}
-              component={CardLink}
-            >
-              <CardHeader
-                className={classes.mobileCard}
-                avatar={
-                  <Avatar className={classes.avatar}>
-                    <Icon fontSize="large">person</Icon>
-                  </Avatar>
-                }
-                action={
-                  <IconButton style={{ transform: 'rotate(90deg)' }}>
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title={
-                  <Typography
-                    noWrap
-                    variant="h6"
-                    align="left"
-                    className={classes.nameClientMobile}
-                  >
-                    {name}
-                  </Typography>
-                }
-                subheader={
-                  <Typography align="left" className={classes.sessionMobile}>
-                    {sessions}
-                  </Typography>
-                }
-              />
-            </ButtonBase>
-          </Hidden>
-        </div>
+                <Icon>edit</Icon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Archive">
+              <IconButton
+                className={classes.iconHover}
+                disableRipple={true}
+                aria-label="Archive"
+                onClick={e => {
+                  e.preventDefault();
+                  deleteClient({ variables: { c_id } });
+                }}
+              >
+                <Icon>archive</Icon>
+              </IconButton>
+            </Tooltip>
+          </CardActions>
+        </Card>
       )}
     </Mutation>
   );
