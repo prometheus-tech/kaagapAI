@@ -46,14 +46,7 @@ class ClientsPage extends Component {
       gender: '',
       birthdate: '',
       no_of_sessions: ''
-    },
-    view: 'card'
-  };
-
-  changeViewHandler = updatedView => {
-    this.setState({
-      view: updatedView
-    });
+    }
   };
 
   openNewClientDialogHandler = () => {
@@ -94,8 +87,7 @@ class ClientsPage extends Component {
     const {
       isNewClientDialogOpened,
       isEditClientDialogOpened,
-      selectedClient,
-      view
+      selectedClient
     } = this.state;
 
     return (
@@ -118,30 +110,16 @@ class ClientsPage extends Component {
                   <AddIcon fontSize="small" style={{ marginRight: '8px' }} />
                 }
               />
-
-              {data.clients.length > 0 ? (
-                <ClientsSubHeader
-                  view={view}
-                  viewChanged={this.changeViewHandler}
-                  searchPlaceholder="Search client..."
-                />
-              ) : null}
-
               <Main>
                 {data.clients.length === 0 ? (
                   <EmptyClient
                     newClientsOpened={this.openNewClientDialogHandler}
                   />
-                ) : view === 'card' && data.clients.length > 0 ? (
+                ) : (
                   <ClientCards
                     clients={data.clients}
                     clientEdited={this.openEditClientDialogHandler}
                     clientDeleted={this.openDeleteClientDialogHandler}
-                  />
-                ) : (
-                  <ClientsList
-                    clients={data.clients}
-                    clientEdited={this.openEditClientDialogHandler}
                   />
                 )}
 
