@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Hidden from '@material-ui/core/Hidden';
 
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import MyBreadcrumb from '../MyBreadcrumb/MyBreadcrumb';
@@ -110,18 +111,20 @@ class MyHeader extends Component {
                   ) : null}
                 </div>
                 <div>
-                  <div className={classes.primaryButtonWrapper}>
-                    {primaryButtonAction ? (
-                      <Button
-                        variant="outlined"
-                        className={classes.primaryButton}
-                        onClick={primaryButtonAction}
-                      >
-                        {primaryButtonIcon ? primaryButtonIcon : null}{' '}
-                        {primaryButtonLabel}
-                      </Button>
-                    ) : null}
-                  </div>
+                  <Hidden xsDown>
+                    <div className={classes.primaryButtonWrapper}>
+                      {primaryButtonAction ? (
+                        <Button
+                          variant="outlined"
+                          className={classes.primaryButton}
+                          onClick={primaryButtonAction}
+                        >
+                          {primaryButtonIcon ? primaryButtonIcon : null}{' '}
+                          {primaryButtonLabel}
+                        </Button>
+                      ) : null}
+                    </div>
+                  </Hidden>
                   <IconButton component={RouterLink} to="/archives">
                     <DeleteIcon />
                   </IconButton>
