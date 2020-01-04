@@ -258,7 +258,6 @@ class SessionPage extends Component {
                     {session.documents.length > 0 ? (
                       <SessionSubHeader
                         tabValue={tabValue}
-                        searchPlaceholder="Search documents..."
                         tabValueChanged={this.changeTabValueHandler}
                       />
                     ) : null}

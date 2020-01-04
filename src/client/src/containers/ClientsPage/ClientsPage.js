@@ -12,13 +12,11 @@ import { lightBlue } from '@material-ui/core/colors';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
-import ClientsList from '../../components/Clients/ClientsList/ClientsList';
 import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
 import AddIcon from '@material-ui/icons/Add';
 import Main from '../../hoc/Main/Main';
-import ClientsSubHeader from '../../components/Clients/ClientsSubHeader/ClientsSubHeader';
 
 const styles = theme => ({
   floatingButton: {

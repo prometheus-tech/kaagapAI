@@ -6,7 +6,6 @@ import orange from '@material-ui/core/colors/orange';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import EmptySession from '../../../components/UI/Placeholder/EmptySession';
 import SessionCards from '../../../components/Client/SessionCards/SessionCards';
-import SessionList from '../../../components/Client/SessionList/SessionList';
 import NewSessionDialog from '../../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../../components/Client/EditSessionDialog/EditSessionDialog';
 
@@ -61,7 +60,6 @@ class ClientSessionsPage extends Component {
       sessions,
       clientId,
       newSessionDialogClosed,
-      view,
       isNewSessionDialogOpened,
       newSessionDialogOpened
     } = this.props;
@@ -72,13 +70,8 @@ class ClientSessionsPage extends Component {
       <Auxilliary>
         {sessions.length === 0 ? (
           <EmptySession newSessionOpened={newSessionDialogOpened} />
-        ) : view === 'card' && sessions.length > 0 ? (
-          <SessionCards
-            sessions={sessions}
-            sessionEdited={this.openEditSessionDialogHandler}
-          />
         ) : (
-          <SessionList
+          <SessionCards
             sessions={sessions}
             sessionEdited={this.openEditSessionDialogHandler}
           />

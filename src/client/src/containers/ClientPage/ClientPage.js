@@ -22,7 +22,6 @@ import TrendsIcon from '@material-ui/icons/Timeline';
 class ClientPage extends Component {
   state = {
     tabValue: 0,
-    view: 'card',
     checkedSessions: [],
     analyzedSessions: [],
     isNewSessionDialogOpened: false,
@@ -40,12 +39,6 @@ class ClientPage extends Component {
     if (this.state.tabValue !== value) {
       this.setState({ tabValue: value });
     }
-  };
-
-  changeViewHandler = updatedView => {
-    this.setState({
-      view: updatedView
-    });
   };
 
   openNewSessionDialogHandler = () => {
@@ -102,7 +95,6 @@ class ClientPage extends Component {
 
     const {
       tabValue,
-      view,
       isNewSessionDialogOpened,
       isSelectSessionsDialogOpened,
       checkedSessions,
@@ -159,9 +151,6 @@ class ClientPage extends Component {
               {data.client.sessions.length > 0 ? (
                 <ClientSubHeader
                   tabValue={tabValue}
-                  searchPlaceholder="Search sessions..."
-                  view={view}
-                  viewChanged={this.changeViewHandler}
                   tabValueChanged={this.changeTabValueHandler}
                 />
               ) : null}
@@ -171,7 +160,6 @@ class ClientPage extends Component {
                   <ClientSessionsPage
                     sessions={data.client.sessions}
                     clientId={c_id}
-                    view={view}
                     isNewSessionDialogOpened={isNewSessionDialogOpened}
                     newSessionDialogClosed={this.closeNewSessionDialogHandler}
                     newSessionDialogOpened={this.openNewSessionDialogHandler}

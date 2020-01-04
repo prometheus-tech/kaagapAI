@@ -3,8 +3,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
-import SearchField from '../../UI/SearchField/SearchField';
-import ViewControl from '../../UI/ViewControl/ViewControl';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import orange from '@material-ui/core/colors/orange';
@@ -47,18 +45,11 @@ const styles = theme => ({
   tabSelected: {}
 });
 
-function ClientSubHeader({
-  classes,
-  tabValue,
-  tabValueChanged,
-  searchPlaceholder,
-  view,
-  viewChanged
-}) {
+function ClientSubHeader({ classes, tabValue, tabValueChanged }) {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Tabs
             value={tabValue}
             onChange={tabValueChanged}
@@ -85,14 +76,6 @@ function ClientSubHeader({
             />
           </Tabs>
         </Grid>
-        {tabValue === 0 && (
-          <Grid item xs={6}>
-            <div className={classes.controlsContainer}>
-              <SearchField placeholder={searchPlaceholder} />
-              <ViewControl view={view} viewChanged={viewChanged} />
-            </div>
-          </Grid>
-        )}
       </Grid>
     </div>
   );
