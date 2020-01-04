@@ -14,7 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Hidden from '@material-ui/core/Hidden';
 
 import { Link as RouterLink, withRouter } from 'react-router-dom';
-import MyBreadcrumb from '../MyBreadcrumb/MyBreadcrumb';
+import NavBreadcrumbs from '../NavBreadcrumbs/NavBreadcrumbs';
 
 import { ApolloConsumer } from 'react-apollo';
 
@@ -111,7 +111,7 @@ class AppBar extends Component {
                     <img src={Logo} alt="kaagapAI" className={classes.logo} />
                   </Button>
                   {breadcrumbData ? (
-                    <MyBreadcrumb breadcrumbData={breadcrumbData} />
+                    <NavBreadcrumbs breadcrumbData={breadcrumbData} />
                   ) : null}
                 </div>
                 <div className={classes.navItemsContainer}>

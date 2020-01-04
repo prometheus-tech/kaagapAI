@@ -33,7 +33,7 @@ const styles = theme => ({
   }
 });
 
-function MyBreadcrumb({ classes, breadcrumbData }) {
+function NavBreadcrumbs({ classes, breadcrumbData }) {
   return (
     <Breadcrumbs separator={<NavigateNextIcon />}>
       {breadcrumbData.map((breadcrumbItem, index) => {
@@ -61,4 +61,4 @@ function MyBreadcrumb({ classes, breadcrumbData }) {
   );
 }
 
-export default withStyles(styles)(MyBreadcrumb);
+export default withStyles(styles)(NavBreadcrumbs);
