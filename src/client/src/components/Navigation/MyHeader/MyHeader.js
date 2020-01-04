@@ -58,6 +58,10 @@ const styles = theme => ({
     borderRight: '1px solid #E6E6E6',
     display: 'inline-block',
     marginRight: theme.spacing.unit
+  },
+  navItemsContainer: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -110,7 +114,7 @@ class MyHeader extends Component {
                     <MyBreadcrumb breadcrumbData={breadcrumbData} />
                   ) : null}
                 </div>
-                <div>
+                <div className={classes.navItemsContainer}>
                   <Hidden xsDown>
                     <div className={classes.primaryButtonWrapper}>
                       {primaryButtonAction ? (
