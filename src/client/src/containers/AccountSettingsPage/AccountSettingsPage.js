@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import Main from '../../hoc/Main/Main';
-import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import AppBar from '../../components/Navigation/AppBar/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import grey from '@material-ui/core/colors/grey';
@@ -62,7 +62,7 @@ class AccountSettingsPage extends Component {
 
           return (
             <Auxilliary>
-              <MyHeader />
+              <AppBar />
               <Main>
                 <div className={classes.root}>
                   <div className={classes.accountSettings}>

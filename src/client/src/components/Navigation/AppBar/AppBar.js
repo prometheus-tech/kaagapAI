@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import AppBar from '@material-ui/core/AppBar';
+import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Logo from '../../../assets/kaagapai-logo.svg';
 import IconButton from '@material-ui/core/IconButton';
@@ -65,7 +65,7 @@ const styles = theme => ({
   }
 });
 
-class MyHeader extends Component {
+class AppBar extends Component {
   state = {
     anchorEl: null
   };
@@ -99,7 +99,7 @@ class MyHeader extends Component {
       <ApolloConsumer>
         {client => (
           <div className={classes.root}>
-            <AppBar position="static" className={classes.appBar}>
+            <MuiAppBar position="static" className={classes.appBar}>
               <Toolbar>
                 <div className={classes.logoContainer}>
                   <Button
@@ -137,7 +137,7 @@ class MyHeader extends Component {
                   </IconButton>
                 </div>
               </Toolbar>
-            </AppBar>
+            </MuiAppBar>
             <Menu
               anchorEl={anchorEl}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -162,4 +162,4 @@ class MyHeader extends Component {
   }
 }
 
-export default withStyles(styles)(withRouter(MyHeader));
+export default withStyles(styles)(withRouter(AppBar));

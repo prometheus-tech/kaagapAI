@@ -16,7 +16,7 @@ import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import grey from '@material-ui/core/colors/grey';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton } from '@material-ui/core';
-import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import AppBar from '../../components/Navigation/AppBar/AppBar';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import Main from '../../hoc/Main/Main';
 import PermanentDeleteConfirmationDialog from '../../components/Archives/PermanentDeleteConfirmationDialog/PermanentDeleteConfirmationDialog';
@@ -89,7 +89,7 @@ class ArchivesPage extends Component {
 
           return (
             <Auxilliary>
-              <MyHeader />
+              <AppBar />
               <Main>
                 <Grid container>
                   <Grid item xs={12} className={classes.pageHeader}>

@@ -14,7 +14,7 @@ import Add from '@material-ui/icons/Add';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
-import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import AppBar from '../../components/Navigation/AppBar/AppBar';
 import AddIcon from '@material-ui/icons/Add';
 import Main from '../../hoc/Main/Main';
 
@@ -101,7 +101,7 @@ class ClientsPage extends Component {
 
           return (
             <Auxilliary>
-              <MyHeader
+              <AppBar
                 primaryButtonAction={this.openNewClientDialogHandler}
                 primaryButtonLabel="New Client"
                 primaryButtonIcon={

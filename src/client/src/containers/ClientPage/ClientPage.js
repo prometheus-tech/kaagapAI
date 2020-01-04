@@ -11,7 +11,7 @@ import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFull
 import CustomSessionsResultPage from './CustomSessionsResultPage/CustomSessionsResultPage';
 import ClientSessionsPage from './ClientSessionsPage/ClientSessionsPage';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
-import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import AppBar from '../../components/Navigation/AppBar/AppBar';
 import Main from '../../hoc/Main/Main';
 import AddIcon from '@material-ui/icons/Add';
 import ClientSubHeader from '../../components/Client/ClientSubHeader/ClientSubHeader';
@@ -126,7 +126,7 @@ class ClientPage extends Component {
 
           return (
             <Auxilliary>
-              <MyHeader
+              <AppBar
                 primaryButtonAction={
                   tabValue === 0
                     ? this.openNewSessionDialogHandler

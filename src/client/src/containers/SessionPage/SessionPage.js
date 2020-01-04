@@ -17,7 +17,7 @@ import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import SessionDocumentsPage from './SessionDocumentsPage/SessionDocumentsPage';
 import SessionResultsPage from './SessionResultsPage/SessionResultsPage';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
-import MyHeader from '../../components/Navigation/MyHeader/MyHeader';
+import AppBar from '../../components/Navigation/AppBar/AppBar';
 import Main from '../../hoc/Main/Main';
 import SessionSubHeader from '../../components/Session/SessionSubHeader/SessionSubHeader';
 import UploadFilePopper from '../../components/Session/UploadFilePopper/UploadFilePopper';
@@ -239,7 +239,7 @@ class SessionPage extends Component {
 
                 return (
                   <Auxilliary>
-                    <MyHeader
+                    <AppBar
                       primaryButtonAction={
                         tabValue === 0 ? this.openUploadFilePopperHandler : null
                       }
