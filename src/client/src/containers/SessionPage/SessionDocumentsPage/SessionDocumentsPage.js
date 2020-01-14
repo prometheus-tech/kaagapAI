@@ -22,6 +22,8 @@ import SimpleSnackbar from '../../../components/UI/SimpleSnackbar/SimpleSnackbar
 import RemoveAnnotationsConfirmationDialog from '../../../components/Session/RemoveAnnotationsConfirmationDialog/RemoveAnnotationsConfirmationDialog';
 import Placeholder from '../../../components/UI/Placeholder/Placeholder';
 import EmptyDocumentsIllustration from '../../../assets/Empty_Documents.svg';
+import Hidden from '@material-ui/core/Hidden';
+import FloatingActionButton from '../../../components/UI/FloatingActionButton/FloatingActionButton';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -30,6 +32,7 @@ class SessionDocumentsPage extends Component {
       documents,
       isNewSessionDocumentDialogOpened,
       isNewSessionAttachmentDialogOpened,
+      newSessionDocumentDialogOpened,
       file,
       isMoreActionsOpened,
       anchorEl,
@@ -71,6 +74,10 @@ class SessionDocumentsPage extends Component {
             moreActionsOpened={moreActionsOpened}
           />
         )}
+
+        <Hidden mdUp>
+          <FloatingActionButton action={newSessionDocumentDialogOpened} />
+        </Hidden>
 
         <NewSessionDocumentDialog
           opened={isNewSessionDocumentDialogOpened}

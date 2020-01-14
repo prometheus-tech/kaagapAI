@@ -14,6 +14,8 @@ import SelectSessionsDialog from '../../../components/Client/SelectSessionsDialo
 import Placeholder from '../../../components/UI/Placeholder/Placeholder';
 import EmptyCustomSessionResultIllustration from '../../../assets/empty_custom_result.svg';
 import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
+import Hidden from '@material-ui/core/Hidden';
+import FloatingActionButton from '../../../components/UI/FloatingActionButton/FloatingActionButton';
 
 import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
@@ -61,6 +63,7 @@ class CustomSessionsResultPage extends Component {
       classes,
       sessions,
       isSelectSessionsDialogOpened,
+      selectSessionsDialogOpened,
       selectSessionsDialogClosed,
       checkedSessions,
       analyzedSessions,
@@ -294,6 +297,9 @@ class CustomSessionsResultPage extends Component {
             subText="All you need to do is select the sessions to analyze"
           />
         )}
+        <Hidden mdUp>
+          <FloatingActionButton action={selectSessionsDialogOpened} />
+        </Hidden>
       </Auxilliary>
     );
   }

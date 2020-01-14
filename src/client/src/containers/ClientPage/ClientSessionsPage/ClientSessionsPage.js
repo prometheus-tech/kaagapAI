@@ -9,6 +9,8 @@ import NewSessionDialog from '../../../components/Client/NewSessionDialog/NewSes
 import EditSessionDialog from '../../../components/Client/EditSessionDialog/EditSessionDialog';
 import Placeholder from '../../../components/UI/Placeholder/Placeholder';
 import EmptySessionsIllustration from '../../../assets/empty_session.svg';
+import Hidden from '@material-ui/core/Hidden';
+import FloatingActionButton from '../../../components/UI/FloatingActionButton/FloatingActionButton';
 
 const styles = theme => ({
   floatingButton: {
@@ -61,7 +63,8 @@ class ClientSessionsPage extends Component {
       sessions,
       clientId,
       newSessionDialogClosed,
-      isNewSessionDialogOpened
+      isNewSessionDialogOpened,
+      newSessionDialogOpened
     } = this.props;
 
     const { isEditSessionDialogOpened, selectedSession } = this.state;
@@ -81,6 +84,9 @@ class ClientSessionsPage extends Component {
             sessionEdited={this.openEditSessionDialogHandler}
           />
         )}
+        <Hidden mdUp>
+          <FloatingActionButton action={newSessionDialogOpened} />
+        </Hidden>
         <NewSessionDialog
           clientId={clientId}
           opened={isNewSessionDialogOpened}

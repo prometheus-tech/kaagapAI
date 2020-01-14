@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import CLIENTS from '../../graphql/queries/clients';
 
-import { withStyles } from '@material-ui/core/styles';
 import LoadingFullScreen from '../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Hidden from '@material-ui/core/Hidden';
 import ClientCards from '../../components/Clients/ClientCards/ClientCards';
 import NewClientDialog from '../../components/Clients/NewClientDialog/NewClientDialog';
-import { lightBlue } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
+import FloatingActionButton from '../../components/UI/FloatingActionButton/FloatingActionButton';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import AppBar from '../../components/Navigation/AppBar/AppBar';
@@ -18,21 +15,6 @@ import AddIcon from '@material-ui/icons/Add';
 import Main from '../../hoc/Main/Main';
 import Placeholder from '../../components/UI/Placeholder/Placeholder';
 import EmptyClientsIllustration from '../../assets/Empty_Clients.svg';
-
-const styles = theme => ({
-  floatingButton: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-    backgroundColor: lightBlue[600],
-    boxShadow: theme.shadows[24],
-    color: '#ffffff',
-    '&:hover': {
-      boxShadow: theme.shadows[10]
-    },
-    zIndex: 2
-  }
-});
 
 class ClientsPage extends Component {
   state = {
@@ -81,8 +63,6 @@ class ClientsPage extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-
     const {
       isNewClientDialogOpened,
       isEditClientDialogOpened,
@@ -126,16 +106,9 @@ class ClientsPage extends Component {
                 )}
 
                 <Hidden mdUp>
-                  <Fab
-                    size="large"
-                    color="primary"
-                    className={classes.floatingButton}
-                    onClick={this.openNewClientDialogHandler}
-                    disableRipple={false}
-                    disableFocusRipple={false}
-                  >
-                    <Add />
-                  </Fab>
+                  <FloatingActionButton
+                    action={this.openNewClientDialogHandler}
+                  />
                 </Hidden>
 
                 <NewClientDialog
@@ -157,4 +130,4 @@ class ClientsPage extends Component {
   }
 }
 
-export default withStyles(styles)(ClientsPage);
+export default ClientsPage;
