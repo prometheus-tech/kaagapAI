@@ -11,7 +11,8 @@ import EmotionsTrend from '../../../components/Results/EmotionsTrend/EmotionsTre
 import SentimentsTrend from '../../../components/Results/SentimentsTrend/SentimentsTrend';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
 import SelectSessionsDialog from '../../../components/Client/SelectSessionsDialog/SelectSessionsDialog';
-import EmptyCustomSessionsResult from '../../../components/UI/Placeholder/EmptyCustomSessionsResult';
+import Placeholder from '../../../components/UI/Placeholder/Placeholder';
+import EmptyCustomSessionResultIllustration from '../../../assets/empty_custom_result.svg';
 import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
 
 import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
@@ -60,7 +61,6 @@ class CustomSessionsResultPage extends Component {
       classes,
       sessions,
       isSelectSessionsDialogOpened,
-      selectSessionsDialogOpened,
       selectSessionsDialogClosed,
       checkedSessions,
       analyzedSessions,
@@ -287,8 +287,11 @@ class CustomSessionsResultPage extends Component {
             }}
           </Query>
         ) : (
-          <EmptyCustomSessionsResult
-            selectSessionsDialogOpened={selectSessionsDialogOpened}
+          <Placeholder
+            illustration={EmptyCustomSessionResultIllustration}
+            alt="No custom session"
+            mainText="Analyze and find trends across multiple sessions"
+            subText="All you need to do is select the sessions to analyze"
           />
         )}
       </Auxilliary>

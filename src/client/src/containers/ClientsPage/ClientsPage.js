@@ -12,11 +12,12 @@ import { lightBlue } from '@material-ui/core/colors';
 import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import EditClientDialog from '../../components/Clients/EditClientDialog/EditClientDialog';
-import EmptyClient from '../../components/UI/Placeholder/EmptyClient';
 import Auxilliary from '../../hoc/Auxilliary/Auxilliary';
 import AppBar from '../../components/Navigation/AppBar/AppBar';
 import AddIcon from '@material-ui/icons/Add';
 import Main from '../../hoc/Main/Main';
+import Placeholder from '../../components/UI/Placeholder/Placeholder';
+import EmptyClientsIllustration from '../../assets/Empty_Clients.svg';
 
 const styles = theme => ({
   floatingButton: {
@@ -110,8 +111,11 @@ class ClientsPage extends Component {
               />
               <Main>
                 {data.clients.length === 0 ? (
-                  <EmptyClient
-                    newClientsOpened={this.openNewClientDialogHandler}
+                  <Placeholder
+                    illustration={EmptyClientsIllustration}
+                    alt="No Clients"
+                    mainText="Looks like you don't have any clients yet"
+                    subText="add a new client to get started"
                   />
                 ) : (
                   <ClientCards

@@ -6,11 +6,12 @@ import { Query } from 'react-apollo';
 import RESULTS from '../../../graphql/queries/results';
 
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
+import EmptyResultIllustration from '../../../assets/No_Result.svg';
 import LoadingFullScreen from '../../../components/UI/LoadingFullScreen/LoadingFullScreen';
 import Grid from '@material-ui/core/Grid';
-import EmptyResults from '../../../components/UI/Placeholder/EmptyResults';
 import ResultsVertTabs from '../../../components/Results/ResultsVertTabs/ResultsVertTabs';
 import ResultPaper from '../../../components/UI/ResultPaper/ResultPaper';
+import Placeholder from '../../../components/UI/Placeholder/Placeholder';
 
 import KeywordsTabIcon from '../../../assets/KeywordsIcon.svg';
 import CategoryTabIcon from '../../../assets/CategoryIcon.svg';
@@ -228,7 +229,12 @@ class SessionResultsPage extends Component {
                   )}
                 </Grid>
               ) : (
-                <EmptyResults />
+                <Placeholder
+                  illustration={EmptyResultIllustration}
+                  alt="No Result"
+                  mainText="No document to analyze"
+                  subText="Upload documents to this session now"
+                />
               )}
             </Auxilliary>
           );

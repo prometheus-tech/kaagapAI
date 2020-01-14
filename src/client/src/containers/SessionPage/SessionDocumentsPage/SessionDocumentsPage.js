@@ -17,10 +17,11 @@ import NewSessionDocumentDialog from '../../../components/Session/NewSessionDocu
 import NewSessionAttachmentDialog from '../../../components/Session/NewSessionAttachmentDialog/NewSessionAttachmentDialog';
 import SessionDocumentMoreActionsPopper from '../../../components/Session/SessionDocumentMoreActionsPopper/SessionDocumentMoreActionsPopper';
 import RenameSessionDocumentDialog from '../../../components/Session/RenameSessionDocumentDialog/RenameSessionDocumentDialog';
-import EmptyDocumentIllustration from '../../../components/UI/Placeholder/EmptyDocuments';
 import ContentSessionDocumentDialog from '../../../components/Session/ContentSessionDocumentDialog/ContentSessionDocumentDialog';
 import SimpleSnackbar from '../../../components/UI/SimpleSnackbar/SimpleSnackbar';
 import RemoveAnnotationsConfirmationDialog from '../../../components/Session/RemoveAnnotationsConfirmationDialog/RemoveAnnotationsConfirmationDialog';
+import Placeholder from '../../../components/UI/Placeholder/Placeholder';
+import EmptyDocumentsIllustration from '../../../assets/Empty_Documents.svg';
 
 class SessionDocumentsPage extends Component {
   render() {
@@ -34,7 +35,6 @@ class SessionDocumentsPage extends Component {
       anchorEl,
       selectedSessionDocument,
       isRenameSessionDocumentDialogOpened,
-      newSessionDocumentDialogOpened,
       contentSessionDocumentDialogOpened,
       moreActionsOpened,
       newSessionDocumentDialogClosed,
@@ -58,8 +58,11 @@ class SessionDocumentsPage extends Component {
     return (
       <Auxilliary>
         {documents.length === 0 ? (
-          <EmptyDocumentIllustration
-            newUploadDocuments={newSessionDocumentDialogOpened}
+          <Placeholder
+            illustration={EmptyDocumentsIllustration}
+            alt="Empty Documents"
+            mainText="There are no files for this session yet"
+            subText="Start uploading your files now"
           />
         ) : (
           <SessionDocumentCards

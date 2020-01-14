@@ -4,10 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 import orange from '@material-ui/core/colors/orange';
 import Auxilliary from '../../../hoc/Auxilliary/Auxilliary';
-import EmptySession from '../../../components/UI/Placeholder/EmptySession';
 import SessionCards from '../../../components/Client/SessionCards/SessionCards';
 import NewSessionDialog from '../../../components/Client/NewSessionDialog/NewSessionDialog';
 import EditSessionDialog from '../../../components/Client/EditSessionDialog/EditSessionDialog';
+import Placeholder from '../../../components/UI/Placeholder/Placeholder';
+import EmptySessionsIllustration from '../../../assets/empty_session.svg';
 
 const styles = theme => ({
   floatingButton: {
@@ -60,8 +61,7 @@ class ClientSessionsPage extends Component {
       sessions,
       clientId,
       newSessionDialogClosed,
-      isNewSessionDialogOpened,
-      newSessionDialogOpened
+      isNewSessionDialogOpened
     } = this.props;
 
     const { isEditSessionDialogOpened, selectedSession } = this.state;
@@ -69,7 +69,12 @@ class ClientSessionsPage extends Component {
     return (
       <Auxilliary>
         {sessions.length === 0 ? (
-          <EmptySession newSessionOpened={newSessionDialogOpened} />
+          <Placeholder
+            illustration={EmptySessionsIllustration}
+            alt="Empty Sessions"
+            mainText="This client has no sessions yet"
+            subText="Create a new session folder"
+          />
         ) : (
           <SessionCards
             sessions={sessions}

@@ -162,7 +162,6 @@ class ClientPage extends Component {
                     clientId={c_id}
                     isNewSessionDialogOpened={isNewSessionDialogOpened}
                     newSessionDialogClosed={this.closeNewSessionDialogHandler}
-                    newSessionDialogOpened={this.openNewSessionDialogHandler}
                   />
                 )}
                 {tabValue === 1 && (

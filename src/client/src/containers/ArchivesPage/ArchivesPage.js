@@ -11,7 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import ArchivedClientCards from '../../components/Archives/ArchivedClientCards/ArchivedClientCards';
 import ArchivedSessionCards from '../../components/Archives/ArchivedSessionCards/ArchivedSessionCards';
 import ArchivedSessionDocumentCards from '../../components/Archives/ArchivedSessionDocumentCards/ArchivedSessionDocumentCards';
-import EmptyArchiveIllustration from '../../components/UI/Placeholder/EmptyArchive';
+import Placeholder from '../../components/UI/Placeholder/Placeholder';
+import EmptyArchiveIllustration from '../../assets/Archive_Illustration.svg';
 import { loadCSS } from 'fg-loadcss/src/loadCSS';
 import grey from '@material-ui/core/colors/grey';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -136,7 +137,7 @@ class ArchivesPage extends Component {
                 {data.archives.clients.length === 0 &&
                 data.archives.sessions.length === 0 &&
                 data.archives.session_documents.length === 0 ? (
-                  <EmptyArchiveIllustration />
+                  <Placeholder illustration={EmptyArchiveIllustration} />
                 ) : null}
               </Main>
               <PermanentDeleteConfirmationDialog
