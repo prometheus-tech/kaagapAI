@@ -40,7 +40,7 @@
     "fetch": "^1.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "fs": "0.0.1-security",
-    "graphiql": "^0.12.0",
+    "graphiql": "^1.4.7",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "graphql-type-json": "^0.2.1",
